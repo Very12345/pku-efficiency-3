@@ -1,0 +1,14 @@
+示例输出（非正式案例结果）
+==========================
+
+本目录是 `examples/case.json`（合成示意案例）在本机真实运行
+`python scripts/main.py` 后产出的**示例输出**，用于演示 Skill 的调用接口、
+产物形态与 result.json 结构。**它不是平台三个固定案例的结果，也不是任何
+评分成绩**：平台正式案例与白板由组织方提供并生成。
+
+复现方法（在 Skill 根目录执行）：
+
+    python scripts/main.py --case examples/case.json --task examples/task.md --out <任意输出目录>
+
+产物清单见 `result.json` 的 `artifacts` 字段；渲染预览为 PIL 示意图
+（非像素级导出），详见 `_PREVIEW_ARE_SCHEMATIC.txt` 与 `render_log.json`。

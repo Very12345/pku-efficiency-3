@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- biological-mechanism-pathway-diagram v1.0.0 (contract 1.0) -->
+<!-- Editable source figure. Change a label / an arrow in a layer group and re-export. -->
+<!-- provenance:  -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+<defs><marker id="mk-arrow-2e7d32" viewBox="0 0 11 11" refX="11" refY="5.5" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L11,5.5 L0,11 z" fill="#2E7D32"/></marker><marker id="mk-bar-c0392b" viewBox="0 0 11 11" refX="5.5" refY="5.5" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><line x1="5.5" y1="0" x2="5.5" y2="11" stroke="#C0392B" stroke-width="2.2"/></marker><marker id="mk-circle-b9770e" viewBox="0 0 11 11" refX="5.5" refY="5.5" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><circle cx="5.5" cy="5.5" r="3.4" fill="#B9770E"/></marker><marker id="mk-diamond-6c3483" viewBox="0 0 11 11" refX="11" refY="5.5" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M5.5,0 L11,5.5 L5.5,11 L0,5.5 z" fill="#6C3483"/></marker><linearGradient id="ramp-legend" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF7E0"/><stop offset="1" stop-color="#1F4E79"/></linearGradient></defs>
+<g id="layer-compartment">
+<rect x="36.0" y="128.0" width="810.0" height="125.5" fill="#FBFCFC" stroke="#D5DBDB" stroke-width="1.4" stroke-dasharray="none" /> data-role="compartment" data-id="extracellular"
+<text x="44.0" y="146.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="13" font-weight="bold" fill="#D5DBDB" text-anchor="start">胞外 (Extracellular)</text>
+<rect x="36.0" y="253.5" width="810.0" height="75.3" fill="#EBF5FB" stroke="#5DADE2" stroke-width="1.4" stroke-dasharray="none" /> data-role="compartment" data-id="membrane"
+<text x="44.0" y="271.5" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="13" font-weight="bold" fill="#5DADE2" text-anchor="start">细胞膜 (Plasma membrane)</text>
+<rect x="36.0" y="328.8" width="810.0" height="312.9" fill="#FDFEFE" stroke="#D5DBDB" stroke-width="1.4" stroke-dasharray="none" /> data-role="compartment" data-id="cytoplasm"
+<text x="44.0" y="346.8" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="13" font-weight="bold" fill="#D5DBDB" text-anchor="start">细胞质 (Cytoplasm)</text>
+<rect x="62.0" y="473.5" width="758.0" height="142.2" fill="#F4ECF7" stroke="#AF7AC5" stroke-width="1.4" stroke-dasharray="none" /> data-role="compartment" data-id="nucleus"
+<text x="70.0" y="491.5" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="13" font-weight="bold" fill="#AF7AC5" text-anchor="start">细胞核 (Nucleus)</text>
+</g>
+<g id="layer-edge">
+<path d="M426.0 216.8 L426.0 241.6 L171.0 241.6 L171.0 266.5" fill="none" stroke="#1F4E79" stroke-width="2.8" data-id="r1" data-type="binding" data-from="e1" data-to="e2" data-evidence="strong" data-source="example_material.md|material|"/>
+<path d="M213.0 291.2 L213.0 291.2 L264.0 291.2 L264.0 291.2" fill="none" stroke="#2E7D32" stroke-width="2.2" marker-end="url(#mk-arrow-2e7d32)" data-id="r2" data-type="activation" data-from="e2" data-to="e3" data-evidence="moderate" data-source="example_material.md|material|"/>
+<path d="M348.0 291.2 L348.0 363.2 L399.0 363.2 L399.0 291.2" fill="none" stroke="#1F4E79" stroke-width="2.8" data-id="r3" data-type="binding" data-from="e3" data-to="e4" data-evidence="strong" data-source="example_material.md|material|"/>
+<path d="M426.0 315.8 L426.0 387.6 L198.0 387.6 L198.0 459.3" fill="none" stroke="#2E7D32" stroke-width="2.8" marker-end="url(#mk-arrow-2e7d32)" data-id="r4" data-type="activation" data-from="e4" data-to="e7" data-evidence="strong" data-source="example_material.md|material|"/>
+<path d="M240.0 485.3 L240.0 485.3 L318.0 485.3 L318.0 485.3" fill="none" stroke="#2E7D32" stroke-width="2.8" marker-end="url(#mk-arrow-2e7d32)" data-id="r5" data-type="activation" data-from="e7" data-to="e8" data-evidence="strong" data-source="example_material.md|material|"/>
+<path d="M402.0 485.3 L402.0 557.3 L480.0 557.3 L480.0 485.3" fill="none" stroke="#B9770E" stroke-width="2.2" marker-end="url(#mk-circle-b9770e)" data-id="r6" data-type="modification" data-from="e8" data-to="e9" data-evidence="moderate" data-source="example_material.md|material|"/>
+<path d="M564.0 485.3 L564.0 629.3 L642.0 629.3 L642.0 485.3" fill="none" stroke="#B9770E" stroke-width="2.8" marker-end="url(#mk-circle-b9770e)" data-id="r7" data-type="modification" data-from="e9" data-to="e10" data-evidence="strong" data-source="example_material.md|material|"/>
+<path d="M669.0 511.3 L669.0 515.0 L272.5 515.0 L272.5 518.6" fill="none" stroke="#6C3483" stroke-width="2.2" marker-end="url(#mk-diamond-6c3483)" data-id="r8" data-type="transport" data-from="e10" data-to="e11" data-evidence="moderate" data-source="example_material.md|material|"/>
+<path d="M684.0 511.3 L684.0 515.0 L272.5 515.0 L272.5 518.6" fill="none" stroke="#B9770E" stroke-width="2.8" marker-end="url(#mk-circle-b9770e)" data-id="r9" data-type="modification" data-from="e10" data-to="e11" data-evidence="strong" data-source="example_material.md|material|"/>
+<path d="M314.5 544.6 L314.5 544.6 L533.0 544.6 L533.0 544.6" fill="none" stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#mk-arrow-2e7d32)" data-id="r10" data-type="activation" data-from="e11" data-to="e13" data-evidence="weak" data-source="example_material.md|material|"/>
+<path d="M642.0 485.3 L642.0 701.3 L402.0 701.3 L402.0 485.3" fill="none" stroke="#C0392B" stroke-width="2.2" marker-end="url(#mk-bar-c0392b)" data-id="r11" data-type="inhibition" data-from="e10" data-to="e8" data-evidence="moderate" data-source="example_material.md|material|"/>
+<path d="M669.0 291.2 L669.0 435.2 L618.0 435.2 L618.0 291.2" fill="none" stroke="#C0392B" stroke-width="2.8" marker-end="url(#mk-bar-c0392b)" data-id="r12" data-type="inhibition" data-from="e6" data-to="e5" data-evidence="strong" data-source="example_material.md|material|"/>
+</g>
+<g id="layer-entity">
+<g id="entity-e1" data-id="e1" data-type="protein" data-compartment="extracellular" data-source="example_material.md|material|" data-values="表达量=0.95">
+<rect x="399.0" y="164.8" width="84.0" height="52.0" rx="10" ry="10" fill="#1F4E79" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e2" data-id="e2" data-type="protein" data-compartment="membrane" data-source="example_material.md|material|" data-values="表达量=0.82">
+<rect x="129.0" y="266.5" width="84.0" height="49.3" rx="10" ry="10" fill="#4C708E" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e3" data-id="e3" data-type="protein" data-compartment="membrane" data-source="example_material.md|material|" data-values="表达量=0.60">
+<rect x="264.0" y="266.5" width="84.0" height="49.3" rx="10" ry="10" fill="#98A9B0" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e4" data-id="e4" data-type="protein" data-compartment="membrane" data-source="example_material.md|material|" data-values="表达量=0.55">
+<rect x="399.0" y="266.5" width="84.0" height="49.3" rx="10" ry="10" fill="#A9B6B8" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e5" data-id="e5" data-type="small_molecule" data-compartment="membrane" data-source="example_material.md|material|" data-values="表达量=0.50">
+<circle cx="576.0" cy="291.2" r="24.7" fill="#BAC3C0" stroke="#CA6F1E" stroke-width="1.6"/>
+</g>
+<g id="entity-e6" data-id="e6" data-type="protein" data-compartment="membrane" data-source="example_material.md|material|" data-values="表达量=0.30">
+<rect x="669.0" y="266.5" width="84.0" height="49.3" rx="10" ry="10" fill="#FFF7E0" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e7" data-id="e7" data-type="protein" data-compartment="cytoplasm" data-source="example_material.md|material|" data-values="表达量=0.72">
+<rect x="156.0" y="459.3" width="84.0" height="52.0" rx="10" ry="10" fill="#6E8A9D" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e8" data-id="e8" data-type="protein" data-compartment="cytoplasm" data-source="example_material.md|material|" data-values="表达量=0.68">
+<rect x="318.0" y="459.3" width="84.0" height="52.0" rx="10" ry="10" fill="#7C94A4" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e9" data-id="e9" data-type="protein" data-compartment="cytoplasm" data-source="example_material.md|material|" data-values="表达量=0.70">
+<rect x="480.0" y="459.3" width="84.0" height="52.0" rx="10" ry="10" fill="#758FA1" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e10" data-id="e10" data-type="protein" data-compartment="cytoplasm" data-source="example_material.md|material|" data-values="表达量=0.66">
+<rect x="642.0" y="459.3" width="84.0" height="52.0" rx="10" ry="10" fill="#8399A7" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e11" data-id="e11" data-type="protein" data-compartment="nucleus" data-source="example_material.md|material|" data-values="表达量=0.50">
+<rect x="230.5" y="518.6" width="84.0" height="52.0" rx="10" ry="10" fill="#BAC3C0" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e12" data-id="e12" data-type="protein" data-compartment="nucleus" data-source="example_material.md|material|" data-values="表达量=0.45">
+<rect x="399.0" y="518.6" width="84.0" height="52.0" rx="10" ry="10" fill="#CBD0C8" stroke="#1F4E79" stroke-width="1.6"/>
+</g>
+<g id="entity-e13" data-id="e13" data-type="gene" data-compartment="nucleus" data-source="example_material.md|material|" data-values="表达量=0.40">
+<rect x="533.0" y="518.6" width="130.0" height="52.0" rx="3" ry="3" fill="#DDDDD0" stroke="#B9770E" stroke-width="1.6"/>
+</g>
+</g>
+<g id="layer-label">
+<text x="441.0" y="195.8" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">EGF</text>
+<text x="171.0" y="296.2" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">EGFR</text>
+<text x="306.0" y="296.2" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">GRB2</text>
+<text x="441.0" y="296.2" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">SOS</text>
+<text x="576.0" y="296.2" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">PIP3</text>
+<text x="711.0" y="296.2" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">PTEN</text>
+<text x="198.0" y="490.3" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">RAS</text>
+<text x="360.0" y="490.3" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">RAF</text>
+<text x="522.0" y="490.3" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">MEK</text>
+<text x="684.0" y="490.3" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">ERK</text>
+<text x="272.5" y="549.7" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">ELK1</text>
+<text x="441.0" y="549.7" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle">MYC</text>
+<text x="598.0" y="549.7" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="14" fill="#17202A" text-anchor="middle" font-style="italic">MYC（基因）</text>
+</g>
+<g id="layer-title">
+<text x="36" y="46" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="21" font-weight="bold" fill="#1B2631">EGF/EGFR → RAS → RAF → MEK → ERK 信号通路机制图（教学简化版）</text>
+<text x="36" y="68" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="12" fill="#566573">【示例，非正式案例 sample output】 case: example-egfr-mapk · generated: 2026-11-20T22:11:35+0800 · skill: biological-mechanism-pathway-diagram v1.0.0 · contract 1.0</text>
+</g>
+<g id="layer-legend">
+<text x="892.0" y="132" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="15" font-weight="bold" fill="#1B2631">图例 Legend</text>
+<text x="892.0" y="156" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="bold" fill="#34495E">实体 styles</text>
+<rect x="874.0" y="164.0" width="26" height="16" rx="3" ry="3" fill="#FFF3E0" stroke="#B9770E" stroke-width="1.4"/>
+<text x="908.0" y="176.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">基因 (gene)</text>
+<rect x="874.0" y="186.0" width="26" height="16" rx="8" ry="8" fill="#EAF2FB" stroke="#1F4E79" stroke-width="1.4"/>
+<text x="908.0" y="198.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">蛋白质 (protein)</text>
+<circle cx="887.0" cy="216.0" r="8" fill="#FDEBD0" stroke="#CA6F1E" stroke-width="1.4"/>
+<text x="908.0" y="220.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">小分子/配体/代谢物 (small_molecule)</text>
+<text x="892.0" y="238" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="bold" fill="#34495E">相互作用 arrows</text>
+<line x1="874.0" y1="254.0" x2="914.0" y2="254.0" stroke="#2E7D32" stroke-width="2.2" marker-end="url(#mk-arrow-2e7d32)"/>
+<text x="922.0" y="258.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">激活 / 促进 (activation)</text>
+<line x1="874.0" y1="276.0" x2="914.0" y2="276.0" stroke="#1F4E79" stroke-width="2.2"/>
+<text x="922.0" y="280.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">结合 / 互作 / 募集 (binding)</text>
+<line x1="874.0" y1="298.0" x2="914.0" y2="298.0" stroke="#C0392B" stroke-width="2.2" marker-end="url(#mk-bar-c0392b)"/>
+<text x="922.0" y="302.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">抑制 / 阻断 (inhibition)</text>
+<line x1="874.0" y1="320.0" x2="914.0" y2="320.0" stroke="#B9770E" stroke-width="2.2" marker-end="url(#mk-circle-b9770e)"/>
+<text x="922.0" y="324.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">修饰（磷酸化、泛素化等） (modification)</text>
+<line x1="874.0" y1="342.0" x2="914.0" y2="342.0" stroke="#6C3483" stroke-width="2.2" marker-end="url(#mk-diamond-6c3483)"/>
+<text x="922.0" y="346.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">转运 / 转位 (transport)</text>
+<line x1="874.0" y1="366.0" x2="914.0" y2="366.0" stroke="#566573" stroke-width="2.8"/>
+<text x="922.0" y="370.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">证据强度 evidence: strong</text>
+<line x1="874.0" y1="388.0" x2="914.0" y2="388.0" stroke="#566573" stroke-width="2.2"/>
+<text x="922.0" y="392.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">证据强度 evidence: moderate</text>
+<line x1="874.0" y1="410.0" x2="914.0" y2="410.0" stroke="#566573" stroke-width="1.6"/>
+<text x="922.0" y="414.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#17202A">证据强度 evidence: weak</text>
+<text x="892.0" y="424" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="10" fill="#566573">虚线 = 证据弱/间接，或不明确的联系（uncertain）</text>
+<rect x="874.0" y="442.0" width="90" height="10" fill="url(#ramp-legend)" stroke="#85929E" stroke-width="0.8"/>
+<text x="874.0" y="464.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="10" fill="#17202A">实体填充色 = 相对表达量（数据映射）</text>
+<text x="970.0" y="451.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="10" fill="#566573">低 #FFF7E0  高 #1F4E79</text>
+<text x="892.0" y="482" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="10" fill="#566573">信号流向：自上方区室向下（受体位于膜区）；反馈环在右侧绕行</text>
+</g>
+<g id="layer-meta">
+<text x="36" y="834.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="10" fill="#7F8C8D">sources / 来源:</text>
+<text x="36" y="860.0" font-family="Arial, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif" font-size="9" fill="#7F8C8D">· example_material.md (kind=material, line=) used by EGF</text>
+</g>
+</svg>

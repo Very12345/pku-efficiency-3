@@ -1,0 +1,432 @@
+{
+  "case_id": "demo-biotech-route-01",
+  "title": "示例：CRISPR 文库筛选实验技术路线（示例用，非正式案例）",
+  "status": "success",
+  "workorder": "apparatus_and_technical_route",
+  "figure_type": "route",
+  "extraction": "structured",
+  "entities": [
+    {
+      "id": "E1",
+      "name": "设计并合成 gRNA 文库",
+      "kind": "step",
+      "stage": "文库构建",
+      "step_no": "1",
+      "source": "task.md §2.1"
+    },
+    {
+      "id": "E2",
+      "name": "慢病毒包装与转导",
+      "kind": "step",
+      "stage": "文库构建",
+      "step_no": "2",
+      "source": "task.md §2.2"
+    },
+    {
+      "id": "E3",
+      "name": "sgRNA 文库质粒",
+      "kind": "material",
+      "stage": "文库构建",
+      "step_no": null,
+      "source": "task.md §2.1"
+    },
+    {
+      "id": "E4",
+      "name": "药筛处理并富集耐药克隆",
+      "kind": "step",
+      "stage": "筛选",
+      "step_no": "3",
+      "source": "task.md §3.1"
+    },
+    {
+      "id": "E5",
+      "name": "药物化合物",
+      "kind": "material",
+      "stage": "筛选",
+      "step_no": null,
+      "source": "task.md §3.1"
+    },
+    {
+      "id": "E6",
+      "name": "存活克隆扩增",
+      "kind": "step",
+      "stage": "筛选",
+      "step_no": "4",
+      "source": "task.md §3.2"
+    },
+    {
+      "id": "E7",
+      "name": "基因组 DNA 提取与 PCR 扩增 sgRNA 区域",
+      "kind": "step",
+      "stage": "鉴定",
+      "step_no": "5",
+      "source": "task.md §4.1"
+    },
+    {
+      "id": "E8",
+      "name": "高通量测序",
+      "kind": "step",
+      "stage": "鉴定",
+      "step_no": "6",
+      "source": "task.md §4.2"
+    },
+    {
+      "id": "E9",
+      "name": "测序数据下机文件",
+      "kind": "data",
+      "stage": "鉴定",
+      "step_no": null,
+      "source": "task.md §4.3"
+    },
+    {
+      "id": "E10",
+      "name": "鉴别耐药相关靶基因",
+      "kind": "milestone",
+      "stage": "鉴定",
+      "step_no": "7",
+      "source": "task.md §5"
+    }
+  ],
+  "relations": [
+    {
+      "id": "R1",
+      "from": "E3",
+      "to": "E2",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §2.1-2.2"
+    },
+    {
+      "id": "R2",
+      "from": "E1",
+      "to": "E2",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §2.1-2.2"
+    },
+    {
+      "id": "R3",
+      "from": "E2",
+      "to": "E4",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §3.1"
+    },
+    {
+      "id": "R4",
+      "from": "E5",
+      "to": "E4",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §3.1"
+    },
+    {
+      "id": "R5",
+      "from": "E4",
+      "to": "E6",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §3.2"
+    },
+    {
+      "id": "R6",
+      "from": "E6",
+      "to": "E7",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §4.1"
+    },
+    {
+      "id": "R7",
+      "from": "E7",
+      "to": "E8",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §4.2"
+    },
+    {
+      "id": "R8",
+      "from": "E8",
+      "to": "E9",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §4.3"
+    },
+    {
+      "id": "R9",
+      "from": "E9",
+      "to": "E10",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §5"
+    }
+  ],
+  "output_contract": {
+    "editable_sources": [
+      {
+        "kind": "svg",
+        "path": "figure.svg",
+        "format": "image/svg+xml",
+        "layers": [
+          "title",
+          "arrows",
+          "entities",
+          "legend"
+        ],
+        "editability": "text 元素真实文本、实体组带 data-entity/data-source，可被 Inkscape/文本编辑器直接修改",
+        "checksum_sha256": "caa12270b7b8e2e98a8e2b099ee0adff5bd472c86dd0333f72b0238f50380e14"
+      }
+    ],
+    "exports": [
+      {
+        "kind": "png",
+        "path": "figure.png",
+        "format": "image/png",
+        "width_px": 2362,
+        "height_px": 1496,
+        "dpi": 200,
+        "font_ttf": "C:\\Windows\\Fonts\\msyh.ttc"
+      },
+      {
+        "kind": "pdf",
+        "path": "figure.pdf",
+        "format": "application/pdf",
+        "vector": true,
+        "font": "STSong-Light"
+      }
+    ],
+    "data_mapping": [
+      {
+        "entity_id": "E1",
+        "kind": "step",
+        "source": "task.md §2.1",
+        "svg_group": "entity-E1"
+      },
+      {
+        "entity_id": "E2",
+        "kind": "step",
+        "source": "task.md §2.2",
+        "svg_group": "entity-E2"
+      },
+      {
+        "entity_id": "E3",
+        "kind": "material",
+        "source": "task.md §2.1",
+        "svg_group": "entity-E3"
+      },
+      {
+        "entity_id": "E4",
+        "kind": "step",
+        "source": "task.md §3.1",
+        "svg_group": "entity-E4"
+      },
+      {
+        "entity_id": "E5",
+        "kind": "material",
+        "source": "task.md §3.1",
+        "svg_group": "entity-E5"
+      },
+      {
+        "entity_id": "E6",
+        "kind": "step",
+        "source": "task.md §3.2",
+        "svg_group": "entity-E6"
+      },
+      {
+        "entity_id": "E7",
+        "kind": "step",
+        "source": "task.md §4.1",
+        "svg_group": "entity-E7"
+      },
+      {
+        "entity_id": "E8",
+        "kind": "step",
+        "source": "task.md §4.2",
+        "svg_group": "entity-E8"
+      },
+      {
+        "entity_id": "E9",
+        "kind": "data",
+        "source": "task.md §4.3",
+        "svg_group": "entity-E9"
+      },
+      {
+        "entity_id": "E10",
+        "kind": "milestone",
+        "source": "task.md §5",
+        "svg_group": "entity-E10"
+      }
+    ],
+    "element_traceability": [
+      {
+        "element": "entity-E1",
+        "source": "task.md §2.1",
+        "kind": "step",
+        "stage": "文库构建"
+      },
+      {
+        "element": "entity-E2",
+        "source": "task.md §2.2",
+        "kind": "step",
+        "stage": "文库构建"
+      },
+      {
+        "element": "entity-E3",
+        "source": "task.md §2.1",
+        "kind": "material",
+        "stage": "文库构建"
+      },
+      {
+        "element": "entity-E4",
+        "source": "task.md §3.1",
+        "kind": "step",
+        "stage": "筛选"
+      },
+      {
+        "element": "entity-E5",
+        "source": "task.md §3.1",
+        "kind": "material",
+        "stage": "筛选"
+      },
+      {
+        "element": "entity-E6",
+        "source": "task.md §3.2",
+        "kind": "step",
+        "stage": "筛选"
+      },
+      {
+        "element": "entity-E7",
+        "source": "task.md §4.1",
+        "kind": "step",
+        "stage": "鉴定"
+      },
+      {
+        "element": "entity-E8",
+        "source": "task.md §4.2",
+        "kind": "step",
+        "stage": "鉴定"
+      },
+      {
+        "element": "entity-E9",
+        "source": "task.md §4.3",
+        "kind": "data",
+        "stage": "鉴定"
+      },
+      {
+        "element": "entity-E10",
+        "source": "task.md §5",
+        "kind": "milestone",
+        "stage": "鉴定"
+      },
+      {
+        "element": "arrow-R1",
+        "from": "E3",
+        "to": "E2",
+        "source": "task.md §2.1-2.2"
+      },
+      {
+        "element": "arrow-R2",
+        "from": "E1",
+        "to": "E2",
+        "source": "task.md §2.1-2.2"
+      },
+      {
+        "element": "arrow-R3",
+        "from": "E2",
+        "to": "E4",
+        "source": "task.md §3.1"
+      },
+      {
+        "element": "arrow-R4",
+        "from": "E5",
+        "to": "E4",
+        "source": "task.md §3.1"
+      },
+      {
+        "element": "arrow-R5",
+        "from": "E4",
+        "to": "E6",
+        "source": "task.md §3.2"
+      },
+      {
+        "element": "arrow-R6",
+        "from": "E6",
+        "to": "E7",
+        "source": "task.md §4.1"
+      },
+      {
+        "element": "arrow-R7",
+        "from": "E7",
+        "to": "E8",
+        "source": "task.md §4.2"
+      },
+      {
+        "element": "arrow-R8",
+        "from": "E8",
+        "to": "E9",
+        "source": "task.md §4.3"
+      },
+      {
+        "element": "arrow-R9",
+        "from": "E9",
+        "to": "E10",
+        "source": "task.md §5"
+      }
+    ]
+  },
+  "canvas": {
+    "width_mm": 311.11,
+    "height_mm": 166.0,
+    "requested": {
+      "width_mm": 300,
+      "height_mm": 190
+    }
+  },
+  "fonts": [
+    {
+      "role": "svg",
+      "mode": "font-family declaration",
+      "family": "'Noto Sans CJK SC','Microsoft YaHei','PingFang SC','SimHei','DejaVu Sans',sans-serif"
+    },
+    {
+      "role": "png",
+      "mode": "ttf",
+      "path": "C:\\Windows\\Fonts\\msyh.ttc",
+      "found": true
+    },
+    {
+      "role": "pdf",
+      "mode": "cid",
+      "name": "STSong-Light",
+      "embedded": "CID font（查看方需具备中文字体）"
+    }
+  ],
+  "sources": [
+    {
+      "id": "input-case",
+      "file": "case.json",
+      "note": "case.json"
+    },
+    {
+      "id": "input-task",
+      "file": "task.md",
+      "note": "task.md"
+    }
+  ],
+  "uncertainty": [],
+  "change_record": [
+    {
+      "time": "2026-11-20T14:06:46+00:00",
+      "action": "运行 main.py",
+      "target": "figure.svg / layout.json / 预览",
+      "reason": "初始生成：从输入案例抽取实体与关系后布图",
+      "by": "scripts/main.py (自动)"
+    }
+  ],
+  "execution": {
+    "script": "main.py",
+    "python": "3.13.9",
+    "out_dir": "D:\\BuildTemp\\final-smoke"
+  },
+  "checksum": "2455648d72aa6deef156831b5878ded6d9eadb588e9a8d2ba2082396dc4ddf94"
+}

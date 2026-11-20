@@ -1,0 +1,40 @@
+{
+  "name": "default",
+  "description": "学术汇报默认模板：16:9、单一强调色系、页脚+页码、内容槽位约束（阀内可编辑）。模板约束见 references/TEMPLATE_SPEC.md。",
+  "slide_size": {"width_in": 13.333, "height_in": 7.5},
+  "colors": {
+    "primary": "#1F4E79",
+    "secondary": "#2E74B5",
+    "accent": "#C55A11",
+    "bg": "#FFFFFF",
+    "text": "#262626",
+    "muted": "#7F7F7F"
+  },
+  "fonts": {
+    "title": "Microsoft YaHei",
+    "body": "Microsoft YaHei",
+    "mono": "Consolas"
+  },
+  "footer": {
+    "enabled": true,
+    "text": "",
+    "size_pt": 9,
+    "color": "#7F7F7F",
+    "page_number": true
+  },
+  "slots": {
+    "title": {"x_in": 0.55, "y_in": 0.30, "w_in": 12.2, "h_in": 0.95, "size_pt": 28, "bold": true},
+    "subtitle": {"x_in": 0.55, "y_in": 1.15, "w_in": 12.2, "h_in": 0.55, "size_pt": 15},
+    "body": {"x_in": 0.6, "y_in": 1.85, "w_in": 12.1, "h_in": 4.9, "size_pt": 17, "line_spacing": 1.12},
+    "body_with_figure": {"x_in": 0.6, "y_in": 1.85, "w_in": 7.0, "h_in": 4.9, "size_pt": 15, "line_spacing": 1.1},
+    "figure": {"x_in": 7.95, "y_in": 1.95, "w_in": 4.85, "h_in": 4.4},
+    "evidence": {"x_in": 0.6, "y_in": 6.75, "w_in": 9.5, "h_in": 0.3, "size_pt": 9},
+    "footer": {"x_in": 0.4, "y_in": 7.05, "w_in": 12.5, "h_in": 0.3, "size_pt": 9}
+  },
+  "limits": {
+    "max_bullets_per_page": 7,
+    "min_body_pt": 12,
+    "max_chars_per_bullet": 90,
+    "title_max_chars": 60
+  }
+}

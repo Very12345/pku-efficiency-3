@@ -1,0 +1,443 @@
+{
+  "case_id": "ppt-6ad93034-example-001",
+  "title": "基于注意力机制改进的蛋白质二级结构预测（虚构示例材料）",
+  "status": "success",
+  "created_at": "2026-11-20T22:30:28",
+  "skill_version": "1.0.0",
+  "deck": {
+    "editable": "work/deck.pptx",
+    "format": "pptx",
+    "template": "default",
+    "template_pptx": "",
+    "starting_deck": "",
+    "slide_count": 6,
+    "slides": [
+      {
+        "index": 1,
+        "role": "cover",
+        "role_label": "封面",
+        "title": "基于注意力机制改进的蛋白质二级结构预测（虚构示例材料）",
+        "claims": [],
+        "figure": {
+          "ref": "",
+          "kind": "none",
+          "table_id": "",
+          "image": "",
+          "note": ""
+        },
+        "notes": [
+          "开场白要点：一句话交代题目、动机和本次要讲清的问题。"
+        ],
+        "evidence_footer": "证据: 依据材料整理"
+      },
+      {
+        "index": 2,
+        "role": "overview",
+        "role_label": "主线与贡献",
+        "title": "汇报主线",
+        "claims": [
+          {
+            "text": "蛋白质二级结构（α 螺旋、β 折叠、无规卷曲）预测是结构生物信息学的基础任务。",
+            "evidence": [
+              "摘要/引言"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "蛋白质二级结构（α 螺旋、β 折叠、无规卷曲）预测是结构生物信息学的基础任务。",
+            "evidence": [
+              "摘要/结论"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          }
+        ],
+        "figure": {
+          "ref": "",
+          "kind": "none",
+          "table_id": "",
+          "image": "",
+          "note": ""
+        },
+        "notes": [
+          "面向实验室内部：突出方法与下一步计划，术语可深入，进度感要强。",
+          "受众=组会，时长=10 分钟，共 6 页（按 spec.max_slides 压缩）"
+        ],
+        "evidence_footer": "证据: 摘要/引言、摘要/结论"
+      },
+      {
+        "index": 3,
+        "role": "question",
+        "role_label": "研究问题",
+        "title": "研究问题",
+        "claims": [
+          {
+            "text": "研究问题：能否用轻量的注意力编码器替代深层卷积网络完成蛋白质二级结构预测， 同时保持精度与可解释性？",
+            "evidence": [
+              "引言"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "相关工作表明，注意力机制能够捕捉序列内的长程依赖， 但此前多与深层主干结合，推理开销大。",
+            "evidence": [
+              "引言"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          }
+        ],
+        "figure": {
+          "ref": "",
+          "kind": "none",
+          "table_id": "",
+          "image": "",
+          "note": ""
+        },
+        "notes": [
+          "一页只放一个核心问题；回答“为什么值得做”。"
+        ],
+        "evidence_footer": "证据: 引言"
+      },
+      {
+        "index": 4,
+        "role": "method",
+        "role_label": "方法",
+        "title": "方法",
+        "claims": [
+          {
+            "text": "模型由三层组成：输入层将 PSSM 与 one-hot 编码拼接为 23 维特征向量；",
+            "evidence": [
+              "§方法"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "中间层为两层多头注意力（头数 8，隐藏维度 128），窗口受限至 31 个残基；",
+            "evidence": [
+              "§方法"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "输出层为逐残基的三态/八态分类头。",
+            "evidence": [
+              "§方法"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "训练使用 PDB-25 训练集，AdamW 优化器， 学习率 1e-3，批大小 64，共训练 40 轮，早停阈值取验证集 Q3 连续 5 轮不升。",
+            "evidence": [
+              "§方法"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          }
+        ],
+        "figure": {
+          "ref": "",
+          "kind": "none",
+          "table_id": "",
+          "image": "",
+          "note": ""
+        },
+        "notes": [
+          "方法压到 4 条以内：核心思路 > 关键步骤 > 与基线的差异。"
+        ],
+        "evidence_footer": "证据: §方法"
+      },
+      {
+        "index": 5,
+        "role": "result",
+        "role_label": "结果",
+        "title": "结果",
+        "claims": [
+          {
+            "text": "results.csv 为 82.4（Q3 (%)）",
+            "evidence": [
+              "表(results)",
+              "列=Q3 (%)"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "results.csv 为 81.1（Q3 (%)）",
+            "evidence": [
+              "表(results)",
+              "列=Q3 (%)"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "表中数值直接取自源数据，未取整、未编造。",
+            "evidence": [
+              "表(results)"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          }
+        ],
+        "figure": {
+          "ref": "表(results)",
+          "kind": "chart_image",
+          "table_id": "results.csv",
+          "image": "D:\\BuildTemp\\smoke-ppt-6ad93034\\work\\chart_results.csv.png",
+          "note": "重绘自数据表 results.csv（2 行）；字体=Microsoft YaHei；未对数据做修改"
+        },
+        "notes": [
+          "讲出“这个数字说明什么”，而不是念表。"
+        ],
+        "evidence_footer": "证据: 表(results)、列=Q3 (%) | 图表: 表(results)"
+      },
+      {
+        "index": 6,
+        "role": "takeaway",
+        "role_label": "结论与展望",
+        "title": "结论与下一步",
+        "claims": [
+          {
+            "text": "S2-Attn 以约四分之一的参数达到高于基线 B-CNN 的 Q3/Q8 精度，验证了浅层 注意力主干用于蛋白质二级结构预测的可行性；",
+            "evidence": [
+              "§结论"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          },
+          {
+            "text": "后续将扩展基准并研究端到端 结构解码。",
+            "evidence": [
+              "§结论"
+            ],
+            "verified": true,
+            "missing_numbers": []
+          }
+        ],
+        "figure": {
+          "ref": "",
+          "kind": "none",
+          "table_id": "",
+          "image": "",
+          "note": ""
+        },
+        "notes": [
+          "最后一页给听众一个“带走”的句子。",
+          "下一步/开放问题请主讲人根据材料补充，并在备注中标注来源（本行是讲稿约定，不是材料结论）。"
+        ],
+        "evidence_footer": "证据: §结论"
+      }
+    ],
+    "notes": true,
+    "receipt": [
+      {
+        "page": 1,
+        "role": "cover",
+        "title": "基于注意力机制改进的蛋白质二级结构预测（虚构示例材料）",
+        "claims": 0,
+        "figure": "none",
+        "note_lines": 3,
+        "body_font_pt": 17,
+        "figure_detail": ""
+      },
+      {
+        "page": 2,
+        "role": "overview",
+        "title": "汇报主线",
+        "claims": 2,
+        "figure": "none",
+        "note_lines": 4,
+        "body_font_pt": 17,
+        "figure_detail": ""
+      },
+      {
+        "page": 3,
+        "role": "question",
+        "title": "研究问题",
+        "claims": 2,
+        "figure": "none",
+        "note_lines": 3,
+        "body_font_pt": 17,
+        "figure_detail": ""
+      },
+      {
+        "page": 4,
+        "role": "method",
+        "title": "方法",
+        "claims": 4,
+        "figure": "none",
+        "note_lines": 3,
+        "body_font_pt": 17,
+        "figure_detail": ""
+      },
+      {
+        "page": 5,
+        "role": "result",
+        "title": "结果",
+        "claims": 3,
+        "figure": "chart_image",
+        "note_lines": 4,
+        "body_font_pt": 15,
+        "figure_detail": "chart_image:chart_results.csv.png"
+      },
+      {
+        "page": 6,
+        "role": "takeaway",
+        "title": "结论与下一步",
+        "claims": 2,
+        "figure": "none",
+        "note_lines": 4,
+        "body_font_pt": 17,
+        "figure_detail": ""
+      }
+    ]
+  },
+  "evidence": {
+    "map": [
+      {
+        "page": 1,
+        "role": "cover",
+        "title": "基于注意力机制改进的蛋白质二级结构预测（虚构示例材料）",
+        "evidence": [],
+        "figure_ref": "",
+        "figure_kind": "none"
+      },
+      {
+        "page": 2,
+        "role": "overview",
+        "title": "汇报主线",
+        "evidence": [
+          "摘要/引言",
+          "摘要/结论"
+        ],
+        "figure_ref": "",
+        "figure_kind": "none"
+      },
+      {
+        "page": 3,
+        "role": "question",
+        "title": "研究问题",
+        "evidence": [
+          "引言"
+        ],
+        "figure_ref": "",
+        "figure_kind": "none"
+      },
+      {
+        "page": 4,
+        "role": "method",
+        "title": "方法",
+        "evidence": [
+          "§方法"
+        ],
+        "figure_ref": "",
+        "figure_kind": "none"
+      },
+      {
+        "page": 5,
+        "role": "result",
+        "title": "结果",
+        "evidence": [
+          "表(results)",
+          "列=Q3 (%)"
+        ],
+        "figure_ref": "表(results)",
+        "figure_kind": "chart_image"
+      },
+      {
+        "page": 6,
+        "role": "takeaway",
+        "title": "结论与下一步",
+        "evidence": [
+          "§结论"
+        ],
+        "figure_ref": "",
+        "figure_kind": "none"
+      }
+    ],
+    "unverified_claims": [],
+    "material_warnings": []
+  },
+  "previews": {
+    "pngs": [
+      "preview/slide_01.png",
+      "preview/slide_02.png",
+      "preview/slide_03.png",
+      "preview/slide_04.png",
+      "preview/slide_05.png",
+      "preview/slide_06.png"
+    ],
+    "pdf": "preview/preview.pdf",
+    "method": "PIL/reportlab 预览渲染，非 PowerPoint 导出",
+    "warnings": []
+  },
+  "sources": [
+    {
+      "role": "case",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-6ad93034\\examples\\case.json",
+      "sha256": "d0a64ccf7fded20c503f03963499280cd6e901bc8def0bc187b1fe851e19e15e"
+    },
+    {
+      "role": "material-1",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-6ad93034\\examples\\material.md",
+      "sha256": "bc00cc147d9bd91dc3950a79d0e1d878099f334ad5d244b6fe7f2df64a9eb6ac"
+    },
+    {
+      "role": "material-2",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-6ad93034\\examples\\results.csv",
+      "sha256": "16534e5fdb82d833f5be139b0cfdf12ecfa65fba1ff4c01826f4d731e92a6243"
+    }
+  ],
+  "uncertainty": [],
+  "change_records": [],
+  "log": "logs/run_2026-11-20T22-30-26.log",
+  "checks": {
+    "all_pass": true,
+    "checks": [
+      {
+        "name": "pptx_reopen",
+        "ok": true,
+        "detail": "slides=6 expected=6"
+      },
+      {
+        "name": "result_json",
+        "ok": true,
+        "detail": "exists"
+      },
+      {
+        "name": "contract_keys",
+        "ok": true,
+        "detail": "all present"
+      },
+      {
+        "name": "unverified_claims",
+        "ok": true,
+        "detail": "count=0"
+      },
+      {
+        "name": "evidence_map",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "previews",
+        "ok": true,
+        "detail": "png=6 pdf=True"
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.13.9",
+    "pptx": "1.0.2",
+    "matplotlib": "3.10.6",
+    "PIL": "12.3.0",
+    "reportlab": "5.0.0"
+  },
+  "is_example": ""
+}

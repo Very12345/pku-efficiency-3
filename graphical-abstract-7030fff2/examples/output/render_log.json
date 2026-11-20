@@ -1,0 +1,18 @@
+{
+  "requested": {
+    "png": "D:\\BuildTemp\\smoke-graphical-abstract-7030fff2\\example-micelle-001_graphical_abstract.png",
+    "pdf": "D:\\BuildTemp\\smoke-graphical-abstract-7030fff2\\example-micelle-001_graphical_abstract.pdf",
+    "scale": 2
+  },
+  "backend": "matplotlib",
+  "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+  "warnings": [],
+  "size_px": [
+    2400.0,
+    1600.0
+  ],
+  "pdf": {
+    "present": true,
+    "path": "D:\\BuildTemp\\smoke-graphical-abstract-7030fff2\\example-micelle-001_graphical_abstract.pdf"
+  }
+}

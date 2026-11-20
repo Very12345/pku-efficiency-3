@@ -1,0 +1,20 @@
+{
+  "generated_by": "render.py of academic-talk-organizer",
+  "generated_at": "2026-11-20T14:30:50+00:00",
+  "method": "Pillow simulated preview (LibreOffice not assumed available)",
+  "limitation": "预览为 Pillow(PIL) 模拟渲染，非 LibreOffice/PowerPoint 的 Office 真实栅格化；用于检查页数、逐页主张/证据布局与图占位，正式视觉效果请以可编辑的 .pptx 打开为准。",
+  "files": [
+    {
+      "file": "previews/cover_preview.png",
+      "kind": "cover",
+      "width": 1280,
+      "height": 720,
+      "simulated": true
+    },
+    {
+      "file": "previews/preview_grid.png",
+      "kind": "grid",
+      "simulated": true
+    }
+  ]
+}

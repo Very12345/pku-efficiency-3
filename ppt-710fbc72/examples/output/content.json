@@ -1,0 +1,189 @@
+{
+  "_meta": "normalized extraction; every item carries a source locator",
+  "case_id": "example-catalyst-201",
+  "title": "Cu-ZnO/γ-Al₂O₃ 双金属催化剂用于 CO₂ 加氢制甲醇",
+  "subtitle": "温度与空速对甲醇时空收率的影响及活性位协同机制",
+  "authors": [
+    {
+      "text": "张 明",
+      "source": "material.md:1"
+    },
+    {
+      "text": "李 华",
+      "source": "material.md:1"
+    }
+  ],
+  "affiliation": "示例大学 化学与化工学院（合成信息）",
+  "audience": "催化方向课题组组会",
+  "duration_minutes": 12,
+  "language": "zh",
+  "slide_count_target": 10,
+  "template": "",
+  "template_path": "",
+  "starting_deck": "",
+  "starting_deck_path": "",
+  "sections": {
+    "question": [
+      {
+        "text": "CO₂ 加氢制甲醇是碳循环的关键路径，但传统 Cu/ZnO 催化剂活性与选择性不足。",
+        "source": "material.md:4"
+      },
+      {
+        "text": "本工作研究 Cu-ZnO 界面协同及反应条件（温度、空速）对甲醇时空收率的影响。",
+        "source": "material.md:5"
+      }
+    ],
+    "methods": [
+      {
+        "text": "共沉淀法制备 Cu-ZnO/γ-Al₂O₃（Cu/Zn 摩尔比 2:1，负载量 15 wt%）。",
+        "source": "material.md:9"
+      },
+      {
+        "text": "固定床反应器，220–300 °C、3 MPa、H₂/CO₂=3:1，GHSV 2000–8000 h⁻¹。",
+        "source": "material.md:10"
+      },
+      {
+        "text": "XRD/H₂-TPR 表征物相与还原行为；GC 在线分析产物。",
+        "source": "material.md:11"
+      }
+    ],
+    "results": [
+      {
+        "text": "260 °C 时甲醇时空收率达 0.68 g/(g·h)，选择性 71%，优于对照 Cu/ZnO。",
+        "source": "material.md:15"
+      },
+      {
+        "text": "XRD 显示 Cu(111)/ZnO(101) 界面相，H₂-TPR 表明 CuO 还原峰向低温移动。",
+        "source": "material.md:16",
+        "figure_refs": [
+          "1",
+          "2"
+        ],
+        "table_refs": [
+          "1"
+        ]
+      },
+      {
+        "text": "GHSV 由 2000 升至 8000 h⁻¹ 时，单程转化率降低但时空收率提高。",
+        "source": "material.md:17",
+        "figure_refs": [
+          "2"
+        ],
+        "table_refs": [
+          "1"
+        ]
+      }
+    ],
+    "discussion": [
+      {
+        "text": "Cu-ZnO 界面有利于 CO₂ 活化与中间体稳定，是选择性提升的主因。",
+        "source": "material.md:20"
+      }
+    ],
+    "limitations": [
+      {
+        "text": "未开展 100 h 以上长周期稳定性测试。",
+        "source": "material.md:23"
+      },
+      {
+        "text": "机理证据以表征为主，缺少原位谱学直接观测。",
+        "source": "material.md:24"
+      }
+    ],
+    "conclusion": [
+      {
+        "text": "Cu-ZnO/γ-Al₂O₃ 在 260 °C、3 MPa、GHSV 4000 h⁻¹ 下甲醇时空收率 0.68 g/(g·h)。",
+        "source": "material.md:27"
+      },
+      {
+        "text": "条件-结构-性能联动规律为 CO₂ 加氢工艺放大提供依据。",
+        "source": "material.md:28"
+      }
+    ]
+  },
+  "figures": [
+    {
+      "id": "1",
+      "file": "figs/fig1.png",
+      "caption": "催化剂形貌与粒径分布（TEM）+ XRD 物相",
+      "source": "material.md:16",
+      "file_abs": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-710fbc72\\examples\\figs/fig1.png",
+      "file_exists": true
+    },
+    {
+      "id": "2",
+      "file": "figs/fig2.png",
+      "caption": "温度对 CO₂ 转化率与甲醇选择性的影响",
+      "source": "material.md:15",
+      "file_abs": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-710fbc72\\examples\\figs/fig2.png",
+      "file_exists": true
+    }
+  ],
+  "tables": [
+    {
+      "id": "1",
+      "caption": "不同催化剂性能对比（260 °C, 3 MPa, GHSV 4000 h⁻¹）",
+      "source": "material.md:18",
+      "rows": [
+        [
+          "催化剂",
+          "转化率/%",
+          "甲醇选择性/%",
+          "时空收率/(g·g⁻¹·h⁻¹)"
+        ],
+        [
+          "Cu/ZnO",
+          "8.2",
+          "58",
+          "0.41"
+        ],
+        [
+          "Cu-ZnO/γ-Al₂O₃",
+          "11.5",
+          "71",
+          "0.68"
+        ]
+      ]
+    }
+  ],
+  "key_numbers": [
+    {
+      "text": "甲醇时空收率",
+      "value": "0.68 g/(g·h)",
+      "source": "material.md:15"
+    },
+    {
+      "text": "甲醇选择性",
+      "value": "71 %",
+      "source": "material.md:15"
+    }
+  ],
+  "supplemented_from_material": {
+    "question": false,
+    "methods": false,
+    "results": false,
+    "discussion": false,
+    "limitations": false,
+    "conclusion": false
+  },
+  "sources": [
+    {
+      "rel": "material.md",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-710fbc72\\examples\\material.md",
+      "exists": true,
+      "lines": 38,
+      "sha256": null
+    }
+  ],
+  "uncertainty": [],
+  "output_contract": {
+    "template_inheritance": true,
+    "slide_count": 10,
+    "audience": "催化方向课题组组会",
+    "language": "zh",
+    "evidence_per_slide": true,
+    "notes_per_slide": true,
+    "preview_png": true
+  },
+  "task_text": "# 任务：Cu-ZnO/γ-Al₂O₃ 催化剂 CO₂ 加氢制甲醇 — 学术汇报 PPT（示例）\n\n（示例任务，非正式案例。平台正式案例由组织方提供。）\n\n将给定论文材料组织为一场 **10 页、约 12 分钟**的课题组学术汇报，交付可编辑\npptx 及渲染预览，全部内容必须能在材料中定位来源。\n\n## 要求\n\n1. 按「背景与问题 → 方法 → 结果（图/表逐页）→ 讨论 → 限制 → 结论 → 证据映射」组织页面。\n2. 每页给出：页级主张、图表编号引用、讲稿/备注（含建议时长）、证据定位（材料行号）。\n3. 套用可用模板的母版/版式/占位符；模板缺失时使用 Skill 内置回退模板并如实说明。\n4. 图表等比放入容器，不拉伸变形；图号与正文引用保持一致。\n5. 交付：\n   - `<case_id>_deck.pptx`（可编辑源）；\n   - 封面预览 PNG + 幻灯联系表 PNG（如实标注为示意图，非像素级导出）；\n   - `result.json`（含全部 output_contract 字段、case_id、status、sources、uncertainty、change_records）。\n6. 材料中找不到来源的数值不得编造；缺失部分在 uncertainty 中如实列出。"
+}

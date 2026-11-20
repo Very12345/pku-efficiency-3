@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "name": "academic-talk-organizer talk config",
+    "version": "1.0.0",
+    "description": "Editable narrative rules: page-budget weights per report type, narrative order, and Q&A templates. Tune here to change behavior without touching code.",
+    "scope": "challenge-20870c35 (slides group: 学术汇报内容组织)"
+  },
+  "blocks": {
+    "group_meeting": {
+      "label": "组会进度汇报（听众熟悉领域、关注进度与风险）",
+      "order": ["title", "motivation", "background", "method", "results", "conclusion_risk", "qa"],
+      "fixed": ["title"],
+      "weights": {
+        "motivation": 0.10,
+        "background": 0.14,
+        "method": 0.20,
+        "results": 0.36,
+        "conclusion_risk": 0.10,
+        "qa": 0.10
+      }
+    },
+    "defense": {
+      "label": "答辩（听众关注创新点与边界、证据链、可复现）",
+      "order": ["title", "agenda", "motivation", "background", "method", "results", "innovation_limits", "conclusion", "qa"],
+      "fixed": ["title", "agenda"],
+      "weights": {
+        "motivation": 0.08,
+        "background": 0.08,
+        "method": 0.18,
+        "results": 0.32,
+        "innovation_limits": 0.12,
+        "conclusion": 0.10,
+        "qa": 0.12
+      }
+    },
+    "review": {
+      "label": "成果评审（听众关注结论与证据强度、口径与适用范围）",
+      "order": ["title", "agenda", "conclusion", "method", "results", "innovation_limits", "qa"],
+      "fixed": ["title", "agenda"],
+      "weights": {
+        "conclusion": 0.10,
+        "method": 0.16,
+        "results": 0.40,
+        "innovation_limits": 0.16,
+        "qa": 0.18
+      }
+    }
+  },
+  "narrative": {
+    "group_meeting": "问题—进度—方法—结果—风险—问答：先交代本次要讲清的进度与风险，再讲方法让合作者能对照，结果页逐条给证据定位，最后把开放风险摆上台面并预埋问答。",
+    "defense": "问题—背景—方法—结果—创新点与边界—结论—问答：创新点不是最后才说，而是在结果之后单独成块，紧接边界页，主动划定适用范围以应对追问。",
+    "review": "结论先行—方法—结果与证据强度—局限—问答：评审先听到主线结论，再回到方法确认口径，结果页逐条标注证据强度，局限页明确结论适用边界。"
+  },
+  "questions": {
+    "group_meeting": [
+      {"question": "这次的进度和预期相比是快是慢？主要卡点在哪里？", "answers": ["指向结论与风险页的定位", "给出下一步计划与需要的支持"], "to_pages": []},
+      {"question": "某张图/哪个数与上一次汇报的口径是否一致？", "answers": ["指向结果页的证据定位（源文件·行号·章节）", "说明口径变化如果存在则已在知识点中标注"], "to_pages": []}
+    ],
+    "defense": [
+      {"question": "与其他已有方法的差别是什么？新在何处？", "answers": ["指向创新点与边界页", "用方法页的证据链说明增量"], "to_pages": []},
+      {"question": "结果的可复现性如何？数据从哪来？", "answers": ["指向结果页证据定位", "说明数据来源与实验设置均在源材料中可查"], "to_pages": []}
+    ],
+    "review": [
+      {"question": "结论的证据强度如何？是否足以支撑主张？", "answers": ["逐条给出证据定位与强度标注", "弱证据页明确降级说明"], "to_pages": []},
+      {"question": "结论的适用范围与前提假设是什么？", "answers": ["指向局限页", "强调结论仅适用于源材料声明范围"], "to_pages": []}
+    ]
+  }
+}

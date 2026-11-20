@@ -1,0 +1,28 @@
+{
+  "case_id": "ppt-6ad93034-example-001",
+  "title": "示例案例：基于注意力机制改进的蛋白质二级结构预测（虚构示例材料，非正式案例）",
+  "_note": "本示例仅供演示接口与完整流程，材料为虚构；正式案例由平台提供，示例输出不得冒充正式案例结果。",
+  "inputs": {
+    "task_md": "task.md",
+    "material": ["material.md", "results.csv"]
+  },
+  "spec": {
+    "template": "default",
+    "audience": "组会",
+    "duration_minutes": 10,
+    "max_slides": 6,
+    "language": "zh",
+    "footer_text": "示例：非正式案例",
+    "style": {
+      "colors": {"accent": "#2E7D32"},
+      "footer": {"text": "示例：非正式案例"}
+    }
+  },
+  "output_contract": {
+    "case_id": "string",
+    "deck": "dict",
+    "evidence": "dict",
+    "previews": "dict",
+    "is_example": "bool"
+  }
+}

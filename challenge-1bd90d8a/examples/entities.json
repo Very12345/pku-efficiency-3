@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    {"id": "L", "label": "Wnt3a (配体)", "group": "Ligand", "shape": "rect", "cite": "Fig. 2A"},
+    {"id": "Fz", "label": "Frizzled (FZD)", "group": "Receptor", "cite": "Fig. 2A"},
+    {"id": "LRP", "label": "LRP5/6 共受体", "group": "Receptor", "cite": "Fig. 2B"},
+    {"id": "Dvl", "label": "Dishevelled (DVL)", "group": "Cytosolic", "cite": "Fig. 2C"},
+    {"id": "APC", "label": "APC/Axin/GSK3β 复合物", "group": "Destruction complex", "cite": "Fig. 2C"},
+    {"id": "beta", "label": "β-catenin", "group": "Cytosolic", "cite": "Fig. 2D"},
+    {"id": "nucl", "label": "TCF/LEF 转录激活", "group": "Nuclear", "shape": "rect", "cite": "Fig. 2E"}
+  ],
+  "relations": [
+    {"from": "L", "to": "Fz", "label": "结合", "type": "activation"},
+    {"from": "L", "to": "LRP", "label": "结合", "type": "activation"},
+    {"from": "Fz", "to": "Dvl", "label": "磷酸化激活", "type": "phosphorylation"},
+    {"from": "LRP", "to": "APC", "label": "抑制复合物装配", "type": "inhibition"},
+    {"from": "Dvl", "to": "APC", "label": "抑制", "type": "inhibition"},
+    {"from": "APC", "to": "beta", "label": "磷酸化降解", "type": "inhibition"},
+    {"from": "beta", "to": "nucl", "label": "入核", "type": "activation"}
+  ]
+}

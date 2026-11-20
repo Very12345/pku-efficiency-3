@@ -1,0 +1,62 @@
+SYNTHETIC EXAMPLE PAPER — NOT A FORMAL CASE (仅供本 Skill 接口演示)
+
+====================================================================
+ExampleNet: An Empirical Study of Retrieval-Augmented Code Review
+====================================================================
+
+Li Wei, Zhang Ming, Wang Fang
+Dept. of Software Engineering, Example University
+(演示用合成论文：作者、机构、数据均为虚构，仅用于展示 Skill 接口)
+
+ABSTRACT
+Automated code review is often limited by the reviewer model's lack of
+project-specific context. We propose ExampleNet, a retrieval-augmented
+code-review pipeline that retrieves similar historical review pairs and
+conditions the review generation on them. On a synthetic benchmark of
+4,000 review pairs, ExampleNet improves review quality over a strong
+baseline by 8.3 points in ROUGE-L F1 while keeping generation latency
+below 1.2 s per review.
+
+1  INTRODUCTION (p.1)
+Code review is a bottleneck in software maintenance (Jones et al., 2019).
+Recent language-model reviewers produce fluent but generic comments that
+fail to reference project conventions.  We frame the problem as: can
+retrieving analogous historical review pairs improve comment specificity
+without costly fine-tuning?
+
+2  METHOD (p.2)
+ExampleNet has three stages. Stage A indexes historical review pairs into
+a dense vector store (Contriever, 768-d). Stage B retrieves the top-k
+similar pairs by cosine similarity (k=5). Stage C conditions the review
+generator (a 1.3B decoder) on the retrieved pairs via prefix prompting.
+No model weights are updated.
+
+3  RESULTS (p.3)
+Table 1 reports ROUGE-L F1, BLEU-4, comment specificity (CE, 0-1), and
+latency on the 4,000-pair benchmark.  Figure 1 shows precision-at-k of
+the retriever; the bar for k=5 is 0.82.
+
+   Table 1. Main results (mean over 5 seeds).
+   ------------------------------------------------------------------
+   System                 ROUGE-L F1   BLEU-4   Specificity   Latency
+   ------------------------------------------------------------------
+   Baseline (no RAG)          0.612      0.184       0.41      0.9 s
+   ExampleNet (k=1)           0.638      0.196       0.48      1.1 s
+   ExampleNet (k=5)           0.695      0.217       0.55      1.2 s
+   ExampleNet (k=10)          0.681      0.209       0.53      1.4 s
+   ------------------------------------------------------------------
+
+Across all configs ExampleNet beats the baseline; k=5 is the sweet spot
+and k=10 slightly degrades, consistent with retrieval noise.
+
+4  CONCLUSION & LIMITATIONS (p.4)
+Retrieval augmentation improves code-review comment quality without
+fine-tuning.  Limitations: (i) benchmark is synthetic; (ii) retriever
+index costs memory linear in the history size; (iii) prefix prompting
+about doubles prompt length, which raises serving cost; (iv) non-English
+comment quality not yet measured.
+
+REFERENCES (p.4)
+[1] T. Jones et al., "Why code review is slow", ICSE 2019 (synth).
+[2] G. Izacard et al., "Unsupervised dense retrieval with Contriever",
+    arXiv 2021 (synth).

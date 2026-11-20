@@ -1,0 +1,567 @@
+{
+  "case_id": "example-egfr-mapk",
+  "title": "EGF/EGFR → RAS → RAF → MEK → ERK 信号通路机制图（教学简化版）",
+  "example": true,
+  "entities": [
+    {
+      "id": "e1",
+      "name": "EGF",
+      "type": "protein",
+      "compartment": "extracellular",
+      "data": {
+        "表达量": "0.95"
+      },
+      "note": "分泌型生长因子配体；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e2",
+      "name": "EGFR",
+      "type": "protein",
+      "compartment": "membrane",
+      "data": {
+        "表达量": "0.82"
+      },
+      "note": "受体酪氨酸激酶（跨膜）；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "name": "GRB2",
+      "type": "protein",
+      "compartment": "membrane",
+      "data": {
+        "表达量": "0.60"
+      },
+      "note": "衔接蛋白；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "name": "SOS",
+      "type": "protein",
+      "compartment": "membrane",
+      "data": {
+        "表达量": "0.55"
+      },
+      "note": "鸟苷酸交换因子(GEF)；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "name": "PIP3",
+      "type": "small_molecule",
+      "compartment": "membrane",
+      "data": {
+        "表达量": "0.50"
+      },
+      "note": "磷脂酰肌醇三磷酸；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e6",
+      "name": "PTEN",
+      "type": "protein",
+      "compartment": "membrane",
+      "data": {
+        "表达量": "0.30"
+      },
+      "note": "脂磷酸酶；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e7",
+      "name": "RAS",
+      "type": "protein",
+      "compartment": "cytoplasm",
+      "data": {
+        "表达量": "0.72"
+      },
+      "note": "小 GTP 酶；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e8",
+      "name": "RAF",
+      "type": "protein",
+      "compartment": "cytoplasm",
+      "data": {
+        "表达量": "0.68"
+      },
+      "note": "MAP3K 家族激酶；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e9",
+      "name": "MEK",
+      "type": "protein",
+      "compartment": "cytoplasm",
+      "data": {
+        "表达量": "0.70"
+      },
+      "note": "MAP2K 激酶；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e10",
+      "name": "ERK",
+      "type": "protein",
+      "compartment": "cytoplasm",
+      "data": {
+        "表达量": "0.66"
+      },
+      "note": "MAPK 激酶；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e11",
+      "name": "ELK1",
+      "type": "protein",
+      "compartment": "nucleus",
+      "data": {
+        "表达量": "0.50"
+      },
+      "note": "转录因子；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e12",
+      "name": "MYC",
+      "type": "protein",
+      "compartment": "nucleus",
+      "data": {
+        "表达量": "0.45"
+      },
+      "note": "转录因子；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "e13",
+      "name": "MYC（基因）",
+      "type": "gene",
+      "compartment": "nucleus",
+      "data": {
+        "表达量": "0.40"
+      },
+      "note": "转录靶标基因（书写区分基因/蛋白）；示例材料 表1",
+      "uncertain": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "from": "e1",
+      "to": "e2",
+      "type": "binding",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "配体-受体结合；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "from": "e2",
+      "to": "e3",
+      "type": "activation",
+      "subtype": "",
+      "evidence": "moderate",
+      "uncertain": false,
+      "label": "",
+      "note": "活化受体募集衔接蛋白；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "from": "e3",
+      "to": "e4",
+      "type": "binding",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "组成型结合；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "from": "e4",
+      "to": "e7",
+      "type": "activation",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "GEF 催化 GDP→GTP 交换；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r5",
+      "from": "e7",
+      "to": "e8",
+      "type": "activation",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "转位至膜并被激活；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r6",
+      "from": "e8",
+      "to": "e9",
+      "type": "modification",
+      "subtype": "",
+      "evidence": "moderate",
+      "uncertain": false,
+      "label": "",
+      "note": "磷酸化激活；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r7",
+      "from": "e9",
+      "to": "e10",
+      "type": "modification",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "磷酸化激活；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r8",
+      "from": "e10",
+      "to": "e11",
+      "type": "transport",
+      "subtype": "",
+      "evidence": "moderate",
+      "uncertain": false,
+      "label": "",
+      "note": "MAPK 核转位；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r9",
+      "from": "e10",
+      "to": "e11",
+      "type": "modification",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "磷酸化转录因子；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r10",
+      "from": "e11",
+      "to": "e13",
+      "type": "activation",
+      "subtype": "",
+      "evidence": "weak",
+      "uncertain": false,
+      "label": "",
+      "note": "转录激活（间接证据，虚线）；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r11",
+      "from": "e10",
+      "to": "e8",
+      "type": "inhibition",
+      "subtype": "",
+      "evidence": "moderate",
+      "uncertain": false,
+      "label": "",
+      "note": "负反馈环（右侧绕行绘制）；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    },
+    {
+      "id": "r12",
+      "from": "e6",
+      "to": "e5",
+      "type": "inhibition",
+      "subtype": "",
+      "evidence": "strong",
+      "uncertain": false,
+      "label": "",
+      "note": "去磷酸化负调控；示例材料 表2",
+      "feedback": false,
+      "source": [
+        {
+          "ref": "example_material.md",
+          "kind": "material"
+        }
+      ]
+    }
+  ],
+  "legend": {
+    "title": "图例 Legend",
+    "entities": {
+      "protein": {
+        "shape": "roundrect",
+        "fill": "#EAF2FB",
+        "stroke": "#1F4E79",
+        "zh": "蛋白质",
+        "en": "protein"
+      },
+      "gene": {
+        "shape": "rect",
+        "fill": "#FFF3E0",
+        "stroke": "#B9770E",
+        "italic": true,
+        "zh": "基因",
+        "en": "gene"
+      },
+      "complex": {
+        "shape": "roundrect",
+        "fill": "#EDE7F6",
+        "stroke": "#6C3483",
+        "double": true,
+        "zh": "复合物",
+        "en": "complex"
+      },
+      "rna": {
+        "shape": "roundrect",
+        "fill": "#E8F8F5",
+        "stroke": "#117A65",
+        "dash": true,
+        "zh": "RNA",
+        "en": "RNA"
+      },
+      "small_molecule": {
+        "shape": "circle",
+        "fill": "#FDEBD0",
+        "stroke": "#CA6F1E",
+        "zh": "小分子/配体/代谢物",
+        "en": "small molecule / ligand"
+      },
+      "other": {
+        "shape": "roundrect",
+        "fill": "#F4F6F6",
+        "stroke": "#7F8C8D",
+        "zh": "其他",
+        "en": "other"
+      }
+    },
+    "edges": {
+      "activation": {
+        "marker": "arrow",
+        "color": "#2E7D32",
+        "width": 2.4,
+        "zh": "激活 / 促进",
+        "en": "activation / promotion"
+      },
+      "inhibition": {
+        "marker": "bar",
+        "color": "#C0392B",
+        "width": 2.4,
+        "zh": "抑制 / 阻断",
+        "en": "inhibition / block"
+      },
+      "binding": {
+        "marker": "none",
+        "color": "#1F4E79",
+        "width": 2.0,
+        "zh": "结合 / 互作 / 募集",
+        "en": "binding / interaction / recruitment"
+      },
+      "modification": {
+        "marker": "circle",
+        "color": "#B9770E",
+        "width": 2.0,
+        "zh": "修饰（磷酸化、泛素化等）",
+        "en": "modification (phosphorylation, ubiquitination, ...)"
+      },
+      "transport": {
+        "marker": "diamond",
+        "color": "#6C3483",
+        "width": 2.2,
+        "zh": "转运 / 转位",
+        "en": "transport / translocation"
+      }
+    },
+    "evidence_width": {
+      "strong": 2.8,
+      "moderate": 2.2,
+      "weak": 1.6
+    },
+    "dash_note": {
+      "zh": "虚线 = 证据弱/间接，或不明确的联系（uncertain）",
+      "en": "dashed = weak / indirect / uncertain evidence"
+    },
+    "data_mapping": {
+      "field": "表达量",
+      "label_zh": "实体填充色 = 相对表达量（数据映射）",
+      "label_en": "node fill = relative expression",
+      "low": "#FFF7E0",
+      "high": "#1F4E79",
+      "note_zh": "材料未给出数值时使用类型默认色（见实体样式区）",
+      "note_en": "type default color is used when no data value is available",
+      "data_mapping": {
+        "field": "表达量",
+        "label_zh": "实体填充色=表达量（低 #FFF7E0 → 高 #1F4E79），数值来自示例材料 表1；边宽=证据强度（strong 2.8 / moderate 2.2 / weak 1.6，weak 或 uncertain 用虚线）。",
+        "low": "#FFF7E0",
+        "high": "#1F4E79"
+      }
+    },
+    "direction_note": {
+      "zh": "信号流向：自上方区室向下（受体位于膜区）；反馈环在右侧绕行",
+      "en": "flow from upper to lower compartments; feedback loops routed on the right"
+    },
+    "version_note": "conventions: see references/DIAGRAM_SPEC.md"
+  },
+  "layout": {},
+  "extraction": {
+    "method": "auto-draft",
+    "verified_by_agent": false
+  }
+}

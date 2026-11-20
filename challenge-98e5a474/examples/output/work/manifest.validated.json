@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "figure_type": "chart",
+  "title": "Response by compound (Figure, demo — EXAMPLE 示例，非正式案例)",
+  "subtitle": "Data-driven chart: legend is generated from the table",
+  "data": {
+    "chart_type": "bar",
+    "table": {
+      "columns": [
+        "compound",
+        "response",
+        "fraction"
+      ],
+      "rows": [
+        [
+          "ctrl",
+          1.0,
+          0.1
+        ],
+        [
+          "inhibitor-A",
+          1.4,
+          0.15
+        ],
+        [
+          "inhibitor-B",
+          0.45,
+          0.3
+        ],
+        [
+          "inhibitor-C",
+          2.1,
+          0.22
+        ]
+      ]
+    },
+    "category_col": "compound",
+    "value_col": "response",
+    "unit": "fold change vs ctrl",
+    "x_label": "compound",
+    "y_label": "response"
+  },
+  "acknowledged_issues": [],
+  "entities": [],
+  "relations": [],
+  "groups": [],
+  "legend": [],
+  "style": {
+    "font": "",
+    "canvas": null
+  },
+  "_provenance": "case.json[manifest]",
+  "_traceability": {
+    "entities_total": 0,
+    "entities_with_source_and_evidence": 0,
+    "relations_total": 0,
+    "relations_with_source": 0,
+    "entities_traceable_pct": 0.0,
+    "relations_traceable_pct": 0.0
+  }
+}
