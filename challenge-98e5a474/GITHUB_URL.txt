@@ -1,2 +1,2 @@
-https://github.com/Very12345/pku-efficiency-3
-work/efficiency-3/build/challenge-98e5a474
+https://github.com/Very12345/pku-efficiency-3/tree/main/challenge-98e5a474
+challenge-98e5a474/

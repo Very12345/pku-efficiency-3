@@ -1,2 +1,2 @@
-https://github.com/Very12345/pku-efficiency-3
-build/ppt-c7b80f0d/
+https://github.com/Very12345/pku-efficiency-3/tree/main/ppt-c7b80f0d
+ppt-c7b80f0d/

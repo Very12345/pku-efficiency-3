@@ -1,2 +1,2 @@
-https://github.com/Very12345/pku-efficiency-3
-build/challenge-20870c35
+https://github.com/Very12345/pku-efficiency-3/tree/main/challenge-20870c35
+challenge-20870c35/
