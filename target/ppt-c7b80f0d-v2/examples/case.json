@@ -1,0 +1,25 @@
+{
+  "case_id": "example-ppt-c7b80f0d",
+  "title": "ExampleNet: 一种检索增强的代码评审方法（合成示例论文）",
+  "task": "将材料中的论文转成学术汇报 PPT：主线清晰、页级证据可追溯、可编辑、适配给定模板。",
+  "material": "materials/paper-mini.txt",
+  "template": { "path": "template-example.pptx", "kind": "organizer-example" },
+  "audience": "研究组组会（research group seminar）",
+  "duration_minutes": 15,
+  "slide_count": 8,
+  "notes_required": true,
+  "template_rules": [
+    "只填占位符，不修改母版",
+    "标题/正文/图占位符按名匹配，找不到回退到安全布局",
+    "不覆盖模板页脚"
+  ],
+  "output_contract": {
+    "title": "deck 标题（一行的字符串）",
+    "main_claim": "全文一句话结论（字符串）",
+    "slides": [ "每页 {page,title,claim}（列表）" ],
+    "evidence_mapping": "页级证据映射描述（字符串或对象）",
+    "render_state": "渲染与版本记录（字符串或对象）",
+    "notes_separated": true
+  },
+  "notes": "这是示例案例（非正式案例）：材料为合成论文，仅用于演示 Skill 的接口与运行方式。"
+}

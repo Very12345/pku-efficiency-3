@@ -1,0 +1,361 @@
+{
+  "schema_version": "1.0",
+  "case_id": "example-micelle-001",
+  "title": "pH 响应型聚合物胶束用于肿瘤药物递送",
+  "task": "纳米载体能否在血液循环中稳定、并在肿瘤微环境中响应性释放化疗药物，是肿瘤靶向递送的核心挑战。",
+  "panels": {
+    "question": [
+      "生理 pH（7.4）下胶束应保持稳定、避免提前泄漏。",
+      "肿瘤微环境 pH 约 5.5-6.5，希望触发快速释放。"
+    ],
+    "method": [
+      "合成 mPEG-PLA 嵌段共聚物，自组装包载 DOX（阿霉素）。",
+      "DLS 测定粒径与 PDI；紫外分光光度法测定载药量与包封率。",
+      "透析法考察 pH 5.5 与 pH 7.4 下的累积释放曲线。"
+    ],
+    "results": [
+      "粒径 95 nm，PDI 0.12，分布均一。",
+      "载药量 14.2 %，包封率 72 %。",
+      "h 累积释放：pH 5.5 为 85 %，pH 7.4 仅 18 %，呈现明显 pH 响应。",
+      "µg/mL 时肿瘤细胞存活率 18 %。"
+    ],
+    "conclusion": [
+      "单页图形摘要，按“问题→方法→结果→结论”顺序排布。",
+      "交付可编辑 SVG 源文件与渲染预览（PNG/PDF）。",
+      "图中每个实体、数值标注来源；缺失数值不得编造。"
+    ]
+  },
+  "entities": [
+    {
+      "id": "DOX_阿霉素",
+      "name": "DOX（阿霉素）",
+      "type": "molecule",
+      "panel": "method",
+      "note": "化疗药物",
+      "shape": "circle",
+      "src": "case.json[entities]"
+    },
+    {
+      "id": "mPEG_PLA_胶束",
+      "name": "mPEG-PLA 胶束",
+      "type": "material",
+      "panel": "method",
+      "note": "纳米递送载体",
+      "shape": "diamond",
+      "src": "case.json[entities]"
+    },
+    {
+      "id": "肿瘤微环境_低_pH",
+      "name": "肿瘤微环境（低 pH）",
+      "type": "tissue",
+      "panel": "method",
+      "note": null,
+      "shape": "rounded",
+      "src": "case.json[entities]"
+    },
+    {
+      "id": "肿瘤细胞",
+      "name": "肿瘤细胞",
+      "type": "cell",
+      "panel": "results",
+      "note": null,
+      "shape": "rounded",
+      "src": "case.json[entities]"
+    },
+    {
+      "id": "血液_pH_7_4",
+      "name": "血液（pH 7.4）",
+      "type": "sample",
+      "panel": "question",
+      "note": null,
+      "shape": "circle",
+      "src": "case.json[entities]"
+    },
+    {
+      "id": "肿瘤组织",
+      "name": "肿瘤组织",
+      "type": "tissue",
+      "panel": "results",
+      "note": null,
+      "shape": "rounded",
+      "src": "case.json[entities]"
+    }
+  ],
+  "relations": [
+    {
+      "id": "mPEG_PLA_胶束_to_DOX_阿霉素",
+      "from": "mPEG-PLA 胶束",
+      "to": "DOX（阿霉素）",
+      "label": "自组装包载",
+      "direction": "forward",
+      "kind": "positive",
+      "src": "case.json[relations]",
+      "from_id": "mPEG_PLA_胶束",
+      "to_id": "DOX_阿霉素"
+    },
+    {
+      "id": "DOX_阿霉素__to_肿瘤组织",
+      "from": "DOX（阿霉素）",
+      "to": "肿瘤组织",
+      "label": "递送",
+      "direction": "forward",
+      "kind": "positive",
+      "src": "case.json[relations]",
+      "from_id": "DOX_阿霉素",
+      "to_id": "肿瘤组织"
+    },
+    {
+      "id": "mPEG_PLA_胶束_to_肿瘤微环境_低_pH",
+      "from": "mPEG-PLA 胶束",
+      "to": "肿瘤微环境（低 pH）",
+      "label": "pH 响应释放",
+      "direction": "forward",
+      "kind": "positive",
+      "src": "case.json[relations]",
+      "from_id": "mPEG_PLA_胶束",
+      "to_id": "肿瘤微环境_低_pH"
+    },
+    {
+      "id": "DOX_阿霉素__to_肿瘤细胞",
+      "from": "DOX（阿霉素）",
+      "to": "肿瘤细胞",
+      "label": "内化杀伤",
+      "direction": "forward",
+      "kind": "positive",
+      "src": "case.json[relations]",
+      "from_id": "DOX_阿霉素",
+      "to_id": "肿瘤细胞"
+    },
+    {
+      "id": "DOX_阿霉素__to_肿瘤细胞",
+      "from": "DOX（阿霉素）",
+      "to": "肿瘤细胞",
+      "label": "抑制增殖",
+      "direction": "forward",
+      "kind": "negative",
+      "src": "case.json[relations]",
+      "from_id": "DOX_阿霉素",
+      "to_id": "肿瘤细胞"
+    },
+    {
+      "id": "to_mPEG_PLA_胶束_粒径_95_nm_PDI_0_12",
+      "from": "-",
+      "to": "mPEG-PLA 胶束：粒径 = 95 nm；PDI = 0.12",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:4",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "to_CMC_0_8_mg_L",
+      "from": "-",
+      "to": "CMC = 0.8 mg/L",
+      "label": "临界胶束浓度",
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:5",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "to_载药量_14_2",
+      "from": "-",
+      "to": "载药量 = 14.2 %",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:6",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "to_包封率_72",
+      "from": "-",
+      "to": "包封率 = 72 %",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:7",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "释放率_pH_5_5_48_h__to__85",
+      "from": "- 释放率 pH 5.5 (48 h)",
+      "to": "= 85 %",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:10",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "释放率_pH_7_4_48_h__to__18",
+      "from": "- 释放率 pH 7.4 (48 h)",
+      "to": "= 18 %",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:11",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "细胞存活率_50_µg_mL__to__18",
+      "from": "- 细胞存活率 (50 µg/mL)",
+      "to": "= 18 %",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:14",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "to_半抑制浓度_IC50_13_6_µg_mL",
+      "from": "-",
+      "to": "半抑制浓度 IC50 ≈ 13.6 µg/mL",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:15",
+      "from_id": null,
+      "to_id": null
+    },
+    {
+      "id": "所_to_有数值为合成示意数据_仅用于接口演示",
+      "from": "所",
+      "to": "有数值为合成示意数据，仅用于接口演示。",
+      "label": null,
+      "direction": "forward",
+      "kind": "positive",
+      "src": "material:25",
+      "from_id": null,
+      "to_id": null
+    }
+  ],
+  "data": [
+    {
+      "id": "粒径",
+      "label": "粒径",
+      "value": 95.0,
+      "unit": "nm",
+      "kind": "bar_length",
+      "group": null,
+      "note": "DLS 测定",
+      "src": "case.json[data]"
+    },
+    {
+      "id": "PDI",
+      "label": "PDI",
+      "value": 0.12,
+      "unit": null,
+      "kind": "bar_length",
+      "group": null,
+      "note": null,
+      "src": "case.json[data]"
+    },
+    {
+      "id": "载药量",
+      "label": "载药量",
+      "value": 14.2,
+      "unit": "%",
+      "kind": "bar_length",
+      "group": null,
+      "note": null,
+      "src": "case.json[data]"
+    },
+    {
+      "id": "包封率",
+      "label": "包封率",
+      "value": 72.0,
+      "unit": "%",
+      "kind": "bar_length",
+      "group": null,
+      "note": null,
+      "src": "case.json[data]"
+    },
+    {
+      "id": "释放率_pH_5_5_48_h",
+      "label": "释放率 pH 5.5 (48 h)",
+      "value": 85.0,
+      "unit": "%",
+      "kind": "bar_length",
+      "group": null,
+      "note": null,
+      "src": "case.json[data]"
+    },
+    {
+      "id": "释放率_pH_7_4_48_h",
+      "label": "释放率 pH 7.4 (48 h)",
+      "value": 18.0,
+      "unit": "%",
+      "kind": "bar_length",
+      "group": null,
+      "note": null,
+      "src": "case.json[data]"
+    },
+    {
+      "id": "细胞存活率_50_µg_mL",
+      "label": "细胞存活率 (50 µg/mL)",
+      "value": 18.0,
+      "unit": "%",
+      "kind": "color_scale",
+      "group": null,
+      "note": null,
+      "src": "case.json[data]"
+    }
+  ],
+  "constraints": {
+    "width": 1200,
+    "height": 800,
+    "margin": 24,
+    "dpi": 300,
+    "colorblind": true,
+    "flow_arrows": true,
+    "language": "zh",
+    "font_family": null,
+    "palette": null,
+    "reading_order": true,
+    "raster_scale": 2,
+    "pdf": true
+  },
+  "output_contract": {
+    "target_format": [
+      "svg",
+      "png",
+      "pdf"
+    ],
+    "resolution_dpi": 300,
+    "colorblind_safe": true,
+    "require_legend": true,
+    "require_scale_bar": true,
+    "layer_names": [
+      "background",
+      "panels",
+      "entities",
+      "relations",
+      "data",
+      "legend",
+      "annotations"
+    ],
+    "provenance_attr": "data-src",
+    "deliverable": "editable_svg_plus_preview"
+  },
+  "source_files": [
+    {
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\graphical-abstract-7030fff2-v2\\examples\\task.md",
+      "sha256": "820241cb102cf892e39a31b586e5e4e4b7961f48338d9e05ecc07d43cfa34919",
+      "role": "task"
+    },
+    {
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\graphical-abstract-7030fff2-v2\\examples\\material.md",
+      "sha256": "9cde8c17a78e49ce7cb229f5ac736eb45e6123c2e063134bc69acae95eaca856",
+      "role": "material"
+    }
+  ],
+  "notes": []
+}
