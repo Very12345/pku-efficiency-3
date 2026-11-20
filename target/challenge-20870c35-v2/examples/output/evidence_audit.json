@@ -1,0 +1,162 @@
+{
+  "schema": "evidence_audit.v1",
+  "generated_by": "evidence_audit.py of academic-talk-organizer (efficiency-3, v2)",
+  "method": "verbatim quote check against actually-read source text; locator line/section bounds; numeric traceability (warning); figure binding state",
+  "valid": true,
+  "summary": {
+    "pages_total": 12,
+    "content_pages": 10,
+    "ok_pages": 10,
+    "errors": 0,
+    "derived_pages": 0,
+    "unavailable_text": 0
+  },
+  "entries": [
+    {
+      "page_no": 1,
+      "block": "title",
+      "title": "示例（非正式案例）：SynthAlign 跨语言句子对齐方法的组会汇报",
+      "ok": true,
+      "notes": [],
+      "kind": "structural"
+    },
+    {
+      "page_no": 2,
+      "block": "motivation",
+      "title": "本文研究问题",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "本文研究问题：在不增加人工标注的前提下，能否把跨语言学术句对对齐的 top-1 准确率",
+      "line_ok": true
+    },
+    {
+      "page_no": 3,
+      "block": "background",
+      "title": "跨语言句子对齐是构建平行语料与学术翻译的重要前置…",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "跨语言句子对齐是构建平行语料与学术翻译的重要前置步骤，但中英文学术文本存在大量",
+      "line_ok": true
+    },
+    {
+      "page_no": 4,
+      "block": "background",
+      "title": "术语缩写与格式差异（如模型名称、单位、引用编号）",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "术语缩写与格式差异（如模型名称、单位、引用编号）。现有方法有两个问题：",
+      "line_ok": true
+    },
+    {
+      "page_no": 5,
+      "block": "method",
+      "title": "检索候选池每句 64 条候选。",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "检索候选池每句 64 条候选。",
+      "line_ok": true
+    },
+    {
+      "page_no": 6,
+      "block": "method",
+      "title": "Fig. 3（图）为术语一致性约束的消融",
+      "ok": true,
+      "notes": [
+        "图表 Fig. 3 无对应图片文件，页内为诚实占位框"
+      ],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "Fig. 3（图）为术语一致性约束的消融：去掉术语约束（λ=0）后 Acc@1 降到 90.6%。",
+      "line_ok": true,
+      "figure_ref": "Fig. 3",
+      "figure_bound": false
+    },
+    {
+      "page_no": 7,
+      "block": "results",
+      "title": "Table 1（表格）显示",
+      "ok": true,
+      "notes": [
+        "图表 Table 1 无对应图片文件，页内为诚实占位框"
+      ],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "Table 1（表格）显示：SynthAlign 在 CCAlign-Zh 上 Acc@1=92.3%、F1=0.874；",
+      "line_ok": true,
+      "figure_ref": "Table 1",
+      "figure_bound": false
+    },
+    {
+      "page_no": 8,
+      "block": "results",
+      "title": "两个基线（BM25-only 80.9%、…",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "两个基线（BM25-only 80.9%、mBERT-only 87.5%）对应值分别为 80.9%/0.742 与 87.5%/0.813。",
+      "line_ok": true
+    },
+    {
+      "page_no": 9,
+      "block": "results",
+      "title": "Fig. 2（图）显示不同训练数据规模（2k/5…",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "Fig. 2（图）显示不同训练数据规模（2k/5k/10k 句对）下 mBERT-only 与 SynthAlign 的",
+      "line_ok": true,
+      "figure_ref": "Fig. 2",
+      "figure_bound": true
+    },
+    {
+      "page_no": 10,
+      "block": "results",
+      "title": "Acc@1 曲线",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "Acc@1 曲线：SynthAlign 在 10k 下达到 92.3%，且在 5k 下即可超过 mBERT-only 的 10k 结果。",
+      "line_ok": true
+    },
+    {
+      "page_no": 11,
+      "block": "conclusion_risk",
+      "title": "当前局限",
+      "ok": true,
+      "notes": [],
+      "kind": "content",
+      "derived": false,
+      "quote_found": true,
+      "line_text": "当前局限：① CCAlign-Zh 仅覆盖生物医学与计算机两个领域；② 对拉丁缩写与公式片段",
+      "line_ok": true
+    },
+    {
+      "page_no": 12,
+      "block": "qa",
+      "title": "问答准备（备用页）",
+      "ok": true,
+      "notes": [],
+      "kind": "structural"
+    }
+  ]
+}

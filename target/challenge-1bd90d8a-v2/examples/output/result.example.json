@@ -1,0 +1,358 @@
+{
+  "steps": [
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP1 读取案例与盘点材料"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "发现任务说明 D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-1bd90d8a-v2\\examples\\task.md"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP2 源材料抽取（列画像 / 实体-关系）"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP3 figure spec lint（生成门）"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP4 构建图 fig-01（type=panel）"
+    },
+    {
+      "ts": "2026-11-21T01:57:34+08:00",
+      "action": "CP4 构建图 fig-02（type=network）"
+    },
+    {
+      "ts": "2026-11-21T01:57:35+08:00",
+      "action": "CP5 校验（mapcheck + figcheck + 确定性）"
+    }
+  ],
+  "case_id": "example-science-figure-01",
+  "title": "示例：剂量-时间响应与信号通路机制图（仅演示接口，非正式案例）",
+  "challenge_id": "challenge-1bd90d8a",
+  "dataset_version": "2026-11-21-example-v2",
+  "task_summary": "# 任务说明（示例，非正式案例）\n\n> 本文件是 Skill 自带的**最小示例**，用于演示调用方式、CP1–CP6 全链路与\n> 契约四形态回显；正式评分使用平台固定的 3 个案例，二者无关。\n> 所有示意输出均标注为示例。\n\n## 任务\n",
+  "sources": [
+    {
+      "file": "data.csv",
+      "sha256": "7a07667fd56cec19ceead910c2633b978fcf07e34e442b45a9bc287e881bee35",
+      "rows": 8,
+      "version": "2026-11-21-example-v2",
+      "columns": [
+        "dose_mg_kg",
+        "time_h",
+        "mean_um3",
+        "se_um3",
+        "n"
+      ]
+    },
+    {
+      "file": "entities.json",
+      "sha256": "9278e7808ac029984945401f09d45ab9e4a4c3a384765486ec4e22dea0e5b562",
+      "role": "entities_file"
+    }
+  ],
+  "checkpoints": {
+    "cp1_material_survey": {
+      "ok": true,
+      "task_found": true,
+      "data_files": [
+        "data.csv"
+      ],
+      "declared_missing": []
+    },
+    "cp2_extract": {
+      "ok": true,
+      "tables": 1,
+      "networks": 1,
+      "uncertain": 0,
+      "file": "extract.json"
+    },
+    "cp3_spec_lint": {
+      "ok": true,
+      "figures": 2,
+      "errors": 0,
+      "warnings": 0
+    },
+    "cp4_export": {
+      "completed": [
+        "fig-01",
+        "fig-02"
+      ],
+      "failed": []
+    },
+    "cp6_contract": {
+      "applied": true,
+      "gates_all_pass": true
+    },
+    "cp5_mapcheck": {
+      "ok": true,
+      "checked": 121,
+      "mismatches": 0,
+      "unmatched": 0
+    },
+    "cp5_figcheck": {
+      "gates": true,
+      "six_checkpoints": {
+        "科学实体": true,
+        "空间关系": true,
+        "数据编码": true,
+        "图例标注": true,
+        "可编辑源文件": true,
+        "导出格式": true
+      }
+    }
+  },
+  "spec_lint": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "counts": {
+      "figures": 2,
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "environment": {
+    "python": "3.13.9",
+    "pillow": "12.3.0",
+    "fonts": {
+      "sans": "book antiqua",
+      "sans_cjk": "stfangsong",
+      "serif": "ms reference sans serif",
+      "mono": "cascadia mono",
+      "fonts_dir_candidates": 1,
+      "note": "SVG 使用字体族回退链（PNG 缺字不影响 SVG 可编辑源）。"
+    },
+    "dpi": 300,
+    "no_network": true,
+    "cwd": null,
+    "style": "nature"
+  },
+  "completed_figures": [
+    "fig-01",
+    "fig-02"
+  ],
+  "outputs": [
+    {
+      "kind": "editable_svg",
+      "file": "figure-fig-01.svg",
+      "figure_id": "fig-01"
+    },
+    {
+      "kind": "png_preview",
+      "file": "figure-fig-01.png",
+      "figure_id": "fig-01"
+    },
+    {
+      "kind": "pdf_preview",
+      "file": "figure-fig-01.pdf",
+      "figure_id": "fig-01"
+    },
+    {
+      "kind": "editable_svg",
+      "file": "figure-fig-02.svg",
+      "figure_id": "fig-02"
+    },
+    {
+      "kind": "png_preview",
+      "file": "figure-fig-02.png",
+      "figure_id": "fig-02"
+    },
+    {
+      "kind": "pdf_preview",
+      "file": "figure-fig-02.pdf",
+      "figure_id": "fig-02"
+    }
+  ],
+  "editable_sources": [
+    "figure-fig-01.svg",
+    "figure-fig-02.svg"
+  ],
+  "renders": {
+    "png": [
+      "figure-fig-01.png",
+      "figure-fig-02.png"
+    ],
+    "pdf": [
+      "figure-fig-01.pdf",
+      "figure-fig-02.pdf"
+    ]
+  },
+  "figure_checks": {
+    "fig-01": [
+      {
+        "id": "provenance",
+        "level": "ok",
+        "detail": "图元 79 个，带 role 溯源 79 个。",
+        "pass": true
+      },
+      {
+        "id": "legend-mapping",
+        "level": "ok",
+        "detail": "无系列型图（heatmap/box/network 图例另检）。",
+        "pass": true
+      },
+      {
+        "id": "cjk-font",
+        "level": "ok",
+        "detail": "CJK 文本 2 处；CJK 字体已找到 stfangsong。",
+        "pass": true
+      },
+      {
+        "id": "axis-units",
+        "level": "ok",
+        "detail": "2 个面板；缺少 y 轴标签的面板：[]。",
+        "pass": true
+      },
+      {
+        "id": "significance",
+        "level": "ok",
+        "detail": "显著性线段 1 条，文字 1 个（p 值脚注见 annotation_footnotes）。",
+        "pass": true
+      },
+      {
+        "id": "null-handling",
+        "level": "ok",
+        "detail": "共使用 24 个源数据行位置。",
+        "pass": true
+      },
+      {
+        "id": "occlusion",
+        "level": "ok",
+        "detail": "文本重叠 0 处（检测到的最大处数；旋转/轴外文本不参与）。",
+        "pass": true
+      }
+    ],
+    "fig-02": [
+      {
+        "id": "provenance",
+        "level": "ok",
+        "detail": "图元 42 个，带 role 溯源 42 个。",
+        "pass": true
+      },
+      {
+        "id": "legend-mapping",
+        "level": "ok",
+        "detail": "无系列型图（heatmap/box/network 图例另检）。",
+        "pass": true
+      },
+      {
+        "id": "cjk-font",
+        "level": "ok",
+        "detail": "CJK 文本 13 处；CJK 字体已找到 stfangsong。",
+        "pass": true
+      },
+      {
+        "id": "axis-units",
+        "level": "ok",
+        "detail": "图型 network 无坐标轴标签要求。",
+        "pass": true
+      },
+      {
+        "id": "significance",
+        "level": "ok",
+        "detail": "显著性线段 0 条，文字 0 个（p 值脚注见 annotation_footnotes）。",
+        "pass": true
+      },
+      {
+        "id": "null-handling",
+        "level": "ok",
+        "detail": "共使用 0 个源数据行位置。",
+        "pass": true
+      },
+      {
+        "id": "occlusion",
+        "level": "warn",
+        "detail": "文本重叠 2 处（检测到的最大处数；旋转/轴外文本不参与）。",
+        "pass": false
+      }
+    ]
+  },
+  "figure_meta": {
+    "fig-01": {
+      "y_range": null,
+      "x_range": null,
+      "adjustments": [],
+      "warnings": [],
+      "annotation_footnotes": []
+    },
+    "fig-02": {
+      "y_range": null,
+      "x_range": null,
+      "adjustments": [],
+      "warnings": [],
+      "annotation_footnotes": []
+    }
+  },
+  "status": "completed",
+  "uncertainty": [],
+  "change_records": [
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP1 读取案例与盘点材料"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "发现任务说明 D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-1bd90d8a-v2\\examples\\task.md"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP2 源材料抽取（列画像 / 实体-关系）"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP3 figure spec lint（生成门）"
+    },
+    {
+      "ts": "2026-11-21T01:57:33+08:00",
+      "action": "CP4 构建图 fig-01（type=panel）"
+    },
+    {
+      "ts": "2026-11-21T01:57:34+08:00",
+      "action": "CP4 构建图 fig-02（type=network）"
+    }
+  ],
+  "artifacts_sha256": {
+    "data_manifest.json": "9cf8ba70f1d4603c12277a174d179a4c6681809e6c95542d798e0b8226a5df9d",
+    "figure-fig-01.pdf": "ca04d0dab7b9fbe797b64d477ba21e3ba27103b32de5d467e189fa75b110b9fd",
+    "figure-fig-01.png": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+    "figure-fig-01.svg": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+    "figure-fig-02.pdf": "9426ea96b1893829c4fb64a183a48593f6a5a4b98b77a730b6514e5daf081b11",
+    "figure-fig-02.png": "c486b38aff0d03ad90e70514e6eb219a48d0f4911efeac4d027d9fbaee2b526a",
+    "figure-fig-02.svg": "8e2c97d76d85fddbd80dd01c4cf5885a94961452cc1ddf0626a67d6e0b98d4e4",
+    "validation.json": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087"
+  },
+  "editable_source": [
+    "figure-fig-01.svg",
+    "figure-fig-02.svg"
+  ],
+  "rendered_preview": {
+    "png": [
+      "figure-fig-01.png",
+      "figure-fig-02.png"
+    ],
+    "pdf": [
+      "figure-fig-01.pdf",
+      "figure-fig-02.pdf"
+    ]
+  },
+  "field_mapping": "data_manifest.json",
+  "validation_report": "validation.json",
+  "gates": {
+    "G1": true,
+    "G2": true,
+    "G5": true,
+    "G6": true,
+    "G3": true,
+    "G4": true,
+    "G7": true,
+    "G8": true,
+    "all_pass": true
+  },
+  "output_contract_applied": true,
+  "mapcheck_report": "mapcheck_report.json",
+  "figcheck_report": "figcheck_report.json"
+}

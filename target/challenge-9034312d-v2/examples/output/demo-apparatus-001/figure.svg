@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 可编辑科研图稿 SVG | challenge-9034312d/scripts/main.py -->
+<!-- 结构: 实体→关系→布局模型→SVG；每个实体元素带 data-source 可回溯到输入材料 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="188.3mm" height="138.0mm"
+     viewBox="0 0 188.3 138.0"
+     font-family="'Noto Sans CJK SC','Microsoft YaHei','PingFang SC','SimHei','DejaVu Sans',sans-serif" font-size="11.0" xml:space="preserve">
+  <metadata id="metadata">
+    <dc:source xmlns:dc="http://purl.org/dc/elements/1.1/">case.json + task.md</dc:source>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">示例：冷冻干燥机实验装置（示例用，非正式案例）</dc:title>
+    <bd:case_id xmlns:bd="urn:challenge-9034312d">demo-apparatus-001</bd:case_id>
+    <bd:workorder xmlns:bd="urn:challenge-9034312d">apparatus_and_technical_route</bd:workorder>
+    <bd:checksum xmlns:bd="urn:challenge-9034312d"></bd:checksum>
+  </metadata>
+  <rect id="layer-background" data-role="layer" x="0" y="0" width="188.3" height="138.0" fill="#FFFFFF" stroke="none"/>
+  <g id="layer-title" data-role="layer" font-size="16.0">
+    <text x="94.1" y="12.00" text-anchor="middle" font-weight="bold"
+          data-layer="title">示例：冷冻干燥机实验装置（示例用，非正式案例）</text>
+  </g>
+  <g id="layer-arrows" data-role="layer" fill="none" stroke="#555555" stroke-width="1.0">
+    <path id="arrow-S1" data-kind="flow" data-role="arrow" d="M 40.00,48.00 L 57.00,48.00 L 57.00,48.00 L 74.00,48.00"/>
+    <polygon id="arrowhead-S1" data-kind="flow" data-role="arrowhead" fill="#C0392B" stroke="none" points="69.00,50.75 69.00,45.25 74.00,48.00"/>
+    <text x="57.00" y="48.00" text-anchor="middle" fill="#C0392B" font-size="9.0" transform="translate(0,-2)">进样</text>
+    <path id="arrow-S2" data-kind="connect" data-role="arrow" d="M 88.47,56.00 L 87.00,68.00"/>
+    <polygon id="arrowhead-S2" data-kind="connect" data-role="arrowhead" fill="#555555" stroke="none" points="84.88,62.70 90.34,63.37 87.00,68.00"/>
+    <text x="87.00" y="68.00" text-anchor="middle" fill="#C0392B" font-size="9.0" transform="translate(0,-2)">管路</text>
+    <path id="arrow-S3" data-kind="connect" data-role="arrow" d="M 87.00,84.00 L 87.00,96.00"/>
+    <polygon id="arrowhead-S3" data-kind="connect" data-role="arrowhead" fill="#555555" stroke="none" points="84.25,91.00 89.75,91.00 87.00,96.00"/>
+    <text x="87.00" y="96.00" text-anchor="middle" fill="#C0392B" font-size="9.0" transform="translate(0,-2)">管路</text>
+    <path id="arrow-S4" data-kind="flow" data-role="arrow" d="M 102.95,48.00 L 119.95,48.00 L 119.95,48.00 L 136.95,48.00"/>
+    <polygon id="arrowhead-S4" data-kind="flow" data-role="arrowhead" fill="#C0392B" stroke="none" points="131.95,50.75 131.95,45.25 136.95,48.00"/>
+    <text x="119.95" y="48.00" text-anchor="middle" fill="#C0392B" font-size="9.0" transform="translate(0,-2)">干燥产物</text>
+    <path id="arrow-S5" data-kind="flow" data-role="arrow" d="M 100.00,76.00 L 118.47,76.00 L 118.47,76.00 L 136.95,76.00"/>
+    <polygon id="arrowhead-S5" data-kind="flow" data-role="arrowhead" fill="#C0392B" stroke="none" points="131.95,78.75 131.95,73.25 136.95,76.00"/>
+    <text x="118.47" y="76.00" text-anchor="middle" fill="#C0392B" font-size="9.0" transform="translate(0,-2)">凝华</text>
+  </g>
+  <g id="layer-entities" data-role="layer">
+    <g id="entity-C1" data-entity="C1" data-kind="material" data-source="case.json[text]" data-stage="" data-step-no="" data-role="entity">
+      <path id="entity-C1-shape" d="M 17.00 40.00 H 37.00 A 3.00 3.00 0 0 1 40.00 43.00 V 53.00 A 3.00 3.00 0 0 1 37.00 56.00 H 17.00 A 3.00 3.00 0 0 1 14.00 53.00 V 43.00 A 3.00 3.00 0 0 1 17.00 40.00 Z" fill="#E8F6E4" stroke="#4C8A3A" stroke-width="1.2"/>
+      <text id="entity-C1-text-0" x="27.00" y="49.36" text-anchor="middle" fill="#28521B" font-weight="normal" data-line="0">样品溶液</text>
+    </g>
+    <g id="entity-C2" data-entity="C2" data-kind="device" data-source="case.json[text]" data-stage="" data-step-no="" data-role="entity">
+      <path id="entity-C2-shape" d="M 74.00 40.00 H 102.95 V 56.00 H 74.00 Z" fill="#FDF3E3" stroke="#C07A1B" stroke-width="1.2"/>
+      <text id="entity-C2-text-0" x="88.47" y="49.36" text-anchor="middle" fill="#6E4408" font-weight="normal" data-line="0">冻干机主机</text>
+    </g>
+    <g id="entity-C3" data-entity="C3" data-kind="device" data-source="case.json[text]" data-stage="" data-step-no="" data-role="entity">
+      <path id="entity-C3-shape" d="M 74.00 68.00 H 100.00 V 84.00 H 74.00 Z" fill="#FDF3E3" stroke="#C07A1B" stroke-width="1.2"/>
+      <text id="entity-C3-text-0" x="87.00" y="77.36" text-anchor="middle" fill="#6E4408" font-weight="normal" data-line="0">冷阱</text>
+    </g>
+    <g id="entity-C4" data-entity="C4" data-kind="device" data-source="case.json[text]" data-stage="" data-step-no="" data-role="entity">
+      <path id="entity-C4-shape" d="M 74.00 96.00 H 100.00 V 112.00 H 74.00 Z" fill="#FDF3E3" stroke="#C07A1B" stroke-width="1.2"/>
+      <text id="entity-C4-text-0" x="87.00" y="105.36" text-anchor="middle" fill="#6E4408" font-weight="normal" data-line="0">真空泵</text>
+    </g>
+    <g id="entity-C5" data-entity="C5" data-kind="product" data-source="case.json[text]" data-stage="" data-step-no="" data-role="entity">
+      <path id="entity-C5-shape" d="M 139.95 40.00 H 171.29 A 3.00 3.00 0 0 1 174.29 43.00 V 53.00 A 3.00 3.00 0 0 1 171.29 56.00 H 139.95 A 3.00 3.00 0 0 1 136.95 53.00 V 43.00 A 3.00 3.00 0 0 1 139.95 40.00 Z" fill="#E4F0FB" stroke="#3E77B8" stroke-width="1.2"/>
+      <text id="entity-C5-text-0" x="155.62" y="49.36" text-anchor="middle" fill="#1E3D66" font-weight="normal" data-line="0">冻干粉（产物）</text>
+    </g>
+    <g id="entity-C6" data-entity="C6" data-kind="waste" data-source="case.json[text]" data-stage="" data-step-no="" data-role="entity">
+      <path id="entity-C6-shape" d="M 139.95 68.00 H 171.29 A 3.00 3.00 0 0 1 174.29 71.00 V 81.00 A 3.00 3.00 0 0 1 171.29 84.00 H 139.95 A 3.00 3.00 0 0 1 136.95 81.00 V 71.00 A 3.00 3.00 0 0 1 139.95 68.00 Z" fill="#F1F1F1" stroke="#777777" stroke-width="1.2"/>
+      <text id="entity-C6-text-0" x="155.62" y="77.36" text-anchor="middle" fill="#444444" font-weight="normal" data-line="0">冷凝水（废料）</text>
+    </g>
+  </g>
+  <g id="layer-legend" data-role="layer" font-size="9">
+    <rect x="10.00" y="132.00" width="4.0" height="4.0" fill="#FDF3E3" stroke="#C07A1B"/>
+    <text x="15.50" y="136.50" style="font-size:9px" fill="#333333">装置/仪器: device</text>
+    <rect x="49.50" y="132.00" width="4.0" height="4.0" fill="#E8F6E4" stroke="#4C8A3A"/>
+    <text x="55.00" y="136.50" style="font-size:9px" fill="#333333">物料/样本: material</text>
+    <rect x="93.00" y="132.00" width="4.0" height="4.0" fill="#E4F0FB" stroke="#3E77B8"/>
+    <text x="98.50" y="136.50" style="font-size:9px" fill="#333333">产物/输出: product</text>
+    <rect x="134.50" y="132.00" width="4.0" height="4.0" fill="#F1F1F1" stroke="#777777"/>
+    <text x="140.00" y="136.50" style="font-size:9px" fill="#333333">废料/终点: waste</text>
+  </g>
+</svg>

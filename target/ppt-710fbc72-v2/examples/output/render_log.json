@@ -1,0 +1,37 @@
+{
+  "_meta": "preview rendering log; schematic PIL preview, not pixel-perfect export",
+  "renderer": "PIL (no LibreOffice/uno detected on runtime box)",
+  "cover": {
+    "path": "examples/output\\example-catalyst-201_cover_preview.png",
+    "backend": "PIL",
+    "size": [
+      1280,
+      720
+    ],
+    "label": "SCHEMATIC",
+    "fonts": [
+      {
+        "path": "C:\\Windows\\Fonts\\msyh.ttc",
+        "index": 0,
+        "fallback_default": false
+      }
+    ],
+    "note": "SCHEMATIC PREVIEW (PIL) — not a pixel-perfect export; open the .pptx in PowerPoint/LibreOffice for true rendering"
+  },
+  "contact_sheet": {
+    "path": "examples/output\\example-catalyst-201_slides_contact_schematic.png",
+    "backend": "PIL",
+    "tiles": 10,
+    "cols": 3,
+    "rows": 4,
+    "label": "SCHEMATIC_CONTACT_SHEET",
+    "fonts": [
+      {
+        "path": "C:\\Windows\\Fonts\\msyh.ttc",
+        "index": 0,
+        "fallback_default": false
+      }
+    ]
+  },
+  "honest_note": "PDF export requires Microsoft PowerPoint or LibreOffice; not performed because neither was available/freshly verified here."
+}

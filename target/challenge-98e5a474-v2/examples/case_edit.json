@@ -1,0 +1,16 @@
+{
+  "case_id": "example-edit-003",
+  "workorder": "editable_relationship_schematic",
+  "title": "Source-preserving edit demo (示例编辑任务)",
+  "summary": "EXAMPLE edit task (示例输入，非正式案例). Edit the previously generated examples/output/figure.svg in place: rename one node label, make one relation label explicit, add a record-only note. Unchanged elements must stay intact; change_records go into result.json.",
+  "figure_type": "schematic",
+  "input_figure": "output/figure.svg",
+  "sources": [
+    "sources/figure03-note.md"
+  ],
+  "edits": [
+    {"action": "rename", "entity_id": "E2", "to": "TNFR1 (receptor)", "reason": "Clarify node label per source table §3.4"},
+    {"action": "relabel", "relation_id": "R5", "to": "upregulates IL6 transcription", "reason": "Explicit label from source §3.1 L4"},
+    {"action": "note", "text": "demo: source-preserving edit keeps every unchanged element intact"}
+  ]
+}

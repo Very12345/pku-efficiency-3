@@ -1,0 +1,348 @@
+{
+  "case_id": "example-schematic-001",
+  "skill": {
+    "name": "scientific-schematic-editor",
+    "version": "1.0.0",
+    "display": "科研示意图生成与编辑"
+  },
+  "status": "success",
+  "workorder": "editable_relationship_schematic",
+  "task_summary": "EXAMPLE input (示例输入，非正式案例). Draft an editable relationship schematic of the NF-κB activation cascade from sources/figure03-note.md: entities, 5 relations with correct direction, 3 module groups, a 3-kind legend, then export SVG (editable source) + PNG/PDF and write result.json.",
+  "figure_type": "schematic",
+  "title": "NF-κB activation cascade (Figure 3, demo)",
+  "main_result": {
+    "figure_type": "schematic",
+    "title": "NF-κB activation cascade (Figure 3, demo)",
+    "entity_count": 6,
+    "relation_count": 5,
+    "group_count": 3,
+    "deliverables": {
+      "figure": {
+        "path": "figure.svg",
+        "format": "svg"
+      },
+      "preview": {
+        "path": "figure.png",
+        "format": "png"
+      },
+      "pdf": {
+        "path": "figure.pdf",
+        "format": "pdf"
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "role": "figure",
+      "format": "svg",
+      "path": "figure.svg",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\figure.svg",
+      "checks": [
+        {
+          "check": "svg.editable_text",
+          "level": "ok",
+          "detail": "19 <text> elements, 0 text-flattened paths"
+        },
+        {
+          "check": "svg.layers",
+          "level": "ok",
+          "detail": "6 semantic layer groups (background/edges/nodes/legend/footer)"
+        },
+        {
+          "check": "svg.manifest_embedded",
+          "level": "ok",
+          "detail": "ER manifest embedded in <metadata id=er-manifest>"
+        },
+        {
+          "check": "svg.manifest_matches",
+          "level": "ok",
+          "detail": "embedded manifest equals the drawn manifest (entities)"
+        },
+        {
+          "check": "svg.title_exists",
+          "level": "ok",
+          "detail": "<title> present"
+        },
+        {
+          "check": "svg.data_entity_attrs",
+          "level": "ok",
+          "detail": "6/6 nodes carry data-entity attribute"
+        },
+        {
+          "check": "svg.data_relation_attrs",
+          "level": "ok",
+          "detail": "5/5 edges carry data-relation attribute"
+        },
+        {
+          "check": "svg.data_source_attrs",
+          "level": "ok",
+          "detail": "5/5 edges carry data-source attribute"
+        }
+      ],
+      "extra": {
+        "role_hint": "editable layered SVG source",
+        "layout": "layout.json"
+      }
+    },
+    {
+      "role": "preview",
+      "format": "png",
+      "path": "figure.png",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\figure.png",
+      "checks": [
+        {
+          "check": "bitmap.dimensions",
+          "level": "ok",
+          "detail": "4500x2580 px, mode RGBA"
+        },
+        {
+          "check": "bitmap.dpi_print",
+          "level": "ok",
+          "detail": "effective DPI at 18 cm print width ~ 635 (>=300 ok for print; >=150 acceptable for screen/preview)"
+        },
+        {
+          "check": "bitmap.colourspace",
+          "level": "ok",
+          "detail": "colour mode RGBA (RGB-family, sRGB-compatible)"
+        }
+      ],
+      "extra": {
+        "font": "Microsoft YaHei",
+        "cjk_ok": true
+      }
+    },
+    {
+      "role": "pdf",
+      "format": "pdf",
+      "path": "figure.pdf",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\figure.pdf",
+      "checks": [
+        {
+          "check": "pdf.header",
+          "level": "ok",
+          "detail": "PDF magic header present"
+        },
+        {
+          "check": "pdf.pages",
+          "level": "ok",
+          "detail": "1 page(s) detected in header scan"
+        },
+        {
+          "check": "pdf.fonts_embedded",
+          "level": "ok",
+          "detail": "font definitions observed: 2 Type3 font(s), 0 FontFile object(s), 2 font resource(s)"
+        }
+      ],
+      "extra": {
+        "role_hint": "export for submission"
+      }
+    }
+  ],
+  "evidence": {
+    "sources": [
+      "sources\\figure03-note.md"
+    ],
+    "entities": [
+      {
+        "id": "E1",
+        "name": "TNF-α",
+        "type": "small_molecule",
+        "source": "sources/figure03-note.md §3.1 L1",
+        "evidence": "Cytokine TNF-α 结合其受体 TNFR1"
+      },
+      {
+        "id": "E2",
+        "name": "TNFR1",
+        "type": "receptor",
+        "source": "sources/figure03-note.md §3.1 L1",
+        "evidence": "结合其受体 TNFR1"
+      },
+      {
+        "id": "E3",
+        "name": "TRADD",
+        "type": "protein",
+        "source": "sources/figure03-note.md §3.1 L2",
+        "evidence": "TNFR1 招募衔接蛋白 TRADD"
+      },
+      {
+        "id": "E4",
+        "name": "RIPK1",
+        "type": "protein",
+        "source": "sources/figure03-note.md §3.1 L2",
+        "evidence": "TRADD 进一步招募激酶 RIPK1"
+      },
+      {
+        "id": "E5",
+        "name": "NF-κB",
+        "type": "protein",
+        "source": "sources/figure03-note.md §3.1 L3",
+        "evidence": "RIPK1 激活转录因子 NF-κB"
+      },
+      {
+        "id": "E6",
+        "name": "IL6",
+        "type": "gene",
+        "source": "sources/figure03-note.md §3.1 L4",
+        "evidence": "NF-κB 上调靶基因 IL6 的转录"
+      }
+    ],
+    "relations": [
+      {
+        "id": "R1",
+        "from": "E1",
+        "to": "E2",
+        "kind": "binds",
+        "canonical_kind": "recruitment",
+        "source": "sources/figure03-note.md §3.1 L1",
+        "evidence": "TNF-α 结合其受体 TNFR1"
+      },
+      {
+        "id": "R2",
+        "from": "E2",
+        "to": "E3",
+        "kind": "recruits",
+        "canonical_kind": "recruitment",
+        "source": "sources/figure03-note.md §3.1 L2",
+        "evidence": "TNFR1 招募衔接蛋白 TRADD"
+      },
+      {
+        "id": "R3",
+        "from": "E3",
+        "to": "E4",
+        "kind": "recruits",
+        "canonical_kind": "recruitment",
+        "source": "sources/figure03-note.md §3.1 L2",
+        "evidence": "TRADD 进一步招募激酶 RIPK1"
+      },
+      {
+        "id": "R4",
+        "from": "E4",
+        "to": "E5",
+        "kind": "activates",
+        "canonical_kind": "activation",
+        "source": "sources/figure03-note.md §3.1 L3",
+        "evidence": "RIPK1 激活转录因子 NF-κB（磷酸化并促进核转位）"
+      },
+      {
+        "id": "R5",
+        "from": "E5",
+        "to": "E6",
+        "kind": "upregulates-gene",
+        "canonical_kind": "transcriptional",
+        "source": "sources/figure03-note.md §3.1 L4",
+        "evidence": "NF-κB 上调靶基因 IL6 的转录"
+      }
+    ]
+  },
+  "legend_mapping": [
+    {
+      "id": "L1",
+      "key": "activation",
+      "label": "activation / promotion 激活/促进",
+      "arrow": "activation",
+      "line": "solid",
+      "source": "sources/figure03-note.md §3.3"
+    },
+    {
+      "id": "L2",
+      "key": "recruitment",
+      "label": "recruitment / binding 招募/结合",
+      "arrow": "recruitment",
+      "line": "solid",
+      "source": "sources/figure03-note.md §3.3"
+    },
+    {
+      "id": "L3",
+      "key": "transcriptional",
+      "label": "transcriptional upregulation 转录上调",
+      "arrow": "transcriptional",
+      "line": "dashed",
+      "source": "sources/figure03-note.md §3.3"
+    }
+  ],
+  "data_mapping": {},
+  "verification": {
+    "checks": {
+      "status": "success",
+      "fail_count": 0,
+      "warn_count": 0,
+      "ack_count": 0,
+      "fails": [],
+      "warns": [],
+      "acks": []
+    },
+    "render": {
+      "kind": "schematic",
+      "font": "Microsoft YaHei",
+      "cjk_ok": true,
+      "layout": {
+        "canvas": {
+          "width": 1500,
+          "height": 860
+        },
+        "node_count": 6,
+        "edge_count": 5
+      }
+    },
+    "traceability": {
+      "entities_total": 6,
+      "entities_with_source_and_evidence": 6,
+      "relations_total": 5,
+      "relations_with_source": 5,
+      "entities_traceable_pct": 100.0,
+      "relations_traceable_pct": 100.0
+    },
+    "spec_lint": {
+      "valid": true,
+      "fail_count": 0,
+      "warn_count": 0,
+      "issues": [
+        {
+          "check": "spec.legend_missing_kinds",
+          "level": "ok",
+          "target": null,
+          "detail": "all drawn kinds have legend"
+        },
+        {
+          "check": "spec.data_mapping",
+          "level": "ok",
+          "target": null,
+          "detail": "schematic — legend conformance above"
+        }
+      ]
+    }
+  },
+  "determinism": {
+    "spec_sha16": "2394674982ab3a42",
+    "note": "same manifest+lint -> same sha; SVG is byte-identical across runs (result.json differs only in generated_at unless --fixed-time is set)"
+  },
+  "sources": [
+    {
+      "path": "sources\\figure03-note.md"
+    }
+  ],
+  "uncertainty": [
+    {
+      "item": "layout",
+      "note": "auto-layout; verify grouping/ordering against the source when the figure has strong layout requirements (entity['pos'] overrides are honoured)."
+    },
+    {
+      "item": "preview fidelity",
+      "note": "PNG/PDF previews are a matplotlib mirror of the same layout+manifest (cairosvg unavailable at runtime); they match the editable SVG semantically, not pixel-for-pixel."
+    }
+  ],
+  "change_records": [],
+  "status_notes": "Generated locally by scientific-schematic-editor.",
+  "generated_at": "2026-11-21T00:52:46+0800",
+  "generator": "scientific-schematic-editor",
+  "tool_versions": {
+    "scientific_schematic_editor": "2.0.0",
+    "python": "3.13.9",
+    "matplotlib": "3.10.6",
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "reportlab": "5.0.0"
+  },
+  "entities_relations": [],
+  "deliverables": []
+}

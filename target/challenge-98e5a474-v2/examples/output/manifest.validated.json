@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0",
+  "figure_type": "schematic",
+  "title": "NF-κB activation cascade (Figure 3, demo)",
+  "subtitle": "EXAMPLE manifest — 示例清单，非正式案例",
+  "entities": [
+    {
+      "id": "E1",
+      "name": "TNF-α",
+      "type": "small_molecule",
+      "source": "sources/figure03-note.md §3.1 L1",
+      "evidence": "Cytokine TNF-α 结合其受体 TNFR1",
+      "note": ""
+    },
+    {
+      "id": "E2",
+      "name": "TNFR1",
+      "type": "receptor",
+      "source": "sources/figure03-note.md §3.1 L1",
+      "evidence": "结合其受体 TNFR1",
+      "note": ""
+    },
+    {
+      "id": "E3",
+      "name": "TRADD",
+      "type": "protein",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TNFR1 招募衔接蛋白 TRADD",
+      "note": ""
+    },
+    {
+      "id": "E4",
+      "name": "RIPK1",
+      "type": "protein",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TRADD 进一步招募激酶 RIPK1",
+      "note": ""
+    },
+    {
+      "id": "E5",
+      "name": "NF-κB",
+      "type": "protein",
+      "source": "sources/figure03-note.md §3.1 L3",
+      "evidence": "RIPK1 激活转录因子 NF-κB",
+      "note": ""
+    },
+    {
+      "id": "E6",
+      "name": "IL6",
+      "type": "gene",
+      "source": "sources/figure03-note.md §3.1 L4",
+      "evidence": "NF-κB 上调靶基因 IL6 的转录",
+      "note": ""
+    }
+  ],
+  "relations": [
+    {
+      "id": "R1",
+      "from": "E1",
+      "to": "E2",
+      "kind": "binds",
+      "source": "sources/figure03-note.md §3.1 L1",
+      "evidence": "TNF-α 结合其受体 TNFR1",
+      "label": "binds",
+      "note": "",
+      "_canon": "recruitment",
+      "_unknown_kind": false
+    },
+    {
+      "id": "R2",
+      "from": "E2",
+      "to": "E3",
+      "kind": "recruits",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TNFR1 招募衔接蛋白 TRADD",
+      "label": "recruits",
+      "note": "",
+      "_canon": "recruitment",
+      "_unknown_kind": false
+    },
+    {
+      "id": "R3",
+      "from": "E3",
+      "to": "E4",
+      "kind": "recruits",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TRADD 进一步招募激酶 RIPK1",
+      "label": "recruits",
+      "note": "",
+      "_canon": "recruitment",
+      "_unknown_kind": false
+    },
+    {
+      "id": "R4",
+      "from": "E4",
+      "to": "E5",
+      "kind": "activates",
+      "source": "sources/figure03-note.md §3.1 L3",
+      "evidence": "RIPK1 激活转录因子 NF-κB（磷酸化并促进核转位）",
+      "label": "activates",
+      "note": "",
+      "_canon": "activation",
+      "_unknown_kind": false
+    },
+    {
+      "id": "R5",
+      "from": "E5",
+      "to": "E6",
+      "kind": "upregulates-gene",
+      "label": "upregulates transcription",
+      "source": "sources/figure03-note.md §3.1 L4",
+      "evidence": "NF-κB 上调靶基因 IL6 的转录",
+      "note": "",
+      "_canon": "transcriptional",
+      "_unknown_kind": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "G1",
+      "label": "Ligand–receptor module 配体-受体模块",
+      "members": [
+        "E1",
+        "E2"
+      ],
+      "source": "sources/figure03-note.md §3.2",
+      "evidence": "配体-受体模块：TNF-α、TNFR1",
+      "_unknown_members": []
+    },
+    {
+      "id": "G2",
+      "label": "Signaling module 信号衔接模块",
+      "members": [
+        "E3",
+        "E4"
+      ],
+      "source": "sources/figure03-note.md §3.2",
+      "evidence": "信号衔接模块：TRADD、RIPK1",
+      "_unknown_members": []
+    },
+    {
+      "id": "G3",
+      "label": "Effector module 效应模块",
+      "members": [
+        "E5",
+        "E6"
+      ],
+      "source": "sources/figure03-note.md §3.2",
+      "evidence": "效应模块：NF-κB、IL6",
+      "_unknown_members": []
+    }
+  ],
+  "legend": [
+    {
+      "id": "L1",
+      "key": "activation",
+      "label": "activation / promotion 激活/促进",
+      "arrow": "activation",
+      "line": "solid",
+      "source": "sources/figure03-note.md §3.3"
+    },
+    {
+      "id": "L2",
+      "key": "recruitment",
+      "label": "recruitment / binding 招募/结合",
+      "arrow": "recruitment",
+      "line": "solid",
+      "source": "sources/figure03-note.md §3.3"
+    },
+    {
+      "id": "L3",
+      "key": "transcriptional",
+      "label": "transcriptional upregulation 转录上调",
+      "arrow": "transcriptional",
+      "line": "dashed",
+      "source": "sources/figure03-note.md §3.3"
+    }
+  ],
+  "style": {
+    "font_size": 16,
+    "canvas": {
+      "width": 1500,
+      "height": 860
+    },
+    "font": ""
+  },
+  "acknowledged_issues": [],
+  "_provenance": "case.json[manifest]",
+  "_traceability": {
+    "entities_total": 6,
+    "entities_with_source_and_evidence": 6,
+    "relations_total": 5,
+    "relations_with_source": 5,
+    "entities_traceable_pct": 100.0,
+    "relations_traceable_pct": 100.0
+  }
+}

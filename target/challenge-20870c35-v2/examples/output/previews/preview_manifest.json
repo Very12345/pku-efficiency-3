@@ -1,0 +1,80 @@
+{
+  "generated_by": "render.py of academic-talk-organizer (v2)",
+  "generated_at": "2026-11-20T18:02:43+00:00",
+  "method": "Pillow simulated preview (LibreOffice not assumed available)",
+  "limitation": "预览为 Pillow(PIL) 模拟渲染，非 LibreOffice/PowerPoint 的 Office 真实栅格化；用于检查页数、逐页主张/证据布局与图占位，正式视觉效果请以可编辑的 .pptx 打开为准。",
+  "files": [
+    {
+      "file": "previews/cover_preview.png",
+      "kind": "cover",
+      "width": 1280,
+      "height": 720,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_002.png",
+      "kind": "slide-thumbnail",
+      "page_no": 2,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_003.png",
+      "kind": "slide-thumbnail",
+      "page_no": 3,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_004.png",
+      "kind": "slide-thumbnail",
+      "page_no": 4,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_005.png",
+      "kind": "slide-thumbnail",
+      "page_no": 5,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_006.png",
+      "kind": "slide-thumbnail",
+      "page_no": 6,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_007.png",
+      "kind": "slide-thumbnail",
+      "page_no": 7,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_008.png",
+      "kind": "slide-thumbnail",
+      "page_no": 8,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_009.png",
+      "kind": "slide-thumbnail",
+      "page_no": 9,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_010.png",
+      "kind": "slide-thumbnail",
+      "page_no": 10,
+      "simulated": true
+    },
+    {
+      "file": "previews/slide_011.png",
+      "kind": "slide-thumbnail",
+      "page_no": 11,
+      "simulated": true
+    },
+    {
+      "file": "previews/preview_grid.png",
+      "kind": "grid",
+      "simulated": true
+    }
+  ]
+}

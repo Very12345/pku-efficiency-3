@@ -1,0 +1,1142 @@
+{
+  "case_id": "example-catalyst-201",
+  "skill": {
+    "name": "academic-slide-adapt",
+    "version": "2.0.0",
+    "display": "Academic PPT Template & Format Adaptation（学术PPT模板与格式适配）"
+  },
+  "status": "success",
+  "workorder": "academic_slide_deck",
+  "task_summary": "# 任务：Cu-ZnO/γ-Al₂O₃ 催化剂 CO₂ 加氢制甲醇 — 学术汇报 PPT（示例）\n\n（示例任务，非正式案例。平台正式案例由组织方提供。）\n\n将给定论文材料组织为一场 **10 页、约 12 分钟**的课题组学术汇报，交付可编辑\npptx 及渲染预览，全部内容必须能在材料中定位来源。\n\n## 要求\n\n1. 按「背景与问题 → 方法 → 结果（图/表逐页）→ 讨论 → 限制 → 结论 → 证据映射」组织页面。\n2. 每页给出：页级主张、图表编号引用、讲稿/备注（含建议时长）、证据定位（材料行号）。\n3. 套用可用模板的母版/版式/占位符；模板缺失时使用 Skill 内置回退模板并如实说明。\n4. 图表等比放入容器，不拉伸变形；图号与正文引用保持一致。\n5. 交付：\n   - `<case_id>_deck.pptx`（可编辑源）；\n   - 封面预览 PNG + 幻灯联系表 P",
+  "title": "Cu-ZnO/γ-Al₂O₃ 双金属催化剂用于 CO₂ 加氢制甲醇",
+  "subtitle": "温度与空速对甲醇时空收率的影响及活性位协同机制",
+  "audience": "催化方向课题组组会",
+  "duration_minutes": 12,
+  "language": "zh",
+  "slide_count": 10,
+  "main_result": {
+    "deck": {
+      "path": "example-catalyst-201_deck.pptx",
+      "format": "pptx",
+      "editable": true
+    },
+    "planned_slides": 10,
+    "target_slides": 10,
+    "notes_pages": 10,
+    "figures_embedded": 2,
+    "figures_total": 2,
+    "tables_pages": 2,
+    "previews": {
+      "cover": "example-catalyst-201_cover_preview.png",
+      "contact_schematic": "example-catalyst-201_slides_contact_schematic.png"
+    },
+    "preview_is_schematic": true
+  },
+  "artifacts": [
+    {
+      "role": "deck",
+      "format": "pptx",
+      "path": "example-catalyst-201_deck.pptx",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\example-catalyst-201_deck.pptx",
+      "checks": {
+        "exists": true,
+        "sha256": "fcb75bb4a755e92f311e9e4d73d19c080f463c615aa83bb5a30874eabcc91568"
+      },
+      "extra": []
+    },
+    {
+      "role": "cover_preview",
+      "format": "png",
+      "path": "example-catalyst-201_cover_preview.png",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\example-catalyst-201_cover_preview.png",
+      "checks": {
+        "exists": true,
+        "sha256": "588d51d9e1dfb5242c4ae8ed4aa750ad0a6cdc68217a0543f7804543a51d6882"
+      },
+      "extra": []
+    },
+    {
+      "role": "contact_preview",
+      "format": "png",
+      "path": "example-catalyst-201_slides_contact_schematic.png",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\example-catalyst-201_slides_contact_schematic.png",
+      "checks": {
+        "exists": true,
+        "sha256": "2b60b2deac0042b963bdd0b97e81d161c860d82eea88d3f39bc88ccb439fafbd"
+      },
+      "extra": []
+    },
+    {
+      "role": "plan spec",
+      "format": "json",
+      "path": "spec.json",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\spec.json",
+      "checks": {
+        "exists": true,
+        "sha256": "ad899f9fa5c1ba14df4860550c5b76eba89dc36a5a5fa9c6f2a68ad274350ece"
+      },
+      "extra": []
+    },
+    {
+      "role": "adaptation plan",
+      "format": "json",
+      "path": "adopt_plan.json",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\adopt_plan.json",
+      "checks": {
+        "exists": true,
+        "sha256": "6fcf785197f88a3c41470efccb4335b53fe650606ad984c17143d7acd7fea1bf"
+      },
+      "extra": []
+    },
+    {
+      "role": "content",
+      "format": "json",
+      "path": "content.json",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\content.json",
+      "checks": {
+        "exists": true,
+        "sha256": "82a960b1e24d06acc5ea6ae2f13ff9b68c1e08d3420f9e884d2fb681cba89758"
+      },
+      "extra": []
+    },
+    {
+      "role": "audit",
+      "format": "json",
+      "path": "audit.json",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\audit.json",
+      "checks": {
+        "exists": true,
+        "sha256": "66c38d43adfaec6e727e177ddf06e13e0d291f273238d829e478dc1d62d9afb3"
+      },
+      "extra": []
+    },
+    {
+      "role": "render log",
+      "format": "json",
+      "path": "render_log.json",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\render_log.json",
+      "checks": {
+        "exists": true,
+        "sha256": "4bf199de7934f007753fd4ffcb4837357b539188b885766d16681fb0e2aad9ea"
+      },
+      "extra": []
+    }
+  ],
+  "slide_evidence": [
+    {
+      "page_no": 1,
+      "page_type": "cover",
+      "title": "Cu-ZnO/γ-Al₂O₃ 双金属催化剂用于 CO₂ 加氢制甲醇",
+      "claims": [],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [],
+      "notes_excerpt": "[建议时长 1.2 分钟] 开场（建议 12 分钟总时长）。一句话介绍题目与核心论点：「Cu-ZnO/γ-Al₂O₃ 双金属催化剂用于 CO₂ 加氢制甲醇」。"
+    },
+    {
+      "page_no": 2,
+      "page_type": "background",
+      "title": "研究背景与研究问题",
+      "claims": [
+        "CO₂ 加氢制甲醇是碳循环的关键路径，但传统 Cu/ZnO 催化剂活性与选择性不足。",
+        "本工作研究 Cu-ZnO 界面协同及反应条件（温度、空速）对甲醇时空收率的影响。"
+      ],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [
+        {
+          "claim": "CO₂ 加氢制甲醇是碳循环的关键路径，但传统 Cu/ZnO 催化剂活性与选择性不足。",
+          "loc": "material.md:4"
+        },
+        {
+          "claim": "本工作研究 Cu-ZnO 界面协同及反应条件（温度、空速）对甲醇时空收率的影响。",
+          "loc": "material.md:5"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 按证据顺序讲背景：先重要性，后空白，落到本工作的研究问题。"
+    },
+    {
+      "page_no": 3,
+      "page_type": "methods",
+      "title": "方法",
+      "claims": [
+        "共沉淀法制备 Cu-ZnO/γ-Al₂O₃（Cu/Zn 摩尔比 2:1，负载量 15 wt%）。",
+        "固定床反应器，220–300 °C、3 MPa、H₂/CO₂=3:1，GHSV 2000–8000 h⁻¹。"
+      ],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [
+        {
+          "claim": "共沉淀法制备 Cu-ZnO/γ-Al₂O₃（Cu/Zn 摩尔比 2:1，负载量 15 wt%）。",
+          "loc": "material.md:9"
+        },
+        {
+          "claim": "固定床反应器，220–300 °C、3 MPa、H₂/CO₂=3:1，GHSV 2000–8000 h⁻¹。",
+          "loc": "material.md:10"
+        },
+        {
+          "claim": "XRD/H₂-TPR 表征物相与还原行为；GC 在线分析产物。",
+          "loc": "material.md:11"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 讲清材料与实验流程；避免进入结果细节。"
+    },
+    {
+      "page_no": 4,
+      "page_type": "results",
+      "title": "结果：1 催化剂形貌与粒径分布（TEM）+ XRD 物相",
+      "claims": [
+        "XRD 显示 Cu(111)/ZnO(101) 界面相，H₂-TPR 表明 CuO 还原峰向低温移动。"
+      ],
+      "figure_refs": [
+        "1",
+        "2"
+      ],
+      "table_refs": [
+        "1"
+      ],
+      "evidence": [
+        {
+          "claim": "XRD 显示 Cu(111)/ZnO(101) 界面相，H₂-TPR 表明 CuO 还原峰向低温移动。",
+          "loc": "material.md:16"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 讲结果主张，然后指向 1/2/1：证据在哪、结论是什么、30 秒内讲完。"
+    },
+    {
+      "page_no": 5,
+      "page_type": "results",
+      "title": "结果：2 温度对 CO₂ 转化率与甲醇选择性的影响",
+      "claims": [
+        "GHSV 由 2000 升至 8000 h⁻¹ 时，单程转化率降低但时空收率提高。"
+      ],
+      "figure_refs": [
+        "2"
+      ],
+      "table_refs": [
+        "1"
+      ],
+      "evidence": [
+        {
+          "claim": "GHSV 由 2000 升至 8000 h⁻¹ 时，单程转化率降低但时空收率提高。",
+          "loc": "material.md:17"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 讲结果主张，然后指向 2/1：证据在哪、结论是什么、30 秒内讲完。"
+    },
+    {
+      "page_no": 6,
+      "page_type": "results",
+      "title": "结果 3",
+      "claims": [
+        "260 °C 时甲醇时空收率达 0.68 g/(g·h)，选择性 71%，优于对照 Cu/ZnO。"
+      ],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [
+        {
+          "claim": "260 °C 时甲醇时空收率达 0.68 g/(g·h)，选择性 71%，优于对照 Cu/ZnO。",
+          "loc": "material.md:15"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 讲结果主张，然后指向 数据：证据在哪、结论是什么、30 秒内讲完。"
+    },
+    {
+      "page_no": 7,
+      "page_type": "conclusion",
+      "title": "结论",
+      "claims": [
+        "Cu-ZnO/γ-Al₂O₃ 在 260 °C、3 MPa、GHSV 4000 h⁻¹ 下甲醇时空收率 0.68 g/(g·h)。"
+      ],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [
+        {
+          "claim": "Cu-ZnO/γ-Al₂O₃ 在 260 °C、3 MPa、GHSV 4000 h⁻¹ 下甲醇时空收率 0.68 g/(g·h)。",
+          "loc": "material.md:27"
+        },
+        {
+          "claim": "条件-结构-性能联动规律为 CO₂ 加氢工艺放大提供依据。",
+          "loc": "material.md:28"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 回到研究问题给出回答，附一句展望。"
+    },
+    {
+      "page_no": 8,
+      "page_type": "discussion",
+      "title": "讨论与局限",
+      "claims": [
+        "Cu-ZnO 界面有利于 CO₂ 活化与中间体稳定，是选择性提升的主因。",
+        "未开展 100 h 以上长周期稳定性测试。"
+      ],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [
+        {
+          "claim": "Cu-ZnO 界面有利于 CO₂ 活化与中间体稳定，是选择性提升的主因。",
+          "loc": "material.md:20"
+        },
+        {
+          "claim": "未开展 100 h 以上长周期稳定性测试。",
+          "loc": "material.md:23"
+        },
+        {
+          "claim": "机理证据以表征为主，缺少原位谱学直接观测。",
+          "loc": "material.md:24"
+        }
+      ],
+      "notes_excerpt": "[建议时长 1.2 分钟] 先讲结果含义，再诚实列出局限。"
+    },
+    {
+      "page_no": 9,
+      "page_type": "evidence_map",
+      "title": "证据映射（页 → 论文位置）",
+      "claims": [],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [],
+      "notes_excerpt": "[建议时长 1.2 分钟] 本附录证明每页主张可追溯到原文位置，供评审/复跑核对。"
+    },
+    {
+      "page_no": 10,
+      "page_type": "thankyou",
+      "title": "谢谢 / 欢迎提问",
+      "claims": [],
+      "figure_refs": [],
+      "table_refs": [],
+      "evidence": [],
+      "notes_excerpt": "[建议时长 1.2 分钟] 重述核心结论与主要证据位置。"
+    }
+  ],
+  "template_audit": {
+    "template_source": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\templates\\builtin.pptx",
+    "opened_from": "builtin",
+    "template_fallback_used": true,
+    "slide_size_emu": [
+      12192000,
+      6858000
+    ],
+    "layout_scores_concept": "masters/layouts/placeholders enumerated by python-pptx; see adopt_plan.json layouts",
+    "layouts": [
+      {
+        "idx": 0,
+        "name": "Title Slide",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 7772400,
+            "h": 1470025
+          },
+          {
+            "idx": 1,
+            "name": "Subtitle 2",
+            "w": 6400800,
+            "h": 1752600
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 3",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 4",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 5",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 1,
+        "name": "Title and Content",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 8229600,
+            "h": 1143000
+          },
+          {
+            "idx": 1,
+            "name": "Content Placeholder 2",
+            "w": 8229600,
+            "h": 4525963
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 3",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 4",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 5",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 2,
+        "name": "Section Header",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 7772400,
+            "h": 1362075
+          },
+          {
+            "idx": 1,
+            "name": "Text Placeholder 2",
+            "w": 7772400,
+            "h": 1500187
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 3",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 4",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 5",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 3,
+        "name": "Two Content",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 8229600,
+            "h": 1143000
+          },
+          {
+            "idx": 1,
+            "name": "Content Placeholder 2",
+            "w": 4038600,
+            "h": 4525963
+          },
+          {
+            "idx": 2,
+            "name": "Content Placeholder 3",
+            "w": 4038600,
+            "h": 4525963
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 4",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 5",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 6",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 4,
+        "name": "Comparison",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 8229600,
+            "h": 1143000
+          },
+          {
+            "idx": 1,
+            "name": "Text Placeholder 2",
+            "w": 4040188,
+            "h": 639762
+          },
+          {
+            "idx": 2,
+            "name": "Content Placeholder 3",
+            "w": 4040188,
+            "h": 3951288
+          },
+          {
+            "idx": 3,
+            "name": "Text Placeholder 4",
+            "w": 4041775,
+            "h": 639762
+          },
+          {
+            "idx": 4,
+            "name": "Content Placeholder 5",
+            "w": 4041775,
+            "h": 3951288
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 6",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 7",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 8",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 5,
+        "name": "Title Only",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 8229600,
+            "h": 1143000
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 2",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 3",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 4",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 6,
+        "name": "Blank",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 10,
+            "name": "Date Placeholder 1",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 2",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 3",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 7,
+        "name": "Content with Caption",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 3008313,
+            "h": 1162050
+          },
+          {
+            "idx": 1,
+            "name": "Content Placeholder 2",
+            "w": 5111750,
+            "h": 5853113
+          },
+          {
+            "idx": 2,
+            "name": "Text Placeholder 3",
+            "w": 3008313,
+            "h": 4691063
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 4",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 5",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 6",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 8,
+        "name": "Picture with Caption",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 5486400,
+            "h": 566738
+          },
+          {
+            "idx": 1,
+            "name": "Picture Placeholder 2",
+            "w": 5486400,
+            "h": 4114800
+          },
+          {
+            "idx": 2,
+            "name": "Text Placeholder 3",
+            "w": 5486400,
+            "h": 804862
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 4",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 5",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 6",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 9,
+        "name": "Title and Vertical Text",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Title 1",
+            "w": 8229600,
+            "h": 1143000
+          },
+          {
+            "idx": 1,
+            "name": "Vertical Text Placeholder 2",
+            "w": 8229600,
+            "h": 4525963
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 3",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 4",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 5",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      },
+      {
+        "idx": 10,
+        "name": "Vertical Title and Text",
+        "master": "",
+        "placeholders": [
+          {
+            "idx": 0,
+            "name": "Vertical Title 1",
+            "w": 2057400,
+            "h": 5851525
+          },
+          {
+            "idx": 1,
+            "name": "Vertical Text Placeholder 2",
+            "w": 6019800,
+            "h": 5851525
+          },
+          {
+            "idx": 10,
+            "name": "Date Placeholder 3",
+            "w": 2133600,
+            "h": 365125
+          },
+          {
+            "idx": 11,
+            "name": "Footer Placeholder 4",
+            "w": 2895600,
+            "h": 365125
+          },
+          {
+            "idx": 12,
+            "name": "Slide Number Placeholder 5",
+            "w": 2133600,
+            "h": 365125
+          }
+        ]
+      }
+    ],
+    "layout_used": [
+      {
+        "page_no": 1,
+        "layout": "layout='Title Slide' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 2,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 3,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 4,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 5,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 6,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 7,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 8,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 9,
+        "layout": "layout='Title and Content' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      },
+      {
+        "page_no": 10,
+        "layout": "layout='Title Slide' master='' [applied via adopt_plan]",
+        "fallback": false,
+        "matched": 2,
+        "plan_source": "adopt_plan"
+      }
+    ],
+    "layout_fallback_used": false,
+    "dropped_original_slides": 0,
+    "template_errors": [],
+    "figure_adjust": [
+      {
+        "src": "fig1.png",
+        "aspect_preserved": true,
+        "scale": 2061.6333,
+        "w_emu": 2226564,
+        "h_emu": 927735,
+        "placed": true
+      },
+      {
+        "src": "fig2.png",
+        "aspect_preserved": true,
+        "scale": 3226.9043,
+        "w_emu": 2226564,
+        "h_emu": 1452106,
+        "placed": true
+      },
+      {
+        "src": "fig2.png",
+        "aspect_preserved": true,
+        "scale": 6652.5913,
+        "w_emu": 4590288,
+        "h_emu": 2993666,
+        "placed": true
+      }
+    ],
+    "theme": {
+      "latin_font": "Calibri",
+      "ea_font": "",
+      "accent_colors": [
+        {
+          "name": "dk1",
+          "value": "000000"
+        },
+        {
+          "name": "lt1",
+          "value": "FFFFFF"
+        },
+        {
+          "name": "dk2",
+          "value": "1F497D"
+        },
+        {
+          "name": "lt2",
+          "value": "EEECE1"
+        },
+        {
+          "name": "accent1",
+          "value": "4F81BD"
+        },
+        {
+          "name": "accent2",
+          "value": "C0504D"
+        },
+        {
+          "name": "accent3",
+          "value": "9BBB59"
+        },
+        {
+          "name": "accent4",
+          "value": "8064A2"
+        },
+        {
+          "name": "accent5",
+          "value": "4BACC6"
+        },
+        {
+          "name": "accent6",
+          "value": "F79646"
+        },
+        {
+          "name": "hlink",
+          "value": "0000FF"
+        },
+        {
+          "name": "folHlink",
+          "value": "800080"
+        }
+      ],
+      "error": null
+    },
+    "adopt_plan_applied": 10,
+    "adopt_plan_total_pages": 10,
+    "adopt_plan_deviations": []
+  },
+  "adopt_plan": {
+    "source": "builtin",
+    "pages_assigned": 10,
+    "layout_gaps": [],
+    "batch_deviations": [],
+    "figure_plan": 3,
+    "gates": {
+      "G1_template_open": true,
+      "G2_layouts_enumerated": true,
+      "G3_every_page_has_layout": true,
+      "G4_batch_rules_ok_or_disclosed": true,
+      "ok": true
+    }
+  },
+  "verification": {
+    "checks": [
+      {
+        "check": "artifact.pptx.exists",
+        "level": "ok",
+        "detail": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\example-catalyst-201_deck.pptx"
+      },
+      {
+        "check": "artifact.cover_png.exists",
+        "level": "ok",
+        "detail": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\example-catalyst-201_cover_preview.png"
+      },
+      {
+        "check": "artifact.contact_png.exists",
+        "level": "ok",
+        "detail": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\example-catalyst-201_slides_contact_schematic.png"
+      },
+      {
+        "check": "artifact.spec.exists",
+        "level": "ok",
+        "detail": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\spec.json"
+      },
+      {
+        "check": "artifact.adopt_plan.exists",
+        "level": "ok",
+        "detail": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-710fbc72-v2\\examples\\output\\adopt_plan.json"
+      },
+      {
+        "check": "pptx.reopen",
+        "level": "ok",
+        "detail": "python-pptx reopened; 10 slides"
+      },
+      {
+        "check": "pptx.slide_count",
+        "level": "ok",
+        "detail": "10 == planned 10"
+      },
+      {
+        "check": "content.claim_coverage",
+        "level": "ok",
+        "detail": "all plan claims present in slide texts"
+      },
+      {
+        "check": "xref.figure_refs",
+        "level": "ok",
+        "detail": "2 figure refs resolve to figure list"
+      },
+      {
+        "check": "xref.figure_placement",
+        "level": "ok",
+        "detail": "every figure is placed on a results page"
+      },
+      {
+        "check": "notes.present",
+        "level": "ok",
+        "detail": "speaker notes on all 10 slides"
+      },
+      {
+        "check": "layout.overflow",
+        "level": "ok",
+        "detail": "no text box overflow estimated"
+      },
+      {
+        "check": "layout.font_floor",
+        "level": "ok",
+        "detail": "no box needed to shrink below 14pt"
+      },
+      {
+        "check": "layout.footer_uniform",
+        "level": "ok",
+        "detail": "uniform footer/page numbers from page 2"
+      },
+      {
+        "check": "preview.cover_png",
+        "level": "ok",
+        "detail": "PNG signature ok, 55727 bytes"
+      },
+      {
+        "check": "preview.contact_png",
+        "level": "ok",
+        "detail": "PNG signature ok, 133421 bytes"
+      },
+      {
+        "check": "traceability.evidence_loc",
+        "level": "ok",
+        "detail": "13/13 claims carry source locators (100%)"
+      },
+      {
+        "check": "adopt_plan.consistency",
+        "level": "ok",
+        "detail": "10/10 pages applied the phase-1 plan; 0 deviations"
+      },
+      {
+        "check": "adopt_plan.gates",
+        "level": "ok",
+        "detail": "phase-1 gates ok: {'G1_template_open': True, 'G2_layouts_enumerated': True, 'G3_every_page_has_layout': True, 'G4_batch_rules_ok_or_disclosed': True, 'ok': True}"
+      },
+      {
+        "check": "result.contract",
+        "level": "ok",
+        "detail": "result.json conforms to OUTPUT_CONTRACT"
+      },
+      {
+        "check": "result.contract_gates",
+        "level": "ok",
+        "detail": "check_contract G1-G8 all pass"
+      }
+    ],
+    "render": {
+      "_meta": "preview rendering log; schematic PIL preview, not pixel-perfect export",
+      "renderer": "PIL (no LibreOffice/uno detected on runtime box)",
+      "cover": {
+        "path": "examples/output\\example-catalyst-201_cover_preview.png",
+        "backend": "PIL",
+        "size": [
+          1280,
+          720
+        ],
+        "label": "SCHEMATIC",
+        "fonts": [
+          {
+            "path": "C:\\Windows\\Fonts\\msyh.ttc",
+            "index": 0,
+            "fallback_default": false
+          }
+        ],
+        "note": "SCHEMATIC PREVIEW (PIL) — not a pixel-perfect export; open the .pptx in PowerPoint/LibreOffice for true rendering"
+      },
+      "contact_sheet": {
+        "path": "examples/output\\example-catalyst-201_slides_contact_schematic.png",
+        "backend": "PIL",
+        "tiles": 10,
+        "cols": 3,
+        "rows": 4,
+        "label": "SCHEMATIC_CONTACT_SHEET",
+        "fonts": [
+          {
+            "path": "C:\\Windows\\Fonts\\msyh.ttc",
+            "index": 0,
+            "fallback_default": false
+          }
+        ]
+      },
+      "honest_note": "PDF export requires Microsoft PowerPoint or LibreOffice; not performed because neither was available/freshly verified here."
+    },
+    "traceability": {
+      "evidence_loc_frac": null,
+      "hashes": {
+        "spec_sha256": "ad899f9fa5c1ba14df4860550c5b76eba89dc36a5a5fa9c6f2a68ad274350ece",
+        "adopt_plan_sha256": "6fcf785197f88a3c41470efccb4335b53fe650606ad984c17143d7acd7fea1bf"
+      },
+      "contract_ok": true
+    },
+    "contract_gates": [
+      {
+        "gate": "G1",
+        "ok": true,
+        "detail": "result.case_id='example-catalyst-201' case.case_id='example-catalyst-201'"
+      },
+      {
+        "gate": "G2",
+        "ok": true,
+        "detail": "status='success'"
+      },
+      {
+        "gate": "G3",
+        "ok": true,
+        "detail": "missing=[] null_placeholders=[]"
+      },
+      {
+        "gate": "G4",
+        "ok": true,
+        "detail": "deck=example-catalyst-201_deck.pptx reopened; 10 slides"
+      },
+      {
+        "gate": "G5",
+        "ok": true,
+        "detail": "slide_evidence entries=10"
+      },
+      {
+        "gate": "G6",
+        "ok": true,
+        "detail": "opened_from='builtin' layouts=11"
+      },
+      {
+        "gate": "G7",
+        "ok": true,
+        "detail": "artifacts=8 missing=[]"
+      },
+      {
+        "gate": "G8",
+        "ok": true,
+        "detail": "preview_required=True cover_exists=True uncertainty=0"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "rel": "material.md",
+      "exists": true,
+      "lines": 38
+    }
+  ],
+  "uncertainty": [],
+  "change_records": [],
+  "status_notes": "status semantics: success=all checks ok; partial=some checks warn/fail (recorded); failed=pipeline did not complete.",
+  "generated_at": "2026-11-20T18:00:04Z",
+  "generator": "academic-slide-adapt",
+  "tool_versions": {
+    "python": "3.13.9",
+    "pptx": "1.0.2",
+    "PIL": "?",
+    "numpy": "2.3.5",
+    "matplotlib": "3.10.6",
+    "reportlab": "5.0.0"
+  },
+  "template_inheritance": false,
+  "evidence_per_slide": false,
+  "notes_per_slide": false,
+  "preview_png": false
+}

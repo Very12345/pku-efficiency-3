@@ -1,0 +1,755 @@
+{
+  "dir": "D:\\BuildTemp\\smoke-challenge-1bd90d8a-v2\\gen-ex",
+  "figures": {
+    "fig-01": {
+      "elements": [
+        {
+          "svg_id": "A-bar-1",
+          "role": "bar",
+          "status": "ok",
+          "detail": "data.csv 行 4 列 mean_um3 = 1180.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-1",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "data.csv 行 4 列 mean_um3 = 1180.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-1",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 4 列 mean_um3 = 1180.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-2",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 4 列 mean_um3 = 1180.0 与图元一致"
+        },
+        {
+          "svg_id": "A-bar-2",
+          "role": "bar",
+          "status": "ok",
+          "detail": "data.csv 行 5 列 mean_um3 = 902.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-2",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "data.csv 行 5 列 mean_um3 = 902.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-3",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 5 列 mean_um3 = 902.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-4",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 5 列 mean_um3 = 902.0 与图元一致"
+        },
+        {
+          "svg_id": "A-bar-3",
+          "role": "bar",
+          "status": "ok",
+          "detail": "data.csv 行 6 列 mean_um3 = 610.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-3",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "data.csv 行 6 列 mean_um3 = 610.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-5",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 6 列 mean_um3 = 610.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-6",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 6 列 mean_um3 = 610.0 与图元一致"
+        },
+        {
+          "svg_id": "A-bar-4",
+          "role": "bar",
+          "status": "ok",
+          "detail": "data.csv 行 7 列 mean_um3 = 485.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-4",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "data.csv 行 7 列 mean_um3 = 485.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-7",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 7 列 mean_um3 = 485.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-errorbar-cap-8",
+          "role": "errorbar-cap",
+          "status": "ok",
+          "detail": "data.csv 行 7 列 mean_um3 = 485.0 与图元一致"
+        },
+        {
+          "svg_id": "A-el-significance-line-1",
+          "role": "significance-line",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-significance-text-1",
+          "role": "significance-text",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-grid-1",
+          "role": "grid",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-grid-2",
+          "role": "grid",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-grid-3",
+          "role": "grid",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-x-tick-1",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-x-tick-2",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-x-tick-3",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-x-tick-4",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-y-tick-1",
+          "role": "y-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-y-tick-2",
+          "role": "y-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-y-tick-3",
+          "role": "y-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-x-axis-label-1",
+          "role": "x-axis-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-y-axis-label-1",
+          "role": "y-axis-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-legend-box-1",
+          "role": "legend-box",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-legend-swatch-1",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "A-el-legend-label-1",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-panel-label-1",
+          "role": "panel-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-line-1",
+          "role": "series",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-1",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 0 列 mean_um3 = 420.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-1",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-2",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 4 列 mean_um3 = 1180.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-2",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-line-2",
+          "role": "series",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-3",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 1 列 mean_um3 = 415.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-3",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-4",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 5 列 mean_um3 = 902.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-4",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-line-3",
+          "role": "series",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-5",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 3 列 mean_um3 = 421.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-5",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-6",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 7 列 mean_um3 = 485.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-6",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-line-4",
+          "role": "series",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-7",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 2 列 mean_um3 = 438.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-7",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-point-8",
+          "role": "point",
+          "status": "ok",
+          "detail": "data.csv 行 6 列 mean_um3 = 610.0 与图元一致"
+        },
+        {
+          "svg_id": "B-el-errorbar-8",
+          "role": "errorbar",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-grid-1",
+          "role": "grid",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-grid-2",
+          "role": "grid",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-grid-3",
+          "role": "grid",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-x-tick-1",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-x-tick-2",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-x-tick-3",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-x-tick-4",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-x-tick-5",
+          "role": "x-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-y-tick-1",
+          "role": "y-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-y-tick-2",
+          "role": "y-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-y-tick-3",
+          "role": "y-tick",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-x-axis-label-1",
+          "role": "x-axis-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-y-axis-label-1",
+          "role": "y-axis-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-box-1",
+          "role": "legend-box",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-swatch-1",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-label-1",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-swatch-2",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-label-2",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-swatch-3",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-label-3",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-swatch-4",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "B-el-legend-label-4",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-panel-label-2",
+          "role": "panel-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-title-1",
+          "role": "title",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-subtitle-1",
+          "role": "subtitle",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        }
+      ],
+      "pass": true,
+      "counts": {
+        "elements": 79,
+        "orphans": 0
+      }
+    },
+    "fig-02": {
+      "elements": [
+        {
+          "svg_id": "el-relation-1",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-1",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-2",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-2",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-3",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-3",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-4",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-4",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-5",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-5",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-6",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-6",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-7",
+          "role": "relation",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-relation-label-7",
+          "role": "relation-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-1",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-1",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-2",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-2",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-3",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-3",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-4",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-4",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-5",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-5",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-6",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-6",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-7",
+          "role": "node",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-node-label-7",
+          "role": "node-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-box-1",
+          "role": "legend-box",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-title-1",
+          "role": "legend-title",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-swatch-1",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-label-1",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-swatch-2",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-label-2",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-swatch-3",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-label-3",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-swatch-4",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-label-4",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-swatch-5",
+          "role": "legend-swatch",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-legend-label-5",
+          "role": "legend-label",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-title-1",
+          "role": "title",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        },
+        {
+          "svg_id": "el-subtitle-1",
+          "role": "subtitle",
+          "status": "ok",
+          "detail": "无 value/column/row_index 三元组（网络图等非表格图元，改查实体存在性）"
+        }
+      ],
+      "pass": true,
+      "counts": {
+        "elements": 42,
+        "orphans": 0
+      }
+    }
+  },
+  "all_pass": true,
+  "summary": {
+    "checked": 121,
+    "mismatches": 0,
+    "unmatched": 0
+  }
+}

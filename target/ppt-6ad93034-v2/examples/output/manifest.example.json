@@ -1,0 +1,130 @@
+{
+  "generated_at": "2026-11-21T02:02:15",
+  "files": [
+    {
+      "path": "changelog.jsonl",
+      "sha256": "ed38b3b185e9f64a55bff9dd3b4561b654e2d5fd75d4ff8556169c2b823ba7c7",
+      "size": 188
+    },
+    {
+      "path": "evidence_map.json",
+      "sha256": "1cadb047fb626f6da0bd0b6fb261a9fa7ae6cf081f89904229a189eb8af78eeb",
+      "size": 1764
+    },
+    {
+      "path": "evidence_map.md",
+      "sha256": "3c2c3ea771dd49824d244a74be1a0dba3361ab05fe52e48488c980d0880ecaf2",
+      "size": 867
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "b352c068e2d6b4efc76677f910f6373fefa8a7d259d3fd5eac3be96d2976875a",
+      "size": 3823
+    },
+    {
+      "path": "result.json",
+      "sha256": "8e3bbd9233dc2bd7b499f70b57a06540a6434c2529b702ebf1e3774ef77bb1d5",
+      "size": 13446
+    },
+    {
+      "path": "logs\\run_2026-11-21T02-02-11.log",
+      "sha256": "466cf771b77c07d0eaad42f0af6a5c992034c61f93b1204f8658c7f2f13e7ea8",
+      "size": 546
+    },
+    {
+      "path": "preview\\preview.pdf",
+      "sha256": "9ca59659a6438aa85beb1173f17f306552cbfaba7aeb79cc3461299612fcee8b",
+      "size": 6022
+    },
+    {
+      "path": "preview\\slide_01.png",
+      "sha256": "716a361e58626972a42d461deae8bf11da0f2c9f43b3bd7a634d204a1e307a10",
+      "size": 39679
+    },
+    {
+      "path": "preview\\slide_02.png",
+      "sha256": "e96b64a3e93917dc3171f10cee4dac4d4af69fb5016dc4f055ef882d1247e0d9",
+      "size": 54423
+    },
+    {
+      "path": "preview\\slide_03.png",
+      "sha256": "73eccef8c9c0f7f6a0357deeb6c71e6dc8c7d61cb870352e21e379d88161ab9d",
+      "size": 64057
+    },
+    {
+      "path": "preview\\slide_04.png",
+      "sha256": "6287b250c9d7750bdac46c063526a16c678cc419baa74c841ede7639e121b2d9",
+      "size": 84045
+    },
+    {
+      "path": "preview\\slide_05.png",
+      "sha256": "eca80207b7d658bb16128b0b5db8dc7f39283c3add5a0b0d0b542a60468f4b37",
+      "size": 64710
+    },
+    {
+      "path": "preview\\slide_06.png",
+      "sha256": "b463bb669cf686a0f3bb7839ac152c78847c2f4de0cf46539c3db1e49d6f8149",
+      "size": 56374
+    },
+    {
+      "path": "work\\chart_results.csv.png",
+      "sha256": "5cc3918be9a4ae48e64b356be3406f0da500bbc8ce06bfd3bf72f041b6103baf",
+      "size": 23287
+    },
+    {
+      "path": "work\\deck.pptx",
+      "sha256": "17bd7d37d1a46559ee0ce41283035a7ee94be664c958f0c79dbb535ef21dd9f0",
+      "size": 68800
+    },
+    {
+      "path": "work\\material_view.json",
+      "sha256": "c0d5a6b5e4919330f61f994d73b4c172438f3c994229f3b706643a1b5bc83ec6",
+      "size": 5013
+    },
+    {
+      "path": "work\\plan.json",
+      "sha256": "22d1a0ba5db5b6732eddd4abab4bd44a0fd21fb48368eb37506eb61c585ea329",
+      "size": 6942
+    },
+    {
+      "path": "work\\preview\\preview.pdf",
+      "sha256": "9ca59659a6438aa85beb1173f17f306552cbfaba7aeb79cc3461299612fcee8b",
+      "size": 6022
+    },
+    {
+      "path": "work\\preview\\slide_01.png",
+      "sha256": "716a361e58626972a42d461deae8bf11da0f2c9f43b3bd7a634d204a1e307a10",
+      "size": 39679
+    },
+    {
+      "path": "work\\preview\\slide_02.png",
+      "sha256": "e96b64a3e93917dc3171f10cee4dac4d4af69fb5016dc4f055ef882d1247e0d9",
+      "size": 54423
+    },
+    {
+      "path": "work\\preview\\slide_03.png",
+      "sha256": "73eccef8c9c0f7f6a0357deeb6c71e6dc8c7d61cb870352e21e379d88161ab9d",
+      "size": 64057
+    },
+    {
+      "path": "work\\preview\\slide_04.png",
+      "sha256": "6287b250c9d7750bdac46c063526a16c678cc419baa74c841ede7639e121b2d9",
+      "size": 84045
+    },
+    {
+      "path": "work\\preview\\slide_05.png",
+      "sha256": "eca80207b7d658bb16128b0b5db8dc7f39283c3add5a0b0d0b542a60468f4b37",
+      "size": 64710
+    },
+    {
+      "path": "work\\preview\\slide_06.png",
+      "sha256": "b463bb669cf686a0f3bb7839ac152c78847c2f4de0cf46539c3db1e49d6f8149",
+      "size": 56374
+    },
+    {
+      "path": "work\\table_cache\\results.csv",
+      "sha256": "16534e5fdb82d833f5be139b0cfdf12ecfa65fba1ff4c01826f4d731e92a6243",
+      "size": 109
+    }
+  ]
+}

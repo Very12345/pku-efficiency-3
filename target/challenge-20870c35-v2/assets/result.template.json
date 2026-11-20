@@ -1,0 +1,41 @@
+{
+  "$id": "assets/result.template.json",
+  "$comment": "result.json 信封模板（示例/文档用途）：最终结果由 finalize_result.py 组装，缺失契约字段按容器类型以 \"\"/[]/{}/0 初始化，绝不 null。",
+  "title": "academic-talk-organizer result envelope",
+  "version": "2.0.0",
+  "layer": "result",
+  "envelope": {
+    "case_id": "",
+    "status": "completed",
+    "title": "",
+    "report_goal": "",
+    "audience": {"description": "", "expertise": "familiar", "background_ratio": 0.18, "evidence_depth": "medium", "notes": ""},
+    "duration_min": 0,
+    "slide_count": 0,
+    "summary": {"narrative_order": [], "plan_file": "talk_plan.json", "pages_total": 0},
+    "main_line": {"research_question": [], "method": [], "results": [], "limitations": [], "conclusion": []},
+    "pages": [],
+    "evidence_map": {},
+    "artifacts": {
+      "editable_deck": "editable_deck.pptx",
+      "talk_plan": "talk_plan.json",
+      "evidence_map": "evidence_map.json",
+      "evidence_audit": "evidence_audit.json",
+      "deck_audit": "deck_audit.json",
+      "plan_gates": "plan_gates.json",
+      "previews": {"cover": "previews/cover_preview.png", "grid": "previews/preview_grid.png",
+                   "manifest": "previews/preview_manifest.json", "slide_pngs": []},
+      "template_used": null,
+      "deck_mode": {"mode": "built-in-theme", "template_path": null, "note": ""},
+      "preview_note": ""
+    },
+    "sources": [],
+    "uncertainty": [],
+    "contract": {"declared_source": "", "applied": []},
+    "change_records": [],
+    "audit": {"plan_gates": {}, "evidence": {}, "deck": {}, "gates": {}},
+    "generated_by": "main.py + finalize_result.py of academic-talk-organizer",
+    "generated_at": ""
+  },
+  "contract_note": "output_contract 声明字段会被 apply_contract 逐项注入顶层；容器类型默认值见 scripts/common.py CONTRACT_TYPE_DEFAULTS。"
+}

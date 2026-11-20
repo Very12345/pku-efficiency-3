@@ -1,0 +1,231 @@
+{
+  "case_id": "example-chart-002",
+  "skill": {
+    "name": "scientific-schematic-editor",
+    "version": "1.0.0",
+    "display": "科研示意图生成与编辑"
+  },
+  "status": "success",
+  "workorder": "editable_relationship_schematic",
+  "task_summary": "EXAMPLE input (示例输入，非正式案例). Draw an editable chart from sources/data-table.csv with the legend generated directly from the table categories, unit on the axis, then export SVG (editable) + PNG/PDF and write result.json.",
+  "figure_type": "chart",
+  "title": "Response by compound (Figure, demo — EXAMPLE 示例，非正式案例)",
+  "main_result": {
+    "figure_type": "chart",
+    "title": "Response by compound (Figure, demo — EXAMPLE 示例，非正式案例)",
+    "entity_count": 0,
+    "relation_count": 0,
+    "group_count": 0,
+    "deliverables": {
+      "pdf": {
+        "path": "figure.pdf",
+        "format": "pdf"
+      },
+      "figure": {
+        "path": "figure.svg",
+        "format": "svg"
+      },
+      "preview": {
+        "path": "figure.png",
+        "format": "png"
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "role": "pdf",
+      "format": "pdf",
+      "path": "figure.pdf",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\chart\\figure.pdf",
+      "checks": [
+        {
+          "check": "pdf.header",
+          "level": "ok",
+          "detail": "PDF magic header present"
+        },
+        {
+          "check": "pdf.pages",
+          "level": "ok",
+          "detail": "1 page(s) detected in header scan"
+        },
+        {
+          "check": "pdf.fonts_embedded",
+          "level": "ok",
+          "detail": "font definitions observed: 1 Type3 font(s), 0 FontFile object(s), 1 font resource(s)"
+        }
+      ]
+    },
+    {
+      "role": "figure",
+      "format": "svg",
+      "path": "figure.svg",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\chart\\figure.svg",
+      "checks": [
+        {
+          "check": "svg.editable_text",
+          "level": "ok",
+          "detail": "16 <text> elements, 0 text-flattened paths"
+        },
+        {
+          "check": "svg.layers",
+          "level": "ok",
+          "detail": "chart SVG: matplotlib output (no semantic layer groups; text is real <text>)"
+        },
+        {
+          "check": "svg.manifest_embedded",
+          "level": "ok",
+          "detail": "ER manifest embedded in <metadata id=er-manifest>"
+        },
+        {
+          "check": "svg.manifest_matches",
+          "level": "ok",
+          "detail": "embedded manifest equals the drawn manifest (entities)"
+        },
+        {
+          "check": "svg.title_exists",
+          "level": "ok",
+          "detail": "<title> present"
+        }
+      ],
+      "extra": {
+        "role_hint": "editable source (matplotlib SVG, text kept as <text>)"
+      }
+    },
+    {
+      "role": "preview",
+      "format": "png",
+      "path": "figure.png",
+      "abspath": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\chart\\figure.png",
+      "checks": [
+        {
+          "check": "bitmap.dimensions",
+          "level": "ok",
+          "detail": "2700x1560 px, mode RGBA"
+        },
+        {
+          "check": "bitmap.dpi_print",
+          "level": "ok",
+          "detail": "effective DPI at 18 cm print width ~ 381 (>=300 ok for print; >=150 acceptable for screen/preview)"
+        },
+        {
+          "check": "bitmap.colourspace",
+          "level": "ok",
+          "detail": "colour mode RGBA (RGB-family, sRGB-compatible)"
+        }
+      ],
+      "extra": {
+        "role_hint": "raster preview of the editable source"
+      }
+    }
+  ],
+  "evidence": {
+    "sources": [
+      "sources\\data-table.csv"
+    ],
+    "entities": [],
+    "relations": []
+  },
+  "legend_mapping": [],
+  "data_mapping": {
+    "category_col": "compound",
+    "value_col": "response",
+    "unit": "fold change vs ctrl",
+    "unique_categories": [
+      "ctrl",
+      "inhibitor-A",
+      "inhibitor-B",
+      "inhibitor-C"
+    ],
+    "category_colors": {
+      "ctrl": "#0072B2",
+      "inhibitor-A": "#E69F00",
+      "inhibitor-B": "#009E73",
+      "inhibitor-C": "#D55E00"
+    },
+    "legend_entries": 4
+  },
+  "verification": {
+    "checks": {
+      "status": "success",
+      "fail_count": 0,
+      "warn_count": 0,
+      "ack_count": 0,
+      "fails": [],
+      "warns": [],
+      "acks": []
+    },
+    "render": {
+      "png": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\chart\\figure.png",
+      "pdf": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\chart\\figure.pdf",
+      "svg": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-98e5a474-v2\\examples\\output\\chart\\figure.svg",
+      "font": "Microsoft YaHei",
+      "cjk_ok": true,
+      "mapping": {
+        "category_col": "compound",
+        "value_col": "response",
+        "unit": "fold change vs ctrl",
+        "unique_categories": [
+          "ctrl",
+          "inhibitor-A",
+          "inhibitor-B",
+          "inhibitor-C"
+        ],
+        "category_colors": {
+          "ctrl": "#0072B2",
+          "inhibitor-A": "#E69F00",
+          "inhibitor-B": "#009E73",
+          "inhibitor-C": "#D55E00"
+        },
+        "legend_entries": 4
+      }
+    },
+    "traceability": {
+      "entities_total": 0,
+      "entities_with_source_and_evidence": 0,
+      "relations_total": 0,
+      "relations_with_source": 0,
+      "entities_traceable_pct": 0.0,
+      "relations_traceable_pct": 0.0
+    },
+    "spec_lint": {
+      "valid": true,
+      "fail_count": 0,
+      "warn_count": 0,
+      "issues": [
+        {
+          "check": "spec.legend_missing_kinds",
+          "level": "ok",
+          "target": null,
+          "detail": "all drawn kinds have legend"
+        }
+      ]
+    }
+  },
+  "determinism": {
+    "spec_sha16": "1235a64d57246a89",
+    "note": "same manifest+lint -> same sha; SVG is byte-identical across runs (result.json differs only in generated_at unless --fixed-time is set)"
+  },
+  "sources": [
+    {
+      "path": "sources\\data-table.csv"
+    }
+  ],
+  "uncertainty": [
+    {
+      "item": "preview fidelity",
+      "note": "PNG/PDF previews are a matplotlib mirror of the same layout+manifest (cairosvg unavailable at runtime); they match the editable SVG semantically, not pixel-for-pixel."
+    }
+  ],
+  "change_records": [],
+  "status_notes": "Generated locally by scientific-schematic-editor.",
+  "generated_at": "2026-11-21T00:52:48+0800",
+  "generator": "scientific-schematic-editor",
+  "tool_versions": {
+    "scientific_schematic_editor": "2.0.0",
+    "python": "3.13.9",
+    "matplotlib": "3.10.6",
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "reportlab": "5.0.0"
+  }
+}

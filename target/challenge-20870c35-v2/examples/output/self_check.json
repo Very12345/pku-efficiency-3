@@ -1,0 +1,180 @@
+{
+  "validate": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "checks": [
+      {
+        "check": "case_id present",
+        "ok": true,
+        "detail": "case_id='example-synthalign-talk-01'"
+      },
+      {
+        "check": "status valid",
+        "ok": true,
+        "detail": "status='completed'"
+      },
+      {
+        "check": "pages non-empty",
+        "ok": true,
+        "detail": "n_pages=12"
+      },
+      {
+        "check": "pages have claim+evidence",
+        "ok": true,
+        "detail": "issue_pages=0"
+      },
+      {
+        "check": "sources declared",
+        "ok": true,
+        "detail": "n_sources=4"
+      },
+      {
+        "check": "evidence sources declared",
+        "ok": true,
+        "detail": "undeclared=[]"
+      },
+      {
+        "check": "artifacts exist on disk",
+        "ok": true,
+        "detail": "missing=[]"
+      },
+      {
+        "check": "audit.evidence embedded",
+        "ok": true,
+        "detail": "has=True"
+      },
+      {
+        "check": "audit.deck embedded",
+        "ok": true,
+        "detail": "has=True"
+      },
+      {
+        "check": "claim numbers traceable to sources",
+        "ok": true,
+        "detail": "all page numbers present in sources"
+      }
+    ],
+    "summary": "checks=10 errors=0 warnings=0"
+  },
+  "contract_check": {
+    "valid": true,
+    "declared": [
+      "case_id",
+      "status",
+      "title",
+      "report_goal",
+      "audience",
+      "duration_min",
+      "slide_count",
+      "summary",
+      "main_line",
+      "pages",
+      "evidence_map",
+      "artifacts",
+      "sources",
+      "uncertainty",
+      "change_records",
+      "contract"
+    ],
+    "missing_required": [],
+    "missing_optional": [],
+    "wrong_type": [],
+    "checked_against": "case.json + task.md",
+    "summary": "declared=16 missing=0 wrong_type=0"
+  },
+  "contract_applied": [
+    "case_id",
+    "status",
+    "title",
+    "report_goal",
+    "audience",
+    "duration_min",
+    "slide_count",
+    "summary",
+    "main_line",
+    "pages",
+    "evidence_map",
+    "artifacts",
+    "sources",
+    "uncertainty",
+    "change_records",
+    "contract"
+  ],
+  "plan_gates": {
+    "valid": true,
+    "gates": [
+      {
+        "id": "P1",
+        "desc": "plan 顶层必填字段齐全且类型正确",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "id": "P2",
+        "desc": "页编号 1..N 连续且无重复",
+        "ok": true,
+        "detail": "got=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+      },
+      {
+        "id": "P3",
+        "desc": "页总数 == slide_target（冻结页数）",
+        "ok": true,
+        "detail": "pages=12 target=12"
+      },
+      {
+        "id": "P4",
+        "desc": "每页 block ∈ 词表",
+        "ok": true,
+        "detail": "bad_page_blocks=[]"
+      },
+      {
+        "id": "P5",
+        "desc": "内容页 evidence 齐全（locator/quote/source_file/strength）",
+        "ok": true,
+        "detail": "pages=[]"
+      },
+      {
+        "id": "P6",
+        "desc": "证据 source_file 均在材料清单中",
+        "ok": true,
+        "detail": "undeclared=[]"
+      },
+      {
+        "id": "P7",
+        "desc": "每页 title/claim/one_liner 非空、claim 长度与强度词法正确",
+        "ok": true,
+        "detail": "issues=[]"
+      },
+      {
+        "id": "P8",
+        "desc": "每页 notes 含【讲解】行；derived 页 strength=weak",
+        "ok": true,
+        "detail": "issues=[]"
+      }
+    ],
+    "errors": [],
+    "warnings": [],
+    "schema_id": "assets/plan.schema.json",
+    "summary": "gates=8 ok=8"
+  },
+  "audit_gates": {
+    "G1": true,
+    "G2": true,
+    "G3": true,
+    "G4": true,
+    "G5": true,
+    "G6": true,
+    "G7": true,
+    "G8": true,
+    "G9": true,
+    "G10": null
+  },
+  "determinism": {
+    "method": "content projection sha256 (recording timestamps stripped: generated_at/at/ts/timestamp/created/modified)",
+    "plan_sha16": "41ba17847b521bc6fe9b4b4fa028dfdbd96e7a18e85b654475d197784b2086f8",
+    "evidence_map_sha16": "6a5d2847678c36dcb38e1f186f00a87e90d8a19af46117b00246247941d86214",
+    "deck_pptx_normalized_sha16": "5c2dc70ae73b91f56794fb327d6f0f445ee3beecaf96909a18fd4c47a0d6c4a8"
+  },
+  "generated_at": "2026-11-20T18:02:43+00:00"
+}

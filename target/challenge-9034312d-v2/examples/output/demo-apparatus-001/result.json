@@ -1,0 +1,427 @@
+{
+  "case_id": "demo-apparatus-001",
+  "title": "示例：冷冻干燥机实验装置（示例用，非正式案例）",
+  "status": "success",
+  "workorder": "apparatus_and_technical_route",
+  "figure_type": "apparatus",
+  "extraction": "structured",
+  "entities": [
+    {
+      "id": "C1",
+      "name": "样品溶液",
+      "kind": "material",
+      "stage": null,
+      "step_no": null,
+      "source": "case.json[text]"
+    },
+    {
+      "id": "C2",
+      "name": "冻干机主机",
+      "kind": "device",
+      "stage": null,
+      "step_no": null,
+      "source": "case.json[text]"
+    },
+    {
+      "id": "C3",
+      "name": "冷阱",
+      "kind": "device",
+      "stage": null,
+      "step_no": null,
+      "source": "case.json[text]"
+    },
+    {
+      "id": "C4",
+      "name": "真空泵",
+      "kind": "device",
+      "stage": null,
+      "step_no": null,
+      "source": "case.json[text]"
+    },
+    {
+      "id": "C5",
+      "name": "冻干粉（产物）",
+      "kind": "product",
+      "stage": null,
+      "step_no": null,
+      "source": "case.json[text]"
+    },
+    {
+      "id": "C6",
+      "name": "冷凝水（废料）",
+      "kind": "waste",
+      "stage": null,
+      "step_no": null,
+      "source": "case.json[text]"
+    }
+  ],
+  "relations": [
+    {
+      "id": "S1",
+      "from": "C1",
+      "to": "C2",
+      "kind": "flow",
+      "label": "进样",
+      "source": "case.json[text]"
+    },
+    {
+      "id": "S2",
+      "from": "C2",
+      "to": "C3",
+      "kind": "connect",
+      "label": "管路",
+      "source": "case.json[text]"
+    },
+    {
+      "id": "S3",
+      "from": "C3",
+      "to": "C4",
+      "kind": "connect",
+      "label": "管路",
+      "source": "case.json[text]"
+    },
+    {
+      "id": "S4",
+      "from": "C2",
+      "to": "C5",
+      "kind": "flow",
+      "label": "干燥产物",
+      "source": "case.json[text]"
+    },
+    {
+      "id": "S5",
+      "from": "C3",
+      "to": "C6",
+      "kind": "flow",
+      "label": "凝华",
+      "source": "case.json[text]"
+    }
+  ],
+  "output_contract": {
+    "editable_sources": [
+      {
+        "kind": "svg",
+        "path": "figure.svg",
+        "format": "image/svg+xml",
+        "layers": [
+          "layer-background",
+          "layer-title",
+          "layer-arrows",
+          "layer-entities",
+          "layer-legend"
+        ],
+        "editability": "text 元素真实文本、实体组带 data-entity/data-source/data-step-no，可被 Inkscape/文本编辑器直接修改",
+        "checksum_sha256": "c6d422febfa1a1b9e4d2be734b43078fb8b7e0e7f3a3d21d3f896e094190ff99"
+      }
+    ],
+    "exports": [
+      {
+        "kind": "png",
+        "path": "figure.png",
+        "format": "image/png",
+        "width_px": 1482,
+        "height_px": 1086,
+        "dpi": 200,
+        "font_ttf": "C:\\Windows\\Fonts\\msyh.ttc"
+      },
+      {
+        "kind": "pdf",
+        "path": "figure.pdf",
+        "format": "application/pdf",
+        "vector": true,
+        "font": "STSong-Light"
+      }
+    ],
+    "data_mapping": [
+      {
+        "entity_id": "C1",
+        "kind": "material",
+        "source": "case.json[text]",
+        "svg_group": "entity-C1"
+      },
+      {
+        "entity_id": "C2",
+        "kind": "device",
+        "source": "case.json[text]",
+        "svg_group": "entity-C2"
+      },
+      {
+        "entity_id": "C3",
+        "kind": "device",
+        "source": "case.json[text]",
+        "svg_group": "entity-C3"
+      },
+      {
+        "entity_id": "C4",
+        "kind": "device",
+        "source": "case.json[text]",
+        "svg_group": "entity-C4"
+      },
+      {
+        "entity_id": "C5",
+        "kind": "product",
+        "source": "case.json[text]",
+        "svg_group": "entity-C5"
+      },
+      {
+        "entity_id": "C6",
+        "kind": "waste",
+        "source": "case.json[text]",
+        "svg_group": "entity-C6"
+      }
+    ],
+    "element_traceability": [
+      {
+        "element": "entity-C1",
+        "source": "case.json[text]",
+        "kind": "material",
+        "stage": null
+      },
+      {
+        "element": "entity-C2",
+        "source": "case.json[text]",
+        "kind": "device",
+        "stage": null
+      },
+      {
+        "element": "entity-C3",
+        "source": "case.json[text]",
+        "kind": "device",
+        "stage": null
+      },
+      {
+        "element": "entity-C4",
+        "source": "case.json[text]",
+        "kind": "device",
+        "stage": null
+      },
+      {
+        "element": "entity-C5",
+        "source": "case.json[text]",
+        "kind": "product",
+        "stage": null
+      },
+      {
+        "element": "entity-C6",
+        "source": "case.json[text]",
+        "kind": "waste",
+        "stage": null
+      },
+      {
+        "element": "arrow-S1",
+        "from": "C1",
+        "to": "C2",
+        "source": "case.json[text]"
+      },
+      {
+        "element": "arrow-S2",
+        "from": "C2",
+        "to": "C3",
+        "source": "case.json[text]"
+      },
+      {
+        "element": "arrow-S3",
+        "from": "C3",
+        "to": "C4",
+        "source": "case.json[text]"
+      },
+      {
+        "element": "arrow-S4",
+        "from": "C2",
+        "to": "C5",
+        "source": "case.json[text]"
+      },
+      {
+        "element": "arrow-S5",
+        "from": "C3",
+        "to": "C6",
+        "source": "case.json[text]"
+      }
+    ]
+  },
+  "evidence": {
+    "source": "gain_evidence",
+    "extraction": "structured",
+    "items": [
+      {
+        "id": "EV1",
+        "type": "entity",
+        "ref": "C1",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV2",
+        "type": "entity",
+        "ref": "C2",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV3",
+        "type": "entity",
+        "ref": "C3",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV4",
+        "type": "entity",
+        "ref": "C4",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV5",
+        "type": "entity",
+        "ref": "C5",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV6",
+        "type": "entity",
+        "ref": "C6",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV7",
+        "type": "relation",
+        "ref": "S1",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV8",
+        "type": "relation",
+        "ref": "S2",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV9",
+        "type": "relation",
+        "ref": "S3",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV10",
+        "type": "relation",
+        "ref": "S4",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV11",
+        "type": "relation",
+        "ref": "S5",
+        "locator": "case.json[text]",
+        "quote": ""
+      }
+    ],
+    "source_files": [
+      {
+        "file": "apparatus_spec.example.json",
+        "sha256": "06472db4917e2bf69b18933c9202466401fe725d259f946011bc79f6645afdad",
+        "size": 2002,
+        "role": "case"
+      }
+    ],
+    "notes": [],
+    "meta": {
+      "source": "gain_evidence",
+      "item_count": {
+        "entities": 6,
+        "relations": 5,
+        "evidence": 11,
+        "sources": 1
+      },
+      "notes": []
+    }
+  },
+  "verify": {
+    "ok": true,
+    "checks": {
+      "layers": true,
+      "editable_text": true,
+      "entity_groups": true,
+      "entity_source_coverage": true,
+      "arrows": true,
+      "no_dangling": true,
+      "numbering_continuous": true,
+      "legend_kinds": true,
+      "kind_vocabulary": true,
+      "relation_kind_vocabulary": true,
+      "connection_rules": true,
+      "all": true
+    },
+    "errors": [],
+    "warnings": [],
+    "determinism": {
+      "spec_sha16": "4603787adcb287d7"
+    },
+    "summary": {
+      "status": "pass",
+      "figure_type": "apparatus",
+      "entities": 6,
+      "relations": 5,
+      "errors": 0,
+      "warnings": 0,
+      "issues": 0,
+      "spec_sha16": "4603787adcb287d7"
+    }
+  },
+  "canvas": {
+    "width_mm": 188.29,
+    "height_mm": 138.0,
+    "requested": {
+      "width_mm": 300,
+      "height_mm": 180
+    }
+  },
+  "fonts": [
+    {
+      "role": "svg",
+      "mode": "font-family declaration",
+      "family": "'Noto Sans CJK SC','Microsoft YaHei','PingFang SC','SimHei','DejaVu Sans',sans-serif"
+    },
+    {
+      "role": "png",
+      "mode": "ttf",
+      "path": "C:\\Windows\\Fonts\\msyh.ttc",
+      "found": true
+    },
+    {
+      "role": "pdf",
+      "mode": "cid",
+      "name": "STSong-Light",
+      "embedded": "CID font（查看方需具备中文字体）"
+    }
+  ],
+  "sources": [
+    {
+      "id": "input-case",
+      "file": "apparatus_spec.example.json",
+      "note": "case.json"
+    }
+  ],
+  "uncertainty": [],
+  "change_record": [
+    {
+      "time": "2026-11-20T16:48:55+00:00",
+      "action": "运行 main.py",
+      "target": "figure.svg / layout.json / evidence.json / 预览",
+      "reason": "初始生成：从输入案例经证据抽取后布图",
+      "by": "scripts/main.py (自动)"
+    }
+  ],
+  "execution": {
+    "script": "main.py",
+    "skill_version": "2.0.0",
+    "python": "3.13.9",
+    "out_dir": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-9034312d-v2\\examples\\output"
+  },
+  "checksum": "17105908a53dfc150e111a386f1d92e6977e832ffce8d9e06ad86dccc49c92ea"
+}

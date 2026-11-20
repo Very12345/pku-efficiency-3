@@ -1,0 +1,142 @@
+{
+  "canvas": {
+    "width": 1500,
+    "height": 860
+  },
+  "nodes": {
+    "E1": {
+      "x": 0.0,
+      "y": 0.0,
+      "w": 240.0,
+      "h": 90.0,
+      "layer": 0,
+      "col": 0,
+      "text": "TNF-α",
+      "type": "small_molecule",
+      "source": "sources/figure03-note.md §3.1 L1",
+      "evidence": "Cytokine TNF-α 结合其受体 TNFR1"
+    },
+    "E2": {
+      "x": 370.0,
+      "y": 0.0,
+      "w": 240.0,
+      "h": 90.0,
+      "layer": 1,
+      "col": 0,
+      "text": "TNFR1 (receptor)",
+      "type": "receptor",
+      "source": "sources/figure03-note.md §3.1 L1",
+      "evidence": "结合其受体 TNFR1"
+    },
+    "E3": {
+      "x": 740.0,
+      "y": 0.0,
+      "w": 240.0,
+      "h": 90.0,
+      "layer": 2,
+      "col": 0,
+      "text": "TRADD",
+      "type": "protein",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TNFR1 招募衔接蛋白 TRADD"
+    },
+    "E4": {
+      "x": 1110.0,
+      "y": 0.0,
+      "w": 240.0,
+      "h": 90.0,
+      "layer": 3,
+      "col": 0,
+      "text": "RIPK1",
+      "type": "protein",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TRADD 进一步招募激酶 RIPK1"
+    },
+    "E5": {
+      "x": 1480.0,
+      "y": 0.0,
+      "w": 240.0,
+      "h": 90.0,
+      "layer": 4,
+      "col": 0,
+      "text": "NF-κB",
+      "type": "protein",
+      "source": "sources/figure03-note.md §3.1 L3",
+      "evidence": "RIPK1 激活转录因子 NF-κB"
+    },
+    "E6": {
+      "x": 1850.0,
+      "y": 0.0,
+      "w": 240.0,
+      "h": 90.0,
+      "layer": 5,
+      "col": 0,
+      "text": "IL6",
+      "type": "gene",
+      "source": "sources/figure03-note.md §3.1 L4",
+      "evidence": "NF-κB 上调靶基因 IL6 的转录"
+    }
+  },
+  "edges": [
+    {
+      "id": "R1",
+      "from": "E1",
+      "to": "E2",
+      "kind": "binds",
+      "canon": "recruitment",
+      "arrow": "open",
+      "line": "solid",
+      "label": "binds",
+      "source": "sources/figure03-note.md §3.1 L1",
+      "evidence": "TNF-α 结合其受体 TNFR1"
+    },
+    {
+      "id": "R2",
+      "from": "E2",
+      "to": "E3",
+      "kind": "recruits",
+      "canon": "recruitment",
+      "arrow": "open",
+      "line": "solid",
+      "label": "recruits",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TNFR1 招募衔接蛋白 TRADD"
+    },
+    {
+      "id": "R3",
+      "from": "E3",
+      "to": "E4",
+      "kind": "recruits",
+      "canon": "recruitment",
+      "arrow": "open",
+      "line": "solid",
+      "label": "recruits",
+      "source": "sources/figure03-note.md §3.1 L2",
+      "evidence": "TRADD 进一步招募激酶 RIPK1"
+    },
+    {
+      "id": "R4",
+      "from": "E4",
+      "to": "E5",
+      "kind": "activates",
+      "canon": "activation",
+      "arrow": "activation",
+      "line": "solid",
+      "label": "activates",
+      "source": "sources/figure03-note.md §3.1 L3",
+      "evidence": "RIPK1 激活转录因子 NF-κB（磷酸化并促进核转位）"
+    },
+    {
+      "id": "R5",
+      "from": "E5",
+      "to": "E6",
+      "kind": "upregulates-gene",
+      "canon": "transcriptional",
+      "arrow": "open",
+      "line": "dashed",
+      "label": "upregulates IL6 transcription",
+      "source": "sources/figure03-note.md §3.1 L4",
+      "evidence": "NF-κB 上调靶基因 IL6 的转录"
+    }
+  ]
+}

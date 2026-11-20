@@ -1,0 +1,1083 @@
+{
+  "case_id": "example-egfr-mapk",
+  "title": "EGF/EGFR → RAS → RAF → MEK → ERK → MYC 通路机制图（教学简化版）",
+  "example": true,
+  "status": "success",
+  "contract_version": "1.1",
+  "skill": {
+    "name": "biological-mechanism-pathway-diagram",
+    "version": "2.0.0",
+    "contract": "1.1"
+  },
+  "deliverables": {
+    "editable_sources": [
+      {
+        "path": "diagram.svg",
+        "format": "svg",
+        "layers": [
+          "layer-compartment",
+          "layer-edge",
+          "layer-entity",
+          "layer-label",
+          "layer-title",
+          "layer-legend",
+          "layer-meta"
+        ],
+        "well_formed": true,
+        "note": "分层可编辑源文件：图层 layer-{compartment,edge,entity,label,title,legend,meta}，元素带 data-id/data-type/data-source 属性，改一个标签即可重新导出"
+      }
+    ],
+    "previews": [
+      {
+        "path": "diagram.png",
+        "format": "png",
+        "dpi": 150,
+        "width_px": 1200,
+        "height_px": 900
+      }
+    ],
+    "exports": [
+      {
+        "path": "diagram.pdf",
+        "format": "pdf",
+        "note": "matplotlib 矢量导出（预览用；可编辑源为 SVG）"
+      }
+    ],
+    "audits": []
+  },
+  "scientific_content": {
+    "entities": [
+      {
+        "id": "e1",
+        "name": "EGF",
+        "type": "small_molecule",
+        "compartment": "extracellular",
+        "data": {
+          "表达量": 0.9
+        },
+        "note": "表皮生长因子配体",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 10
+          }
+        ]
+      },
+      {
+        "id": "e2",
+        "name": "EGFR",
+        "type": "protein",
+        "compartment": "membrane",
+        "data": {
+          "表达量": 0.82
+        },
+        "note": "跨膜受体酪氨酸激酶",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 11
+          }
+        ]
+      },
+      {
+        "id": "e3",
+        "name": "EGFR–EGF 复合物",
+        "type": "complex",
+        "compartment": "cytoplasm",
+        "data": {
+          "表达量": 0.78
+        },
+        "note": "受体-配体复合物，内化进入胞质",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 12
+          }
+        ]
+      },
+      {
+        "id": "e4",
+        "name": "RAS",
+        "type": "protein",
+        "compartment": "cytoplasm",
+        "data": {
+          "表达量": 0.6
+        },
+        "note": "小 GTP 酶",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 13
+          }
+        ]
+      },
+      {
+        "id": "e5",
+        "name": "RAF",
+        "type": "protein",
+        "compartment": "cytoplasm",
+        "data": {
+          "表达量": 0.5
+        },
+        "note": "丝氨酸/苏氨酸激酶",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 14
+          }
+        ]
+      },
+      {
+        "id": "e6",
+        "name": "MEK",
+        "type": "protein",
+        "compartment": "cytoplasm",
+        "data": {
+          "表达量": 0.55
+        },
+        "note": "双特异性激酶",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 15
+          }
+        ]
+      },
+      {
+        "id": "e7",
+        "name": "ERK",
+        "type": "protein",
+        "compartment": "cytoplasm",
+        "data": {
+          "表达量": 0.7
+        },
+        "note": "胞质 ERK，被 MEK 磷酸化激活",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 16
+          }
+        ]
+      },
+      {
+        "id": "e8",
+        "name": "核内 ERK",
+        "type": "protein",
+        "compartment": "nucleus",
+        "data": {
+          "表达量": 0.72
+        },
+        "note": "ERK 转位入核后的形式；与 ERK（e7）同一种蛋白，按区室拆分为两个实体（教学演示：同一蛋白不同区室分实体绘制，避免跨膜/区室语义混淆）",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 17
+          }
+        ]
+      },
+      {
+        "id": "e9",
+        "name": "MYC",
+        "type": "gene",
+        "compartment": "nucleus",
+        "data": {
+          "表达量": 0.85
+        },
+        "note": "转录因子基因（斜体表示基因，正体为其蛋白）",
+        "uncertain": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 18
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "r1",
+        "from": "e1",
+        "to": "e2",
+        "type": "binding",
+        "subtype": "",
+        "evidence": "strong",
+        "label": "",
+        "note": "EGF 结合 EGFR",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 22
+          }
+        ]
+      },
+      {
+        "id": "r2",
+        "from": "e2",
+        "to": "e3",
+        "type": "transport",
+        "subtype": "",
+        "evidence": "strong",
+        "label": "",
+        "note": "受体-配体复合物内化（转运）进入胞质",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 23
+          }
+        ]
+      },
+      {
+        "id": "r3",
+        "from": "e3",
+        "to": "e4",
+        "type": "activation",
+        "subtype": "",
+        "evidence": "strong",
+        "label": "",
+        "note": "复合物激活 RAS",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 24
+          }
+        ]
+      },
+      {
+        "id": "r4",
+        "from": "e4",
+        "to": "e5",
+        "type": "activation",
+        "subtype": "",
+        "evidence": "strong",
+        "label": "",
+        "note": "RAS 激活 RAF",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 25
+          }
+        ]
+      },
+      {
+        "id": "r5",
+        "from": "e5",
+        "to": "e6",
+        "type": "modification",
+        "subtype": "磷酸化",
+        "evidence": "strong",
+        "label": "",
+        "note": "RAF 磷酸化 MEK",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 26
+          }
+        ]
+      },
+      {
+        "id": "r6",
+        "from": "e6",
+        "to": "e7",
+        "type": "modification",
+        "subtype": "磷酸化",
+        "evidence": "strong",
+        "label": "",
+        "note": "MEK 磷酸化 ERK",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 27
+          }
+        ]
+      },
+      {
+        "id": "r7",
+        "from": "e7",
+        "to": "e8",
+        "type": "transport",
+        "subtype": "",
+        "evidence": "strong",
+        "label": "",
+        "note": "ERK 转位入核",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 28
+          }
+        ]
+      },
+      {
+        "id": "r8",
+        "from": "e8",
+        "to": "e9",
+        "type": "activation",
+        "subtype": "",
+        "evidence": "moderate",
+        "label": "",
+        "note": "核内 ERK 激活 MYC 转录",
+        "feedback": false,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 29
+          }
+        ]
+      },
+      {
+        "id": "r9",
+        "from": "e8",
+        "to": "e5",
+        "type": "inhibition",
+        "subtype": "",
+        "evidence": "weak",
+        "label": "负反馈",
+        "note": "核内 ERK 负反馈抑制 RAF（弱证据，虚线）",
+        "feedback": true,
+        "source": [
+          {
+            "ref": "materials/example_material.md",
+            "kind": "material",
+            "line": 30
+          }
+        ]
+      }
+    ],
+    "legend": {
+      "title": "图例 Legend",
+      "entities": {
+        "protein": {
+          "shape": "roundrect",
+          "fill": "#EAF2FB",
+          "stroke": "#1F4E79",
+          "zh": "蛋白质",
+          "en": "protein"
+        },
+        "gene": {
+          "shape": "rect",
+          "fill": "#FFF3E0",
+          "stroke": "#B9770E",
+          "italic": true,
+          "zh": "基因",
+          "en": "gene"
+        },
+        "complex": {
+          "shape": "roundrect",
+          "fill": "#EDE7F6",
+          "stroke": "#6C3483",
+          "double": true,
+          "zh": "复合物",
+          "en": "complex"
+        },
+        "rna": {
+          "shape": "roundrect",
+          "fill": "#E8F8F5",
+          "stroke": "#117A65",
+          "dash": true,
+          "zh": "RNA",
+          "en": "RNA"
+        },
+        "small_molecule": {
+          "shape": "circle",
+          "fill": "#FDEBD0",
+          "stroke": "#CA6F1E",
+          "zh": "小分子/配体/代谢物",
+          "en": "small molecule / ligand"
+        },
+        "other": {
+          "shape": "roundrect",
+          "fill": "#F4F6F6",
+          "stroke": "#7F8C8D",
+          "zh": "其他",
+          "en": "other"
+        }
+      },
+      "edges": {
+        "activation": {
+          "marker": "arrow",
+          "color": "#2E7D32",
+          "width": 2.4,
+          "zh": "激活 / 促进",
+          "en": "activation / promotion"
+        },
+        "inhibition": {
+          "marker": "bar",
+          "color": "#C0392B",
+          "width": 2.4,
+          "zh": "抑制 / 阻断",
+          "en": "inhibition / block"
+        },
+        "binding": {
+          "marker": "none",
+          "color": "#1F4E79",
+          "width": 2.0,
+          "zh": "结合 / 互作 / 募集",
+          "en": "binding / interaction / recruitment"
+        },
+        "modification": {
+          "marker": "circle",
+          "color": "#B9770E",
+          "width": 2.0,
+          "zh": "修饰（磷酸化、泛素化等）",
+          "en": "modification (phosphorylation, ubiquitination, ...)"
+        },
+        "transport": {
+          "marker": "diamond",
+          "color": "#6C3483",
+          "width": 2.2,
+          "zh": "转运 / 转位",
+          "en": "transport / translocation"
+        }
+      },
+      "evidence_width": {
+        "strong": 2.8,
+        "moderate": 2.2,
+        "weak": 1.6
+      },
+      "dash_note": {
+        "zh": "虚线 = 证据弱/间接，或不明确的联系（uncertain）",
+        "en": "dashed = weak / indirect / uncertain evidence"
+      },
+      "data_mapping": {
+        "field": "表达量",
+        "label_zh": "实体填充色 = 相对表达量（数据映射）",
+        "label_en": "node fill = relative expression",
+        "low": "#FFF7E0",
+        "high": "#1F4E79",
+        "note_zh": "材料未给出数值时使用类型默认色（见实体样式区）",
+        "note_en": "type default color is used when no data value is available"
+      },
+      "direction_note": {
+        "zh": "信号流向：自上方区室向下（受体位于膜区）；反馈环在右侧绕行",
+        "en": "flow from upper to lower compartments; feedback loops routed on the right"
+      },
+      "version_note": "conventions: see references/legend-encoding.md"
+    },
+    "layout": {
+      "canvas": {
+        "width": 1200,
+        "height": 900
+      },
+      "compartments": [
+        {
+          "id": "extracellular",
+          "label_zh": "胞外",
+          "label_en": "Extracellular",
+          "rect": [
+            36,
+            128,
+            810,
+            125.51020408163266
+          ]
+        },
+        {
+          "id": "membrane",
+          "label_zh": "细胞膜",
+          "label_en": "Plasma membrane",
+          "rect": [
+            36,
+            253.51020408163265,
+            810,
+            75.3061224489796
+          ]
+        },
+        {
+          "id": "cytoplasm",
+          "label_zh": "细胞质",
+          "label_en": "Cytoplasm",
+          "rect": [
+            36,
+            328.81632653061223,
+            810,
+            312.9387755102041
+          ]
+        },
+        {
+          "id": "nucleus",
+          "label_zh": "细胞核",
+          "label_en": "Nucleus",
+          "rect": [
+            62,
+            473.5102040816327,
+            758,
+            142.24489795918367
+          ]
+        }
+      ],
+      "constraints": {
+        "flow": "extracellular→membrane→cytoplasm→nucleus",
+        "feedback_routing": "right side"
+      },
+      "note": "布局规则见 references/mechanism-spec.md §4：区室分层、跨膜受体位于膜带、反馈环右侧绕行"
+    },
+    "counts": {
+      "entities": 9,
+      "edges": 9,
+      "compartments": 4
+    }
+  },
+  "evidence_sources": [
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 10
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 11
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 12
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 13
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 14
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 15
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 16
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 17
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 18
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 22
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 23
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 24
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 25
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 26
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 27
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 28
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 29
+    },
+    {
+      "ref": "materials/example_material.md",
+      "kind": "material",
+      "line": 30
+    }
+  ],
+  "data_mapping": {
+    "field": "表达量",
+    "label_zh": "实体填充色 = 相对表达量（数据映射）",
+    "label_en": "node fill = relative expression",
+    "low": "#FFF7E0",
+    "high": "#1F4E79",
+    "note_zh": "材料未给出数值时使用类型默认色（见实体样式区）",
+    "note_en": "type default color is used when no data value is available"
+  },
+  "extraction": {
+    "method": "manual",
+    "verified_by_agent": true,
+    "note": "实体/关系已与输入材料核对；草稿提取器输出的部分见 change_records"
+  },
+  "export_checks": [
+    {
+      "file": "diagram.svg",
+      "check": "well-formed XML + sha256",
+      "result": "pass",
+      "detail": "sha256=27f344a0dfb2e90f, 17771 bytes"
+    },
+    {
+      "file": "diagram.png",
+      "check": "size/dpi",
+      "result": "pass",
+      "detail": "1200x900 px @ 150 dpi"
+    },
+    {
+      "file": "diagram.pdf",
+      "check": "vector PDF exists",
+      "result": "pass",
+      "detail": "108045 bytes"
+    }
+  ],
+  "topology": {
+    "checks": [
+      {
+        "id": "P01",
+        "check": "实体 id 唯一",
+        "result": "pass",
+        "detail": "9 个实体 id 唯一"
+      },
+      {
+        "id": "P02",
+        "check": "边端点存在",
+        "result": "pass",
+        "detail": "9 条边端点都存在"
+      },
+      {
+        "id": "P03",
+        "check": "通路方向(非反馈边上游→下游)",
+        "result": "pass",
+        "detail": "全部非反馈边符合区室上→下流向"
+      },
+      {
+        "id": "P04",
+        "check": "同名基因/蛋白消歧",
+        "result": "pass",
+        "detail": "无同名基因/蛋白混用"
+      },
+      {
+        "id": "P04b",
+        "check": "同名实体须备注去向",
+        "result": "pass",
+        "detail": "同名实体均有 note 说明"
+      },
+      {
+        "id": "P05",
+        "check": "重复边检测",
+        "result": "pass",
+        "detail": "无重复边"
+      },
+      {
+        "id": "P06",
+        "check": "自环检测",
+        "result": "pass",
+        "detail": "无非反馈自环"
+      },
+      {
+        "id": "P07",
+        "check": "疑似反馈环未标注",
+        "result": "pass",
+        "detail": "无未标注的逆流回流边"
+      },
+      {
+        "id": "P08",
+        "check": "区室词表",
+        "result": "pass",
+        "detail": "区室均在词表内"
+      }
+    ],
+    "failures": [],
+    "warnings": []
+  },
+  "legend_audit": {
+    "checks": [
+      {
+        "id": "L01",
+        "check": "图例覆盖(实体类型)",
+        "result": "pass",
+        "detail": "图例覆盖全部在用实体类型"
+      },
+      {
+        "id": "L02",
+        "check": "图例覆盖(边类型)",
+        "result": "pass",
+        "detail": "图例覆盖全部在用边类型"
+      },
+      {
+        "id": "L03",
+        "check": "数据映射有数值支撑",
+        "result": "pass",
+        "detail": "映射字段 表达量: 数值范围 [0.5, 0.9]"
+      },
+      {
+        "id": "E02",
+        "check": "色带端点声明",
+        "result": "pass",
+        "detail": "色带低→高: #FFF7E0 → #1F4E79"
+      },
+      {
+        "id": "L07",
+        "check": "证据强度→线宽映射",
+        "result": "pass",
+        "detail": "证据宽度 strong/moderate/weak = 2.8/2.2/1.6 与规范一致"
+      },
+      {
+        "id": "E01",
+        "check": "画布数据可溯源",
+        "result": "pass",
+        "detail": "所有数据值均挂接 source（材料行号）"
+      },
+      {
+        "id": "L04",
+        "check": "箭头语义=图例声明",
+        "result": "pass",
+        "detail": "全部边 marker 与图例声明一致"
+      },
+      {
+        "id": "L05",
+        "check": "图面颜色⊆图例∪数据映射(节点与边)",
+        "result": "pass",
+        "detail": "节点与边颜色全部可回溯到图例或数据映射"
+      },
+      {
+        "id": "L06",
+        "check": "虚线语义(仅 weak/uncertain)",
+        "result": "pass",
+        "detail": "虚线仅用于 weak/间接/uncertain"
+      },
+      {
+        "id": "L08",
+        "check": "图层命名(layer-*)",
+        "result": "pass",
+        "detail": "7 个规范图层齐全"
+      }
+    ],
+    "failures": [],
+    "warnings": []
+  },
+  "self_check": {
+    "passed": true,
+    "checks": [
+      {
+        "id": "M01",
+        "check": "实体 id 唯一",
+        "result": "pass",
+        "detail": "9 个实体，id 唯一"
+      },
+      {
+        "id": "M03",
+        "check": "实体命名",
+        "result": "pass",
+        "detail": "全部实体有名称"
+      },
+      {
+        "id": "S01_schema",
+        "check": "机制规格 schema 门(CP2)",
+        "result": "pass",
+        "detail": "机制规格通过 schema 校验（mechanism-spec.schema.json）"
+      },
+      {
+        "id": "T01",
+        "check": "实体来源标注",
+        "result": "pass",
+        "detail": "全部实体携带 source（材料行号/出处）"
+      },
+      {
+        "id": "T02",
+        "check": "边来源标注",
+        "result": "pass",
+        "detail": "全部边携带 source"
+      },
+      {
+        "id": "T03",
+        "check": "假设型来源显式化",
+        "result": "pass",
+        "detail": "无假设型来源元素"
+      },
+      {
+        "id": "P01",
+        "check": "实体 id 唯一",
+        "result": "pass",
+        "detail": "9 个实体 id 唯一"
+      },
+      {
+        "id": "P02",
+        "check": "边端点存在",
+        "result": "pass",
+        "detail": "9 条边端点都存在"
+      },
+      {
+        "id": "P03",
+        "check": "通路方向(非反馈边上游→下游)",
+        "result": "pass",
+        "detail": "全部非反馈边符合区室上→下流向"
+      },
+      {
+        "id": "P04",
+        "check": "同名基因/蛋白消歧",
+        "result": "pass",
+        "detail": "无同名基因/蛋白混用"
+      },
+      {
+        "id": "P04b",
+        "check": "同名实体须备注去向",
+        "result": "pass",
+        "detail": "同名实体均有 note 说明"
+      },
+      {
+        "id": "P05",
+        "check": "重复边检测",
+        "result": "pass",
+        "detail": "无重复边"
+      },
+      {
+        "id": "P06",
+        "check": "自环检测",
+        "result": "pass",
+        "detail": "无非反馈自环"
+      },
+      {
+        "id": "P07",
+        "check": "疑似反馈环未标注",
+        "result": "pass",
+        "detail": "无未标注的逆流回流边"
+      },
+      {
+        "id": "P08",
+        "check": "区室词表",
+        "result": "pass",
+        "detail": "区室均在词表内"
+      },
+      {
+        "id": "L01",
+        "check": "图例覆盖(实体类型)",
+        "result": "pass",
+        "detail": "图例覆盖全部在用实体类型"
+      },
+      {
+        "id": "L02",
+        "check": "图例覆盖(边类型)",
+        "result": "pass",
+        "detail": "图例覆盖全部在用边类型"
+      },
+      {
+        "id": "L03",
+        "check": "数据映射有数值支撑",
+        "result": "pass",
+        "detail": "映射字段 表达量: 数值范围 [0.5, 0.9]"
+      },
+      {
+        "id": "E02",
+        "check": "色带端点声明",
+        "result": "pass",
+        "detail": "色带低→高: #FFF7E0 → #1F4E79"
+      },
+      {
+        "id": "L07",
+        "check": "证据强度→线宽映射",
+        "result": "pass",
+        "detail": "证据宽度 strong/moderate/weak = 2.8/2.2/1.6 与规范一致"
+      },
+      {
+        "id": "E01",
+        "check": "画布数据可溯源",
+        "result": "pass",
+        "detail": "所有数据值均挂接 source（材料行号）"
+      },
+      {
+        "id": "L04",
+        "check": "箭头语义=图例声明",
+        "result": "pass",
+        "detail": "全部边 marker 与图例声明一致"
+      },
+      {
+        "id": "L05",
+        "check": "图面颜色⊆图例∪数据映射(节点与边)",
+        "result": "pass",
+        "detail": "节点与边颜色全部可回溯到图例或数据映射"
+      },
+      {
+        "id": "L06",
+        "check": "虚线语义(仅 weak/uncertain)",
+        "result": "pass",
+        "detail": "虚线仅用于 weak/间接/uncertain"
+      },
+      {
+        "id": "L08",
+        "check": "图层命名(layer-*)",
+        "result": "pass",
+        "detail": "7 个规范图层齐全"
+      },
+      {
+        "id": "F01_svg",
+        "check": "SVG 存在且非空",
+        "result": "pass",
+        "detail": "D:\\BuildTemp\\smoke-challenge-83d4f050-v2\\diagram.svg (17771 bytes)"
+      },
+      {
+        "id": "F01_png",
+        "check": "PNG预览 存在且非空",
+        "result": "pass",
+        "detail": "D:\\BuildTemp\\smoke-challenge-83d4f050-v2\\diagram.png (203655 bytes)"
+      },
+      {
+        "id": "F01_pdf",
+        "check": "PDF预览 存在且非空",
+        "result": "pass",
+        "detail": "D:\\BuildTemp\\smoke-challenge-83d4f050-v2\\diagram.pdf (108045 bytes)"
+      },
+      {
+        "id": "F02_png",
+        "check": "PNG 尺寸/可打开",
+        "result": "pass",
+        "detail": "1200x900 px"
+      },
+      {
+        "id": "D01_determinism",
+        "check": "确定性探针",
+        "result": "pass",
+        "detail": "{\"svg\": \"27f344a0dfb2e90f\", \"model_json\": \"f93a20a283492f73\"}"
+      },
+      {
+        "id": "F01_result_json",
+        "check": "result.json 存在且非空",
+        "result": "pass",
+        "detail": "D:\\BuildTemp\\smoke-challenge-83d4f050-v2\\result.json (28530 bytes)"
+      },
+      {
+        "id": "F03_contract",
+        "check": "result.json 契约字段完整",
+        "result": "pass",
+        "detail": "契约字段齐全 (contract 1.1)"
+      }
+    ],
+    "failures": [],
+    "warnings": [],
+    "determinism": {
+      "model_sha16": "f93a20a283492f73",
+      "svg_sha16": "27f344a0dfb2e90f",
+      "note": "同输入同布局：SVG/model 为输入+布局纯函数产物；result.json 含时间戳"
+    }
+  },
+  "gates": {
+    "g1_case_id": {
+      "pass": true,
+      "detail": "case_id='example-egfr-mapk'"
+    },
+    "g2_contract_echo": {
+      "pass": true,
+      "detail": "output_contract 全部字段回显、无 null"
+    },
+    "g3_status": {
+      "pass": true,
+      "detail": "status=success"
+    },
+    "g4_svg_layers": {
+      "pass": true,
+      "detail": "SVG 良构 + 7 层 layer-* 组"
+    },
+    "g5_png": {
+      "pass": true,
+      "detail": "PNG 存在 (203655 bytes)"
+    },
+    "g6_legend_cover": {
+      "pass": true,
+      "detail": "图例覆盖在用类型（L01/L02 全过）"
+    },
+    "g7_sources": {
+      "pass": true,
+      "detail": "实体/边全部带来源（T01/T02 全过）"
+    },
+    "g8_audits": {
+      "pass": true,
+      "detail": "topology.json + legend_audit.json 已产出"
+    }
+  },
+  "uncertainty": [],
+  "change_records": [
+    {
+      "ts": "2026-11-21T00:52:20+0800",
+      "what": "CP1 读取输入",
+      "why": "case=D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-83d4f050-v2\\examples\\case.json, materials=materials/example_material.md, task文字长度=110",
+      "by": "main.py"
+    },
+    {
+      "ts": "2026-11-21T00:52:20+0800",
+      "what": "CP2 使用 --model-file 机制规格",
+      "why": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-83d4f050-v2\\examples\\model.example.json",
+      "by": "main.py"
+    },
+    {
+      "ts": "2026-11-21T00:52:20+0800",
+      "what": "CP2 schema 门",
+      "why": "机制规格通过 schema 校验（mechanism-spec.schema.json）",
+      "by": "main.py"
+    }
+  ],
+  "files": [
+    "diagram.pdf",
+    "diagram.png",
+    "diagram.svg",
+    "legend_audit.json",
+    "model.json",
+    "topology.json"
+  ],
+  "provenance": {
+    "skill": "biological-mechanism-pathway-diagram",
+    "skill_version": "2.0.0",
+    "contract": "1.1",
+    "ts": "2026-11-21T00:52:20+0800",
+    "command": "scripts/main.py --case examples/case.json --model-file examples/model.example.json --out D:/BuildTemp/smoke-challenge-83d4f050-v2",
+    "material_refs": [
+      "materials/example_material.md"
+    ],
+    "case_file": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-83d4f050-v2\\examples\\case.json",
+    "schema": "assets\\mechanism-spec.schema.json"
+  },
+  "custom_demo_field": "",
+  "custom_list_field": []
+}

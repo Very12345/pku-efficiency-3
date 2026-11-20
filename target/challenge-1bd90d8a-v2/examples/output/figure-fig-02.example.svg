@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1350" height="560" viewBox="0 0 1350 560">
+<title>Scientific figure</title>
+<desc>Editable scientific figure with per-element data-provenance attributes (data-file, data-column, data-row-index, data-row-label ...); see data_manifest.json for the full mapping.</desc>
+<metadata id='provenance'>
+<![CDATA[{
+  "generator": "scientific-figure-craft (efficiency-3 / challenge-1bd90d8a v2)",
+  "engine": "main.py",
+  "source_files": [
+    {
+      "file": "data.csv",
+      "sha256": "7a07667fd56cec19ceead910c2633b978fcf07e34e442b45a9bc287e881bee35"
+    }
+  ],
+  "method": "chartkit 手写 XML 分层 SVG + Pillow 同场景渲染 PNG/PDF；每个图元携带 data-* 溯源属性；mapcheck/figcheck 双校验；未使用网络、未调用统计推断。",
+  "task_file": "task.md",
+  "data_version": "2026-11-21-example-v2",
+  "figure_id": "fig-02",
+  "data_files": []
+}]]>
+</metadata>
+<defs>
+<marker id='arrow' markerWidth='10' markerHeight='10' refX='8' refY='3' orient='auto' markerUnits='strokeWidth'><path d='M0,0 L8,3 L0,6 z' fill='#666666'/></marker>
+<pattern id='hatch' width='6' height='6' patternTransform='rotate(45 0 0)' patternUnits='userSpaceOnUse'><line x1='0' y1='0' x2='0' y2='6' stroke='#333' stroke-width='1'/></pattern>
+</defs>
+<g id="layer-data" data-layer="data">
+<line id="el-relation-1" x1="150" y1="350" x2="450" y2="220" stroke="#2166AC" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="L" data-to="Fz" data-label="结合" data-type="activation"/>
+<line id="el-relation-2" x1="150" y1="350" x2="450" y2="480" stroke="#2166AC" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="L" data-to="LRP" data-label="结合" data-type="activation"/>
+<line id="el-relation-3" x1="450" y1="220" x2="760" y2="220" stroke="#2166AC" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="Fz" data-to="Dvl" data-label="磷酸化激活" data-type="phosphorylation"/>
+<line id="el-relation-4" x1="450" y1="480" x2="760" y2="480" stroke="#B2182B" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="LRP" data-to="APC" data-label="抑制复合物装配" data-type="inhibition"/>
+<line id="el-relation-5" x1="760" y1="220" x2="760" y2="480" stroke="#B2182B" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="Dvl" data-to="APC" data-label="抑制" data-type="inhibition"/>
+<line id="el-relation-6" x1="760" y1="480" x2="1030" y2="350" stroke="#B2182B" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="APC" data-to="beta" data-label="磷酸化降解" data-type="inhibition"/>
+<line id="el-relation-7" x1="1030" y1="350" x2="1270" y2="350" stroke="#2166AC" stroke-width="2.5" marker-end="url(#arrow)" data-role="relation" data-from="beta" data-to="nucl" data-label="入核" data-type="activation"/>
+<text id="el-relation-label-1" x="308" y="277" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="结合" data-role="relation-label" data-from="L" data-to="Fz"/>
+<text id="el-relation-label-2" x="308" y="407" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="结合" data-role="relation-label" data-from="L" data-to="LRP"/>
+<text id="el-relation-label-3" x="613" y="212" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="磷酸化激活" data-role="relation-label" data-from="Fz" data-to="Dvl"/>
+<text id="el-relation-label-4" x="613" y="472" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="抑制复合物装配" data-role="relation-label" data-from="LRP" data-to="APC"/>
+<text id="el-relation-label-5" x="768" y="342" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="抑制" data-role="relation-label" data-from="Dvl" data-to="APC"/>
+<text id="el-relation-label-6" x="903" y="407" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="磷酸化降解" data-role="relation-label" data-from="APC" data-to="beta"/>
+<text id="el-relation-label-7" x="1158" y="342" font-size="17" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#555555" xml:space="preserve" data-text="入核" data-role="relation-label" data-from="beta" data-to="nucl"/>
+<rect id="el-node-1" x="43" y="327" width="214" height="46" fill="white" stroke="#E64B35" stroke-width="2.5" data-role="node" data-id="L" data-label="Wnt3a (配体)" data-group="Ligand" data-cite="Fig. 2A"/>
+<ellipse id="el-node-2" cx="450" cy="220" rx="141" ry="23" fill="white" stroke="#4DBBD5" stroke-width="2.5" data-role="node" data-id="Fz" data-label="Frizzled (FZD)" data-group="Receptor" data-cite="Fig. 2A"/>
+<ellipse id="el-node-3" cx="450" cy="480" rx="107" ry="23" fill="white" stroke="#4DBBD5" stroke-width="2.5" data-role="node" data-id="LRP" data-label="LRP5/6 共受体" data-group="Receptor" data-cite="Fig. 2B"/>
+<ellipse id="el-node-4" cx="760" cy="220" rx="166.5" ry="23" fill="white" stroke="#00A087" stroke-width="2.5" data-role="node" data-id="Dvl" data-label="Dishevelled (DVL)" data-group="Cytosolic" data-cite="Fig. 2C"/>
+<ellipse id="el-node-5" cx="760" cy="480" rx="175" ry="23" fill="white" stroke="#F39B7F" stroke-width="2.5" data-role="node" data-id="APC" data-label="APC/Axin/GSK3β 复合物" data-group="Destruction complex" data-cite="Fig. 2C"/>
+<ellipse id="el-node-6" cx="1030" cy="350" rx="98.5" ry="23" fill="white" stroke="#00A087" stroke-width="2.5" data-role="node" data-id="beta" data-label="β-catenin" data-group="Cytosolic" data-cite="Fig. 2D"/>
+<rect id="el-node-7" x="1146" y="327" width="248" height="46" fill="white" stroke="#8491B4" stroke-width="2.5" data-role="node" data-id="nucl" data-label="TCF/LEF 转录激活" data-group="Nuclear" data-cite="Fig. 2E"/>
+<text id="el-node-label-1" x="150" y="350" font-size="19" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="Wnt3a (配体)" data-role="node-label" data-id="L" data-label="Wnt3a (配体)"/>
+<text id="el-node-label-2" x="450" y="220" font-size="19" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="Frizzled (FZD)" data-role="node-label" data-id="Fz" data-label="Frizzled (FZD)"/>
+<text id="el-node-label-3" x="450" y="480" font-size="19" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="LRP5/6 共受体" data-role="node-label" data-id="LRP" data-label="LRP5/6 共受体"/>
+<text id="el-node-label-4" x="760" y="220" font-size="19" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="Dishevelled (DVL)" data-role="node-label" data-id="Dvl" data-label="Dishevelled (DVL)"/>
+<text id="el-node-label-5" x="760" y="480" font-size="19" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="APC/Axin/GSK3β 复合物" data-role="node-label" data-id="APC" data-label="APC/Axin/GSK3β 复合物"/>
+<text id="el-node-label-6" x="1030" y="350" font-size="19" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="β-catenin" data-role="node-label" data-id="beta" data-label="β-catenin"/>
+<text id="el-node-label-7" x="1270" y="350" font-size="19" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#111111" text-anchor="middle" xml:space="preserve" data-text="TCF/LEF 转录激活" data-role="node-label" data-id="nucl" data-label="TCF/LEF 转录激活"/>
+</g>
+<g id="layer-text" data-layer="text">
+<text id="el-title-1" x="675" y="52" font-size="28" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#1a1a1a" font-weight="bold" text-anchor="middle" xml:space="preserve" data-text="示例 Figure 2：Wnt 信号转导简化机制图（实体与关系引自材料，逐元素标注来源）" data-role="title"/>
+<text id="el-subtitle-1" x="675" y="84" font-size="18" font-family="Microsoft YaHei, Noto Sans CJK SC, Source Han Sans SC, SimHei, WenQuanYi Zen Hei, PingFang SC, sans-serif" fill="#1a1a1a" text-anchor="middle" xml:space="preserve" data-text="箭头=激活/促进；末端横线=抑制；每个节点含 cite 引用来源图表编号" data-role="subtitle"/>
+</g>
+<g id="layer-annotation" data-layer="annotation">
+<rect id="el-legend-box-1" x="1059" y="20" width="267" height="185" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1" data-role="legend-box"/>
+<text id="el-legend-title-1" x="1073" y="24" font-size="15" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#1a1a1a" font-weight="bold" xml:space="preserve" data-text="Group" data-role="legend-title"/>
+<rect id="el-legend-swatch-1" x="1073" y="45" width="20" height="16" fill="#E64B35" stroke="#666666" stroke-width="1" data-role="legend-swatch" data-label="Ligand"/>
+<text id="el-legend-label-1" x="1105" y="54" font-size="17" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#1a1a1a" xml:space="preserve" data-text="Ligand" data-role="legend-label" data-label="Ligand"/>
+<rect id="el-legend-swatch-2" x="1073" y="76" width="20" height="16" fill="#4DBBD5" stroke="#666666" stroke-width="1" data-role="legend-swatch" data-label="Receptor"/>
+<text id="el-legend-label-2" x="1105" y="85" font-size="17" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#1a1a1a" xml:space="preserve" data-text="Receptor" data-role="legend-label" data-label="Receptor"/>
+<rect id="el-legend-swatch-3" x="1073" y="107" width="20" height="16" fill="#00A087" stroke="#666666" stroke-width="1" data-role="legend-swatch" data-label="Cytosolic"/>
+<text id="el-legend-label-3" x="1105" y="116" font-size="17" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#1a1a1a" xml:space="preserve" data-text="Cytosolic" data-role="legend-label" data-label="Cytosolic"/>
+<rect id="el-legend-swatch-4" x="1073" y="138" width="20" height="16" fill="#F39B7F" stroke="#666666" stroke-width="1" data-role="legend-swatch" data-label="Destruction complex"/>
+<text id="el-legend-label-4" x="1105" y="147" font-size="17" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#1a1a1a" xml:space="preserve" data-text="Destruction complex" data-role="legend-label" data-label="Destruction complex"/>
+<rect id="el-legend-swatch-5" x="1073" y="169" width="20" height="16" fill="#8491B4" stroke="#666666" stroke-width="1" data-role="legend-swatch" data-label="Nuclear"/>
+<text id="el-legend-label-5" x="1105" y="178" font-size="17" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" fill="#1a1a1a" xml:space="preserve" data-text="Nuclear" data-role="legend-label" data-label="Nuclear"/>
+</g>
+</svg>

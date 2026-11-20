@@ -1,0 +1,208 @@
+{
+  "source": "gain_evidence",
+  "extraction": "structured",
+  "entities": [
+    {
+      "id": "C1",
+      "name": "样品溶液",
+      "kind": "material",
+      "stage": null,
+      "source": "case.json[text]",
+      "label": null,
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "C2",
+      "name": "冻干机主机",
+      "kind": "device",
+      "stage": null,
+      "source": "case.json[text]",
+      "label": null,
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "C3",
+      "name": "冷阱",
+      "kind": "device",
+      "stage": null,
+      "source": "case.json[text]",
+      "label": null,
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "C4",
+      "name": "真空泵",
+      "kind": "device",
+      "stage": null,
+      "source": "case.json[text]",
+      "label": null,
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "C5",
+      "name": "冻干粉（产物）",
+      "kind": "product",
+      "stage": null,
+      "source": "case.json[text]",
+      "label": null,
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "C6",
+      "name": "冷凝水（废料）",
+      "kind": "waste",
+      "stage": null,
+      "source": "case.json[text]",
+      "label": null,
+      "locator": "case.json[text]",
+      "quote": ""
+    }
+  ],
+  "relations": [
+    {
+      "id": "S1",
+      "from": "C1",
+      "to": "C2",
+      "kind": "flow",
+      "label": "进样",
+      "source": "case.json[text]",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "S2",
+      "from": "C2",
+      "to": "C3",
+      "kind": "connect",
+      "label": "管路",
+      "source": "case.json[text]",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "S3",
+      "from": "C3",
+      "to": "C4",
+      "kind": "connect",
+      "label": "管路",
+      "source": "case.json[text]",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "S4",
+      "from": "C2",
+      "to": "C5",
+      "kind": "flow",
+      "label": "干燥产物",
+      "source": "case.json[text]",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "S5",
+      "from": "C3",
+      "to": "C6",
+      "kind": "flow",
+      "label": "凝华",
+      "source": "case.json[text]",
+      "locator": "case.json[text]",
+      "quote": ""
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EV1",
+      "type": "entity",
+      "ref": "C1",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV2",
+      "type": "entity",
+      "ref": "C2",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV3",
+      "type": "entity",
+      "ref": "C3",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV4",
+      "type": "entity",
+      "ref": "C4",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV5",
+      "type": "entity",
+      "ref": "C5",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV6",
+      "type": "entity",
+      "ref": "C6",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV7",
+      "type": "relation",
+      "ref": "S1",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV8",
+      "type": "relation",
+      "ref": "S2",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV9",
+      "type": "relation",
+      "ref": "S3",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV10",
+      "type": "relation",
+      "ref": "S4",
+      "locator": "case.json[text]",
+      "quote": ""
+    },
+    {
+      "id": "EV11",
+      "type": "relation",
+      "ref": "S5",
+      "locator": "case.json[text]",
+      "quote": ""
+    }
+  ],
+  "sources": [
+    {
+      "id": "input-case",
+      "file": "apparatus_spec.example.json",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\challenge-9034312d-v2\\examples\\apparatus_spec.example.json",
+      "sha256": "06472db4917e2bf69b18933c9202466401fe725d259f946011bc79f6645afdad",
+      "size": 2002,
+      "role": "case"
+    }
+  ],
+  "notes": []
+}
