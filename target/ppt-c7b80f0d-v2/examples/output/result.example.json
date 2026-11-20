@@ -1,0 +1,203 @@
+{
+  "case_id": "example-ppt-c7b80f0d",
+  "status": "completed",
+  "task": "academic-presentation-from-paper",
+  "deck": {
+    "file": "academic_deck.pptx",
+    "path": "academic_deck.pptx",
+    "slide_count": 8,
+    "template": {
+      "kind": "file",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-c7b80f0d-v2\\examples\\template-example.pptx",
+      "basename": "template-example.pptx",
+      "layout_count": 11,
+      "guard": "placeholder-fill-only; master/footer/colors untouched",
+      "starter_slides": 1,
+      "starter_slides_removed": 1,
+      "note": "template_mode=replace: starter slides removed, layouts/master kept"
+    },
+    "layouts_used": {
+      "Title Slide": 1,
+      "Title and Content": 5,
+      "Figure Slide": 1,
+      "Reference Slide": 1
+    },
+    "notes_included": true,
+    "notes_separated": true,
+    "editable": true,
+    "overflow_guard": {
+      "max_bullets": 6,
+      "max_chars_bullet": 110
+    },
+    "auto_slides": {
+      "outline": false,
+      "evidence": false
+    },
+    "export": {
+      "ooxml": null,
+      "naming": null
+    },
+    "page_budget": 8,
+    "page_budget_met": true
+  },
+  "evidence_mapping": {
+    "file": "evidence_mapping.md",
+    "entries": 6,
+    "gaps": []
+  },
+  "evidence_map_json": "evidence_map.json",
+  "spec_lint": {
+    "valid": true,
+    "problems": [],
+    "counts": {
+      "slides": 6,
+      "evidence_gaps": 0,
+      "unmapped": 0
+    }
+  },
+  "previews": [
+    {
+      "slide": 0,
+      "file": "preview-approx-cover.png",
+      "kind": "pil-approximation"
+    },
+    {
+      "slide": 1,
+      "file": "preview-approx-001.png",
+      "kind": "pil-approximation"
+    },
+    {
+      "slide": 2,
+      "file": "preview-approx-002.png",
+      "kind": "pil-approximation"
+    },
+    {
+      "slide": 3,
+      "file": "preview-approx-003.png",
+      "kind": "pil-approximation"
+    },
+    {
+      "slide": 4,
+      "file": "preview-approx-004.png",
+      "kind": "pil-approximation"
+    },
+    {
+      "slide": 5,
+      "file": "preview-approx-005.png",
+      "kind": "pil-approximation"
+    },
+    {
+      "slide": 6,
+      "file": "preview-approx-006.png",
+      "kind": "pil-approximation"
+    }
+  ],
+  "charts": [
+    {
+      "slide": 4,
+      "ref": "Fig. 1（重建）",
+      "chart": {
+        "file": "D:/BuildTemp/ex-out-ppt\\chart-Fig_1.png",
+        "png": true,
+        "svg": "chart-Fig_1.svg",
+        "note": "reconstructed_from_table; numbers are those declared in spec and must match the paper table",
+        "title_used": "Fig. 1"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "type": "paper_material",
+      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-c7b80f0d-v2\\examples\\materials\\paper-mini.txt",
+      "tool": "direct-read",
+      "text_chars": 2983,
+      "pages_parsed": 0,
+      "images_extracted": 0
+    }
+  ],
+  "uncertainty": [
+    "theme fonts: theme font injection failed: 'Part' object has no attribute 'element'"
+  ],
+  "change_records": [
+    {
+      "time": "2026-11-20T22:57:16+0800",
+      "what": "start run (paper-to-academic-ppt v2.0.0)",
+      "why": "case case.json"
+    },
+    {
+      "time": "2026-11-20T22:57:17+0800",
+      "what": "run finished",
+      "why": "status=completed, deck=True, lint=True"
+    }
+  ],
+  "run_meta": {
+    "python": "3.13.9",
+    "platform": "Windows-11-10.0.22621-SP0",
+    "ppt_version": "1.0.2",
+    "pillow_version": "12.3.0",
+    "matplotlib_available": true,
+    "pdf_tools": {
+      "fitz": true,
+      "pypdf": true,
+      "pdfplumber": true
+    },
+    "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+    "preview_fidelity": "approximate — PIL re-composition, not PowerPoint rendering",
+    "preview_font": "C:\\Windows\\Fonts\\msyh.ttc",
+    "timestamp": "2026-11-20T22:57:17+0800",
+    "case_file": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-c7b80f0d-v2\\examples\\case.json",
+    "spec_source": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\target\\ppt-c7b80f0d-v2\\examples\\deck-spec.json",
+    "duration_seconds": 1.6,
+    "skill_version": "2.0.0",
+    "checkpoints": {
+      "cp1_spec_lint": true,
+      "cp2_build": true,
+      "cp3_export_check": null
+    },
+    "self_check": {
+      "ok": true,
+      "problems": []
+    }
+  },
+  "title": "ExampleNet: 检索增强的代码评审（演示示例）",
+  "main_claim": "检索增强无需微调即可提升代码评审评语质量（ROUGE-L F1 +8.3 点）。",
+  "slides": [
+    {
+      "page": 1,
+      "title": "研究问题：评语通用、缺上下文",
+      "claim": "代码评审自动化受限于评审模型缺少项目上下文。"
+    },
+    {
+      "page": 2,
+      "title": "方法：索引→检索→条件生成",
+      "claim": "ExampleNet 用三阶段流水线实现免微调的检索增强评审。"
+    },
+    {
+      "page": 3,
+      "title": "结果：主表（Table 1）",
+      "claim": "k=5 时 ROUGE-L F1 提到 0.695，超过基线 8.3 点。"
+    },
+    {
+      "page": 4,
+      "title": "结果：检索量 vs 质量（重建图）",
+      "claim": "重建图：ROUGE-L F1 随 k 先升后降，k=5 为甜点。"
+    },
+    {
+      "page": 5,
+      "title": "结论",
+      "claim": "所有配置均优于基线；k=5 是信息量与噪声的平衡点。"
+    },
+    {
+      "page": 6,
+      "title": "局限与展望",
+      "claim": "局限明确：合成基准、索引内存、服务成本、非英语未测。"
+    }
+  ],
+  "render_state": {
+    "previews": 7,
+    "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+    "deck_file": "academic_deck.pptx",
+    "evidence_mapping_file": "evidence_mapping.md"
+  },
+  "notes_separated": true
+}
