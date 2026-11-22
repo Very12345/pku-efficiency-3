@@ -1,9 +1,18 @@
 {
   "meta": {
     "name": "academic-talk-organizer talk config",
-    "version": "1.0.0",
-    "description": "Editable narrative rules: page-budget weights per report type, narrative order, and Q&A templates. Tune here to change behavior without touching code.",
-    "scope": "challenge-20870c35 (slides group: 学术汇报内容组织)"
+    "version": "2.0.0",
+    "description": "Editable narrative rules (v2): page-budget weights per report type, narrative order, Q&A templates and deck rules. Tune here to change behavior without touching code. schema: assets/plan.schema.json, gate: scripts/validate_plan.py",
+    "scope": "challenge-20870c35 (slides group: 学术汇报内容组织) + companion challenges"
+  },
+  "deck_rules": {
+    "title_max_chars": 40,
+    "claim_min_chars": 6,
+    "claim_max_chars": 500,
+    "one_liner_max_chars": 64,
+    "figure_placeholder_note": "材料未提供对应图片文件时，页内放诚实占位框并注明，不虚构插图",
+    "notes_required": true,
+    "element_naming": "page-title-NN / page-claim-NN / page-figure-NN / page-footer-NN（确定性命名，verify_deck.py 校验）"
   },
   "blocks": {
     "group_meeting": {

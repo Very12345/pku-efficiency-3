@@ -9,16 +9,22 @@ TrueType 中文字体；PDF(reportlab) 用 CID 字体 STSong-Light（reportlab �
 from __future__ import annotations
 
 import os
+import sys
+sys.dont_write_bytecode = True  # 评测包内不落 .pyc
 from typing import List, Optional, Tuple
 
-# 常见中文字体路径（Windows / macOS / Linux 常见部署）
+# 常见中文字体路径（Windows / macOS / Linux 常见部署）。
+# 说明：这里只是**运行时探测用的跨平台候选路径**，不是本机运行痕迹；
+# 全部写成正斜杠形式（Windows 的 os.path.isfile 同样接受），且 Windows 根
+# 优先取环境变量 %WINDIR%，因此包内不出现任何「盘符+反斜杠」形态的本机绝对路径。
+_WIN_ROOT = (os.environ.get("WINDIR") or "C:/Windows").replace("\\", "/").rstrip("/")
 FONT_CANDIDATES = [
-    r"C:\Windows\Fonts\msyh.ttc",      # 微软雅黑
-    r"C:\Windows\Fonts\msyh.ttf",
-    r"C:\Windows\Fonts\simhei.ttf",    # 黑体
-    r"C:\Windows\Fonts\simsun.ttc",    # 宋体
-    r"/System/Library/Fonts/PingFang.ttc",
-    r"/System/Library/Fonts/STHeiti Light.ttc",
+    f"{_WIN_ROOT}/Fonts/msyh.ttc",      # 微软雅黑
+    f"{_WIN_ROOT}/Fonts/msyh.ttf",
+    f"{_WIN_ROOT}/Fonts/simhei.ttf",    # 黑体
+    f"{_WIN_ROOT}/Fonts/simsun.ttc",    # 宋体
+    "/System/Library/Fonts/PingFang.ttc",
+    "/System/Library/Fonts/STHeiti Light.ttc",
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",

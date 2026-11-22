@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 """model.py — 结构化中间表示 (Structured Intermediate Representation, SIR).
 
-把输入案例（case.json + 可选 task.md）解析成「实体—关系—步骤—流向」的
-结构化图面模型。这是本 Skill 的核心创新点：先出结构化中间表示，再据此
-布图与自检（对应评分维度「创新增益」）。
+把输入案例（case.json + task.md + 材料文件）解析成「实体—关系—步骤—流向」的
+结构化图面模型。这是本 Skill 的核心创新点（评分维度「创新增益」）：先出结构化
+中间表示，再据此布图与自检；v2 起支持**证据先行**——中间表示可以由
+`gain_evidence.py` 生成（每条实体/关系携带材料出处 locator + 原文引用 quote），
+也可以通过本模块的原始解析路径（结构化 case 字段或朴素文本解构兜底）获得。
 
 设计约束：
-- 只用标准库，保证在任何装有 Python 3 的评测机上可跑。
+- 只用标准库，保证在任何装有 Python 3 的评测机上可跑；
 - 不依赖领域标签猜数据：每个实体/关系尽量携带 source（材料出处），
-  拿不到就记为 null 并写入 uncertainty。
+  拿不到就记为 null 并写入 uncertainty；
 - 不编造数据：结构化字段缺失时只做朴素文本解构（提取步骤/箭头/编号），
-  解构结果标记 extraction="text-heuristic"，由 Agent 复核。
+  解构结果标记 extraction="text-heuristic"，由 Agent 复核；
+- 对 evidence（证据先行）输入做与结构化输入相同的归一化，保证下游一致。
 """
 
 from __future__ import annotations
@@ -25,7 +28,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 PT_TO_MM = 25.4 / 72.0  # 1 pt → mm
 
-# 图元类别统一词表（图例/配色/形状都从 kind 映射）
+# 图元类别统一词表（图例/配色/形状都从 kind 映射；与 references/vocabulary.md 同步）
 KINDS = {
     "step":       {"label": "步骤",       "shape": "rect"},
     "phase":      {"label": "阶段",       "shape": "rect"},
@@ -94,6 +97,7 @@ class FigureModel:
     uncertainty: List[Dict[str, Any]] = field(default_factory=list)
     raw_text: str = ""
     task_text: str = ""
+    evidence_meta: Dict[str, Any] = field(default_factory=dict)  # 证据先行元信息
 
     def entity_by_id(self, eid: str) -> Optional[Entity]:
         for e in self.entities:
@@ -136,15 +140,17 @@ def _norm_kind(k: Any) -> str:
     s = str(k).strip().lower()
     if s in KINDS:
         return s
-    # 容错映射
+    # 容错映射（与 references/vocabulary.md 的 alias 词表一致）
     alias = {
-        "step": "step", "步骤": "step", "step/operation": "step",
+        "step": "step", "步骤": "step", "step/operation": "step", "operation": "step",
         "phase": "phase", "阶段": "phase", "stage": "phase",
         "device": "device", "装置": "device", "仪器": "device", "部件": "device",
-        "equipment": "device", "part": "device", "部件/接口": "device",
+        "equipment": "device", "part": "device", "部件/接口": "device", "machine": "device",
         "material": "material", "物料": "material", "样本": "material", "样品": "material",
+        "input": "material", "sample": "material",
         "product": "product", "产物": "product", "输出": "product", "outcome": "product",
-        "data": "data", "数据": "data", "file": "data", "文件": "data",
+        "output": "product",
+        "data": "data", "数据": "data", "file": "data", "文件": "data", "result": "data",
         "decision": "decision", "判断": "decision", "条件": "decision",
         "milestone": "milestone", "里程碑": "milestone",
         "waste": "waste", "废料": "waste", "终点": "waste",
@@ -208,7 +214,7 @@ def _parse_relations(list_data: Any, entity_ids: set) -> List[Relation]:
         frm = str(_strip_key(item, "from", "from_id", "source", "src", "起点") or "")
         to = str(_strip_key(item, "to", "to_id", "target", "tgt", "终点") or "")
         if not frm or not to or frm not in entity_ids or to not in entity_ids:
-            continue  # 指向不存在实体的关系不画，避免断头箭头
+            continue  # 指向不存在实体的关系不画，避免断头箭头（D5）
         kind = _norm_relation_kind(_strip_key(item, "kind", "type", "关系", "arrow_type"))
         rid = str(_strip_key(item, "id", "rel_id", "key") or f"R{i+1}")
         src = _strip_key(item, "source", "source_ref", "src", "出处", "ref")
@@ -216,6 +222,20 @@ def _parse_relations(list_data: Any, entity_ids: set) -> List[Relation]:
                             label=_strip_key(item, "label", "flow_label", "标签"),
                             source=None if src is None else str(src)))
     return out
+
+
+# ---------------------------------------------------------------- 证据先行输入（gain_evidence.py 的产出）
+
+def _parse_evidence(inputs: Dict[str, Any]) -> Tuple[List[Entity], List[Relation], str]:
+    """把 gain_evidence.py 的 evidence 转成 Entity/Relation。
+    字段兼容：{entities:[{id,name,kind,stage,source,label}], relations:[{id,from,to,kind,label,source}]}。
+    """
+    if not isinstance(inputs, dict):
+        return [], [], "structured"
+    ents = _parse_entities(inputs.get("entities") or [])
+    rels = _parse_relations(inputs.get("relations") or [], {e.id for e in ents})
+    xt = str(inputs.get("extraction") or "structured")
+    return ents, rels, xt
 
 
 # ---------------------------------------------------------------- 文本解构（兜底）
@@ -299,8 +319,14 @@ def text_relations(entities: List[Entity], task_text: str, raw_text: str) -> Lis
 # ---------------------------------------------------------------- 主入口
 
 def build_model(case_path: str, task_path: Optional[str] = None,
-                figure_type_override: Optional[str] = None) -> FigureModel:
-    """构建 FigureModel。返回前自动做一致性自查（实体 id 唯一、关系两端存在）。"""
+                figure_type_override: Optional[str] = None,
+                evidence: Optional[Dict[str, Any]] = None) -> FigureModel:
+    """构建 FigureModel。返回前自动做一致性自查（实体 id 唯一、关系两端存在）。
+
+    evidence 为 None 时走原始路径（结构化 case 字段或文本解构）；非 None 时
+    优先采用证据先行的实体/关系（仍读取 case.json 取 case_id/title/canvas，
+    保证产物与真实输入绑定）。
+    """
     data, task_text = load_inputs(case_path, task_path)
     raw_text = data.get("text") or data.get("materials_text") or data.get("材料") or ""
 
@@ -311,13 +337,25 @@ def build_model(case_path: str, task_path: Optional[str] = None,
     canvas.setdefault("width_mm", 297)
     canvas.setdefault("height_mm", 180)
 
-    entities = _parse_entities(data.get("entities") or data.get("entity_list") or
-                               data.get("nodes") or data.get("步骤") or data.get("stages"))
-    relations = _parse_relations(data.get("relations") or data.get("links") or
-                                 data.get("edges") or data.get("连接") or data.get("flows"),
-                                 {e.id for e in entities})
-
     extraction = "structured"
+    if evidence is not None:
+        # 证据先行：实体/关系由 gain_evidence.py 从材料真实抽取并带出处
+        entities, relations, extraction = _parse_evidence(evidence)
+        if not entities:
+            # 证据为空时回落到结构化/文本路径，并如实标注
+            entities = _parse_entities(data.get("entities") or data.get("entity_list") or
+                                       data.get("nodes") or data.get("步骤") or data.get("stages"))
+            relations = _parse_relations(data.get("relations") or data.get("links") or
+                                         data.get("edges") or data.get("连接") or data.get("flows"),
+                                         {e.id for e in entities})
+            extraction = "structured" if entities else "text-heuristic"
+    else:
+        entities = _parse_entities(data.get("entities") or data.get("entity_list") or
+                                   data.get("nodes") or data.get("步骤") or data.get("stages"))
+        relations = _parse_relations(data.get("relations") or data.get("links") or
+                                     data.get("edges") or data.get("连接") or data.get("flows"),
+                                     {e.id for e in entities})
+
     if not entities:
         entities = text_entities(task_text, raw_text)
         extraction = "text-heuristic"
@@ -369,23 +407,43 @@ def build_model(case_path: str, task_path: Optional[str] = None,
     if task_path:
         sources.append(SourceRef(id="input-task", file=os.path.basename(task_path), note="task.md"))
 
+    evidence_meta = {}
+    if evidence is not None:
+        evidence_meta = {
+            "source": evidence.get("source", "gain_evidence"),
+            "item_count": {
+                "entities": len(entities),
+                "relations": len(relations),
+                "evidence": len(evidence.get("evidence") or []),
+                "sources": len(evidence.get("sources") or []),
+            },
+            "notes": list(evidence.get("notes") or []),
+        }
+
     return FigureModel(
         case_id=case_id, title=title, figure_type=fig_type, canvas=canvas,
         entities=entities, relations=relations, sources=sources,
         extraction=extraction, uncertainty=uncertainty,
         raw_text=raw_text, task_text=task_text,
+        evidence_meta=evidence_meta,
     )
 
 
 if __name__ == "__main__":
-    # 自检：python model.py <case.json> [task.md]
+    # 自检：python model.py <case.json> [task.md] [--evidence evidence.json]
     if len(sys.argv) < 2:
-        print("usage: python model.py <case.json> [task.md]", file=sys.stderr)
+        print("usage: python model.py <case.json> [task.md] [--evidence evidence.json]", file=sys.stderr)
         sys.exit(2)
-    m = build_model(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
+    ev_path = None
+    if "--evidence" in sys.argv:
+        ev_path = sys.argv[sys.argv.index("--evidence") + 1]
+    ev = read_json(ev_path) if ev_path else None
+    m = build_model(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("--") else None,
+                    evidence=ev)
     print(json.dumps({
         "case_id": m.case_id, "figure_type": m.figure_type,
         "entities": len(m.entities), "relations": len(m.relations),
         "extraction": m.extraction,
+        "evidence_meta": m.evidence_meta,
         "uncertainty": [u["issue"] for u in m.uncertainty],
     }, ensure_ascii=False, indent=2))

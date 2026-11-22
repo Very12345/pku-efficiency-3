@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 check_contract.py — verify that result.json covers every field of the
-output_contract declared by the case/task.
+output_contract declared by the case/task.  (verify role.)
 
 Field source priority:
   1. --contract <file.json | inline-json>   (explicit)

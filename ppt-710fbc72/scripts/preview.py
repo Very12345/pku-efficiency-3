@@ -15,7 +15,7 @@ from __future__ import annotations
 import os
 from PIL import Image, ImageDraw, ImageFont
 from common import (PALETTE, hex_to_rgb, pil_font, probe_font_candidates,
-                    dump_json, write_text, utf8_writer, SKILL_NAME, SKILL_VERSION)
+                    dump_json, write_text, utf8_writer, SKILL_NAME, SKILL_VERSION, slash)
 
 W, H = 1280, 720
 
@@ -135,8 +135,19 @@ def render_contact_png(content: dict, plan: dict, out_png: str) -> dict:
 
 
 def _font_report() -> list:
-    _, path, idx = probe_font_candidates()
-    return [{"path": path, "index": idx, "fallback_default": path is None}]
+    """Honest, machine-independent record of the font actually used.
+
+    The resolved font is recorded by file name (the directory is resolved from
+    the platform's standard font locations at run time), so the log stays
+    reproducible on any host and leaks no local path.
+    """
+    cands, path, idx = probe_font_candidates()
+    return [{"file": os.path.basename(path) if path else "",
+             "index": idx,
+             "fallback_default": path is None,
+             "candidates_probed": len(cands),
+             "note": ("system font resolved at run time from the standard font "
+                      "directories (see scripts/common.py font_dirs)")}]
 
 
 def render_all(content: dict, plan: dict, out_dir: str, case_id: str) -> dict:
@@ -148,8 +159,8 @@ def render_all(content: dict, plan: dict, out_dir: str, case_id: str) -> dict:
     log = {
         "_meta": "preview rendering log; schematic PIL preview, not pixel-perfect export",
         "renderer": "PIL (no LibreOffice/uno detected on runtime box)",
-        "cover": {"path": cover, **cover_log},
-        "contact_sheet": {"path": sheet, **sheet_log},
+        "cover": {"path": slash(cover), **cover_log},
+        "contact_sheet": {"path": slash(sheet), **sheet_log},
         "honest_note": ("PDF export requires Microsoft PowerPoint or LibreOffice; "
                         "not performed because neither was available/freshly verified here."),
     }

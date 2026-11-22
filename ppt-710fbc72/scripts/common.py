@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""common.py — ppt-710fbc72 Skill (slides group) shared utilities.
+"""common.py — ppt-710fbc72 v2 Skill (slides group) shared utilities.
 
 Path self-location, version stamping, hashing, fonts probing, color/number
 helpers.  No hard-coded absolute paths anywhere in this skill: every script
@@ -14,7 +14,7 @@ import os
 import sys
 
 SKILL_NAME = "academic-slide-adapt"
-SKILL_VERSION = "1.0.0"
+SKILL_VERSION = "2.0.0"          # v2: two-phase workflow (adopt-plan -> adapt)
 DISPLAY_NAME = "Academic PPT Template & Format Adaptation（学术PPT模板与格式适配）"
 WORKORDER = "academic_slide_deck"
 
@@ -26,6 +26,36 @@ def _root() -> str:
 
 def skill_root() -> str:
     return _root()
+
+
+def slash(path) -> str:
+    """Forward-slash form of a path for JSON records.
+
+    Applied when a recorded path may still be re-opened later in the pipeline:
+    Python accepts forward slashes on every platform, so this is cosmetic for
+    I/O and makes the record identical on Windows and POSIX.
+    """
+    return str(path or "").replace("\\", "/")
+
+
+def portable_path(path) -> str:
+    """Machine-independent form of a run path, for every path we *record*.
+
+    The skill ships no machine-specific path: records must stay readable and
+    reproducible on any host.  A path is therefore stored relative to the
+    current working directory (forward slashes on every OS); when that is
+    impossible — a different drive on Windows, for instance — only the final
+    component is kept.  Real I/O still uses the real path.
+    """
+    if not path:
+        return ""
+    p = str(path)
+    try:
+        rel = os.path.relpath(p)
+    except ValueError:            # different drive/volume: no relative form
+        rel = os.path.basename(p)
+    rel = rel.replace("\\", "/")
+    return rel
 
 
 def utf8_writer():
@@ -158,26 +188,95 @@ def fit_font_size(paragraphs, box_width_pt: int, box_height_pt: int,
 
 # --------------------------------------------------------------------------
 # Fonts (PIL preview only) --------------------------------------------------
-def probe_font_candidates():
-    """Return (list of truetype paths/pairs tried, chosen path, chosen idx)."""
-    candidates = []
-    win_dir = r"C:\Windows\Fonts"
-    known = [
-        ("msyh.ttc", 0), ("msyh.ttc", 1), ("msyhbd.ttc", 0), ("simhei.ttf", 0),
-        ("simsun.ttc", 0), ("Microsoft YaHei UI.ttf", 0), ("arial.ttf", 0),
-        ("segoeui.ttf", 0), ("times.ttf", 0),
-    ]
-    for name, idx in known:
-        p = os.path.join(win_dir, name)
-        candidates.append((p, idx))
+# No font binary is shipped (text-only skill resources): the preview renderer
+# probes the platform's standard font directories at run time.  The Windows
+# directory is resolved from the environment (WINDIR / SystemRoot) rather than
+# from a hard-coded drive letter, so this module carries no machine path while
+# still finding the same fonts on a real Windows box.
+FONT_FILE_CANDIDATES = [
+    ("NotoSansCJK-Regular.ttc", 0), ("NotoSansCJKsc-Regular.otf", 0),
+    ("NotoSerifCJK-Regular.ttc", 0), ("NotoSansCJKsc-Medium.otf", 0),
+    ("SourceHanSansSC-Regular.otf", 0), ("wqy-zenhei.ttc", 0),
+    ("wqy-microhei.ttc", 0), ("DroidSansFallbackFull.ttf", 0),
+    ("PingFang.ttc", 0), ("Hiragino Sans GB.ttc", 0), ("STHeiti Light.ttc", 0),
+    ("msyh.ttc", 0), ("msyh.ttc", 1), ("msyhbd.ttc", 0), ("simhei.ttf", 0),
+    ("simsun.ttc", 0), ("Microsoft YaHei UI.ttf", 0),
+    ("DejaVuSans.ttf", 0), ("LiberationSans-Regular.ttf", 0),
+    ("arial.ttf", 0), ("segoeui.ttf", 0), ("times.ttf", 0),
+]
+
+FONT_DIR_ENV = ("WINDIR", "SystemRoot")          # Windows: %WINDIR%\Fonts
+FONT_DIR_POSIX = [
+    "/usr/share/fonts", "/usr/local/share/fonts",
+    "/usr/share/fonts/truetype", "/usr/share/fonts/opentype",
+    "/usr/share/fonts/truetype/dejavu", "/usr/share/fonts/truetype/noto",
+    "/usr/share/fonts/opentype/noto",
+    "/System/Library/Fonts", "/System/Library/Fonts/Supplemental", "/Library/Fonts",
+]
+
+
+def font_dirs() -> list:
+    """Candidate system font directories for the current platform."""
+    dirs = []
+    for env in FONT_DIR_ENV:
+        v = os.environ.get(env)
+        if v:
+            dirs.append(os.path.join(v, "Fonts"))
+    dirs.extend(FONT_DIR_POSIX)
+    dirs.append(os.path.join(os.path.expanduser("~"), ".fonts"))
+    dirs.append(os.path.join(os.path.expanduser("~"), "Library", "Fonts"))
+    seen, out = set(), []
+    for d in dirs:
+        if d and d not in seen:
+            seen.add(d)
+            out.append(d)
+    return out
+
+
+def _try_fonts(candidates: list):
+    """Return (path, index) of the first candidate PIL can actually load."""
     for p, idx in candidates:
         try:
             from PIL import ImageFont
             ImageFont.truetype(p, 16, index=idx)
-            return candidates, p, idx
+            return p, idx
         except Exception:
             continue
-    return candidates, None, 0
+    return None, 0
+
+
+def probe_font_candidates():
+    """Return ([(path, index), ...] tried, chosen path, chosen index).
+
+    Two passes: (1) well-known file names inside the standard font dirs;
+    (2) if none loads, a bounded scan for CJK-capable files in those dirs.
+    A machine with no usable TrueType font returns (candidates, None, 0) and
+    the caller falls back to PIL's built-in bitmap font, recording that fact.
+    """
+    direct = [(os.path.join(d, name), idx)
+              for d in font_dirs() for name, idx in FONT_FILE_CANDIDATES]
+    path, idx = _try_fonts(direct)
+    if path:
+        return direct, path, idx
+
+    scanned = []
+    for d in font_dirs():
+        if not os.path.isdir(d):
+            continue
+        try:
+            for dirpath, _dirnames, filenames in os.walk(d):
+                for fn in sorted(filenames):
+                    low = fn.lower()
+                    if low.endswith((".ttf", ".ttc", ".otf")) and any(
+                            k in low for k in ("cjk", "han", "hei", "song", "yahei", "wqy",
+                                               "noto", "dejavu", "liberation")):
+                        p = os.path.join(dirpath, fn)
+                        if (p, 0) not in direct:
+                            scanned.append((p, 0))
+        except Exception:
+            continue
+    path, idx = _try_fonts(scanned)
+    return direct + scanned, path, idx
 
 
 def pil_font(size: int, bold: bool = False):

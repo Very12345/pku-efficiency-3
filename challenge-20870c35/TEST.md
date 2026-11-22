@@ -1,127 +1,205 @@
-# TEST.md — 本地实测记录（challenge-20870c35）
+# TEST.md — 本地实测记录（challenge-20870c35 · 合规重打包版）
 
-- 测试时间：2026-11-20 22:31 +08（Asia/Shanghai）
+- 测试时间：2026-11-22 15:37–15:57 +08（Asia/Shanghai）
 - 测试机：Windows（Git Bash / MSYS2），Python 3.13.9（Anaconda）
-- 代码状态：本目录全部文件，`scripts/` 7 个 Python 脚本最后一次 `py_compile` 通过后未再改动
+- 被测定版本：本目录全部文件（`scripts/` 14 个 Python 脚本，最后一次 `py_compile` 通过后未再改动）
+- 测试方式：把包**复制到一个临时目录**（本机为系统临时盘下的 ASCII 目录）里跑，不在提交目录里跑，避免把运行产物 / `__pycache__` 混进提交资源
+- 覆盖：语法编译 / 合成输入再生成 / 主流程 smoke / 独立复核四件套 / 全链路自检 / 双跑确定性 /
+  模板适配 / 跳过预览 / cwd 自定位 / **六条降级与失败分支（含负例）**
 
-## 1. 环境确认
+## 0. 环境与依赖
 
 ```
 $ python --version
 Python 3.13.9
-$ python -c "import pptx,PIL; print('python-pptx',pptx.__version__,'| Pillow',PIL.__version__)"
-python-pptx 1.0.2 | Pillow 12.3.0
-$ python -c "import pypdf; print('pypdf',pypdf.__version__)"
-pypdf 6.14.2
+$ python -c "import pptx,PIL,pypdf; print(pptx.__version__, PIL.__version__, pypdf.__version__)"
+1.0.2 12.3.0 6.14.2
 ```
 
-## 2. 语法检查
+依赖策略：**必需**只有 `python-pptx` + `Pillow`；`pypdf`/`PyPDF2` 为 PDF 可选解析器；
+`scripts/make_synthetic_inputs.py` 零第三方依赖（PDF 为手工构造的最小 PDF，PNG 用 Pillow）。
+缺任何一个都不崩：见 §8。
+
+## 1. 语法检查（T1）
 
 ```
-$ python -m py_compile scripts/*.py
-=> 无输出，退出码 0（COMPILE_OK）
+$ cd <pkg>/scripts && for f in *.py; do python -m py_compile "$f" || exit 1; done
+COMPILE_OK 14/14 scripts          # 退出码 0
 ```
 
-## 3. 主流程实测（验收 smoke）
-
-命令（等价于父任务验收命令，`<script> --case examples/case.json --out <out>`）：
+## 2. 合成输入再生成（T0，对应"二进制资源改运行时生成"）
 
 ```
-$ python scripts/main.py --case examples/case.json --out "D:/BuildTemp/smoke-20870c35"
-[plan] 12 pages, narrative=group_meeting, audience=familiar
-[deck] 12 slides, mode=built-in-theme
+$ python scripts/make_synthetic_inputs.py
+[synthetic-inputs] written=['dataset_card.pdf', 'fig2.png']
+$ python scripts/make_synthetic_inputs.py                 # 幂等：已存在则跳过
+[synthetic-inputs] skipped(existing)=['dataset_card.pdf', 'fig2.png']
+$ python scripts/make_synthetic_inputs.py --force --template
+[synthetic-inputs] written=['dataset_card.pdf', 'fig2.png', 'synthetic_template.pptx']
+$ python -c "from pypdf import PdfReader; print(repr(PdfReader('examples/materials/dataset_card.pdf').pages[0].extract_text()[:80]))"
+'SYNTHETIC EXAMPLE - generated placeholder, not real research data\nDataset card - SynthAlign ...'
+```
+
+三个退出码均为 0。生成的 PDF 可被 pypdf 正常抽取文本（12 行文本层），生成的 PNG 是纯几何示意图
+（带 `SYNTHETIC EXAMPLE` 标注，不含任何测量值）。
+
+## 3. 主流程 smoke（T2 · 验收形态）
+
+```
+$ python scripts/main.py --case examples/case.json --out <OUT>/out-A
+[plan] 12 pages, narrative=group_meeting, audience=familiar, P-gates valid=True
+[deck] 12 slides, mode=built-in-theme, verify valid=True
 [preview] wrote 13 preview files (PIL simulation)
-[done] status=completed deck_ok=True preview_ok=True validate_valid=True contract_valid=True
-[done] output: D:\BuildTemp\smoke-20870c35
+[done] status=completed deck_ok=True preview_ok=True plan_gates=True evidence_audit=True validate_valid=True contract_valid=True
 退出码 0
 ```
 
-实际产出（D:/BuildTemp/smoke-20870c35，均为真实文件）：
+产出（`<OUT>/out-A`，均为真实文件）：
 
-| 文件 | 大小 | 说明 |
+```
+deck_audit.json  editable_deck.pptx  evidence_audit.json  evidence_map.json
+plan_gates.json  previews/{cover_preview.png, preview_grid.png, preview_manifest.json, slide_002..011.png}
+result.json  self_check.json  talk_plan.json
+```
+
+单次运行耗时：约 1.6–3.1 秒。
+
+## 4. 独立复核四件套 + 全链路自检（T3）
+
+| 测试 | 命令 | 退出码 |
 |-|-|-|
-| result.json | 29,547 B | status=completed；output_contract 16 字段全在顶层；sources 含 md×2 + pdf×1(parsed)+png×1(附件) |
-| talk_plan.json | 24,134 B | 12 页计划（叙事/每页主张/证据/讲稿/问答） |
-| evidence_map.json | 458 B | 源文件 → 页 + 图表引用 反向映射 |
-| editable_deck.pptx | 74,599 B | python-pptx 可编辑；12 页，每页含讲稿备注 |
-| previews/cover_preview.png | 97,357 B | 1280×720 封面预览（PIL 模拟，带水印） |
-| previews/slide_002..011.png | 各 ~50–65 KB | 10 张逐页缩略图（PIL 模拟，带水印） |
-| previews/preview_grid.png | 101,149 B | 整包网格 |
-| previews/preview_manifest.json | 680 B | 预览清单 + 限制说明 |
-| self_check.json | 约 2 KB | validate + contract 双自检 |
+| T3a 结构 + 文件在盘 + 数字提示 | `python scripts/validate_result.py out-A/result.json` | 0 |
+| T3b 契约齐全 | `python scripts/check_contract.py out-A/result.json` | 0 |
+| T3c 证据逐字审计 | `python scripts/evidence_audit.py out-A/result.json` | 0 |
+| T3d deck 机器校验 | `python scripts/verify_deck.py out-A/editable_deck.pptx --expect-pages 12 --plan out-A/talk_plan.json` | 0 |
+| T3e 全链路 + 包约束 | `python scripts/selftest.py out-A --package-check <pkg>` | 0 |
 
-自检（内嵌于 self_check.json，亦可用独立 CLI 复核）：
+`out-A/self_check.json` 观测值：
 
-```
-$ python scripts/validate_result.py D:/BuildTemp/smoke-20870c35/result.json
-=> valid: true, checks=8 errors=0 warnings=0
-$ python scripts/check_contract.py D:/BuildTemp/smoke-20870c35/result.json
-=> valid: true, declared=16 missing_required=0 wrong_type=0
-```
+- `validate`：checks 10/10 ok，`errors=[]`，`warnings=[]`；
+- `contract_check`：`declared=16 missing=0 wrong_type=0`（`checked_against = case.json + task.md`）；
+- `audit.gates`：G1–G9 = true，G10 = null（设计如此：包约束由 `selftest --package-check` 执行）；
+- `audit.plan_gates`：P1–P8 全过（`P3 pages=12 target=12`）；
+- `audit.evidence.summary`：`{pages_total:12, content_pages:10, ok_pages:10, errors:0, derived_pages:0, unavailable_text:0}`；
+- `audit.deck`：`valid=true`，12 张幻灯片，每页 `notes_nonempty=true`、`claim_element=true`。
 
-内容抽查（talk_plan.json 页级主张均为源材料逐字引文，证据定位 L行号 · §章节）：
+T3e 的 `selftest` 明细：`checks=6 errors=0`（validate_result / check_contract / evidence_audit /
+verify_deck / determinism_probe / package_constraints 全 ✓）；
+包约束实测（含运行期生成的二进制）：`text=37 total_bytes=322018 max_file=42297`，`errors=[]`。
 
-- 第 2 页 motivation（strong）「本文研究问题：…」← L19 · §1 引言
-- 第 7–10 页 results（strong）：「Table 1 显示…」「两个基线…」「Fig. 2…」「Acc@1 曲线…」← §3 结果（L32–L35）
-- 第 9 页绑定插图：fig=Fig. 2 → img=examples/materials/fig2.png（真实嵌入）
-- 第 6/7 页 Fig. 3 / Table 1 无图片文件 → 页内诚实占位框
-- 第 12 页问答备用页；question_bank=6 条预判追问
+## 5. 双跑确定性（T4）
 
-## 4. 二次运行（可复现性）
+同一条命令写到两个目录（`out-A` / `out-B`），逐项比对：
 
-```
-$ python scripts/main.py --case examples/case.json --out "D:/BuildTemp/smoke-20870c35b" --quiet
-status=completed pages=12 deck=True validate_valid=True contract_valid=True
-```
+| 文件 | A vs B |
+|-|-|
+| `evidence_map.json` / `plan_gates.json` / `deck_audit.json` / `evidence_audit.json` | **逐字节相同** |
+| `previews/*.png`（12 张） | **逐字节相同**（12/12） |
+| `talk_plan.json` / `result.json` / `preview_manifest.json` | 内容相同，仅记录性时间戳（`generated_at` / `change_records[].at`）不同 |
 
-两次 `talk_plan.json` 在去掉 `generated_at` 时间戳后 `==` 相等 → **确定性**：✓
-
-## 5. 模板适配模式
-
-用 python-pptx 生成一个外部模板后传入：
+确定性探针（剔除记录性时间戳后的内容投影 sha）A/B 完全一致：
 
 ```
-$ python scripts/main.py --case examples/case.json --out "D:/BuildTemp/smoke-tpl" --template "D:/BuildTemp/tpl.pptx" --quiet
-status=completed ... validate_valid=True contract_valid=True
-result.json → artifacts.template_used = D:\BuildTemp\tpl.pptx
-           → artifacts.deck_mode.mode = template-adapt（沿用模板母版/版式新增页面）
+plan_sha16      = 1dcff19cb479cba9ada62c9ddab260135bf12f5c22aa0e39a3f569b151336120
+evidence_map16  = 6a5d2847678c36dcb38e1f186f00a87e90d8a19af46117b00246247941d86214
+deck 规范化 sha = 6d17df3f4c09de46490fb81ddb15b2bb03dd053dac1677b76f19f7e1c6dfc27e
 ```
 
-## 6. --skip-previews 模式
+结论：**同输入 → 页内容、证据、deck、预览全部逐位一致**；唯一差异是记录性时间戳，已在探针中排除并如实记录。
+
+## 6. 模板适配（T5，起始演示路径）
 
 ```
-$ python scripts/main.py --case examples/case.json --out "D:/BuildTemp/smoke-nopre" --skip-previews --quiet
-status=completed ... 退出码 0
-previews/ 只含 cover_preview.png + preview_grid.png + preview_manifest.json
+$ python scripts/make_synthetic_inputs.py --out <TMP>/tpl --template   # 生成带 1 张自带页的起始演示
+$ python scripts/main.py --case examples/case.json --out out-T --template <TMP>/tpl/synthetic_template.pptx --quiet
+退出码 0
 ```
 
-## 7. 打包示例输出（examples/sample-output，标注"示例，非正式案例"）
+`out-T/result.json` 观测值：`status=completed`；`pages=12`；`deck_audit.slides=12`；
+`artifacts.template_used=synthetic_template.pptx`；
+`artifacts.deck_mode={mode: template-adapt, template_slides_present: 1, template_slides_dropped: 1}`；
+`change_records` 有 `adapted template synthetic_template.pptx (master/layout reused; 1 pre-existing
+slide(s) dropped so the deck matches the frozen page count of 12)`。
+⇒ 沿用模板母版/版式，同时保证**最终页数 == 冻结页数**。
+
+## 7. 跳过预览 / cwd 自定位（T6 / T7）
 
 ```
-$ python scripts/main.py --case examples/case.json --out examples/sample-output --skip-previews --quiet
-status=completed ... 退出码 0
-产生：result.json、talk_plan.json、evidence_map.json、editable_deck.pptx(74,599 B)、
-      previews/{cover_preview.png, preview_grid.png, preview_manifest.json}、self_check.json
+# T6：只渲染封面 + 网格
+$ python scripts/main.py --case examples/case.json --out out-S --skip-previews --quiet   # 退出码 0
+previews/ = {cover_preview.png, preview_grid.png, preview_manifest.json}；status=completed，G8=true
+
+# T7a：cwd 不是技能根（在无关目录 <TMP> 下用绝对路径调用）
+$ (cwd=<TMP>) python <TMP>/pkg/scripts/main.py --case <TMP>/pkg/examples/case.json --out out-C --quiet
+退出码 0；status=completed；pages=12；sources[].path = materials/paper_extract.md, materials/figures.md,
+materials/dataset_card.pdf, materials/fig2.png（**均为相对路径，无本机绝对路径**）
+
+# T7b：自检脚本同样可在任意 cwd 运行
+$ (cwd=<TMP>) python <TMP>/pkg/scripts/selftest.py out-C    # 退出码 0
 ```
 
-`examples/case.json` 含 `"sample": true`、标题含「示例（非正式案例）」；
-`examples/task.md` 首行声明「仅演示接口，不是平台正式测试案例」。
+## 8. 文档命令逐条实跑（T14：SKILL.md / README.md 里写的命令必须真能跑）
 
-## 8. 产出文件 SHA-256（D:/BuildTemp/smoke-20870c35）
+在**无关 cwd**（临时目录）下、用 `SKILL_DIR=<包目录>` 逐条执行文档里的命令（不做任何改写）：
+
+| 文档位置 | 命令形态 | 退出码 | 观测 |
+|-|-|-|-|
+| `README.md` §1 步骤 0 | `make_synthetic_inputs.py` | 0 | 生成 `dataset_card.pdf` + `fig2.png`；重复执行跳过 |
+| `README.md` §1 步骤 3 | `main.py --case … --out … --materials … --skip-previews`（cwd 非技能根） | 0 | `status=completed pages=12 deck=True`；`previews/` 仅封面+网格 |
+| `SKILL.md` §4 CP2 命令形态 | `main.py --case … --task … --out …` | 0 | 同上（`--task` 路径被真正读取并解析 output_contract） |
+| `references/OUTPUT_CONTRACT.md` §6 | `validate_result.py <out>/result.json --strict` | 0 | 无输出，strict 模式亦通过 |
+| 同上 | `check_contract.py <out>/result.json --contract '<inline json>'` | 0 | `declared=8 missing=0 wrong_type=0`（内联契约生效） |
+| 同上 | `evidence_audit.py <out>/result.json --sources-dir <材料目录> --out …_reread.json` | 0 | 复读报告 `valid=true`，**`unavailable_text=0`**（离开运行期仍能逐字复核） |
+| `references/plan-contract.md` §5 | `validate_plan.py <out>/talk_plan.json --materials-dir <材料目录>` | 0 | P1–P8 全过 |
+| `references/quality-gates.md` §独立复核 | `verify_deck.py … --expect-pages 12 --plan …` | 0 | 见 T3d |
+| `SKILL.md` §7 | `selftest.py <out> --package-check <包目录>` | 0 | 见 T3e |
+
+⇒ 文档里的脚本路径、参数名与 `scripts/` 实际入口**逐字对得上**，且在 cwd 不是技能根时同样可跑。
+
+## 9. 降级与失败分支（T8–T13，**含负例**）
+
+| 测试 | 条件 | 命令（同一入口） | 退出码 | `result.json` 观测值 |
+|-|-|-|-|-|
+| T8 | 案例声明的材料不存在 | `main.py --case <case-missing>/case.json --out out-M` | 0 | `status=partial`；`sources=[(paper_extract.md, md, parsed), (not_on_disk.pdf, missing, unparsed)]`；`uncertainty` 同时列出"未解析"与"声明但不存在"；`pages=8`，deck 正常生成 |
+| T9 | 无 `pypdf`/`PyPDF2` | `PYTHONPATH=<shim> main.py --case examples/case.json --out out-P` | 0 | `status=partial`；`dataset_card.pdf` → `parsed=false`，`note="PDF parsing unavailable (pypdf/PyPDF2 not installed)…"`；其余材料照常出页 |
+| T10 | 无 Pillow（连带 python-pptx 不可用） | `PYTHONPATH=<shim> main.py --case examples/case.json --out out-L` | 0 | `status=partial`；`artifacts.editable_deck=null`；`environment.pillow=null`、`python_pptx=null`；`uncertainty`/`change_records` 记明 |
+| T11 | 无 `python-pptx` | `PYTHONPATH=<shim> main.py --case examples/case.json --out out-X` | 0 | `status=partial`；`pages=12` 页计划照常；`artifacts.deck_limitation="python-pptx 不可用(…)"`；`uncertainty` 首条即该限制；预览照常 |
+| T12 | `case.json` 不可读 | `main.py --case <不存在>/case.json --out out-F` | **1** | 仍写最小 `result.json`（`status=failed` + `error`，且 error 文本里的本机路径已被净化）——**这是唯一应当非 0 退出的情形** |
+| T13 | 材料为空 | `main.py --case <case-none>.json --out out-N` | 0 | `status=partial`；`pages=6`（仅结构性页面）；`sources=['(none)']`；`uncertainty` 明写"没有任何材料被解析为文本" |
+
+退出码语义（与 `SKILL.md` §7 / `references/OUTPUT_CONTRACT.md` 一致）：
+**0** = 已产出通过 validate + contract 的 `result.json`（其 `status` 字段说明是 `completed` 还是 `partial`）；
+**1** = 没有可用的契约结果；**2** = 参数用法错误。
+
+## 10. 图绑定与可编辑性（人工 + 机器）
 
 ```
-result.json          c568425feb1496e24ffa667dbe4f8791b85f0d2a11964d5f22abf50c2bed7c97
-talk_plan.json       f13f1e0d00ee2e0a6ab43853b43e395997d41f0cdd3ae515def6d6b74f75c19b
-evidence_map.json    9db62f69c50149f17f15e2195571c85e2a2cfb7ec44619866f0d2ecdf26463cc
-editable_deck.pptx   f2dfa9f8d2b0d18b71f19231603773ea1e638c123719520bc76670df886979f4
-previews/cover_preview.png    07b2d0f3f60caa5c403b293cc9f3046765bc9105a812248e7decf6d300398ac4
-previews/preview_grid.png     9479ff9685622148c8f2f2ac19d856054d4e235be897fe5fb4e11914531d6f5a
+deck: slides=12；picture shapes: [(slide 9, 'page-figure-09')]；media parts: ['/ppt/media/image1.png']
+notes on all 12 slides: True
 ```
 
-## 9. 资源约束
+⇒ 示例材料里 `Fig. 2` 的引用被绑定到**运行期生成**的 `materials/fig2.png`，并真的嵌入 deck；
+`Fig. 3` / `Table 1` 没有图片文件 → 页内诚实占位框，`evidence_audit.figure_bound=false` 如实记录。
 
-- 文本文件数：按 find 统计 = 见最终清单（≤50）✓
-- 单文件 ≤500KB、总计 ≤2MB、无符号链接 ✓
-- SKILL.md frontmatter `name/description` 由 yaml 解析通过 ✓
+## 11. 提交资源形态与包约束（G10）
 
-成功。全部命令真实执行、产物为真实文件；预览为 Pillow 模拟渲染（如实标注）。
+在**提交目录本身**（不是包副本）上实测：
+
+```
+files = 39   (目标 20–40，上限 50)   total ≈ 339.3 KB / 347,4xx B (上限 2MB)
+max single file = 42,426 B      (examples/output/result.example.json；上限 500KB)
+extensions = {.md: 18, .py: 14, .json: 6, .txt: 1}   ← 全部在允许的七种之内
+目录 = 根 5 + assets 2 + references 7 + scripts 14 + templates 3 + examples 4 (+materials 2, output 2)
+无符号链接；无 __pycache__/*.pyc；示例二进制（pdf/png/pptx）不随包
+```
+
+`selftest.py --package-check`（在包副本上、含运行期生成的二进制时）报
+`text=37 total_bytes=322018 max_file=42297`、`errors=[]`；提交目录因不含二进制，实际更小。
+
+## 12. 已知限制 / 残余说明
+
+- 预览为 Pillow 模拟渲染（每张带水印 + manifest 说明），**不是** Office 真实栅格化；
+- `result.audit.gates.G10` 设计为 `null`（由 `selftest --package-check` 执行），非缺陷；
+- 证据定位为行级/章节级近似锚点，源材料变化后需按引文复核；
+- 模板适配会丢弃起始演示文件自带的示例页（记入 `change_records`），以保证页数等于冻结值；
+- 平台 3 案例 × 3 复跑由平台执行，本节只记录本机可复现性证据。

@@ -15,6 +15,7 @@ import json
 import math
 import os
 import sys
+sys.dont_write_bytecode = True  # 评测包内不落 .pyc
 from typing import Any, Dict, List, Optional, Tuple
 
 from model import FigureModel, KINDS, RELATION_KINDS, PT_TO_MM  # type: ignore

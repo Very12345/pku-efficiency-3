@@ -10,7 +10,8 @@ from __future__ import annotations
 import os
 import re
 
-from common import read_text, write_text, dump_json, load_json, utf8_writer
+from common import (read_text, write_text, dump_json, load_json, utf8_writer, slash,
+                    sha256_text)
 
 # Section keywords used to bucket free-form material.md into the story line.
 _SECTION_KW = [
@@ -30,13 +31,17 @@ _TBL_RE = re.compile(r"^[#*\-\s]*((?:表|Table)\s*([0-9A-Za-z]+))[:：.\-]\s*(.+
 
 def _locate(case_path: str, rel: str, work_dir: str | None = None) -> str:
     """Resolve a relative source path from case.json against, in order:
-    work_dir, case_dir.  Returns absolute path."""
+    work_dir, case_dir (relative form first, absolute form as the last
+    resort).  Relative resolution is preferred so every recorded path stays
+    portable; the absolute form keeps lookups working when the process later
+    changes directory."""
     candidates = []
     if rel and os.path.isabs(rel):
         candidates.append(rel)
     if rel and work_dir:
         candidates.append(os.path.join(work_dir, rel))
     if rel and case_path:
+        candidates.append(os.path.join(os.path.dirname(case_path) or ".", rel))
         candidates.append(os.path.join(os.path.dirname(os.path.abspath(case_path)), rel))
     for c in candidates:
         if c and os.path.exists(c):
@@ -97,7 +102,6 @@ def _extract_table_lines(text: str) -> list:
 def extract(case_path: str, task_path: str | None, work_dir: str | None, out_dir: str) -> dict:
     """Run extraction and persist content.json under out_dir."""
     case = load_json(case_path)
-    case_dir = os.path.dirname(os.path.abspath(case_path)) if case_path else "."
     case_id = str(case.get("case_id") or os.path.splitext(os.path.basename(case_path))[0])
 
     sources = []          # [{path, rel, exists, lines}]
@@ -108,7 +112,8 @@ def extract(case_path: str, task_path: str | None, work_dir: str | None, out_dir
 
     for rel in material_srcs:
         abspath = _locate(case_path, rel, work_dir)
-        rec = {"rel": rel, "path": abspath, "exists": os.path.exists(abspath), "lines": 0}
+        rec = {"rel": rel, "path": slash(abspath),
+               "exists": os.path.exists(abspath), "lines": 0}
         if rec["exists"]:
             try:
                 txt = read_text(abspath)
@@ -117,7 +122,7 @@ def extract(case_path: str, task_path: str | None, work_dir: str | None, out_dir
                 sources.append(rec)
                 continue
             rec["lines"] = txt.count("\n") + 1
-            rec["sha256"] = None  # computed below
+            rec["sha256"] = sha256_text(txt)      # content hash of the actual bytes read
             material_text += "\n" + txt
         sources.append(rec)
 
@@ -183,7 +188,7 @@ def extract(case_path: str, task_path: str | None, work_dir: str | None, out_dir
         entry.setdefault("caption", entry.get("caption") or entry.get("title") or "")
         entry.setdefault("source", entry.get("source") or entry.get("src") or f"case.json[figures]")
         entry.setdefault("file", entry.get("file") or "")
-        entry["file_abs"] = _locate(case_path, entry["file"], work_dir) if entry.get("file") else ""
+        entry["file_abs"] = slash(_locate(case_path, entry["file"], work_dir)) if entry.get("file") else ""
         entry["file_exists"] = bool(entry["file_abs"]) and os.path.exists(entry["file_abs"])
         if not entry["file_exists"] and entry.get("file"):
             entry["missing"] = entry["file"]

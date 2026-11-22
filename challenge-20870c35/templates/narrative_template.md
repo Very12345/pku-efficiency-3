@@ -1,8 +1,10 @@
-# 叙事模板（narrative template）——学术汇报内容组织
+# 叙事模板（narrative template）——学术汇报内容组织（v2）
 
 > 本文件描述 Skill 使用的内容组织模板：报告目标 → 听众 → 叙事顺序 → 页级主张 → 问答准备。
-> **机器可执行版本**在同目录 `talk_config.json`（planner 实际读取它做页数分配）；
-> 本文档供人（或 Agent 做人工精修时）理解取舍逻辑，两者保持同一套"块"（block）定义。
+> **机器可执行版本**在同目录 `talk_config.json`（scaffold_plan.py 实际读取它做页数分配；
+> `validate_plan.py` 按 `assets/plan.schema.json` 对它 + 计划做门控 P1–P8，并沿
+> `references/quality-gates.md` 的 G1–G10 收口）；本文档供人（或 Agent 做人工精修时）
+> 理解取舍逻辑，两者保持同一套"块"（block）定义。
 
 ## 0. 先定报告目标，再定页数与时长
 
@@ -14,7 +16,9 @@
 
 `case.json` 中的 `report_goal` 会覆写默认成功标准；`slide_count` 与 `duration_min`
 存在时直接决定页数与节奏，缺失时按上表推导。**听众越不了解背景，背景/术语页占比越高**
-（expert 10% / familiar 18% / lay 30%，见 `planner.py` 的 `resolve_audience`）。
+（expert 10% / familiar 18% / lay 30%，见 `scaffold_plan.py::resolve_audience`）。
+页数优先级：**任务冻结页数 > 时长推导页数 > 论文章节长度**（计划门 P3 校验
+`len(pages) == slide_target`）。
 
 ## 1. 内容块（block）与叙事顺序
 
@@ -42,7 +46,8 @@
 - `one_liner`：把 claim 压成一句 ≤64 字可讲的"讲解一句话"。
 - `strength` 证据强度：含数值/统计/图表引用 → `strong`；结论/结果动词 → `medium`；
   间接概括 → `weak`（页面会带"※ 间接概括"提示与 uncertainty 记录）。
-- 材料中没有对应主张的块 → 用该块源章节首段概括成页并标注 `weak`（诚实降级，不编造）。
+- 材料中没有对应主张的块 → 用该块源章节首段概括成页并标注 `weak` + `derived=true`
+  （诚实降级，不编造；证据审计对 derived 页按"概括语"而非"逐字引文"记录）。
 
 ## 3. 问答准备
 
@@ -54,4 +59,6 @@
 
 - 案例自带模板/起始演示 → `python-pptx` 打开并**沿用其母版与版式**新增页面（模板约束不破坏）。
 - 无模板 → 用包内置主题（16:9 母版 + 主题色 + 底栏）。
+- 每个 Skill 创建的图形元素带确定性命名（`page-claim-NN` / `page-figure-NN` …），
+  `verify_deck.py` 机器校验"每页仍表达其主张"，也方便在 PowerPoint 里定位编辑。
 - 预览为 Pillow 模拟渲染（每张 PNG 带"PIL 模拟预览"水印），正式效果以 `.pptx` 打开为准。

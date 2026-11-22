@@ -10,13 +10,12 @@ from __future__ import annotations
 
 import json
 import os
-import sys
 from common import utf8_writer
 
 REQUIRED = [
     "case_id", "skill", "status", "workorder", "title", "slide_count",
     "main_result", "artifacts", "slide_evidence", "template_audit",
-    "verification", "sources", "uncertainty", "change_records",
+    "adopt_plan", "verification", "sources", "uncertainty", "change_records",
     "status_notes", "generated_at", "generator", "tool_versions",
 ]
 STATUS_OK = ("success", "partial", "failed")
@@ -36,14 +35,11 @@ def validate(case_path: str, result_path: str | None = None, result: dict | None
         problems.append(f"invalid status: {result.get('status')!r}")
     if not result.get("case_id"):
         problems.append("case_id empty")
-    if not isinstance(result.get("slide_evidence"), list):
-        problems.append("slide_evidence must be a list")
-    if not isinstance(result.get("artifacts"), list):
-        problems.append("artifacts must be a list")
-    if not isinstance(result.get("uncertainty"), list):
-        problems.append("uncertainty must be a list")
-    if not isinstance(result.get("change_records"), list):
-        problems.append("change_records must be a list")
+    for field, kind in (("slide_evidence", list), ("artifacts", list),
+                        ("uncertainty", list), ("change_records", list),
+                        ("adopt_plan", dict)):
+        if not isinstance(result.get(field), kind):
+            problems.append(f"{field} must be a {kind.__name__}")
 
     # output_contract echo: every key of case output_contract present at top
     if case_path and os.path.exists(case_path):
@@ -56,7 +52,7 @@ def validate(case_path: str, result_path: str | None = None, result: dict | None
     ok = not problems
     if verbose:
         print("VALID - result.json conforms to OUTPUT_CONTRACT" if ok
-              else "INVALID:\n  " + "\n  ".join(problems))
+              else "INVALID:" + chr(10) + "  " + (chr(10) + "  ").join(problems))
     return ok, problems
 
 

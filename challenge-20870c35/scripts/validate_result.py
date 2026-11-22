@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 validate_result.py — structural + honesty checks on a produced result.json.
+(verify role in the build/extract/render/verify split.)
 
 Verifies, from the result itself and the files on disk next to it:
   * case_id / status are present and sane
   * a completed result has a non-empty page list, every page has a unique
     claim and at least one evidence locator (except structural pages)
   * every evidence source_file is declared in `sources`
-  * declared artifacts (editable deck, previews) actually exist on disk
+  * declared artifacts (editable deck, previews, audit files) actually exist
+    on disk
   * numeric claim tokens are traceable to some source text (warning level:
     this is a faithfulness hint for the human/grader, not a hard gate)
 
@@ -131,6 +133,10 @@ def validate(result, result_dir, strict=False):
         val = previews.get(key) if isinstance(previews, dict) else None
         if val:
             rel_checks.append(("previews.%s" % key, val))
+    for key in ("evidence_audit", "deck_audit", "plan_gates"):
+        val = artifacts.get(key)
+        if val:
+            rel_checks.append(("artifacts.%s" % key, val))
     missing_files = []
     for label, rel in rel_checks:
         full = os.path.join(result_dir, rel) if not os.path.isabs(rel) else rel
@@ -142,6 +148,19 @@ def validate(result, result_dir, strict=False):
           "missing=%s" % [(a, r) for a, r in missing_files])
     for label, rel in missing_files:
         errors.append("artifact missing on disk: %s (%s)" % (label, rel))
+
+    # audit field presence (G-verify: audit embedded in result)
+    audit = result.get("audit") or {}
+    if isinstance(audit, dict):
+        ev_audit = audit.get("evidence")
+        deck_audit = audit.get("deck")
+        check("audit.evidence embedded", isinstance(ev_audit, dict),
+              "has=%s" % bool(ev_audit))
+        check("audit.deck embedded", isinstance(deck_audit, dict),
+              "has=%s" % bool(deck_audit))
+    else:
+        check("audit embedded", False, "audit missing")
+        errors.append("result.audit missing (evidence/deck audit not embedded)")
 
     # numeric faithfulness hint (warning only)
     src_text = _load_sources_text(sources, result_dir)

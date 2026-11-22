@@ -1,28 +1,51 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-main.py — orchestrator of the academic-talk-organizer Skill.
+main.py — orchestrator of the academic-talk-organizer Skill (v2).
 
 True pipeline (all steps read/write real files, nothing is fabricated):
 
   case.json + task.md + materials
-      -> load & parse materials (text/markdown; PDF via pypdf when present)
-      -> extract claims with evidence anchors (line/section-level)
-      -> page-level talk plan (audience/time-driven narrative order)
-      -> editable .pptx (python-pptx; template adapt or built-in theme)
-      -> PIL previews (cover / per-slide / grid) + manifest
-      -> result.json (honest status/sources/uncertainty/change_records,
-                      all output_contract fields applied)
-      -> self_check.json (validate_result + check_contract reports)
+      [CP1] load & parse materials + collect output_contract
+      [CP2] scaffold plan (scaffold_plan.build_plan) -> write talk_plan.json
+            -> validate against assets/plan.schema.json (gates P1–P8)
+            -> write plan_gates.json
+      [CP3] editable .pptx (deck_builder.build_deck; template adapt or
+            built-in theme) -> verify_deck opens/count/notes/naming
+            -> write deck_audit.json
+      [CP4] PIL previews (render.render_all: cover / per-slide / grid)
+            -> previews/preview_manifest.json
+      [CP5] evidence audit (verbatim quote vs actually-read text)
+            -> evidence_audit.json
+            -> finalize_result: result.json (all output_contract fields,
+               audits embedded, honest status/sources/uncertainty/
+               change_records) + self_check.json (validate + contract +
+               determinism probe)
 
 Usage:
     python main.py --case <case.json> --out <output_dir> \
                    [--task task.md] [--materials dir] [--template deck.pptx] \
                    [--skip-previews] [--quiet]
 
+Exit code 0 = a contract-valid result.json was produced and passes the built-in
+validate + contract checks (its `status` field says `completed` or `partial` —
+the honest status travels *inside* result.json, so an honest partial run is not
+reported as a crash); 1 = no contract-valid result could be produced (case.json
+unreadable, self-check errors, unexpected deck crash).  Exit code 2 is argparse
+usage error.
+
+Degradation rules (never a silent failure):
+  * python-pptx missing  -> deck skipped, status=partial, reason recorded in
+    uncertainty/change_records; talk_plan/plan_gates/previews/result.json are
+    still produced;
+  * Pillow missing       -> previews skipped (non-fatal, status=partial);
+  * pypdf missing        -> PDF materials recorded as unparsed.
+
 The package never depends on the calling cwd: all internal paths derive from
 this file's location, and all input/output paths are resolved from the
-arguments (absolute or relative to the case file's directory).
+arguments (absolute or relative to the case file's directory).  Nothing
+written by this orchestrator carries this machine's absolute paths — see
+common.write_json / common.sanitize_output.
 """
 
 import argparse
@@ -39,21 +62,24 @@ except Exception:  # noqa: BLE001
     pass
 
 from common import (SKILL_ROOT, TEMPLATES_DIR, utc_now, read_text, read_json,
-                    write_json, ensure_dir, load_talk_config,
+                    write_json, ensure_dir, load_talk_config, set_path_bases,
+                    resolve_input_path, portable_path,
                     normalize_output_contract, parse_output_contract_from_task,
                     apply_contract, DEFAULT_CONTRACT_FIELDS)
 import evidence as ev
-import planner as pl
+import scaffold_plan as sp
+import validate_plan as vp
+import evidence_audit as ea
 import deck_builder as db
+import verify_deck as vdeck
 import render as rnd
-import validate_result as vr
-import check_contract as cc
+import finalize_result as fr
 
 SUPPORTED_DOC_EXTS = {".md", ".markdown", ".txt", ".text", ".rst", ".rtf", ".pdf"}
 
 
 def _setup_args():
-    ap = argparse.ArgumentParser(description="academic-talk-organizer orchestrator")
+    ap = argparse.ArgumentParser(description="academic-talk-organizer orchestrator (v2)")
     ap.add_argument("--case", required=True, help="path to case.json (or a directory containing case.json)")
     ap.add_argument("--out", required=True, help="output directory (final artifacts land here)")
     ap.add_argument("--task", default=None, help="path to task.md (default: <case_dir>/task.md)")
@@ -96,7 +122,6 @@ def _resolve_materials(case, case_dir, materials_arg):
         listed = [listed]
     resolved = []
     missing = []
-    roles = {}
     base_dirs = [d for d in [materials_arg, case_dir] if d]
     for e in listed:
         if isinstance(e, dict):
@@ -164,7 +189,6 @@ def _resolve_template(case, case_dir, materials_arg, template_arg):
                     base = fn.lower()
                     if "template" in base or "master" in base or "start" in base or "deck" in base:
                         return os.path.normpath(full)
-            # only top level to avoid picking up random files
             break
     return None
 
@@ -173,9 +197,9 @@ def main(argv=None):
     args = _setup_args()
     started = utc_now()
     change_records = [{"at": started, "step": "start",
-                       "action": "academic-talk-organizer pipeline start (efficiency-3, challenge-20870c35)"}]
+                       "action": "academic-talk-organizer v2 pipeline start (efficiency-3, challenge-20870c35)"}]
 
-    # ---------- resolve paths ----------
+    # ============ CP1 · 输入契约：路径、case.json、task.md、材料、模板 ============
     try:
         case_path = _resolve_case_path(args.case)
         case_dir = os.path.dirname(os.path.abspath(case_path))
@@ -186,13 +210,44 @@ def main(argv=None):
             if os.path.isdir(auto):
                 materials_arg = auto
         ensure_dir(out_dir)
+        # every local absolute path written from now on becomes relative to the
+        # case directory (no machine-specific path may travel inside the pack)
+        set_path_bases(case_dir)
     except SystemExit:
         raise
     except Exception as exc:  # noqa: BLE001
         print("FATAL path setup:", exc)
         return 2
 
-    # ---------- load case.json ----------
+    # ============ 环境预检（决定本次运行能生成哪些产物，如实记录） ============
+    deps = db.dependency_status()
+    font_info = rnd.font_status()
+    env_info = {
+        "python": sys.version.split()[0],
+        "platform": sys.platform,
+        "python_pptx": deps.get("python_pptx"),
+        "pillow": deps.get("pillow"),
+        "pypdf": deps.get("pypdf"),
+        "cjk_font": font_info,
+    }
+    change_records.append({
+        "at": utc_now(), "step": "environment",
+        "action": "deps python-pptx=%s pillow=%s pypdf=%s; cjk_font=%s" % (
+            deps.get("python_pptx") or "MISSING", deps.get("pillow") or "MISSING",
+            deps.get("pypdf") or "MISSING",
+            font_info.get("file") or "built-in bitmap fallback")})
+    if not deps.get("python_pptx"):
+        change_records.append({
+            "at": utc_now(), "step": "environment",
+            "action": "python-pptx 不可用(%s)：本次运行将跳过可编辑 .pptx，"
+                      "其余产物照常产出并降级为 partial" % (deps.get("pptx_import_error") or "")})
+    if not deps.get("pillow"):
+        change_records.append({"at": utc_now(), "step": "environment",
+                               "action": "Pillow 不可用：PNG 预览将跳过（非致命）"})
+    if not deps.get("pypdf"):
+        change_records.append({"at": utc_now(), "step": "environment",
+                               "action": "pypdf/PyPDF2 不可用：PDF 材料将按未解析如实记录"})
+
     try:
         case = read_json(case_path)
         change_records.append({"at": utc_now(), "step": "input",
@@ -214,9 +269,8 @@ def main(argv=None):
     task_text = read_text(task_path) if task_path else ""
     if task_path:
         change_records.append({"at": utc_now(), "step": "input",
-                               "action": "loaded task.md: %s" % task_path})
+                               "action": "loaded task.md: %s" % os.path.basename(task_path)})
 
-    # ---------- materials ----------
     materials_arg_final = args.materials
     if not materials_arg_final:
         fallback_md = os.path.join(case_dir, "materials")
@@ -251,28 +305,41 @@ def main(argv=None):
     for path, role in missing:
         material_records.append({"path": path, "file": os.path.basename(path), "kind": "missing",
                                  "parsed": False, "note": "listed in case.json but not found on disk (role=%s)" % role,
-                                 "char_count": 0, "sections": [], "claims": [], "role": role})
+                                 "char_count": 0, "sections": [], "claims": [],
+                                 "figure_refs": [], "text": "", "role": role})
         change_records.append({"at": utc_now(), "step": "material",
                                "action": "MISSING material %s not found on disk" % path})
 
     if not material_records:
         material_records.append({"path": "(none)", "file": "(none)", "kind": "none",
                                  "parsed": False, "note": "no materials found; deck carries structural pages only",
-                                 "char_count": 0, "sections": [], "claims": [], "role": ""})
+                                 "char_count": 0, "sections": [], "claims": [],
+                                 "figure_refs": [], "text": "", "role": ""})
         change_records.append({"at": utc_now(), "step": "material",
                                "action": "no materials found on disk"})
 
-    # ---------- plan ----------
+    # ============ CP2 · 计划门：scaffold -> validate (P1–P8) ============
     talk_config = load_talk_config()
-    plan = pl.build_plan(case, material_records, talk_config, change_records)
+    plan = sp.build_plan(case, material_records, talk_config, change_records)
     plan["title"] = str(case.get("title") or "(案例未提供标题)")
     talk_plan_path = os.path.join(out_dir, "talk_plan.json")
     write_json(talk_plan_path, plan)
     change_records.append({"at": utc_now(), "step": "plan", "action": "wrote talk_plan.json (%d pages)" % len(plan["pages"])})
+
+    material_names = [r.get("file") for r in material_records]
+    plan_gates = vp.validate_plan(plan, material_names=material_names)
+    write_json(os.path.join(out_dir, "plan_gates.json"), plan_gates)
+    change_records.append({"at": utc_now(), "step": "plan",
+                           "action": "plan gates: valid=%s errors=%d" % (
+                               plan_gates["valid"], len(plan_gates.get("errors", [])))})
+    if not plan_gates["valid"]:
+        for err in plan_gates.get("errors", [])[:8]:
+            change_records.append({"at": utc_now(), "step": "plan-gate",
+                                   "action": "P-gate violation: %s" % err})
     if not args.quiet:
-        print("[plan] %d pages, narrative=%s, audience=%s" % (
+        print("[plan] %d pages, narrative=%s, audience=%s, P-gates valid=%s" % (
             len(plan["pages"]), plan["narrative"]["report_type"],
-            plan["audience"].get("expertise")))
+            plan["audience"].get("expertise"), plan_gates["valid"]))
 
     # ---------- evidence map ----------
     evidence_map = {}
@@ -290,33 +357,60 @@ def main(argv=None):
     evidence_map_path = os.path.join(out_dir, "evidence_map.json")
     write_json(evidence_map_path, evidence_map)
 
-    # ---------- editable deck ----------
+    # ============ CP3 · 生成门：deck -> verify_deck ============
     template_path = _resolve_template(case, case_dir, materials_arg_final, args.template)
     deck_path = os.path.join(out_dir, "editable_deck.pptx")
     status = "completed"
     deck_ok = False
     deck_result = None
-    try:
-        deck_result, deck_changes = db.build_deck(plan, deck_path, template_path=template_path)
-        change_records.extend(deck_changes)
-        deck_ok = True
-        if not args.quiet:
-            print("[deck] %s slides, mode=%s" % (
-                len(deck_result["manifest"]), deck_result["mode"]["mode"]))
-    except Exception as exc:  # noqa: BLE001
-        status = "failed"
+    deck_audit = None
+    deck_normalized_sha = None
+    deck_failure = None
+    if not deps.get("python_pptx"):
+        # dependency missing -> honest degradation, everything else still runs
+        status = "partial"
+        deck_failure = ("python-pptx 不可用（%s）" % (deps.get("pptx_import_error") or "import failed"))
         change_records.append({"at": utc_now(), "step": "deck",
-                               "action": "deck build FAILED: %s" % exc})
-        print("[deck] FAILED:", exc)
-        traceback.print_exc()
+                               "action": "deck SKIPPED: %s" % deck_failure})
+        print("[deck] SKIPPED (dependency missing):", deck_failure)
+    else:
+        try:
+            deck_result, deck_changes = db.build_deck(plan, deck_path,
+                                                      template_path=template_path,
+                                                      figure_base=case_dir)
+            change_records.extend(deck_changes)
+            deck_ok = True
+            deck_audit = vdeck.verify_deck(deck_path, expect_pages=len(plan["pages"]), plan=plan)
+            write_json(os.path.join(out_dir, "deck_audit.json"), deck_audit)
+            deck_normalized_sha = deck_audit.get("normalized_sha256")
+            change_records.append({"at": utc_now(), "step": "deck",
+                                   "action": "deck built (%s), verify valid=%s, normalized_sha=%s" % (
+                                       deck_result["mode"]["mode"], deck_audit["valid"],
+                                       (deck_normalized_sha or "")[:16])})
+            if not deck_audit["valid"]:
+                status = "partial"
+                change_records.append({"at": utc_now(), "step": "deck-gate",
+                                       "action": "verify_deck 发现 %d 处问题: %s" % (
+                                           len(deck_audit.get("errors", [])),
+                                           deck_audit.get("errors", [])[:3])})
+            if not args.quiet:
+                print("[deck] %s slides, mode=%s, verify valid=%s" % (
+                    len(deck_result["manifest"]), deck_result["mode"]["mode"], deck_audit["valid"]))
+        except Exception as exc:  # noqa: BLE001
+            status = "failed"
+            deck_failure = str(exc)
+            change_records.append({"at": utc_now(), "step": "deck",
+                                   "action": "deck build FAILED: %s" % exc})
+            print("[deck] FAILED:", exc)
+            traceback.print_exc()
 
-    # ---------- previews (honest PIL simulation) ----------
+    # ============ CP4 · 渲染门：PIL 预览 ============
     preview_ok = False
     preview_records, preview_limitation = [], ""
     try:
         preview_records, preview_limitation = rnd.render_all(
             plan, os.path.join(out_dir, "previews"),
-            skip_slide_thumbs=args.skip_previews)
+            skip_slide_thumbs=args.skip_previews, figure_base=case_dir)
         preview_ok = True
         if not args.quiet:
             print("[preview] wrote %d preview files (PIL simulation)" % len(preview_records))
@@ -328,60 +422,8 @@ def main(argv=None):
         change_records.append({"at": utc_now(), "step": "preview",
                                "action": "per-slide thumbnails skipped via --skip-previews"})
 
-    # ---------- result.json ----------
-    main_line = {"research_question": [], "method": [], "results": [],
-                 "limitations": [], "conclusion": []}
-    for p in plan["pages"]:
-        e0 = (p.get("evidence") or [{}])[0]
-        item = {"claim": p.get("claim", ""), "evidence": e0.get("locator", ""),
-                "page_no": p["page_no"]}
-        b = p.get("block")
-        if b == "motivation":
-            main_line["research_question"].append(item)
-        elif b == "method":
-            main_line["method"].append(item)
-        elif b == "results":
-            main_line["results"].append(item)
-        elif b in ("limits", "conclusion_risk", "innovation_limits"):
-            main_line["limitations"].append(item)
-        elif b == "conclusion":
-            main_line["conclusion"].append(item)
-
-    sources = []
-    for rec in material_records:
-        sources.append({
-            "file": rec.get("file"), "path": rec.get("path"), "kind": rec.get("kind"),
-            "parsed": rec.get("parsed", False), "note": rec.get("note", ""),
-            "char_count": rec.get("char_count", 0),
-            "sections": [{"heading": s.get("heading"), "start_line": s.get("start_line"),
-                          "end_line": s.get("end_line")} for s in rec.get("sections", [])],
-        })
-
-    previews_art = {"cover": None, "grid": None, "manifest": None, "slide_pngs": []}
-    for r_ in preview_records:
-        tag = r_["file"].split("/")[-1]
-        if tag.startswith("cover_"):
-            previews_art["cover"] = r_["file"]
-        elif tag.startswith("preview_grid"):
-            previews_art["grid"] = r_["file"]
-        elif tag == "preview_manifest.json":
-            previews_art["manifest"] = r_["file"]
-        elif tag.startswith("slide_"):
-            previews_art["slide_pngs"].append(r_["file"])
-
-    artifacts = {
-        "editable_deck": "editable_deck.pptx" if deck_ok else None,
-        "talk_plan": "talk_plan.json",
-        "evidence_map": "evidence_map.json",
-        "previews": previews_art,
-        "template_used": template_path,
-        "deck_mode": deck_result["mode"] if deck_ok else None,
-        "preview_note": preview_limitation,
-    }
-
+    # ============ CP5 · 证据审计 + 收口 ============
     uncertainty = []
-    # binary figure attachments are intentionally unparsed; only document
-    # materials (md/txt/pdf) that failed to parse downgrade the status
     image_kinds = {"png", "jpg", "jpeg", "gif", "bmp", "tif", "tiff", "webp"}
     unparsed = [r["file"] for r in material_records
                 if not r["parsed"] and r["kind"] not in image_kinds and r["file"] != "(none)"]
@@ -401,7 +443,14 @@ def main(argv=None):
         uncertainty.append({
             "item": "若干页面由源材料章节间接概括而成（无逐句主张）",
             "impact": "这些页面证据强度为 weak，讲解时应回查原论文正文",
-            "mitigation": "页面证据明确标注 strength=weak"})
+            "mitigation": "页面证据明确标注 strength=weak 且 derived=true"})
+    if not any(r.get("parsed") for r in material_records):
+        status = "partial"
+        uncertainty.append({
+            "item": "没有任何材料被解析为文本（材料为空，或全部不可解析/不存在）",
+            "impact": "交付的 deck 只包含结构性页面，没有可溯源的证据页",
+            "mitigation": "核对 case.json 的 materials 字段与实际材料目录；"
+                          "本包不据标签补造材料内容，因此如实降级为 partial"})
     if not preview_ok:
         status = "partial"
         uncertainty.append({"item": "PNG 预览渲染失败或未执行", "impact": "无法图形化检查页布局",
@@ -409,6 +458,24 @@ def main(argv=None):
     if deck_result and not deck_ok:
         uncertainty.append({"item": "editable_deck.pptx 未生成", "impact": "核心交付缺失",
                             "mitigation": "见 change_records 中的异常记录"})
+    if deck_failure and not deck_ok:
+        if not deps.get("python_pptx"):
+            uncertainty.append({
+                "item": "运行环境缺少 python-pptx（%s）：本次未生成可编辑 .pptx" % deck_failure,
+                "impact": "核心可编辑交付缺失；页计划、计划门、预览与 result.json 仍然完整产出",
+                "mitigation": "在目标环境执行 pip install python-pptx 后重跑同一条命令即可补齐；"
+                              "本包不预置任何 .pptx 二进制（题面只允许 UTF-8 文本资源）"})
+        else:
+            uncertainty.append({
+                "item": "可编辑演示文件生成抛错：%s" % deck_failure,
+                "impact": "deck 缺失，其余产物已落盘",
+                "mitigation": "见 change_records 的 deck 记录；修因后重跑（status=failed 为如实降级）"})
+    if plan_gates and not plan_gates["valid"]:
+        status = "partial"
+        uncertainty.append({
+            "item": "计划门 P1–P8 未全过（见 plan_gates.json / result.audit.plan_gates）",
+            "impact": "页计划存在结构性偏差，已如实降级为 partial",
+            "mitigation": "按 plan_gates.json 的 errors 修复（多为冻结页数/材料声明问题）后重跑"})
     uncertainty.append({
         "item": "证据定位为行级/章节级近似锚点（L<行号> · §<章节>）",
         "impact": "若源材料更新或行数变化，定位可能偏移",
@@ -423,32 +490,22 @@ def main(argv=None):
             "impact": "使用包内置主题母版，可能不完全符合组织方冻结模板（若题面另附模板，请经 --template 传入）",
             "mitigation": "本包支持模板适配模式，传入模板后自动改用它"})
 
-    result = {
-        "case_id": case_id,
-        "status": status,
-        "title": str(case.get("title") or ""),
-        "report_goal": str(case.get("report_goal") or ""),
-        "audience": plan["audience"],
-        "duration_min": plan["timing"]["duration_min"],
-        "slide_count": plan["timing"]["slide_target"],
-        "summary": {
-            "narrative_order": plan["narrative"]["order_blocks"],
-            "plan_file": "talk_plan.json",
-            "pages_total": len(plan["pages"]),
-        },
-        "main_line": main_line,
-        "pages": plan["pages"],
-        "evidence_map": evidence_map,
-        "artifacts": artifacts,
-        "sources": sources,
-        "uncertainty": uncertainty,
-        "contract": {"declared_source": "", "applied": []},
-        "change_records": change_records,
-        "generated_by": "main.py of academic-talk-organizer (efficiency-3)",
-        "generated_at": utc_now(),
-    }
+    # evidence audit against the text actually read
+    evidence_audit = ea.audit_evidence(plan["pages"], material_records=material_records)
+    write_json(os.path.join(out_dir, "evidence_audit.json"), evidence_audit)
+    change_records.append({"at": utc_now(), "step": "audit",
+                           "action": "evidence audit: valid=%s errors=%d derived=%d" % (
+                               evidence_audit["valid"],
+                               evidence_audit["summary"].get("errors"),
+                               evidence_audit["summary"].get("derived_pages"))})
+    if not evidence_audit["valid"]:
+        status = "partial"
+        uncertainty.append({
+            "item": "证据审计发现引文/定位问题（见 evidence_audit.json / result.audit.evidence）",
+            "impact": "存在页面论断未能在源材料逐字定位",
+            "mitigation": "按 evidence_audit.json 的 notes 逐条核对；derived 页以概括语标注"})
 
-    # ---------- output_contract ----------
+    # output_contract collection
     specs = []
     declared_note = []
     case_contract = case.get("output_contract")
@@ -457,7 +514,7 @@ def main(argv=None):
         specs.extend(cs)
         declared_note.append("case.json")
     if task_text:
-        ts, note = parse_output_contract_from_task(task_text)
+        ts, _note = parse_output_contract_from_task(task_text)
         if ts:
             for s in ts:
                 if s[0] not in [x[0] for x in specs]:
@@ -468,47 +525,47 @@ def main(argv=None):
             specs.append((name, True, "any"))
     if not declared_note:
         declared_note.append("built-in default")
-    result, initialized = apply_contract(result, specs)
-    result["contract"] = {"declared_source": " + ".join(declared_note),
-                          "applied": [s[0] for s in specs]}
-    result_path = os.path.join(out_dir, "result.json")
-    write_json(result_path, result)
-    change_records.append({"at": utc_now(), "step": "result",
-                           "action": "wrote result.json (status=%s; contract from %s; initialized %s)" % (
-                               status, result["contract"]["declared_source"], initialized)})
 
-    # ---------- self check ----------
-    validate_report = vr.validate(result, out_dir, strict=False)
-    contract_report = cc.check(result, specs, result["contract"]["declared_source"])
-    self_check = {
-        "validate": validate_report,
-        "contract_check": contract_report,
-        "contract_applied": [s[0] for s in specs],
-        "generated_at": utc_now(),
+    stage = {
+        "case": case, "case_id": case_id, "out_dir": out_dir,
+        "plan": plan,
+        "material_records": material_records,
+        "evidence_map": evidence_map,
+        "deck_result": deck_result, "deck_ok": deck_ok,
+        "deck_audit": deck_audit, "deck_normalized_sha": deck_normalized_sha,
+        "deck_failure": deck_failure,
+        "environment": env_info,
+        "preview_records": preview_records, "preview_ok": preview_ok,
+        "preview_limitation": preview_limitation,
+        "template_path": template_path,
+        "evidence_audit": evidence_audit,
+        "plan_gates": plan_gates,
+        "uncertainty": uncertainty, "status": status,
+        "change_records": change_records,
+        "specs": specs, "declared_note": declared_note,
     }
-    write_json(os.path.join(out_dir, "self_check.json"), self_check)
-    if not validate_report["valid"] and result["status"] != "failed":
-        old = result["status"]
-        result["status"] = "partial"
-        result["uncertainty"].append({
-            "item": "自检发现结构问题（见 self_check.json）",
-            "impact": "状态由 %s 降级为 partial" % old,
-            "mitigation": "按 self_check.json 的 errors 修复后重跑"})
-        write_json(result_path, result)
-        validate_report2 = vr.validate(result, out_dir, strict=False)
-        self_check["validate_after_downgrade"] = validate_report2
-        write_json(os.path.join(out_dir, "self_check.json"), self_check)
+    result, self_check, final_status = fr.finalize_result(stage)
 
     if args.quiet:
         print("status=%s pages=%d deck=%s validate_valid=%s contract_valid=%s" % (
-            result["status"], len(plan["pages"]), deck_ok,
-            validate_report["valid"], contract_report["valid"]))
+            final_status, len(plan["pages"]), deck_ok,
+            self_check["validate"]["valid"], self_check["contract_check"]["valid"]))
     else:
-        print("[done] status=%s deck_ok=%s preview_ok=%s validate_valid=%s contract_valid=%s" % (
-            result["status"], deck_ok, preview_ok,
-            validate_report["valid"], contract_report["valid"]))
+        print("[done] status=%s deck_ok=%s preview_ok=%s plan_gates=%s "
+              "evidence_audit=%s validate_valid=%s contract_valid=%s" % (
+                  final_status, deck_ok, preview_ok,
+                  bool(plan_gates and plan_gates["valid"]),
+                  bool(evidence_audit and evidence_audit["valid"]),
+                  self_check["validate"]["valid"],
+                  self_check["contract_check"]["valid"]))
         print("[done] output: %s" % out_dir)
-    return 0 if validate_report["valid"] else 1
+
+    ok = (final_status != "failed" and self_check["validate"]["valid"]
+          and self_check["contract_check"]["valid"])
+    if ok and not deck_ok and not args.quiet:
+        print("[done] NOTE: 可编辑 .pptx 未生成 —— 见 result.json.artifacts.deck_limitation "
+              "与 uncertainty；status 已按 partial 如实标注，其余产物均已落盘")
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

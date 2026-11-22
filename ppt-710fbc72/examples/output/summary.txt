@@ -1,7 +1,8 @@
 case_id      : example-catalyst-201
 status       : success
 slides       : 10 (planned 10)
+adopt_plan   : applied 10/10
 deck         : example-catalyst-201_deck.pptx
 previews     : cover/schematic contact sheet (PIL schematic, see render_log.json)
 figures      : 2/2 placed
-checks       : 17 total
+checks       : 21 total, contract_gates ok

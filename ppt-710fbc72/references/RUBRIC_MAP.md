@@ -1,53 +1,63 @@
-# RUBRIC_MAP — 评分五维 → 本 Skill 设计覆盖
+# RUBRIC_MAP — 评分五维 → 本包的具体文件与机制
 
-题面评分：实际效果 40 · 使用增益 25 · 创新增益 15 · 可靠体验 10 · 生态贡献 10
-（GitHub 公开链接另加 5）。下表逐项说明本包如何覆盖，证据都指向 Skill 内
-可实际运行的脚本与产物，不靠文字自述。
+题面评分：**实际效果 40 · 使用增益 25 · 创新增益 15 · 可靠体验 10 · 生态贡献 10**
+（GitHub 公开作品链接另加 5）。下表逐条把每个评分点落到**本包里可打开、可运行、
+可复核的文件或机制**上——不是文字自述，`证据位置` 一列给出的都是包内路径，
+括号内是该项在运行时会写进 `result.json` 的具体字段。
 
-## 1. 实际效果（40 = 完成度15 + 正确性15 + 完整性5 + 可核验性5）
+> 对照关系自检：五维合计 100 分，表中每个评分点都有一行；没有"仅靠叙述"的
+> 评分点。交付前按本表逐行核对一遍（§6 的自查清单）。
+
+## 1. 实际效果（40 = 任务完成度 15 + 结果正确性 15 + 结果完整性 5 + 可核验性 5）
+
+| 评分点 | 覆盖设计（本包做了什么） | 证据位置（包内路径 + 运行时字段） |
+|-|-|-|
+| 任务完成度 15 | 一条命令走完真实链路：读真实 `case.json`/`task.md`/材料/模板 → 抽主张与图表（带 `文件:行`）→ 确定性页结构方案 → **阶段一适配方案**（模板母版/版式/占位符审计 + 页→版式分配）→ **阶段二按方案建册**（占位符继承、逐页讲稿备注、页脚页码）→ 预览 → 审计 → `result.json`；平台运行时直连 `/input`、`/app/work`、`/app/output` | `scripts/main.py`（`run()` 全流程）、`scripts/extract.py`、`scripts/deckplan.py`、`scripts/adopt_plan.py`、`scripts/adapt_pptx.py`；产物清单 `result.json.artifacts`（8 项，各带 sha256） |
+| 结果正确性 15 | ① 页内文字只来自抽取结果（材料里没有的数值绝不补造，缺项进 `uncertainty`）；② 图号双向核验（正文引用 ⊂ 图清单，图清单 ⊆ 结果页放置）；③ 模板继承**真实发生且可查**（每页实际套用的版式名/master/来源写在 `template_audit.layout_used`，主题字体色读 `theme1.xml`）；④ pptx 用 python-pptx **重开验证**；⑤ 契约回显取**真实值**（`preview_png`/`evidence_per_slide`/`notes_per_slide`/`template_inheritance` 由产物推出，不再回落成 `false`），派生来源记在 `verification.contract_echo_derived` | `scripts/audit.py`（`content.claim_coverage`、`xref.figure_refs`、`xref.figure_placement`、`pptx.reopen`、`pptx.slide_count`、`layout.*`）、`scripts/main.py`（`_derive_contract_value()`）、`references/OUTPUT_CONTRACT.md` |
+| 结果完整性 5 | 六类要素全覆盖：论文主线（cover→background→methods→results×N→discussion→limitations→conclusion）、页结构（含 agenda/evidence_map/thankyou 页型与超页裁剪）、图表引用（图/表容器 + 编号 + 标题 + 来源）、讲解逻辑（逐页 speaker notes 含建议时长）、模板约束（版式审计 + 方案套用一致性）、导出渲染（两张预览 + 渲染日志） | `scripts/deckplan.py` 页型表、`scripts/adapt_pptx.py`（图表/表格/页脚/备注）、`references/template_guide.md`、`references/batch-rules.md` |
+| 可核验性 5 | 每条结论都有落盘记录：`content.json`（抽取 + 来源定位 + 材料 sha256）、`spec.json`（页计划）、`adopt_plan.json`（阶段一方案，含批量规则偏差）、`audit.json`（21 条真实产物检查）、`render_log.json`（渲染后端与字体）、`result.json`（契约 + 门）；同输入重跑**逐字节一致**（仅 `generated_at` 不同，`TEST.md` §2 实测） | `scripts/audit.py`、`scripts/adopt_plan.py`、`TEST.md` §2、`examples/EXPECTED-OUTPUT.md`（示例运行的逐文件实测清单） |
+
+## 2. 使用增益（25 = 质量增益 15 + 效率增益 5 + 增益可验证性 5）
 
 | 评分点 | 覆盖设计 | 证据位置 |
 |-|-|-|
-| 任务完成度 15 | 读真实文件→抽主张/图/表（带 `file:line` 来源定位）→ 按页计划建 `deck.pptx`（模板/版式的占位符继承）→ 逐页讲稿备注 → 预览 + result.json 全流程可跑 | `scripts/main.py`（管线）、`scripts/extract.py`、`scripts/deckplan.py`、`scripts/pptxbuild.py` |
-| 结果正确性 15 | 页内文字/数字/图号与源材料一致：主张来自抽取（绝不编造数值）；图号交叉引用审计（`xref.figure_refs`）；证据映射 100% 带 loc；母版/版式/占位符继承写入 `template_audit`，`pptx.reopen` 重新打开核验 | `scripts/audit.py` 检查 3/4/16；`references/OUTPUT_CONTRACT.md` |
-| 结果完整性 5 | 六类要素全覆盖：论文主线（question→method→results→conclusion 页序）、页结构（10+2 页型）、图表引用（结果页图/表容器+编号+标题+来源）、讲解逻辑（逐页 notes）、模板约束（layout 审计）、导出渲染（2 张预览+render_log） | `scripts/deckplan.py` 页型表；`references/TEMPLATE.md` |
-| 可核验性 5 | 源材料、模板、导出件、逐页偏差记录齐备：`content.json`（来源定位）、`spec.json`（页计划）、`audit.json`（真实产物检查+哈希）、`render_log.json`；同输入重跑结构一致（TEST.md §2） | `scripts/audit.py`、`TEST.md` |
+| 质量增益 15 | 相对"基础 Agent 直接往默认版式里塞正文"，本包提供的是**可查的结构化增益**：① 先方案后执行——版式分配在动手前定稿，阶段二逐页套用并记录偏差（`adopt_plan_applied` / `adopt_plan_deviations`）；② 每页 claim/evidence/notes 都有字段，不存在"内容对不上资料"；③ 整册一致性（页脚/页码/标题位置/字号阶梯/图表缩放）由批量规则统一并审计；④ 起始 deck 改编时**旧页连关系一起移除**，不会出现"只改前几页、后面还是旧模板" | `scripts/adopt_plan.py`、`scripts/adapt_pptx.py`（`template_audit.*`）、`scripts/pptx_toolkit.py`（`drop_slides()`）、`references/batch-rules.md`、`result.json.slide_evidence`（每页 claim/图表引用/证据） |
+| 效率增益 5 | 一条命令完成 抽取→页计划→适配方案→建册→脚注页码字号→预览→审计→契约门；批量规则**单点评估**而非逐页手改；分步命令（`references/two-phase-workflow.md`）用于返工定位，不必整册重跑；重建二进制资源只需两条脚本命令（模板/示例图） | `scripts/main.py`（单命令）、`references/two-phase-workflow.md`、`scripts/make_template.py`、`scripts/make_synthetic_inputs.py` |
+| 增益可验证性 5 | 增益不是自述而是可复跑记录：同一示例案例的**朴素基线 vs 本 Skill**对照表在 `TEST.md` §5；阶段一→阶段二的逐页吻合由 `audit` 的 `adopt_plan.consistency` 检查（示例运行 10/10、0 偏差）；同输入重跑确定性在 `TEST.md` §2；三条鲁棒性分支（模板损坏 / 显式模板 / 起始 deck 编辑）在 `TEST.md` §4 各有真实运行结果 | `TEST.md` §2/§4/§5、`scripts/audit.py`（`adopt_plan.consistency`）、`references/checklist.md` |
 
-## 2. 使用增益（25 = 质量增益15 + 效率增益5 + 增益可验证性5）
-
-| 评分点 | 覆盖设计 | 证据位置 |
-|-|-|-|
-| 质量增益 15 | 对比基础 Agent 的直接产出，「套用模板/版式继承 + 来源绑定 + 整册一致性 + 逐页讲稿」是可查的结构化增益：每页 claim/evidence/notes 都有字段，**不存在"内容对不上资料"** | 同上 + `slide_evidence` 字段、`template_audit`；对照运行记录见 `TEST.md` §4 |
-| 效率增益 5 | 一次命令完成 抽取→计划→建册→脚注/页码/字号→预览→审计→result.json；减少排版耗时与批量返工（整册统一处理而非逐页手改） | `scripts/main.py` 单命令管线 |
-| 增益可验证性 5 | 公平对照路径：同一 case 输入，`AUTO=0`？（不用自定义变量）—— 明确记录「基础 Agent 常见失败 vs 本 Skill 检查点」，并以 TEST.md §4 的对照运行（同输入同模板，直接产出 vs Skill 产出）为证据 | `README.md`「预期增益」、`TEST.md` §4 |
-
-## 3. 创新增益（15 = 新增能力5 + 方法改进5 + 创新证据5）
+## 3. 创新增益（15 = 新增能力 5 + 方法改进 5 + 创新证据 5）
 
 | 评分点 | 覆盖设计 | 证据位置 |
 |-|-|-|
-| 新增能力 5 | 基础 Agent 难以稳定做到的：**母版/版式/占位符继承关系可查的表驱动适配**（按页型自动选版式+缺占位符回退+主题字体继承）+ 图号↔正文交叉引用自动核验 | `scripts/pptxbuild.py` `_best_layout`、`scripts/audit.py` xref 检查 |
-| 方法改进 5 | 内容↔版式映射：claim 容量→字号阶梯（FONT_LADDER + 逐段换行估算，12pt 下限）、图表容器等比 contain-fit（不拉伸）、页脚/页码整册统一、页数超目标时的确定性裁剪策略（合并讨论/局限→去议程→合并结果页） | `scripts/common.py` `fit_font_size`、`scripts/deckplan.py` trim、`scripts/pptxbuild.py` `_contain_fit` |
-| 创新证据 5 | 边界与价值：对"模板无目标版式/占位符缺失/超页/缺源图/无 LibreOffice"五种退化场景提供确定性处置并记录（audit/uncertainty），非现成工具行为 | `references/TEMPLATE.md` 异常表、`TEST.md` §3 |
+| 新增能力 5 | **两阶段工作流（方案先行）**：`adopt_plan.py` 把"模板结构审计 + 页→版式分配 + 批量规则 + 图表放置计划"在动手前固化成机器可读方案，`adapt_pptx.py` 按方案执行并逐条记录偏差；基础 Agent 或现成模板工具通常是"读一页填一页"，没有可核对的中间判据 | `scripts/adopt_plan.py`、`references/two-phase-workflow.md`、`result.json.adopt_plan`（阶段一方案摘要 + gates） |
+| 方法改进 5 | ① 内容↔版式映射：claim 容量 → 字号阶梯（32→12pt，换行按占位符真实几何估算，地板 12pt，溢出上报不静默压字）；② 图表等比 contain-fit（按容器实算比例，绝不拉伸）；③ 页脚/页码/标题位置整册统一；④ 主题字体/主题色只读继承可查；⑤ 超页时确定性裁剪顺序；⑥ **二进制资源运行时生成**（模板/示例图/预览），使包体只含文本资源仍能产出完整形态 | `scripts/common.py`（`FONT_LADDER`/`fit_font_size`）、`scripts/adapt_pptx.py`（contain-fit/页脚/备注）、`scripts/adopt_plan.py`（批量规则/图表计划）、`scripts/make_template.py` |
+| 创新证据 5 | 五种退化场景各有**确定性处置 + 记录位置 + 决策编号**：模板无目标版式（best-fit + `adopt_plan_deviations`）、占位符缺失（手绘框 + `layout_fallback_used`）、文本框溢出（字号地板 + `layout.overflow`）、源图缺失（图位占位框 + `uncertainty`）、无 LibreOffice（不产伪 PDF + `preview_is_schematic`）；全部收敛成 D1–D12 决策规则 + CP1–CP3 检查点，边界与价值可复验 | `references/failure-modes.md`、`SKILL.md` §4/§5、`references/checklist.md`、`TEST.md` §4（三条分支实测） |
 
-## 4. 可靠体验（10 = 调用与易用性3 + 运行稳定性4 + 异常处理3）
-
-| 评分点 | 覆盖设计 | 证据位置 |
-|-|-|-|
-| 调用与易用性 3 | SKILL.md 前 8 行给出 name/description（含中英文触发词）；"论文+模板→pptx+预览"一条命令完整流程；README 含依赖清单与最小示例 | `SKILL.md`、`README.md` |
-| 运行稳定性 4 | 确定性布局（同输入→同 spec/结构，TEST.md §2）；python-pptx 重开验证；多模板/多页数/缺字体/重复运行均可产出；全脚本仅标准库+python-pptx+PIL（matplotlib/reportlab 仅示例图生成与信息性版本记录） | `scripts/common.py`、`TEST.md` §2/§3 |
-| 异常处理 3 | 失败模式表：模板缺失→内置回退、版式缺占位符→手工文本框并记录、溢出→字号阶梯+下限、源图缺失→图位占位框+uncertainty、模板打不开→回退链、预览后端缺失→如实标注；流水线异常仍写 failed result.json | `SKILL.md` §4、`references/TEMPLATE.md`、`scripts/main.py` 异常分支 |
-
-## 5. 生态贡献（10 = 文档完整性3 + 资源可复用性4 + 分享推广价值3）
+## 4. 可靠体验（10 = 调用与易用性 3 + 运行稳定性 4 + 异常处理 3）
 
 | 评分点 | 覆盖设计 | 证据位置 |
 |-|-|-|
-| 文档完整性 3 | SKILL.md（用途/适用条件/输入输出/步骤/异常/自查）、README（运行/依赖/限制/失败处理）、OUTPUT_CONTRACT（契约）、TEMPLATE.md（版式与字号阶梯规则、内置模板说明）、TEST.md（实测记录） | 全部文档位于包内 |
-| 资源可复用性 4 | 可直接复用：模板适配层（`pptxbuild.py` 可对任意 pptx 模板做版式审计+套用）、确定性页计划器（`deckplan.py`）、审计器（`audit.py`/`validate_result.py`）、内置回退模板（`templates/builtin.pptx` + 再生成脚本 `make_template.py`）、最小案例（`examples/`） | `scripts/`、`templates/`、`examples/` |
-| 分享推广价值 3 | 沉淀可分享能力：页级金标准（每页 claim/evidence 可核对）、字号/间距阶梯规则、图表缩放策略、批量一致性校验、示例案例；`GITHUB_URL.txt` 指向公开仓库 | `references/TEMPLATE.md`、`GITHUB_URL.txt` |
+| 调用与易用性 3 | `SKILL.md` 前置 YAML frontmatter 给出 name/description 与中英文触发词；"论文+模板→pptx+预览"一条命令；**命令自定位**：文档里一律写 `"$SKILL_DIR/scripts/..."`，脚本用 `os.path.dirname(__file__)` 定位 Skill 根，**cwd 不是技能根目录时照样能跑**（`TEST.md` §3 实测）；`README.md` 给依赖、最小示例与分步命令 | `SKILL.md`（§3 命令块）、`README.md`、`scripts/common.py`（`skill_root()`）、`TEST.md` §3 |
+| 运行稳定性 4 | 同输入重跑确定性（`spec.json`/`adopt_plan.json`/pptx/两张 PNG 逐字节一致，`result.json` 仅时间戳差异；pptx 的 zip 时间戳被固定化并去重同名条目）；构建后 python-pptx 重开验证；多模板/多页数/缺字体/重复运行均可产出；CP3 把"产物 + 契约"变成硬门，失败显式而非静默 | `scripts/pptx_toolkit.py`（`deterministic_zip()`）、`scripts/audit.py`、`TEST.md` §2、`result.json.verification.contract_gates` |
+| 异常处理 3 | `references/failure-modes.md` 失败模式表（识别→处置→记录→决策编号）+ `SKILL.md` D1–D12 + CP1–CP3：case 不可解析→立即失败不产半成品；模板缺失/损坏→回退链（含**运行时生成**的内置回退，生成失败也只记录原因不抛栈）；版式缺占位符→手绘框并记录；溢出→字号地板 + 上报；源图缺失→占位框保留图号来源；无预览后端→如实标注；流水线异常→先落盘部分产物再写 `status=failed` 的 `result.json` | `references/failure-modes.md`、`SKILL.md` §4/§5、`scripts/main.py`（异常分支写 failed result）、`scripts/make_template.py`（`ensure_builtin()` 返回原因而非抛异常） |
 
-## 明确边界（不夸大）
+## 5. 生态贡献（10 = 文档完整性 3 + 资源可复用性 4 + 分享推广价值 3）
 
-- 预览为 PIL 示意图而非像素级导出（无 LibreOffice/PPT 时如实标注）；
-- 主题色/主题字体通过"占位符继承 + 不覆盖 run 字体"保持，未做主题 XML 深度解析；
-- 本 Skill 不代写科学内容：材料里没有的数值绝不补造；
-- 平台对照与白板由组织方运行，本包不提交预制答案。
+| 评分点 | 覆盖设计 | 证据位置 |
+|-|-|-|
+| 文档完整性 3 | `SKILL.md`（用途/适用条件/输入输出/两阶段步骤/决策规则/失败处理/自查清单/目录/资源形态）、`README.md`（运行/依赖/输入字段/输出/增益/限制/维护）、`references/OUTPUT_CONTRACT.md`（字段契约 + CP3 门 + 资源形态）、`template_guide.md`（母版/版式/占位符/主题/字号阶梯）、`checklist.md`（收尾验收清单）、`batch-rules.md`（批量规则）、`two-phase-workflow.md`（两阶段图示与逐条命令）、`failure-modes.md`、`TEST.md`（实测记录）、`examples/README.md` + `examples/EXPECTED-OUTPUT.md`（示例怎么跑、应产出什么）——均随包 | `SKILL.md`、`README.md`、`TEST.md`、`references/`（7 篇）、`examples/*.md` |
+| 资源可复用性 4 | 可被他人直接复用的部分：模板适配层（`pptx_toolkit.py` + `adapt_pptx.py` 能对**任意** pptx 做母版/版式/占位符审计与套用）、阶段一方案器（`adopt_plan.py` 单点分析任意模板）、确定性页计划器（`deckplan.py`）、审计与契约工具（`audit.py` / `validate_result.py` / `check_contract.py`，均带独立 CLI 与退出码语义）、回退模板生成器（`make_template.py`）、示例输入生成器（`make_synthetic_inputs.py`）、最小案例与方案样例（`examples/`）、页级金标准字段（每页 claim/evidence 可核对） | `scripts/`（13 个脚本）、`examples/`（case/task/material + plan/adopt_plan 样例 + 文本产物）、`examples/EXPECTED-OUTPUT.md` |
+| 分享推广价值 3 | 沉淀的是可迁移的**方法**而非一次性产物：两阶段工作流、字号/间距阶梯与容差规则、图表缩放策略、批量一致性校验、失败模式与决策规则表、契约四形态回显与 CP 门；`GITHUB_URL.txt` 指向公开仓库，`examples/` 可直接作为他人上手题集 | `references/`、`GITHUB_URL.txt`、`examples/`、`TEST.md` §5 |
+
+## 6. 明确边界（不夸大，交付前逐条确认）
+
+- 预览是 **PIL 示意图**而非像素级导出；无 PowerPoint/LibreOffice 时**不产伪 PDF**，
+  能力缺失记在 `render_log.json` 与 `uncertainty`（`preview_is_schematic=true`）；
+- 主题色/主题字体是**只读记录**（读 `theme1.xml`），不改写主题 XML、不换色板；
+- 复杂 SmartArt / 艺术字 / 动画 / 切换不在范围；
+- **不代写科学内容**：材料里没有的数值、结论、图件绝不补造，缺项一律进
+  `uncertainty`；
+- 平台对照与白板由组织方运行；本包**不提交预制答案**，`examples/` 一律标注
+  "示例，非正式案例"，`GITHUB_URL.txt` 只指向作品本身；
+- 包内**无二进制资源**（只含 `.md/.py/.json/.txt`）：需要 pptx/PNG 时由
+  `scripts/make_template.py`、`scripts/make_synthetic_inputs.py` 或运行时产物生成。

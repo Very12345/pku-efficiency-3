@@ -3,20 +3,16 @@
 
 Runs against the actual files on disk: reopens the pptx with python-pptx,
 extracts slide texts/notes, and checks coverage, cross-reference consistency,
-overflow records, uniform footer, preview validity and evidence mapping.
-Writes audit.json.
+overflow records, uniform footer, preview validity, evidence mapping and the
+adopt-plan -> build consistency (two-phase workflow contract).  Writes
+audit.json.
 """
 from __future__ import annotations
 
 import os
-from common import (sha256_file, dump_json, utf8_writer, SKILL_NAME, SKILL_VERSION)
 
-REQUIRED_RESULT_FIELDS = [
-    "case_id", "skill", "status", "workorder", "title", "slide_count",
-    "main_result", "artifacts", "slide_evidence", "template_audit",
-    "verification", "sources", "uncertainty", "change_records",
-    "status_notes", "generated_at", "generator", "tool_versions",
-]
+from common import (sha256_file, dump_json, utf8_writer, SKILL_NAME, SKILL_VERSION,
+                    portable_path)
 
 
 def _slide_texts(pptx_path: str) -> list:
@@ -41,26 +37,25 @@ def _slide_texts(pptx_path: str) -> list:
 
 
 def audit(content: dict, plan: dict, out_dir: str, case_id: str,
-          build_audit: dict | None = None) -> dict:
+          build_audit: dict | None = None, adopt_plan: dict | None = None) -> dict:
     checks = []
     pptx_path = os.path.join(out_dir, f"{case_id}_deck.pptx")
-    result_path = os.path.join(out_dir, "result.json")
     cover_png = os.path.join(out_dir, f"{case_id}_cover_preview.png")
     sheet_png = os.path.join(out_dir, f"{case_id}_slides_contact_schematic.png")
     spec_path = os.path.join(out_dir, "spec.json")
+    adopt_path = os.path.join(out_dir, "adopt_plan.json")
 
     def add(check, level, detail):
         checks.append({"check": check, "level": level, "detail": detail})
 
-    # 1 file existence + reopening (result.json is written after audit by
-    #    main.py; its contract validation lives in validate_result.py and is
-    #    appended as check 'result.contract' into audit.json by main.py)
+    # 1 artifact existence + reopening
     for role, path in (("pptx", pptx_path), ("cover_png", cover_png),
-                       ("contact_png", sheet_png), ("spec", spec_path)):
+                       ("contact_png", sheet_png), ("spec", spec_path),
+                       ("adopt_plan", adopt_path)):
         if os.path.exists(path):
-            add(f"artifact.{role}.exists", "ok", os.path.abspath(path))
+            add(f"artifact.{role}.exists", "ok", portable_path(path))
         else:
-            add(f"artifact.{role}.exists", "fail", f"missing: {path}")
+            add(f"artifact.{role}.exists", "fail", f"missing: {portable_path(path)}")
 
     slides = []
     if os.path.exists(pptx_path):
@@ -79,7 +74,7 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
         else:
             add("pptx.slide_count", "fail", f"{len(slides)} != planned {planned} (see change_records)")
 
-    # 2 claim coverage: every plan claim must appear in some slide text
+    # 2 claim coverage
     all_text = " ".join(t for s in slides for t in s["texts"])
     missing_claims = []
     for p in plan.get("pages", []):
@@ -92,9 +87,8 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
     else:
         add("content.claim_coverage", "ok", "all plan claims present in slide texts")
 
-    # 3 figure cross-reference consistency: every figure on a results page has
-    #    a caption visible; every figure in content appears somewhere or flagged
-    fig_ids = list(content.get("figures") or [])
+    # 3 figure cross-reference consistency
+    fig_ids = content.get("figures") or []
     figid_set = {str(f.get("id")) for f in fig_ids} if isinstance(fig_ids, list) else set()
     refs_in_text = []
     for p in plan.get("pages", []):
@@ -146,7 +140,7 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
     else:
         add("layout.font_floor", "ok", "no box needed to shrink below 14pt")
 
-    # 6 footer uniformity: non-cover slides carry a page number textbox
+    # 6 footer uniformity
     if os.path.exists(pptx_path):
         try:
             from pptx import Presentation as _Pres
@@ -162,9 +156,6 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
                         if t.isdigit() and 1 <= int(t) <= 99:
                             has_pn = True
                             break
-                    if getattr(sh, "has_text_frame", False) and sh.text_frame.text.strip().isdigit():
-                        has_pn = True
-                        break
                 if not has_pn:
                     bad_foot.append(si)
             if bad_foot:
@@ -174,7 +165,7 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
         except Exception as exc:
             add("layout.footer_uniform", "fail", f"could not scan footers: {exc}")
 
-    # 7 previews valid (PNG signature + non-tiny)
+    # 7 previews valid
     for role, path in (("cover_png", cover_png), ("contact_png", sheet_png)):
         if os.path.exists(path):
             with open(path, "rb") as fh:
@@ -192,18 +183,36 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
             ev_total += 1
             if e.get("loc"):
                 ev_wloc += 1
+    ev_frac = round(ev_wloc / ev_total, 4) if ev_total else 0.0
     if ev_total:
-        frac = ev_wloc / ev_total
-        add("traceability.evidence_loc", "ok" if frac >= 0.9 else "warn",
-            f"{ev_wloc}/{ev_total} claims carry source locators ({frac:.0%})")
+        add("traceability.evidence_loc", "ok" if ev_frac >= 0.9 else "warn",
+            f"{ev_wloc}/{ev_total} claims carry source locators ({ev_frac:.0%})")
     else:
         add("traceability.evidence_loc", "warn", "no claims with evidence rows (see uncertainty)")
 
-    # 9 spec hash (determinism anchor; result.json itself is validated by the
-    #    'result.contract' check instead of being hashed here, so audit.json
-    #    never embeds a self-referential hash)
+    # 9 adopt-plan -> build consistency (two-phase workflow contract)
+    if adopt_plan:
+        applied = (build_audit or {}).get("adopt_plan_applied")
+        total_p = (build_audit or {}).get("adopt_plan_total_pages")
+        deviations = (build_audit or {}).get("adopt_plan_deviations", [])
+        if applied is None:
+            add("adopt_plan.consistency", "warn", "adopt_plan.json present but builder did not report application")
+        elif applied == total_p and not deviations:
+            add("adopt_plan.consistency", "ok", f"{applied}/{total_p} pages applied the phase-1 plan; 0 deviations")
+        else:
+            add("adopt_plan.consistency", "warn",
+                f"{applied}/{total_p} pages applied the phase-1 plan; deviations={len(deviations)}: {deviations[:3]}")
+        gates = adopt_plan.get("gates") or {}
+        if gates.get("ok"):
+            add("adopt_plan.gates", "ok", f"phase-1 gates ok: {gates}")
+        else:
+            add("adopt_plan.gates", "warn", f"phase-1 gates not all ok: {gates}")
+
+    # 10 spec hash (determinism anchor)
     spec_hash = sha256_file(spec_path) if os.path.exists(spec_path) else None
     hashes = {"spec_sha256": spec_hash}
+    if os.path.exists(adopt_path):
+        hashes["adopt_plan_sha256"] = sha256_file(adopt_path)
 
     audit_obj = {
         "_meta": "audit over real produced artifacts",
@@ -213,9 +222,12 @@ def audit(content: dict, plan: dict, out_dir: str, case_id: str,
         "slide_summary": [{"page_no": s["page_no"], "text_count": len(s["texts"]),
                            "notes_len": len(s["notes"])} for s in slides],
         "hashes": hashes,
+        "traceability": {"evidence_loc": ev_frac, "evidence_rows": ev_total,
+                         "evidence_with_locator": ev_wloc},
     }
     dump_json(os.path.join(out_dir, "audit.json"), audit_obj)
-    print(f"audit ok: {len(checks)} checks, fails={sum(1 for c in checks if c['level']=='fail')}, warns={sum(1 for c in checks if c['level']=='warn')}")
+    print(f"audit ok: {len(checks)} checks, fails={sum(1 for c in checks if c['level']=='fail')}, "
+          f"warns={sum(1 for c in checks if c['level']=='warn')}")
     return audit_obj
 
 
@@ -227,14 +239,18 @@ def main(argv=None):
     ap.add_argument("--content", required=True)
     ap.add_argument("--spec", required=True)
     ap.add_argument("--out", required=True, help="output dir containing the deck + result.json")
-    ap.add_argument("--build-audit", default="", help=".build_audit.json produced by pptxbuild")
+    ap.add_argument("--build-audit", default="", help=".build_audit.json produced by adapt_pptx")
+    ap.add_argument("--adopt-plan", default="", help="adopt_plan.json produced by adopt_plan.py")
     a = ap.parse_args(argv)
     content = json.load(open(a.content, "r", encoding="utf-8-sig"))
     plan = json.load(open(a.spec, "r", encoding="utf-8-sig"))
     ba = None
     if a.build_audit and os.path.exists(a.build_audit):
         ba = json.load(open(a.build_audit, "r", encoding="utf-8-sig"))
-    audit(content, plan, a.out, content.get("case_id", "deck"), ba)
+    ap_plan = None
+    if a.adopt_plan and os.path.exists(a.adopt_plan):
+        ap_plan = json.load(open(a.adopt_plan, "r", encoding="utf-8-sig"))
+    audit(content, plan, a.out, content.get("case_id", "deck"), ba, ap_plan)
     return 0
 
 

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 evidence.py — load source materials and extract claims with evidence anchors.
+(extract role in the build/extract/render/verify split.)
 
 Honesty rule: nothing here invents content.  Claims are taken verbatim (or
 lightly re-worded) from material lines, and every claim carries a locator
@@ -143,7 +144,8 @@ def load_material(path):
         return record
     if ext in TEXT_EXTS:
         try:
-            raw = open(path, "r", encoding="utf-8", errors="replace").read()
+            with open(path, "r", encoding="utf-8", errors="replace") as fh:
+                raw = fh.read()
             record["parsed"] = True
             record["text"] = raw
             record["char_count"] = len(raw)

@@ -1,6 +1,6 @@
 {
   "name": "default",
-  "description": "学术汇报默认模板：16:9、单一强调色系、页脚+页码、内容槽位约束（阀内可编辑）。模板约束见 references/TEMPLATE_SPEC.md。",
+  "description": "学术汇报默认模板：16:9、单一强调色系、页脚+页码、内容槽位约束（阀内可编辑）。模板约束见 references/DECK_SPEC.md；配色/字体/页脚均可由 case.json spec.style 覆盖。",
   "slide_size": {"width_in": 13.333, "height_in": 7.5},
   "colors": {
     "primary": "#1F4E79",

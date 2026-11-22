@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import math
 import sys
+sys.dont_write_bytecode = True  # 评测包内不落 .pyc
 from typing import Any, Dict, List, Optional, Tuple
 
 import fonts as fonts_mod

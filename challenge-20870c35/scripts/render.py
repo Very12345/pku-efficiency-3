@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 render.py — PNG previews rendered with Pillow.
+(render role in the build/extract/render/verify split.)
 
 IMPORTANT honest note: without LibreOffice/PowerPoint this package cannot do a
 true Office rasterisation of the .pptx.  These previews are PIL *simulations*
@@ -14,11 +15,15 @@ states the limitation explicitly.
 
 import os
 
-from common import utc_now
+from common import utc_now, resolve_input_path, write_json
 
 CANVAS_W, CANVAS_H = 1280, 720
 THUMB_W, THUMB_H = 960, 540
 
+# Runtime font probe: the package ships no font binary.  These are *candidate*
+# cross-platform locations only (Windows / Linux / macOS); the first one that
+# exists is used, otherwise Pillow's built-in bitmap font is the honest
+# fallback and the limitation is recorded in the preview manifest.
 FONT_CANDIDATES = [
     # Windows CJK
     "C:/Windows/Fonts/msyh.ttc",
@@ -44,6 +49,27 @@ LIGHT = (0xF2, 0xF5, 0xF9)
 WHITE = (255, 255, 255)
 STRENGTH_COLOR = {"strong": (0x2E, 0x7D, 0x32), "medium": (0xC0, 0x7F, 0x00),
                   "weak": (0x8A, 0x8A, 0x8A), None: GRAY}
+
+
+def font_status():
+    """Runtime font probe result — reported (basename only) in result.json so a
+    reviewer can tell whether CJK glyphs were drawn with a real font or with
+    Pillow's built-in bitmap fallback.  Never raises."""
+    def _family(path):
+        if path[1:3] == ":/":
+            return "windows"
+        if path.startswith("/System/"):
+            return "macos"
+        return "posix"
+    for path in FONT_CANDIDATES:
+        try:
+            if os.path.exists(path):
+                return {"found": True, "file": os.path.basename(path),
+                        "family": _family(path)}
+        except (OSError, ValueError):
+            continue
+    return {"found": False, "file": None,
+            "note": "no CJK-capable system font found; Pillow built-in bitmap font used"}
 
 
 def find_font(size):
@@ -231,9 +257,15 @@ def render_grid(pages, plan, out_png, cols=4):
     return out_png
 
 
-def render_all(plan, out_dir, figure_lookup=None, skip_slide_thumbs=False):
+def render_all(plan, out_dir, figure_lookup=None, skip_slide_thumbs=False,
+               figure_base=None):
     """Render cover + per-slide thumbnails + grid; returns manifest (list of
-    record dicts) and limitation note."""
+    record dicts) and limitation note.
+
+    Page `figure_file` values may be absolute (fresh plan) or relative to the
+    case directory (a portable plan re-read from talk_plan.json); both are
+    resolved through common.resolve_input_path(figure_base).
+    """
     figure_lookup = figure_lookup or {}
     ensure_out = os.path.dirname(out_dir)
     if ensure_out:
@@ -244,12 +276,16 @@ def render_all(plan, out_dir, figure_lookup=None, skip_slide_thumbs=False):
     records.append({"file": "previews/cover_preview.png", "kind": "cover", "width": CANVAS_W,
                     "height": CANVAS_H, "simulated": True})
     slide_pngs = []
+    unbound_figures = []
     if not skip_slide_thumbs:
         for page in plan["pages"]:
             if page["block"] in ("title", "agenda", "qa"):
                 continue
             png = os.path.join(out_dir, "slide_%03d.png" % page["page_no"])
-            figure_file = page.get("figure_file") or figure_lookup.get(page.get("figure_ref"))
+            figure_file = (resolve_input_path(page.get("figure_file"), figure_base)
+                           or figure_lookup.get(page.get("figure_ref")))
+            if not figure_file and page.get("figure_ref"):
+                unbound_figures.append(page["figure_ref"])
             render_slide(page, plan, png, figure_file=figure_file)
             slide_pngs.append("previews/slide_%03d.png" % page["page_no"])
             records.append({"file": "previews/slide_%03d.png" % page["page_no"],
@@ -260,16 +296,19 @@ def render_all(plan, out_dir, figure_lookup=None, skip_slide_thumbs=False):
     records.append({"file": "previews/preview_grid.png", "kind": "grid", "simulated": True})
     limitation = ("预览为 Pillow(PIL) 模拟渲染，非 LibreOffice/PowerPoint 的 Office 真实栅格化；"
                   "用于检查页数、逐页主张/证据布局与图占位，正式视觉效果请以可编辑的 .pptx 打开为准。")
+    if unbound_figures:
+        limitation += (" 图表 %s 在材料目录中没有对应图片文件，页内/预览中为诚实占位框，"
+                       "未虚构插图。" % sorted(set(unbound_figures)))
     manifest = {
-        "generated_by": "render.py of academic-talk-organizer",
+        "generated_by": "render.py of academic-talk-organizer (v2)",
         "generated_at": utc_now(),
         "method": "Pillow simulated preview (LibreOffice not assumed available)",
+        "font": font_status(),
+        "unbound_figure_refs": sorted(set(unbound_figures)),
         "limitation": limitation,
         "files": records,
     }
     mpath = os.path.join(out_dir, "preview_manifest.json")
-    import json
-    with open(mpath, "w", encoding="utf-8", newline="\n") as fh:
-        json.dump(manifest, fh, ensure_ascii=False, indent=2)
+    write_json(mpath, manifest)
     records.append({"file": "previews/preview_manifest.json", "kind": "manifest"})
     return records, limitation
