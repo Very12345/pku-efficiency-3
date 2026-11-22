@@ -1,0 +1,45 @@
+{
+  "case_id": "urban-heat-001",
+  "title": "城市热岛的地表能量平衡与植被调节",
+  "_meta": "合成案例（非平台正式案例）。故意包含「材料缺值」与「材料数值矛盾」两个边界情形，用于检验降级路径；数值为示意。",
+  "source_material": "material.md",
+  "entities": [
+    {"name": "城市建成区", "type": "region", "panel": "question", "note": "高不透水面比例的核心区"},
+    {"name": "城郊过渡带", "type": "region", "panel": "question"},
+    {"name": "植被覆盖", "type": "object", "panel": "method", "note": "蒸散与遮阴的调节项"},
+    {"name": "不透水面", "type": "material", "panel": "method", "note": "混凝土与沥青，蓄热强"},
+    {"name": "地表温度（LST）", "type": "object", "panel": "results", "note": "MODIS 8 天合成"},
+    {"name": "热浪过程", "type": "object", "panel": "results", "note": "连续高温日事件"},
+    {"name": "城郊农田", "type": "region", "panel": "conclusion"}
+  ],
+  "relations": [
+    {"from": "植被覆盖", "to": "地表温度（LST）", "label": "蒸散降温", "kind": "negative"},
+    {"from": "不透水面", "to": "地表温度（LST）", "label": "蓄热升温"},
+    {"from": "城市建成区", "to": "热浪过程", "label": "热岛叠加放大"},
+    {"from": "城郊过渡带", "to": "城市建成区", "label": "热量平流"},
+    {"from": "植被覆盖", "to": "城郊农田", "label": "冷岛效应"}
+  ],
+  "data": [
+    {"label": "白天地表温度差", "value": "4.6 K", "kind": "bar_length", "note": "城区减郊区"},
+    {"label": "夜间地表温度差", "kind": "bar_length", "note": "材料未给出数值——有意构造的缺值边界"},
+    {"label": "植被覆盖度", "value": "38 %", "kind": "bar_length"},
+    {"label": "不透水面比例", "value": "61 %", "kind": "bar_length"},
+    {"label": "夏季平均反照率", "value": "0.14", "kind": "value_label", "note": "材料中另有一处不同数值，用于检验矛盾处置"},
+    {"label": "蒸散量", "value": "1.8 mm/day", "kind": "bar_length"},
+    {"label": "热浪日数", "value": "23 d", "kind": "bar_length"}
+  ],
+  "figure_constraints": {
+    "width": 1400, "height": 860, "dpi": 300, "colorblind": true,
+    "flow_arrows": true, "raster_scale": 1, "pdf": false
+  },
+  "output_contract": {
+    "target_format": ["svg", "png"],
+    "resolution_dpi": 300,
+    "colorblind_safe": true,
+    "require_legend": true,
+    "require_scale_bar": true,
+    "layer_names": ["background", "panels", "entities", "relations", "data", "legend", "annotations"],
+    "provenance_attr": "data-src",
+    "deliverable": "editable_svg_plus_preview"
+  }
+}

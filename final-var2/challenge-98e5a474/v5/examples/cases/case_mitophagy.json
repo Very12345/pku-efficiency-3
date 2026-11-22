@@ -1,0 +1,166 @@
+{
+  "case_id": "synth-mitophagy-101",
+  "workorder": "editable_relationship_schematic",
+  "title": "PINK1/Parkin mitophagy clearance pathway (synthetic case)",
+  "summary": "SYNTHETIC case 1/2 (合成案例，非正式案例). Cell-biology mechanism diagram: damaged-mitochondrion recognition, ubiquitin tagging, autophagosome engulfment and lysosomal clearance, plus the one documented mis-reading (PINK1 is a kinase recruited TO the outer membrane, it is not the substrate).",
+  "figure_type": "schematic",
+  "output_contract": {
+    "case_id": "string",
+    "status": "string",
+    "figure_type": "string",
+    "entities_relations": "array",
+    "deliverables": "array"
+  },
+  "sources": [
+    "sources/mitophagy-note.md"
+  ],
+  "manifest": {
+    "schema_version": "1.0",
+    "figure_type": "schematic",
+    "title": "PINK1/Parkin mitophagy (synthetic mechanism case)",
+    "subtitle": "SYNTHETIC 合成案例 — 非正式案例",
+    "entities": [
+      {
+        "id": "E1",
+        "name": "depolarised mitochondrion",
+        "type": "organelle",
+        "source": "sources/mitophagy-note.md §2 L3",
+        "evidence": "膜电位丧失的去极化线粒体"
+      },
+      {
+        "id": "E2",
+        "name": "PINK1",
+        "type": "kinase",
+        "source": "sources/mitophagy-note.md §2 L5",
+        "evidence": "PINK1 稳定积累在外膜"
+      },
+      {
+        "id": "E3",
+        "name": "Parkin",
+        "type": "e3_ligase",
+        "source": "sources/mitophagy-note.md §2 L7",
+        "evidence": "Parkin 被招募到外膜"
+      },
+      {
+        "id": "E4",
+        "name": "phospho-ubiquitin chains",
+        "type": "modification",
+        "source": "sources/mitophagy-note.md §2 L9",
+        "evidence": "外膜蛋白被泛素化，形成磷酸泛素链"
+      },
+      {
+        "id": "E5",
+        "name": "autophagosome",
+        "type": "organelle",
+        "source": "sources/mitophagy-note.md §2 L11",
+        "evidence": "自噬体包裹受损线粒体"
+      },
+      {
+        "id": "E6",
+        "name": "lysosome",
+        "type": "organelle",
+        "source": "sources/mitophagy-note.md §2 L13",
+        "evidence": "与自噬体融合完成降解"
+      }
+    ],
+    "relations": [
+      {
+        "id": "R1",
+        "from": "E1",
+        "to": "E2",
+        "kind": "recruits",
+        "source": "sources/mitophagy-note.md §2 L5",
+        "evidence": "去极化使 PINK1 稳定积累在外膜"
+      },
+      {
+        "id": "R2",
+        "from": "E2",
+        "to": "E3",
+        "kind": "recruits",
+        "source": "sources/mitophagy-note.md §2 L7",
+        "evidence": "PINK1 招募并磷酸化 Parkin"
+      },
+      {
+        "id": "R3",
+        "from": "E3",
+        "to": "E4",
+        "kind": "produces",
+        "source": "sources/mitophagy-note.md §2 L9",
+        "evidence": "Parkin 泛素化外膜蛋白"
+      },
+      {
+        "id": "R4",
+        "from": "E4",
+        "to": "E5",
+        "kind": "recruits",
+        "source": "sources/mitophagy-note.md §2 L11",
+        "evidence": "泛素链被自噬受体识别，自噬体包裹"
+      },
+      {
+        "id": "R5",
+        "from": "E5",
+        "to": "E6",
+        "kind": "process",
+        "source": "sources/mitophagy-note.md §2 L13",
+        "evidence": "自噬体与溶酶体融合，线粒体被降解"
+      }
+    ],
+    "groups": [
+      {
+        "id": "G1",
+        "label": "Damage sensing 损伤感知",
+        "members": [
+          "E1",
+          "E2"
+        ],
+        "source": "sources/mitophagy-note.md §3",
+        "evidence": "损伤感知模块"
+      },
+      {
+        "id": "G2",
+        "label": "Ubiquitin tagging 泛素标记",
+        "members": [
+          "E3",
+          "E4"
+        ],
+        "source": "sources/mitophagy-note.md §3",
+        "evidence": "泛素标记模块"
+      },
+      {
+        "id": "G3",
+        "label": "Clearance 清除",
+        "members": [
+          "E5",
+          "E6"
+        ],
+        "source": "sources/mitophagy-note.md §3",
+        "evidence": "清除模块"
+      }
+    ],
+    "legend": [
+      {
+        "id": "L1",
+        "key": "recruitment",
+        "label": "recruitment / binding 招募/结合",
+        "arrow": "recruitment",
+        "line": "solid",
+        "source": "sources/mitophagy-note.md §4"
+      },
+      {
+        "id": "L2",
+        "key": "process",
+        "label": "process / conversion 过程/转化",
+        "arrow": "process",
+        "line": "solid",
+        "source": "sources/mitophagy-note.md §4"
+      }
+    ],
+    "style": {
+      "font_size": 16,
+      "canvas": {
+        "width": 2300,
+        "height": 900
+      }
+    }
+  }
+}

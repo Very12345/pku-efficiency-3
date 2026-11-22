@@ -1,0 +1,28 @@
+{
+  "case_id": "synth-plant-hormone-mirna",
+  "title": "植物激素与转录后调控（合成案例）",
+  "example": true,
+  "entities": [
+    {"id": "e1", "name": "ETR1", "type": "protein", "compartment": "cytoplasm", "data": {"表达量": 0.35}, "note": "乙烯受体", "source": [{"ref": "material.md", "kind": "material", "line": 12}]},
+    {"id": "e2", "name": "CTR1", "type": "protein", "compartment": "cytoplasm", "data": {"表达量": 0.42}, "note": "受体下游激酶", "source": [{"ref": "material.md", "kind": "material", "line": 13}]},
+    {"id": "e3", "name": "EIN2", "type": "protein", "compartment": "cytoplasm", "data": {"表达量": 0.66}, "note": "C 端入核", "source": [{"ref": "material.md", "kind": "material", "line": 14}]},
+    {"id": "e4", "name": "EIN3", "type": "protein", "compartment": "nucleus", "data": {"表达量": 0.74}, "note": "核心转录因子", "source": [{"ref": "material.md", "kind": "material", "line": 15}]},
+    {"id": "e5", "name": "ERF1", "type": "gene", "compartment": "nucleus", "data": {"表达量": 0.88}, "note": "乙烯响应转录因子基因", "source": [{"ref": "material.md", "kind": "material", "line": 16}]},
+    {"id": "e6", "name": "miR164", "type": "rna", "compartment": "nucleus", "data": {"表达量": 0.58}, "note": "miRNA", "source": [{"ref": "material.md", "kind": "material", "line": 17}]},
+    {"id": "e7", "name": "NAC1", "type": "gene", "compartment": "nucleus", "data": {"表达量": 0.31}, "note": "被 miR164 抑制", "source": [{"ref": "material.md", "kind": "material", "line": 18}]},
+    {"id": "e8", "name": "EBF1", "type": "protein", "compartment": "cytoplasm", "data": {"表达量": 0.47}, "note": "泛素连接酶亚基", "source": [{"ref": "material.md", "kind": "material", "line": 19}]}
+  ],
+  "edges": [
+    {"id": "r1", "from": "e1", "to": "e2", "type": "inhibition", "evidence": "moderate", "note": "ETR1 抑制 CTR1", "source": [{"ref": "material.md", "kind": "material", "line": 23}]},
+    {"id": "r2", "from": "e2", "to": "e3", "type": "inhibition", "evidence": "strong", "note": "CTR1 抑制 EIN2", "source": [{"ref": "material.md", "kind": "material", "line": 24}]},
+    {"id": "r3", "from": "e3", "to": "e4", "type": "activation", "evidence": "strong", "note": "EIN2 激活 EIN3", "source": [{"ref": "material.md", "kind": "material", "line": 25}]},
+    {"id": "r4", "from": "e4", "to": "e5", "type": "activation", "evidence": "strong", "note": "EIN3 转录激活 ERF1", "source": [{"ref": "material.md", "kind": "material", "line": 26}]},
+    {"id": "r5", "from": "e4", "to": "e6", "type": "activation", "evidence": "moderate", "note": "EIN3 转录激活 miR164（并行分支）", "source": [{"ref": "material.md", "kind": "material", "line": 27}]},
+    {"id": "r6", "from": "e6", "to": "e7", "type": "inhibition", "evidence": "strong", "note": "miR164 转录后抑制 NAC1", "source": [{"ref": "material.md", "kind": "material", "line": 28}]},
+    {"id": "r7", "from": "e8", "to": "e4", "type": "inhibition", "evidence": "moderate", "feedback": true, "label": "负反馈", "note": "EBF1 促 EIN3 降解", "source": [{"ref": "material.md", "kind": "material", "line": 29}]},
+    {"id": "r8", "from": "e5", "to": "e1", "type": "activation", "evidence": "weak", "feedback": true, "label": "负反馈", "note": "ERF1 上调 ETR1（弱证据，虚线）", "source": [{"ref": "material.md", "kind": "material", "line": 30}]}
+  ],
+  "legend": {"data_mapping": {"field": "表达量", "low": "#FFF7E0", "high": "#1F4E79"}},
+  "layout": {"constraints": {"flow": "cytoplasm→nucleus", "parallel_branches": ["ERF1", "miR164"], "feedback_routing": "right side"}},
+  "extraction": {"method": "manual", "verified_by_agent": true, "note": "依据 material.md 逐条核对；本案例有数值，已启用颜色数据映射"}
+}

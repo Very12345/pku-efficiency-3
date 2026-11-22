@@ -1,0 +1,38 @@
+{
+  "case_id": "case-c-uhi-remote-302",
+  "_meta": "合成示例案例（非正式案例）。故意只给出最小结构化字段，正文主线需从 material.md 的小节抽取。全部数值为合成示意数据，不代表任何真实研究结果。",
+  "title": "城市热岛效应的多源遥感反演与归因",
+  "subtitle": "Landsat 9 与 Sentinel-2 协同反演，以及不透水面与人为热排放的贡献分解",
+  "audience": "城市环境遥感课题组进展汇报",
+  "duration_minutes": 10,
+  "slide_count": 9,
+  "language": "zh",
+  "source_material": [
+    "material.md"
+  ],
+  "figures": [
+    {
+      "id": "1",
+      "file": "figs/fig1.png",
+      "caption": "2023 年夏季地表温度反演结果与热岛强度空间分布",
+      "source": "material.md:27"
+    }
+  ],
+  "tables": [
+    {
+      "id": "1",
+      "caption": "热岛强度的归因分解结果",
+      "source": "material.md:30",
+      "rows": []
+    }
+  ],
+  "output_contract": {
+    "template_inheritance": true,
+    "slide_count": 9,
+    "audience": "城市环境遥感课题组进展汇报",
+    "language": "zh",
+    "evidence_per_slide": true,
+    "notes_per_slide": true,
+    "preview_png": true
+  }
+}

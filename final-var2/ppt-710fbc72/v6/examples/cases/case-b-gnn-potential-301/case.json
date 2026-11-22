@@ -1,0 +1,267 @@
+{
+  "case_id": "case-b-gnn-potential-301",
+  "_meta": "合成示例案例（非正式案例）。图神经网络势函数用于固态电解质离子输运模拟，全部数值为合成示意数据，仅用于演示 Skill 接口与本地冒烟，不代表任何真实研究结果。",
+  "title": "图神经网络势函数用于固态电解质离子输运的分子动力学模拟",
+  "subtitle": "以 Li₆PS₅Cl 为例：从第一性原理精度到千原子/纳秒尺度的锂离子输运",
+  "authors": [
+    {
+      "text": "陈 一鸣",
+      "source": "material.md:10"
+    },
+    {
+      "text": "周 澜",
+      "source": "material.md:10"
+    }
+  ],
+  "affiliation": "示例大学 材料科学与工程学院（合成信息）",
+  "audience": "计算材料学方向学术报告（组会+外组旁听）",
+  "duration_minutes": 15,
+  "slide_count": 12,
+  "language": "zh",
+  "source_material": [
+    "material.md"
+  ],
+  "research_question": [
+    {
+      "text": "全固态电池的硫化物电解质中，锂离子输运机制缺少可在原子尺度系统扫描的计算手段。",
+      "source": "material.md:7"
+    },
+    {
+      "text": "第一性原理分子动力学精度可靠，但被限制在数百原子、皮秒量级，难以覆盖长程扩散与缺陷统计。",
+      "source": "material.md:9"
+    },
+    {
+      "text": "本工作以 Li₆PS₅Cl 为对象，研究图神经网络势函数能否在接近第一性原理精度的同时，把模拟推进到数千原子、纳秒量级。",
+      "source": "material.md:10"
+    }
+  ],
+  "methods": [
+    {
+      "text": "采用等变图神经网络势函数，以原子局部环境为输入，通过消息传递输出能量与原子受力。",
+      "source": "material.md:15"
+    },
+    {
+      "text": "训练集由 AIMD 采样构型构成，覆盖 300–700 K 与 12 种锂含量配比，共 48,000 个构型。",
+      "source": "material.md:16"
+    },
+    {
+      "text": "每条构型同时提供能量与力标签，力标签由密度泛函理论给出，能量收敛判据 1×10⁻⁵ eV/atom。",
+      "source": "material.md:17"
+    },
+    {
+      "text": "训练集/验证集按构型来源以 8:2 划分，避免同一轨迹的相邻构型同时出现在两侧。",
+      "source": "material.md:18"
+    },
+    {
+      "text": "验证集上能量均方根误差 3.2 meV/atom，力均方根误差 48 meV/Å。",
+      "source": "material.md:19"
+    },
+    {
+      "text": "模拟盒含 2,048 个原子（Li₆PS₅Cl 2×2×2 超胞，边长约 20.4 Å）。",
+      "source": "material.md:22"
+    },
+    {
+      "text": "NVT 系综与 Nosé–Hoover 热浴，时间步长 2 fs，每个温度点模拟 2 ns。",
+      "source": "material.md:23"
+    },
+    {
+      "text": "温度点取 300、400、500、600 K，每点先平衡 0.2 ns，再统计后 1.8 ns 轨迹。",
+      "source": "material.md:24"
+    },
+    {
+      "text": "Li⁺ 电导率由均方位移的 Einstein 关系提取，活化能由 Arrhenius 拟合给出。",
+      "source": "material.md:25"
+    }
+  ],
+  "results": [
+    {
+      "text": "图1 给出 GNN 势函数在验证集上的能量与力误差分布，以及与 AIMD 参考值的对比。",
+      "source": "material.md:29",
+      "figure_refs": [
+        "1"
+      ]
+    },
+    {
+      "text": "300 K 下 Li⁺ 电导率为 1.2×10⁻³ S/cm，与同温 AIMD 参考值 9.6×10⁻⁴ S/cm 处于同一量级。",
+      "source": "material.md:30",
+      "figure_refs": [
+        "1"
+      ]
+    },
+    {
+      "text": "图2 给出 Li⁺ 电导率的 Arrhenius 行为与 600 K 下的锂离子概率密度分布。",
+      "source": "material.md:31",
+      "figure_refs": [
+        "2"
+      ]
+    },
+    {
+      "text": "由 300–600 K 的 Arrhenius 拟合得到活化能 0.24 eV，与实验区间 0.22–0.26 eV 一致。",
+      "source": "material.md:32",
+      "figure_refs": [
+        "2"
+      ]
+    },
+    {
+      "text": "表1 汇总不同温度下的 Li⁺ 电导率与迁移数统计。",
+      "source": "material.md:33",
+      "table_refs": [
+        "1"
+      ]
+    },
+    {
+      "text": "均方位移曲线在 0.4 ns 后进入线性区，说明统计窗口足够长、扩散系数提取可靠。",
+      "source": "material.md:34",
+      "figure_refs": [
+        "2"
+      ]
+    },
+    {
+      "text": "概率密度分析显示锂离子迁移以协同跳跃为主，跳跃路径沿 PS₄ 四面体间隙通道连接。",
+      "source": "material.md:35",
+      "figure_refs": [
+        "2"
+      ],
+      "table_refs": [
+        "1"
+      ]
+    }
+  ],
+  "discussion": [
+    {
+      "text": "GNN 势函数把可模拟体系推进到 2,048 原子、2 ns，使长程扩散与缺陷统计具备可计算性。",
+      "source": "material.md:39"
+    },
+    {
+      "text": "模拟活化能 0.24 eV 落在实验区间 0.22–0.26 eV 内，说明势函数在有限温度下没有系统性偏差。",
+      "source": "material.md:40"
+    },
+    {
+      "text": "协同跳跃机制的识别解释了硫化物电解质低活化能的来源，为组分调控提高电导率提供线索。",
+      "source": "material.md:41"
+    }
+  ],
+  "limitations": [
+    {
+      "text": "训练集主要覆盖 300–700 K 平衡态构型，对界面与晶界非平衡构型的外推能力尚未验证。",
+      "source": "material.md:45"
+    },
+    {
+      "text": "2 ns 模拟时长不足以统计低概率长程跳跃事件，扩散系数的统计不确定度未被严格量化。",
+      "source": "material.md:46"
+    },
+    {
+      "text": "泛化性只在 Li₆PS₅Cl 一种组分上检验，跨组分迁移能力仍属未知。",
+      "source": "material.md:47"
+    }
+  ],
+  "conclusion": [
+    {
+      "text": "图神经网络势函数在 Li₆PS₅Cl 上达到接近第一性原理的精度，并把离子输运模拟推进到 2,048 原子与 2 ns 尺度。",
+      "source": "material.md:51"
+    },
+    {
+      "text": "该工作给出可复用的训练与验证流程，为固态电解质组分筛选提供原子尺度计算工具。",
+      "source": "material.md:52"
+    }
+  ],
+  "figures": [
+    {
+      "id": "1",
+      "file": "figs/fig1.png",
+      "caption": "GNN 势函数在验证集上的能量与力误差分布，以及与 AIMD 参考值的对比",
+      "source": "material.md:29"
+    },
+    {
+      "id": "2",
+      "file": "figs/fig2.png",
+      "caption": "Li⁺ 电导率的 Arrhenius 行为，以及 600 K 下的锂离子概率密度分布",
+      "source": "material.md:31"
+    }
+  ],
+  "tables": [
+    {
+      "id": "1",
+      "caption": "不同温度下的 Li⁺ 电导率与迁移数统计",
+      "source": "material.md:33",
+      "rows": [
+        [
+          "温度/K",
+          "Li⁺ 电导率/(S·cm⁻¹)",
+          "Li⁺ 迁移数",
+          "均方位移线性起点/ns"
+        ],
+        [
+          "300",
+          "1.2×10⁻³",
+          "0.86",
+          "0.4"
+        ],
+        [
+          "400",
+          "2.6×10⁻³",
+          "0.88",
+          "0.3"
+        ],
+        [
+          "500",
+          "5.1×10⁻³",
+          "0.90",
+          "0.3"
+        ],
+        [
+          "600",
+          "9.4×10⁻³",
+          "0.92",
+          "0.2"
+        ]
+      ]
+    }
+  ],
+  "key_numbers": [
+    {
+      "text": "300 K 下 Li⁺ 电导率",
+      "value": "1.2×10⁻³ S/cm",
+      "source": "material.md:30"
+    },
+    {
+      "text": "AIMD 参考电导率（300 K）",
+      "value": "9.6×10⁻⁴ S/cm",
+      "source": "material.md:30"
+    },
+    {
+      "text": "活化能",
+      "value": "0.24 eV",
+      "source": "material.md:32"
+    },
+    {
+      "text": "模拟盒原子数",
+      "value": "2,048 个原子",
+      "source": "material.md:22"
+    },
+    {
+      "text": "单温度点模拟时长",
+      "value": "2 ns",
+      "source": "material.md:23"
+    },
+    {
+      "text": "能量均方根误差",
+      "value": "3.2 meV/atom",
+      "source": "material.md:19"
+    },
+    {
+      "text": "力均方根误差",
+      "value": "48 meV/Å",
+      "source": "material.md:19"
+    }
+  ],
+  "output_contract": {
+    "template_inheritance": true,
+    "slide_count": 12,
+    "audience": "计算材料学方向学术报告（组会+外组旁听）",
+    "language": "zh",
+    "evidence_per_slide": true,
+    "notes_per_slide": true,
+    "preview_png": true
+  }
+}

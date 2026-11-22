@@ -1,0 +1,26 @@
+{
+  "case_id": "case-sleep-cohort",
+  "title": "社区队列中睡眠时长与代谢综合征的横断面关联（合成案例）",
+  "task": "把 material.md 中的（合成）研究材料转成学术汇报 PPT：横断面口径必须写清，禁止任何因果措辞，数值逐字一致。",
+  "material": "material.md",
+  "template": null,
+  "audience": "临床流行病学方法学组会",
+  "duration_minutes": 12,
+  "slide_count": 11,
+  "notes_required": true,
+  "template_rules": [
+    "只填占位符，不修改母版",
+    "无模板时用内置 16:9 学术版式"
+  ],
+  "output_contract": {
+    "title": "deck 标题（一行的字符串）",
+    "main_claim": "全文一句话结论（字符串）",
+    "slides": [
+      "每页 {page,title,claim}（列表）"
+    ],
+    "evidence_mapping": "页级证据映射描述（字符串或对象）",
+    "render_state": "渲染与版本记录（字符串或对象）",
+    "notes_separated": true
+  },
+  "notes": "合成案例 B（非正式案例）：题材为临床流行病学；所有数值虚构，仅用于接口与泛化测试。"
+}

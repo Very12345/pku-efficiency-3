@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MechanismSpec v1",
+  "description": "Declarative mechanism/pathway figure spec produced by scripts/extract.py or --model-file, validated by scripts/validate_figure.py (CP2 schema gate) before rendering. Entity/edge enums align with model.py glyph semantics (references/legend-encoding.md).",
+  "type": "object",
+  "required": ["case_id", "entities", "edges"],
+  "properties": {
+    "case_id": {"type": "string"},
+    "title": {"type": "string"},
+    "example": {"type": "boolean"},
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "compartment", "source"],
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "type": {"enum": ["protein", "gene", "complex", "rna", "small_molecule", "other"]},
+          "compartment": {"type": "string"},
+          "data": {"type": "object"},
+          "note": {"type": "string"},
+          "uncertain": {"type": "boolean"},
+          "source": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["ref", "kind"],
+              "properties": {
+                "ref": {"type": "string"},
+                "kind": {"enum": ["material", "data_table", "common_knowledge", "assumption"]},
+                "line": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "from", "to", "type", "evidence", "source"],
+        "properties": {
+          "id": {"type": "string"},
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "type": {"enum": ["activation", "inhibition", "binding", "modification", "transport"]},
+          "subtype": {"type": "string"},
+          "evidence": {"enum": ["strong", "moderate", "weak"]},
+          "label": {"type": "string"},
+          "note": {"type": "string"},
+          "uncertain": {"type": "boolean"},
+          "feedback": {"type": "boolean"},
+          "source": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["ref", "kind"],
+              "properties": {
+                "ref": {"type": "string"},
+                "kind": {"enum": ["material", "data_table", "common_knowledge", "assumption"]},
+                "line": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "legend": {
+      "type": "object",
+      "properties": {
+        "title": {"type": "string"},
+        "entities": {"type": "object"},
+        "edges": {"type": "object"},
+        "evidence_width": {"type": "object"},
+        "data_mapping": {"type": "object"},
+        "dash_note": {"type": "object"},
+        "direction_note": {"type": "object"},
+        "version_note": {"type": "string"}
+      }
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "compartments": {"type": "array"},
+        "constraints": {"type": "object"}
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "method": {"enum": ["auto-draft", "manual", "manual-required"]},
+        "verified_by_agent": {"type": "boolean"}
+      }
+    }
+  }
+}

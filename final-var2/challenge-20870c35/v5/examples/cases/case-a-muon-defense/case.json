@@ -1,0 +1,27 @@
+{
+  "sample": true,
+  "synthetic_case": true,
+  "case_id": "synth-muon-defense-01",
+  "challenge_id": "challenge-20870c35",
+  "title": "合成案例 A：μSR 内场分布正则化反演的学位答辩汇报",
+  "report_goal": "让答辩委员会认可反演方法的必要性，并接受\"结论仅限合成数据\"这一证据边界",
+  "report_type": "defense",
+  "audience": "学位答辩委员会：本领域教授与一位外专业委员，熟悉 μSR 实验但不了解反演细节",
+  "duration_min": 25,
+  "slide_count": 15,
+  "success_criteria": [
+    "讲清病态反演为什么需要正则化，以及 4.6% 与 17.2% 的对比从哪里来",
+    "主动声明三条局限与一条风险，不把合成数据结论外推到真实束流数据",
+    "预判委员对\"双峰被抹平\"与\"GCV 低信噪比失效\"的追问"
+  ],
+  "materials": [
+    {
+      "path": "materials/muon_extract.md",
+      "role": "论文主体（摘要/研究问题/方法/结果/局限/结论）"
+    },
+    {
+      "path": "materials/figures.md",
+      "role": "图表清单（本案例故意不带图片文件，检验诚实占位）"
+    }
+  ]
+}

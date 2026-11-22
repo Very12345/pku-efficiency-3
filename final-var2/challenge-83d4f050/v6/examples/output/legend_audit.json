@@ -1,0 +1,70 @@
+{
+  "checks": [
+    {
+      "id": "L01",
+      "check": "图例覆盖(实体类型)",
+      "result": "pass",
+      "detail": "图例覆盖全部在用实体类型"
+    },
+    {
+      "id": "L02",
+      "check": "图例覆盖(边类型)",
+      "result": "pass",
+      "detail": "图例覆盖全部在用边类型"
+    },
+    {
+      "id": "L03",
+      "check": "数据映射有数值支撑",
+      "result": "pass",
+      "detail": "映射字段 表达量: 数值范围 [0.5, 0.9]"
+    },
+    {
+      "id": "E02",
+      "check": "色带端点声明",
+      "result": "pass",
+      "detail": "色带低→高: #FFF7E0 → #1F4E79"
+    },
+    {
+      "id": "L07",
+      "check": "证据强度→线宽映射",
+      "result": "pass",
+      "detail": "证据宽度 strong/moderate/weak = 2.8/2.2/1.6 与规范一致"
+    },
+    {
+      "id": "E01",
+      "check": "画布数据可溯源",
+      "result": "pass",
+      "detail": "所有数据值均挂接 source（材料行号）"
+    },
+    {
+      "id": "L04",
+      "check": "箭头语义=图例声明",
+      "result": "pass",
+      "detail": "全部边 marker 与图例声明一致"
+    },
+    {
+      "id": "L05",
+      "check": "图面颜色⊆图例∪数据映射(节点与边)",
+      "result": "pass",
+      "detail": "节点与边颜色全部可回溯到图例或数据映射"
+    },
+    {
+      "id": "L06",
+      "check": "虚线语义(仅 weak/uncertain)",
+      "result": "pass",
+      "detail": "虚线仅用于 weak/间接/uncertain"
+    },
+    {
+      "id": "L08",
+      "check": "图层命名(layer-*)",
+      "result": "pass",
+      "detail": "7 个规范图层齐全"
+    }
+  ],
+  "counts": {
+    "entities": 9,
+    "edges": 9
+  },
+  "failures": [],
+  "warnings": []
+}

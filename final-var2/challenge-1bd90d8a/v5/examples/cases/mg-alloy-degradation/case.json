@@ -1,0 +1,55 @@
+{
+  "case_id": "caseB-mg-alloy-degradation",
+  "title": "案例 B：Mg-Zn 合金体外降解速率与产物膜机制（合成）",
+  "challenge_id": "challenge-1bd90d8a",
+  "dataset_version": "2026-11-22-synthetic-caseB-v1",
+  "case_note": "合成案例：合金编号与数值为演示用；机制来源为自写的 ENTITY/REL 行，非真实文献。",
+  "output_contract": {
+    "case_id": "string",
+    "status": "string",
+    "sources": "array",
+    "editable_sources": "array",
+    "renders": "object",
+    "data_manifest": "string",
+    "validation": "string",
+    "uncertainty": "array",
+    "change_records": "array",
+    "gates": "object",
+    "figure_checks": "object"
+  },
+  "manual_confirmations": [
+    {"ts": "2026-11-22T19:00:00+08:00", "who": "case-author", "what": "实体与关系逐条抄自 material.md 的显式行；自然语言段落未用于上图"}
+  ],
+  "figures": [
+    {
+      "id": "fig-B1",
+      "type": "scatter",
+      "title": "Figure B1：Zn 含量与体外降解速率（mean ± SD，n=5）",
+      "subtitle": "每个点标注合金编号；误差线为 SD（列 sd_rate），与 Figure B2 的细胞数据（SE）严格区分",
+      "width": 1800,
+      "height": 900,
+      "style": "prism",
+      "x": {"column": "zn_wt_pct", "label": "Zn content", "unit": "wt%"},
+      "y": {"column": "degradation_rate_mm_per_year", "label": "Degradation rate", "unit": "mm/year"},
+      "error": {"column": "sd_rate", "semantics": "SD"},
+      "hue": {"column": "alloy_id"}
+    },
+    {
+      "id": "fig-B2",
+      "type": "network",
+      "title": "Figure B2：Mg-Zn 合金产物膜与细胞界面机制图（实体与关系引自 material.md 显式行）",
+      "subtitle": "箭头=促进/生成；末端横线=抑制/破坏；每节点带 cite 来源图表编号",
+      "width": 1600,
+      "height": 800,
+      "material_file": "material.md",
+      "layout": "auto",
+      "colors": {
+        "Bulk": "#4C72B0",
+        "Microstructure": "#DD8452",
+        "Surface film": "#55A868",
+        "Aqueous": "#C44E52",
+        "Cell": "#8172B3"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "sample": true,
+  "synthetic_case": true,
+  "case_id": "synth-scrna-review-01",
+  "challenge_id": "challenge-20870c35",
+  "title": "合成案例 B：单细胞计数去噪的评审答辩汇报",
+  "report_goal": "让评审接受结论的证据强度边界（两个指标互相矛盾时必须同时报告），而不是被最大改善幅度说服",
+  "report_type": "review",
+  "audience": "评审专家组：计算生物学方向，熟悉指标口径，关注可复现性与选择性报告",
+  "duration_min": 12,
+  "slide_count": 8,
+  "success_criteria": [
+    "结论先行：先给证据强度判定，再给数字",
+    "同时报告 MSE 改善 10.9% 与泊松似然改善 0.4%，不选择性报告",
+    "主动把两条不利事实（单次重采样、指标口径歧义）放在显著位置"
+  ],
+  "materials": [
+    {
+      "path": "materials/scrna_extract.md",
+      "role": "论文主体（摘要/评审焦点/方法/结果/局限/结论）"
+    },
+    {
+      "path": "materials/figures.md",
+      "role": "图表清单（本案例故意不带图片文件）"
+    }
+  ]
+}

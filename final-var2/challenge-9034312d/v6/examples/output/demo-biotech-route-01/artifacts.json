@@ -1,0 +1,936 @@
+{
+  "_doc": "本文件是 demo-biotech-route-01 这一合成示例案例的三份文本类运行产物的合并版：evidence（证据链）/ layout（布局模型）/ verify_report（校验与规则审计）。同目录的 result.json 保持独立文件，因为它是契约的唯一回显产物。三部分内容逐字保留，仅改为按 key 嵌套；figure.svg/png/pdf 不随包发布，由 scripts/main.py 运行时现场生成。",
+  "evidence": {
+    "source": "gain_evidence",
+    "extraction": "structured",
+    "entities": [
+      {
+        "id": "E1",
+        "name": "设计并合成 gRNA 文库",
+        "kind": "step",
+        "stage": "文库构建",
+        "source": "task.md §2.1",
+        "label": null,
+        "locator": "task.md §2.1",
+        "quote": ""
+      },
+      {
+        "id": "E2",
+        "name": "慢病毒包装与转导",
+        "kind": "step",
+        "stage": "文库构建",
+        "source": "task.md §2.2",
+        "label": null,
+        "locator": "task.md §2.2",
+        "quote": ""
+      },
+      {
+        "id": "E3",
+        "name": "sgRNA 文库质粒",
+        "kind": "material",
+        "stage": "文库构建",
+        "source": "task.md §2.1",
+        "label": null,
+        "locator": "task.md §2.1",
+        "quote": ""
+      },
+      {
+        "id": "E4",
+        "name": "药筛处理并富集耐药克隆",
+        "kind": "step",
+        "stage": "筛选",
+        "source": "task.md §3.1",
+        "label": null,
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "E5",
+        "name": "药物化合物",
+        "kind": "material",
+        "stage": "筛选",
+        "source": "task.md §3.1",
+        "label": null,
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "E6",
+        "name": "存活克隆扩增",
+        "kind": "step",
+        "stage": "筛选",
+        "source": "task.md §3.2",
+        "label": null,
+        "locator": "task.md §3.2",
+        "quote": ""
+      },
+      {
+        "id": "E7",
+        "name": "基因组 DNA 提取与 PCR 扩增 sgRNA 区域",
+        "kind": "step",
+        "stage": "鉴定",
+        "source": "task.md §4.1",
+        "label": null,
+        "locator": "task.md §4.1",
+        "quote": ""
+      },
+      {
+        "id": "E8",
+        "name": "高通量测序",
+        "kind": "step",
+        "stage": "鉴定",
+        "source": "task.md §4.2",
+        "label": null,
+        "locator": "task.md §4.2",
+        "quote": ""
+      },
+      {
+        "id": "E9",
+        "name": "测序数据下机文件",
+        "kind": "data",
+        "stage": "鉴定",
+        "source": "task.md §4.3",
+        "label": null,
+        "locator": "task.md §4.3",
+        "quote": ""
+      },
+      {
+        "id": "E10",
+        "name": "鉴别耐药相关靶基因",
+        "kind": "milestone",
+        "stage": "鉴定",
+        "source": "task.md §5",
+        "label": null,
+        "locator": "task.md §5",
+        "quote": ""
+      }
+    ],
+    "relations": [
+      {
+        "id": "R1",
+        "from": "E3",
+        "to": "E2",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §2.1-2.2",
+        "locator": "task.md §2.1-2.2",
+        "quote": ""
+      },
+      {
+        "id": "R2",
+        "from": "E1",
+        "to": "E2",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §2.1-2.2",
+        "locator": "task.md §2.1-2.2",
+        "quote": ""
+      },
+      {
+        "id": "R3",
+        "from": "E2",
+        "to": "E4",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §3.1",
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "R4",
+        "from": "E5",
+        "to": "E4",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §3.1",
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "R5",
+        "from": "E4",
+        "to": "E6",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §3.2",
+        "locator": "task.md §3.2",
+        "quote": ""
+      },
+      {
+        "id": "R6",
+        "from": "E6",
+        "to": "E7",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §4.1",
+        "locator": "task.md §4.1",
+        "quote": ""
+      },
+      {
+        "id": "R7",
+        "from": "E7",
+        "to": "E8",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §4.2",
+        "locator": "task.md §4.2",
+        "quote": ""
+      },
+      {
+        "id": "R8",
+        "from": "E8",
+        "to": "E9",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §4.3",
+        "locator": "task.md §4.3",
+        "quote": ""
+      },
+      {
+        "id": "R9",
+        "from": "E9",
+        "to": "E10",
+        "kind": "flow",
+        "label": null,
+        "source": "task.md §5",
+        "locator": "task.md §5",
+        "quote": ""
+      }
+    ],
+    "evidence": [
+      {
+        "id": "EV1",
+        "type": "entity",
+        "ref": "E1",
+        "locator": "task.md §2.1",
+        "quote": ""
+      },
+      {
+        "id": "EV2",
+        "type": "entity",
+        "ref": "E2",
+        "locator": "task.md §2.2",
+        "quote": ""
+      },
+      {
+        "id": "EV3",
+        "type": "entity",
+        "ref": "E3",
+        "locator": "task.md §2.1",
+        "quote": ""
+      },
+      {
+        "id": "EV4",
+        "type": "entity",
+        "ref": "E4",
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "EV5",
+        "type": "entity",
+        "ref": "E5",
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "EV6",
+        "type": "entity",
+        "ref": "E6",
+        "locator": "task.md §3.2",
+        "quote": ""
+      },
+      {
+        "id": "EV7",
+        "type": "entity",
+        "ref": "E7",
+        "locator": "task.md §4.1",
+        "quote": ""
+      },
+      {
+        "id": "EV8",
+        "type": "entity",
+        "ref": "E8",
+        "locator": "task.md §4.2",
+        "quote": ""
+      },
+      {
+        "id": "EV9",
+        "type": "entity",
+        "ref": "E9",
+        "locator": "task.md §4.3",
+        "quote": ""
+      },
+      {
+        "id": "EV10",
+        "type": "entity",
+        "ref": "E10",
+        "locator": "task.md §5",
+        "quote": ""
+      },
+      {
+        "id": "EV11",
+        "type": "relation",
+        "ref": "R1",
+        "locator": "task.md §2.1-2.2",
+        "quote": ""
+      },
+      {
+        "id": "EV12",
+        "type": "relation",
+        "ref": "R2",
+        "locator": "task.md §2.1-2.2",
+        "quote": ""
+      },
+      {
+        "id": "EV13",
+        "type": "relation",
+        "ref": "R3",
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "EV14",
+        "type": "relation",
+        "ref": "R4",
+        "locator": "task.md §3.1",
+        "quote": ""
+      },
+      {
+        "id": "EV15",
+        "type": "relation",
+        "ref": "R5",
+        "locator": "task.md §3.2",
+        "quote": ""
+      },
+      {
+        "id": "EV16",
+        "type": "relation",
+        "ref": "R6",
+        "locator": "task.md §4.1",
+        "quote": ""
+      },
+      {
+        "id": "EV17",
+        "type": "relation",
+        "ref": "R7",
+        "locator": "task.md §4.2",
+        "quote": ""
+      },
+      {
+        "id": "EV18",
+        "type": "relation",
+        "ref": "R8",
+        "locator": "task.md §4.3",
+        "quote": ""
+      },
+      {
+        "id": "EV19",
+        "type": "relation",
+        "ref": "R9",
+        "locator": "task.md §5",
+        "quote": ""
+      }
+    ],
+    "sources": [
+      {
+        "id": "input-case",
+        "file": "case.json",
+        "path": "examples/case.json",
+        "sha256": "938ae7f6598f4e111910df1d3e52713e899081181a37ffd7c7de7f133a128734",
+        "size": 2681,
+        "role": "case"
+      },
+      {
+        "id": "input-task",
+        "file": "task.md",
+        "path": "examples/task.md",
+        "sha256": "ebe20988f88cfff3e7aa1761ec542fa827e2ef90639cb5edff7f5985180ba7e0",
+        "size": 1301,
+        "role": "task"
+      }
+    ],
+    "notes": []
+  },
+  "layout": {
+    "canvas": {
+      "width_mm": 311.11,
+      "height_mm": 166.0
+    },
+    "requested_canvas": {
+      "width_mm": 300,
+      "height_mm": 190
+    },
+    "font": {
+      "family": "'Noto Sans CJK SC','Microsoft YaHei','PingFang SC','SimHei','DejaVu Sans',sans-serif",
+      "size_pt": 11.0,
+      "title_pt": 16.0
+    },
+    "title": "示例：CRISPR 文库筛选实验技术路线（示例用，非正式案例）",
+    "case_id": "demo-biotech-route-01",
+    "entities": [
+      {
+        "id": "E1",
+        "label": "设计并合成 gRNA 文库",
+        "display_label": "1. 设计并合成 gRNA 文库",
+        "lines": [
+          "1. 设计并合成 gRNA 文库"
+        ],
+        "kind": "step",
+        "x": 14.0,
+        "y": 40.0,
+        "w": 58.08,
+        "h": 16.0,
+        "source": "task.md §2.1",
+        "step_no": "1",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "文库构建"
+      },
+      {
+        "id": "E2",
+        "label": "慢病毒包装与转导",
+        "display_label": "2. 慢病毒包装与转导",
+        "lines": [
+          "2. 慢病毒包装与转导"
+        ],
+        "kind": "step",
+        "x": 14.0,
+        "y": 68.0,
+        "w": 48.44,
+        "h": 16.0,
+        "source": "task.md §2.2",
+        "step_no": "2",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "文库构建"
+      },
+      {
+        "id": "E3",
+        "label": "sgRNA 文库质粒",
+        "display_label": "sgRNA 文库质粒",
+        "lines": [
+          "sgRNA 文库质粒"
+        ],
+        "kind": "material",
+        "x": 14.0,
+        "y": 96.0,
+        "w": 38.59,
+        "h": 16.0,
+        "source": "task.md §2.1",
+        "step_no": null,
+        "color": {
+          "fill": "#E8F6E4",
+          "stroke": "#4C8A3A",
+          "text": "#28521B",
+          "shape": "rounded"
+        },
+        "shape": "rounded",
+        "stage": "文库构建"
+      },
+      {
+        "id": "E4",
+        "label": "药筛处理并富集耐药克隆",
+        "display_label": "3. 药筛处理并富集耐药克隆",
+        "lines": [
+          "3. 药筛处理并富集耐药克隆"
+        ],
+        "kind": "step",
+        "x": 106.08,
+        "y": 40.0,
+        "w": 61.02,
+        "h": 16.0,
+        "source": "task.md §3.1",
+        "step_no": "3",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "筛选"
+      },
+      {
+        "id": "E5",
+        "label": "药物化合物",
+        "display_label": "药物化合物",
+        "lines": [
+          "药物化合物"
+        ],
+        "kind": "material",
+        "x": 106.08,
+        "y": 68.0,
+        "w": 28.95,
+        "h": 16.0,
+        "source": "task.md §3.1",
+        "step_no": null,
+        "color": {
+          "fill": "#E8F6E4",
+          "stroke": "#4C8A3A",
+          "text": "#28521B",
+          "shape": "rounded"
+        },
+        "shape": "rounded",
+        "stage": "筛选"
+      },
+      {
+        "id": "E6",
+        "label": "存活克隆扩增",
+        "display_label": "4. 存活克隆扩增",
+        "lines": [
+          "4. 存活克隆扩增"
+        ],
+        "kind": "step",
+        "x": 106.08,
+        "y": 96.0,
+        "w": 40.06,
+        "h": 16.0,
+        "source": "task.md §3.2",
+        "step_no": "4",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "筛选"
+      },
+      {
+        "id": "E7",
+        "label": "基因组 DNA 提取与 PCR 扩增 sgRNA 区域",
+        "display_label": "5. 基因组 DNA 提取与 PCR 扩增 sgRNA 区域",
+        "lines": [
+          "5. 基因组 DNA 提取与 PCR 扩增 sgRNA 区域"
+        ],
+        "kind": "step",
+        "x": 201.1,
+        "y": 40.0,
+        "w": 96.01,
+        "h": 16.0,
+        "source": "task.md §4.1",
+        "step_no": "5",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "鉴定"
+      },
+      {
+        "id": "E8",
+        "label": "高通量测序",
+        "display_label": "6. 高通量测序",
+        "lines": [
+          "6. 高通量测序"
+        ],
+        "kind": "step",
+        "x": 201.1,
+        "y": 68.0,
+        "w": 35.87,
+        "h": 16.0,
+        "source": "task.md §4.2",
+        "step_no": "6",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "鉴定"
+      },
+      {
+        "id": "E9",
+        "label": "测序数据下机文件",
+        "display_label": "测序数据下机文件",
+        "lines": [
+          "测序数据下机文件"
+        ],
+        "kind": "data",
+        "x": 201.1,
+        "y": 96.0,
+        "w": 41.53,
+        "h": 16.0,
+        "source": "task.md §4.3",
+        "step_no": null,
+        "color": {
+          "fill": "#F7EAF6",
+          "stroke": "#9A4FA4",
+          "text": "#5B2A62",
+          "shape": "diamond"
+        },
+        "shape": "diamond",
+        "stage": "鉴定"
+      },
+      {
+        "id": "E10",
+        "label": "鉴别耐药相关靶基因",
+        "display_label": "7. 鉴别耐药相关靶基因",
+        "lines": [
+          "7. 鉴别耐药相关靶基因"
+        ],
+        "kind": "milestone",
+        "x": 201.1,
+        "y": 124.0,
+        "w": 52.63,
+        "h": 16.0,
+        "source": "task.md §5",
+        "step_no": "7",
+        "color": {
+          "fill": "#EAF3FB",
+          "stroke": "#2E6DA4",
+          "text": "#1B3A5C",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": "鉴定"
+      }
+    ],
+    "relations": [
+      {
+        "id": "R1",
+        "kind": "flow",
+        "from": "E3",
+        "to": "E2",
+        "label": "流向",
+        "source": "task.md §2.1-2.2",
+        "points": [
+          [
+            33.3,
+            96.0
+          ],
+          [
+            38.22,
+            84.0
+          ]
+        ],
+        "arrow": [
+          38.87,
+          89.67,
+          33.78,
+          87.58,
+          38.22,
+          84.0,
+          -68
+        ],
+        "y_mid": 90.0
+      },
+      {
+        "id": "R2",
+        "kind": "flow",
+        "from": "E1",
+        "to": "E2",
+        "label": "流向",
+        "source": "task.md §2.1-2.2",
+        "points": [
+          [
+            43.04,
+            56.0
+          ],
+          [
+            38.22,
+            68.0
+          ]
+        ],
+        "arrow": [
+          37.53,
+          62.34,
+          42.64,
+          64.39,
+          38.22,
+          68.0,
+          112
+        ],
+        "y_mid": 62.0
+      },
+      {
+        "id": "R3",
+        "kind": "flow",
+        "from": "E2",
+        "to": "E4",
+        "label": "流向",
+        "source": "task.md §3.1",
+        "points": [
+          [
+            62.44,
+            76.0
+          ],
+          [
+            84.26,
+            76.0
+          ],
+          [
+            84.26,
+            48.0
+          ],
+          [
+            106.08,
+            48.0
+          ]
+        ],
+        "arrow": [
+          101.08,
+          50.75,
+          101.08,
+          45.25,
+          106.08,
+          48.0,
+          0
+        ],
+        "y_mid": 62.0
+      },
+      {
+        "id": "R4",
+        "kind": "flow",
+        "from": "E5",
+        "to": "E4",
+        "label": "流向",
+        "source": "task.md §3.1",
+        "points": [
+          [
+            120.55,
+            68.0
+          ],
+          [
+            136.59,
+            56.0
+          ]
+        ],
+        "arrow": [
+          134.23,
+          61.2,
+          130.94,
+          56.79,
+          136.59,
+          56.0,
+          -37
+        ],
+        "y_mid": 62.0
+      },
+      {
+        "id": "R5",
+        "kind": "flow",
+        "from": "E4",
+        "to": "E6",
+        "label": "流向",
+        "source": "task.md §3.2",
+        "points": [
+          [
+            136.59,
+            56.0
+          ],
+          [
+            126.11,
+            96.0
+          ]
+        ],
+        "arrow": [
+          124.72,
+          90.47,
+          130.04,
+          91.86,
+          126.11,
+          96.0,
+          105
+        ],
+        "y_mid": 76.0
+      },
+      {
+        "id": "R6",
+        "kind": "flow",
+        "from": "E6",
+        "to": "E7",
+        "label": "流向",
+        "source": "task.md §4.1",
+        "points": [
+          [
+            146.14,
+            104.0
+          ],
+          [
+            173.62,
+            104.0
+          ],
+          [
+            173.62,
+            48.0
+          ],
+          [
+            201.1,
+            48.0
+          ]
+        ],
+        "arrow": [
+          196.1,
+          50.75,
+          196.1,
+          45.25,
+          201.1,
+          48.0,
+          0
+        ],
+        "y_mid": 76.0
+      },
+      {
+        "id": "R7",
+        "kind": "flow",
+        "from": "E7",
+        "to": "E8",
+        "label": "流向",
+        "source": "task.md §4.2",
+        "points": [
+          [
+            249.1,
+            56.0
+          ],
+          [
+            219.03,
+            68.0
+          ]
+        ],
+        "arrow": [
+          222.65,
+          63.59,
+          224.69,
+          68.7,
+          219.03,
+          68.0,
+          158
+        ],
+        "y_mid": 62.0
+      },
+      {
+        "id": "R8",
+        "kind": "flow",
+        "from": "E8",
+        "to": "E9",
+        "label": "流向",
+        "source": "task.md §4.3",
+        "points": [
+          [
+            219.03,
+            84.0
+          ],
+          [
+            221.87,
+            96.0
+          ]
+        ],
+        "arrow": [
+          218.04,
+          91.77,
+          223.39,
+          90.5,
+          221.87,
+          96.0,
+          77
+        ],
+        "y_mid": 90.0
+      },
+      {
+        "id": "R9",
+        "kind": "flow",
+        "from": "E9",
+        "to": "E10",
+        "label": "流向",
+        "source": "task.md §5",
+        "points": [
+          [
+            221.87,
+            112.0
+          ],
+          [
+            227.41,
+            124.0
+          ]
+        ],
+        "arrow": [
+          222.82,
+          120.61,
+          227.81,
+          118.31,
+          227.41,
+          124.0,
+          65
+        ],
+        "y_mid": 118.0
+      }
+    ],
+    "legend": [
+      {
+        "kind": "data",
+        "label": "数据/文件",
+        "fill": "#F7EAF6",
+        "stroke": "#9A4FA4"
+      },
+      {
+        "kind": "material",
+        "label": "物料/样本",
+        "fill": "#E8F6E4",
+        "stroke": "#4C8A3A"
+      },
+      {
+        "kind": "milestone",
+        "label": "里程碑",
+        "fill": "#EAF3FB",
+        "stroke": "#2E6DA4"
+      },
+      {
+        "kind": "step",
+        "label": "步骤",
+        "fill": "#EAF3FB",
+        "stroke": "#2E6DA4"
+      }
+    ],
+    "extraction": "structured",
+    "figure_type": "route"
+  },
+  "verify_report": {
+    "ok": true,
+    "checks": {
+      "layers": true,
+      "editable_text": true,
+      "entity_groups": true,
+      "entity_source_coverage": true,
+      "arrows": true,
+      "no_dangling": true,
+      "numbering_continuous": true,
+      "legend_kinds": true,
+      "kind_vocabulary": true,
+      "relation_kind_vocabulary": true,
+      "connection_rules": true,
+      "all": true
+    },
+    "issues": [],
+    "rule_violations": [],
+    "errors": [],
+    "warnings": [],
+    "determinism": {
+      "spec_sha16": "e04e9d47e8ca0099"
+    },
+    "summary": {
+      "status": "pass",
+      "figure_type": "route",
+      "entities": 10,
+      "relations": 9,
+      "errors": 0,
+      "warnings": 0,
+      "issues": 0,
+      "spec_sha16": "e04e9d47e8ca0099"
+    }
+  }
+}

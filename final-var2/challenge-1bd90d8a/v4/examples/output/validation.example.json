@@ -1,0 +1,96 @@
+{
+  "case_id": "example-science-figure-01",
+  "status": "completed",
+  "checks": {
+    "fig-01": [
+      {
+        "id": "provenance",
+        "level": "ok",
+        "detail": "图元 79 个，带 role 溯源 79 个。",
+        "pass": true
+      },
+      {
+        "id": "legend-mapping",
+        "level": "ok",
+        "detail": "无系列型图（heatmap/box/network 图例另检）。",
+        "pass": true
+      },
+      {
+        "id": "cjk-font",
+        "level": "ok",
+        "detail": "CJK 文本 2 处；CJK 字体已找到 stfangsong。",
+        "pass": true
+      },
+      {
+        "id": "axis-units",
+        "level": "ok",
+        "detail": "2 个面板；缺少 y 轴标签的面板：[]。",
+        "pass": true
+      },
+      {
+        "id": "significance",
+        "level": "ok",
+        "detail": "显著性线段 1 条，文字 1 个（p 值脚注见 annotation_footnotes）。",
+        "pass": true
+      },
+      {
+        "id": "null-handling",
+        "level": "ok",
+        "detail": "共使用 24 个源数据行位置。",
+        "pass": true
+      },
+      {
+        "id": "occlusion",
+        "level": "ok",
+        "detail": "文本重叠 0 处（检测到的最大处数；旋转/轴外文本不参与）。",
+        "pass": true
+      }
+    ],
+    "fig-02": [
+      {
+        "id": "provenance",
+        "level": "ok",
+        "detail": "图元 42 个，带 role 溯源 42 个。",
+        "pass": true
+      },
+      {
+        "id": "legend-mapping",
+        "level": "ok",
+        "detail": "无系列型图（heatmap/box/network 图例另检）。",
+        "pass": true
+      },
+      {
+        "id": "cjk-font",
+        "level": "ok",
+        "detail": "CJK 文本 13 处；CJK 字体已找到 stfangsong。",
+        "pass": true
+      },
+      {
+        "id": "axis-units",
+        "level": "ok",
+        "detail": "图型 network 无坐标轴标签要求。",
+        "pass": true
+      },
+      {
+        "id": "significance",
+        "level": "ok",
+        "detail": "显著性线段 0 条，文字 0 个（p 值脚注见 annotation_footnotes）。",
+        "pass": true
+      },
+      {
+        "id": "null-handling",
+        "level": "ok",
+        "detail": "共使用 0 个源数据行位置。",
+        "pass": true
+      },
+      {
+        "id": "occlusion",
+        "level": "warn",
+        "detail": "文本重叠 2 处（检测到的最大处数；旋转/轴外文本不参与）。",
+        "pass": false
+      }
+    ]
+  },
+  "adjustments": [],
+  "warnings": []
+}

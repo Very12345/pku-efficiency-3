@@ -1,0 +1,23 @@
+{
+  "_doc": "装置图（apparatus）结构化规格示例：冷冻干燥机装配。三桶布局：物料列（样品溶液）→ 装置列（主机/冷阱/真空泵）→ 产物/废料列（冻干粉/冷凝水）。标注：示例，非正式案例。",
+  "case_id": "demo-apparatus-001",
+  "title": "示例：冷冻干燥机实验装置（示例用，非正式案例）",
+  "figure_type": "apparatus",
+  "canvas": {"width_mm": 300, "height_mm": 180},
+  "text": "本装置由样品溶液、冻干机主机、冷阱、真空泵组成。工作过程：样品溶液置于冻干机主机搁板上冷冻干燥，主机连接冷阱与真空泵；水蒸气在冷阱内凝华为冰（冷凝水），干燥产物即冻干粉。",
+  "entities": [
+    {"id": "C1", "name": "样品溶液", "kind": "material", "source": "case.json[text]", "label": "样品溶液"},
+    {"id": "C2", "name": "冻干机主机", "kind": "device", "source": "case.json[text]", "label": "冻干机主机"},
+    {"id": "C3", "name": "冷阱", "kind": "device", "source": "case.json[text]", "label": "冷阱"},
+    {"id": "C4", "name": "真空泵", "kind": "device", "source": "case.json[text]", "label": "真空泵"},
+    {"id": "C5", "name": "冻干粉（产物）", "kind": "product", "source": "case.json[text]", "label": "冻干粉"},
+    {"id": "C6", "name": "冷凝水（废料）", "kind": "waste", "source": "case.json[text]", "label": "冷凝水"}
+  ],
+  "relations": [
+    {"id": "S1", "from": "C1", "to": "C2", "kind": "flow", "label": "进样", "source": "case.json[text]"},
+    {"id": "S2", "from": "C2", "to": "C3", "kind": "connect", "label": "管路", "source": "case.json[text]"},
+    {"id": "S3", "from": "C3", "to": "C4", "kind": "connect", "label": "管路", "source": "case.json[text]"},
+    {"id": "S4", "from": "C2", "to": "C5", "kind": "flow", "label": "干燥产物", "source": "case.json[text]"},
+    {"id": "S5", "from": "C3", "to": "C6", "kind": "flow", "label": "凝华", "source": "case.json[text]"}
+  ]
+}

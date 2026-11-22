@@ -1,0 +1,16 @@
+{
+  "_doc": "编辑既有图稿的增量修改示例（route_spec.mutation 用例）：作为 --merge 传给 main.py，同名 id 替换、新 id 追加，动作自动写入 change_record。标注：示例，非正式案例。",
+  "entities": [
+    {"id": "E5", "name": "药物化合物", "kind": "material", "stage": "筛选", "source": "task.md §3.1", "label": "药物（激酶抑制剂）"},
+    {"id": "E11", "name": "DMSO 溶剂对照", "kind": "material", "stage": "筛选", "source": "task.md §3.1", "label": "DMSO 对照"}
+  ],
+  "relations": [
+    {"id": "R10", "from": "E6", "to": "E4", "kind": "recycle", "label": "复筛回流", "source": "task.md §3.2"},
+    {"id": "R11", "from": "E11", "to": "E4", "kind": "flow", "label": "对照孔", "source": "task.md §3.1"}
+  ],
+  "change_notes": [
+    "人工复核：E5 图面标签改为药物（激酶抑制剂），与正文 §3.1 一致",
+    "补录回流：克隆扩增后部分克隆返回药筛复筛（R10，recycle 虚线）",
+    "新增实体：DMSO 溶剂对照孔（E11，material）及其流向（R11）"
+  ]
+}

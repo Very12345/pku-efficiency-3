@@ -1,0 +1,36 @@
+{
+  "case_id": "synth-immune-synapse-tcr",
+  "title": "T 细胞受体（TCR）免疫突触近膜信号（合成案例）",
+  "example": true,
+  "entities": [
+    {"id": "e1", "name": "MHC–肽复合物", "type": "complex", "compartment": "extracellular", "note": "抗原提呈细胞表面", "source": [{"ref": "material.md", "kind": "material", "line": 12}]},
+    {"id": "e2", "name": "TCR–CD3 复合物", "type": "complex", "compartment": "membrane", "note": "跨膜受体复合物（ITAM）", "source": [{"ref": "material.md", "kind": "material", "line": 13}]},
+    {"id": "e3", "name": "LCK", "type": "protein", "compartment": "membrane", "note": "近膜 Src 家族激酶", "source": [{"ref": "material.md", "kind": "material", "line": 14}]},
+    {"id": "e4", "name": "ZAP70", "type": "protein", "compartment": "cytoplasm", "note": "Syk 家族激酶", "source": [{"ref": "material.md", "kind": "material", "line": 15}]},
+    {"id": "e5", "name": "LAT", "type": "protein", "compartment": "membrane", "note": "跨膜支架蛋白", "source": [{"ref": "material.md", "kind": "material", "line": 16}]},
+    {"id": "e6", "name": "PLCγ1", "type": "protein", "compartment": "cytoplasm", "note": "被招募并激活", "source": [{"ref": "material.md", "kind": "material", "line": 17}]},
+    {"id": "e7", "name": "IP3", "type": "small_molecule", "compartment": "cytoplasm", "note": "第二信使", "source": [{"ref": "material.md", "kind": "material", "line": 18}]},
+    {"id": "e8", "name": "钙离子", "type": "small_molecule", "compartment": "cytoplasm", "note": "胞内钙升高", "source": [{"ref": "material.md", "kind": "material", "line": 19}]},
+    {"id": "e9", "name": "钙调磷酸酶", "type": "protein", "compartment": "cytoplasm", "note": "钙依赖磷酸酶", "source": [{"ref": "material.md", "kind": "material", "line": 20}]},
+    {"id": "e10", "name": "NFAT", "type": "protein", "compartment": "cytoplasm", "note": "胞质 NFAT", "source": [{"ref": "material.md", "kind": "material", "line": 21}]},
+    {"id": "e11", "name": "核内 NFAT", "type": "protein", "compartment": "nucleus", "note": "入核形式；与 NFAT(e10) 同一蛋白，按区室拆分", "source": [{"ref": "material.md", "kind": "material", "line": 22}]},
+    {"id": "e12", "name": "SHP-1", "type": "protein", "compartment": "cytoplasm", "note": "负反馈磷酸酶", "source": [{"ref": "material.md", "kind": "material", "line": 23}]}
+  ],
+  "edges": [
+    {"id": "r1", "from": "e1", "to": "e2", "type": "binding", "evidence": "strong", "note": "抗原肽-MHC 被 TCR 识别", "source": [{"ref": "material.md", "kind": "material", "line": 27}]},
+    {"id": "r2", "from": "e3", "to": "e2", "type": "modification", "subtype": "磷酸化", "evidence": "strong", "note": "LCK 磷酸化 ITAM", "source": [{"ref": "material.md", "kind": "material", "line": 28}]},
+    {"id": "r3", "from": "e4", "to": "e2", "type": "binding", "evidence": "strong", "note": "ZAP70 经 ITAM 募集", "source": [{"ref": "material.md", "kind": "material", "line": 29}]},
+    {"id": "r4", "from": "e4", "to": "e5", "type": "activation", "evidence": "strong", "note": "ZAP70 激活 LAT", "source": [{"ref": "material.md", "kind": "material", "line": 30}]},
+    {"id": "r5", "from": "e5", "to": "e6", "type": "binding", "evidence": "strong", "note": "LAT 募集 PLCγ1", "source": [{"ref": "material.md", "kind": "material", "line": 31}]},
+    {"id": "r6", "from": "e6", "to": "e7", "type": "activation", "evidence": "strong", "note": "PLCγ1 产生 IP3", "source": [{"ref": "material.md", "kind": "material", "line": 32}]},
+    {"id": "r7", "from": "e7", "to": "e8", "type": "activation", "evidence": "strong", "note": "IP3 触发钙释放", "source": [{"ref": "material.md", "kind": "material", "line": 33}]},
+    {"id": "r8", "from": "e8", "to": "e9", "type": "activation", "evidence": "strong", "note": "钙激活钙调磷酸酶", "source": [{"ref": "material.md", "kind": "material", "line": 34}]},
+    {"id": "r9", "from": "e9", "to": "e10", "type": "modification", "subtype": "去磷酸化", "evidence": "strong", "note": "去磷酸化 NFAT", "source": [{"ref": "material.md", "kind": "material", "line": 35}]},
+    {"id": "r10", "from": "e10", "to": "e11", "type": "transport", "evidence": "strong", "note": "NFAT 入核", "source": [{"ref": "material.md", "kind": "material", "line": 36}]},
+    {"id": "r11", "from": "e11", "to": "e10", "type": "activation", "evidence": "weak", "feedback": true, "label": "反馈", "note": "核内 NFAT 的转录输出回到胞质池（弱证据，虚线）", "source": [{"ref": "material.md", "kind": "material", "line": 37}]},
+    {"id": "r12", "from": "e12", "to": "e4", "type": "inhibition", "evidence": "moderate", "feedback": true, "label": "负反馈", "note": "SHP-1 抑制 ZAP70", "source": [{"ref": "material.md", "kind": "material", "line": 38}]}
+  ],
+  "legend": {"data_mapping": {"field": "", "low": "#FFF7E0", "high": "#1F4E79"}},
+  "layout": {"constraints": {"flow": "extracellular→membrane→cytoplasm→nucleus", "feedback_routing": "right side"}},
+  "extraction": {"method": "manual", "verified_by_agent": true, "note": "依据 material.md 实体表与关系节逐条核对；本案例无数值，未启用颜色数据映射"}
+}

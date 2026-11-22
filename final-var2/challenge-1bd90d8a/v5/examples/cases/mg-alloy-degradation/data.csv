@@ -1,0 +1,5 @@
+alloy_id,zn_wt_pct,degradation_rate_mm_per_year,sd_rate,ph_day7,viability_percent,se_viability,n
+Mg-1Zn,1.0,0.82,0.07,9.1,94.2,2.1,5
+Mg-3Zn,3.0,0.54,0.05,8.7,97.6,1.8,5
+Mg-5Zn,5.0,0.41,0.04,8.4,98.9,1.5,5
+Mg-10Zn,10.0,0.66,0.09,8.9,91.3,2.4,5

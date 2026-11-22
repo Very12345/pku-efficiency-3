@@ -1,0 +1,14 @@
+{
+  "case_id": "synth-plant-hormone-mirna",
+  "title": "植物激素与转录后调控：乙烯信号 → EIN3 → ERF1 与 miR164→NAC1 并行分支（合成案例，教学简化）",
+  "example": true,
+  "synthetic": true,
+  "task": "依据材料绘制植物激素信号与转录后调控机制图：以基因与转录本（rna）为主要实体类型，区分转录激活、miRNA 介导的转录后抑制与泛素化降解型抑制；材料给出相对表达量区间，须用颜色映射表达量并在图例画出色带；标出 EIN3 对 ERF1 与 miR164 的并行分支。",
+  "materials": ["material.md"],
+  "render": {"width": 1200, "height": 900},
+  "output_contract": {
+    "figure_spec_version": "case-set/1",
+    "required_compartments": ["cytoplasm", "nucleus"],
+    "expected_export_formats": ["svg", "png", "pdf"]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$id": "assets/plan.schema.json",
+  "$comment": "talk plan 契约模式：scaffold_plan.build_plan 产出 → validate_plan.validate_plan 门控（P1–P8）。单点真相：改这里即改校验行为。",
+  "title": "academic-talk-organizer plan contract",
+  "version": "2.0.0",
+  "layer": "plan",
+  "required": [
+    "case_id",
+    "report_goal",
+    "audience",
+    "timing",
+    "narrative",
+    "success_criteria",
+    "pages",
+    "question_bank",
+    "terminology"
+  ],
+  "properties": {
+    "case_id": {"type": "string"},
+    "report_goal": {"type": "string"},
+    "audience": {
+      "type": "object",
+      "required": ["description", "expertise", "background_ratio", "evidence_depth"],
+      "properties": {
+        "description": {"type": "string"},
+        "expertise": {"type": "string", "enum": ["expert", "familiar", "lay"]},
+        "background_ratio": {"type": "number"},
+        "evidence_depth": {"type": "string"},
+        "notes": {"type": "string"}
+      }
+    },
+    "timing": {
+      "type": "object",
+      "required": ["duration_min", "slide_target"],
+      "properties": {
+        "duration_min": {"type": "number"},
+        "slide_target": {"type": "integer"},
+        "seconds_per_slide": {"type": "number"}
+      }
+    },
+    "narrative": {
+      "type": "object",
+      "required": ["report_type", "order_blocks", "template"],
+      "properties": {
+        "report_type": {"type": "string"},
+        "order_blocks": {"type": "list"},
+        "template": {"type": "string"}
+      }
+    },
+    "success_criteria": {"type": "list"},
+    "pages": {"type": "list"},
+    "question_bank": {"type": "list"},
+    "terminology": {"type": "object"}
+  },
+  "page": {
+    "required": [
+      "page_no", "block", "block_label", "title", "claim", "one_liner",
+      "evidence", "notes", "strength", "qa", "derived"
+    ],
+    "blocks": [
+      "title", "agenda", "motivation", "background", "method", "results",
+      "conclusion_risk", "innovation_limits", "conclusion", "qa"
+    ],
+    "strengths": ["strong", "medium", "weak", null],
+    "evidence_required_blocks": [
+      "motivation", "background", "method", "results",
+      "conclusion_risk", "innovation_limits", "conclusion"
+    ]
+  },
+  "gates": [
+    {"id": "P1", "desc": "plan 顶层必填字段齐全且类型正确", "target": "required"},
+    {"id": "P2", "desc": "页编号 1..N 连续且无重复", "target": "page_no_sequence"},
+    {"id": "P3", "desc": "页总数 == timing.slide_target（冻结页数）", "target": "page_count"},
+    {"id": "P4", "desc": "每页 block ∈ 词表", "target": "block_enum"},
+    {"id": "P5", "desc": "内容页 evidence[0] 含 locator/quote/source_file/strength", "target": "evidence_present"},
+    {"id": "P6", "desc": "证据 source_file ∈ 材料清单", "target": "source_declared"},
+    {"id": "P7", "desc": "每页 title/claim/one_liner 非空；6<=len(claim)<=500；strength 词法正确", "target": "text_fields"},
+    {"id": "P8", "desc": "notes 含【讲解】；derived 页 strength=weak", "target": "notes_derived"}
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "case_id": "case-sleep-cohort",
+  "difficulty_tier": "中等偏难 — 数字自洽且可重建，但语言纪律是主要难点：全篇不得出现因果动词。",
+  "expected_artifacts": [
+    "result.json",
+    "academic_deck.pptx",
+    "preview-approx-*.png",
+    "evidence_mapping.md",
+    "evidence_map.json",
+    "chart-*.png（由 Table 1 重建）"
+  ],
+  "expected_structure": [
+    "问题（结论不一致的原因）",
+    "人群与纳排流程",
+    "暴露/结局/协变量",
+    "主结果（四档患病率与 OR）",
+    "非线性形状",
+    "稳健性与分层",
+    "判读（两端关联含义不同）",
+    "局限",
+    "结论"
+  ],
+  "acceptance_band": {
+    "slides": "8-11（6 个内容页 + 封面 + 收尾 [+ 证据映射页]）",
+    "evidence_entries_min": 6,
+    "status": [
+      "completed",
+      "partial"
+    ],
+    "uncertainty_max_if_completed": 0,
+    "must_keep_verbatim": [
+      "41.2",
+      "30.1",
+      "27.8",
+      "36.7",
+      "1.58",
+      "1.09",
+      "1.31",
+      "0.03"
+    ],
+    "must_not_claim": [
+      "睡眠不足导致代谢综合征",
+      "延长睡眠可降低风险",
+      "性别差异显著"
+    ]
+  },
+  "failure_boundary": "最典型的泛化失败是『用动词偷因果』：把『与更高 odds 相关』写成『增加风险』，或把 >8 h 的关联写成『长睡眠的危害』。"
+}

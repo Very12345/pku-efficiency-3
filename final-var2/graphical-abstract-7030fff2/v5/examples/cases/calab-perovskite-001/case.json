@@ -1,0 +1,45 @@
+{
+  "case_id": "calab-perovskite-001",
+  "title": "钙钛矿太阳能电池的界面钝化与湿稳定性",
+  "_meta": "合成案例（非平台正式案例）。数值为示意，均由同目录 material.md 提供，不代表任何真实论文结果。",
+  "source_material": "material.md",
+  "entities": [
+    {"name": "FAPbI3 吸光层", "type": "material", "panel": "method", "note": "带隙 1.53 eV 的钙钛矿吸收层"},
+    {"name": "PTAI 钝化分子", "type": "molecule", "panel": "method", "note": "苯乙铵碘化物，界面钝化剂"},
+    {"name": "SnO2 电子传输层", "type": "material", "panel": "method"},
+    {"name": "界面缺陷态", "type": "object", "panel": "question", "note": "深能级陷阱，非辐射复合中心"},
+    {"name": "水分子（H2O）", "type": "molecule", "panel": "question", "note": "湿气入侵来源"},
+    {"name": "钝化后器件", "type": "device", "panel": "results"},
+    {"name": "对照器件", "type": "device", "panel": "results"}
+  ],
+  "relations": [
+    {"from": "PTAI 钝化分子", "to": "界面缺陷态", "label": "配位钝化"},
+    {"from": "界面缺陷态", "to": "钝化后器件", "label": "非辐射复合损失", "kind": "negative"},
+    {"from": "水分子（H2O）", "to": "FAPbI3 吸光层", "label": "分解侵蚀", "kind": "negative"},
+    {"from": "SnO2 电子传输层", "to": "FAPbI3 吸光层", "label": "电子抽取"},
+    {"from": "FAPbI3 吸光层", "to": "钝化后器件", "label": "光生载流子注入"}
+  ],
+  "data": [
+    {"label": "光电转换效率", "value": "23.7 %", "kind": "bar_length", "note": "AM1.5G 反扫"},
+    {"label": "开路电压", "value": "1.18 V", "kind": "bar_length"},
+    {"label": "短路电流密度", "value": "25.4 mA/cm2", "kind": "bar_length"},
+    {"label": "填充因子", "value": "81.2 %", "kind": "bar_length"},
+    {"label": "界面缺陷密度", "value": "3.1e11 cm-2", "kind": "value_label", "note": "热导纳谱提取"},
+    {"label": "未封装 T80 寿命", "value": "720 h", "kind": "bar_length", "note": "85% RH, 65 °C"},
+    {"label": "对照器件效率", "value": "21.2 %", "kind": "color_scale"}
+  ],
+  "figure_constraints": {
+    "width": 1400, "height": 860, "dpi": 300, "colorblind": true,
+    "flow_arrows": true, "raster_scale": 1, "pdf": false
+  },
+  "output_contract": {
+    "target_format": ["svg", "png"],
+    "resolution_dpi": 300,
+    "colorblind_safe": true,
+    "require_legend": true,
+    "require_scale_bar": false,
+    "layer_names": ["background", "panels", "entities", "relations", "data", "legend", "annotations"],
+    "provenance_attr": "data-src",
+    "deliverable": "editable_svg_plus_preview"
+  }
+}

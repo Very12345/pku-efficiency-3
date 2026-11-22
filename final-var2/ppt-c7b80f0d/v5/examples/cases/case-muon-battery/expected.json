@@ -1,0 +1,48 @@
+{
+  "case_id": "case-muon-battery",
+  "difficulty_tier": "中等 — 材料自洽、有可重建数字表（Table 1 一列 4 类目），但结论措辞敏感（『低于下限』≠『无析锂』）。",
+  "expected_artifacts": [
+    "result.json",
+    "academic_deck.pptx",
+    "preview-approx-*.png",
+    "evidence_mapping.md",
+    "evidence_map.json",
+    "chart-*.png（由 Table 1 重建）"
+  ],
+  "expected_structure": [
+    "问题与痛点",
+    "装置与方法",
+    "设计与统计",
+    "主结果（透射率 vs SoC）",
+    "反演厚度与验证",
+    "判读口径（仅统计关联）",
+    "在线化约束",
+    "局限",
+    "结论"
+  ],
+  "acceptance_band": {
+    "slides": "8-11（6 个内容页 + 封面 + 收尾 [+ 证据映射页]）",
+    "evidence_entries_min": 6,
+    "status": [
+      "completed",
+      "partial"
+    ],
+    "uncertainty_max_if_completed": 0,
+    "must_keep_verbatim": [
+      "92.4",
+      "90.8",
+      "88.6",
+      "87.1",
+      "8.6",
+      "15.9",
+      "3.2",
+      "74%"
+    ],
+    "must_not_claim": [
+      "析锂是透射率下降的唯一原因",
+      "50% SoC 以下没有析锂",
+      "可在线检测"
+    ]
+  },
+  "failure_boundary": "若把材料误当成『已给出定量结论』的论文，汇报会漏掉 §5 局限中『低于分辨下限』的语义，把 < 3.2 μm 说成 0。"
+}

@@ -1,0 +1,541 @@
+# GAIN-PROTOCOL.md — 与"不加载 Skill 的基础形态"的公平对照协议与实测记录
+
+> 适用版本：本包 v2（增益可验证版）。v3 目录下的同名文件与本文件**逐字节相同**（同一份协议与同一批实测数据）。
+> 机器可读的原始记录：`references/gain-run-record.json`（由 `scripts/gain_ab.py` 直接写出，未经手工编辑）。
+> 复跑命令、指标定义、实测数字、以及**不利于本包的结果**都在本文件里，不放任何自报分数。
+
+## 1. 为什么要写成协议，而不是写一段"我们更好"
+
+题面（使用增益 25 分：质量增益 15 / 效率增益 5 / 增益可验证性 5）明确要求：
+*"是否通过公平对照证明质量或效率改善；文字自述不能替代实际运行证据。"*
+并且 *"平台固定运行 3 个案例，比较不加载 Skill 与加载参赛 Skill 时的实际结果"*。
+
+⇒ 参赛者能做的、也是本文件做的，是两件事：
+1. 把"加载后的做法"变成**可复跑**的形式（一条命令、自定位、确定性）；
+2. 把**比较口径**写成第三方能照着跑的协议，并**如实公布两个臂各自的强弱**——
+   包括不利于本包的项。
+
+**本文件不宣称任何平台分数。** 平台的三案例 × 三重复公平对照由组织方执行；
+本包不预置白板、不冒充成绩、不提交正式案例的答案。
+
+## 2. 两个臂的定义
+
+| | A 臂（基础形态） | B 臂（加载本包） |
+|-|-|-|
+| 定义 | `scripts/gain_ab.py` 内置的**确定性基线模拟器** | 本包唯一入口 `scripts/main.py` 的一次真实运行 |
+| 它做什么 | 读材料的文本，按"每页 5 段"把段落搬成页面；页数由**材料长度**决定；不写讲稿备注、不记录来源定位、不预判追问；把 case 声明的图片文件按原尺寸贴到末尾页 | CP1–CP5 全流程：材料实读 → 页级计划（听众/时长/冻结页数）→ 计划契约门 P1–P8 → 可编辑 deck（模板适配或内置主题 + 图绑定/诚实占位）→ PIL 预览 → 逐字证据审计 → `result.json`（契约 + 三道审计内嵌）+ `self_check.json` |
+| 它不做什么 | 不做计划、不做审计、不产出 `result.json` | 不改写事实、不补造材料、不提交预制答案 |
+
+**A 臂是"代理臂"，不是平台真实的基础 Agent。** 它的行为按题面「题目介绍」对常见表现的描述
+逐条实现（*"把摘要和 Results 逐段搬成页面，页数与讲述时长脱节，图表与页内结论不对应，
+公式和引用编号错位，讲解备注缺失或与页面重复，被追问时没有任何准备"*）。
+这是一个**忠实实现的代理**：它拿同样的输入、用同样的 python-pptx 栈、做"最自然的基础做法"。
+协议要求的诚实之处在于：**代理臂的选择会影响结论**，因此 §7 专门列出"代理臂偏保守/偏不利"的项。
+
+## 3. 公平性约束（两个臂必须一致的东西）
+
+| 约束 | 两个臂如何满足 |
+|-|-|
+| 同一份输入 | 同一个 `case.json` 与同一份材料目录（含同一份运行时生成的 `fig2.png` / `dataset_card.pdf`） |
+| 同一套工具栈 | 同一个解释器、同一个 `python-pptx` 版本；A 臂不手工设主题色/字号以外的额外资源，B 臂用自身内置主题（**不是**用平台模板，因为示例案例没有模板） |
+| 同一画布 | 均为 16:9（13.333in × 7.5in = A 臂显式设置，B 臂由 `deck_builder` 设置） |
+| 同一预算 | 均为一次运行、无网络、无人工干预；A 臂额外允许**一次最小返工**（页数对齐冻结值），因为"返工"本身就是要测量的成本（§4 E2） |
+| 同一把尺子 | 度量代码在 `scripts/gain_ab.py` 内，**不 import 本包任何模块**，只读产物（`.pptx` + `result.json` + `previews/*.png` 文件头）；指标定义写死在 §4，两臂逐项同法计算 |
+| 缺项处理 | 缺项记 `0` 或 `null` 并标 `available=false`，**不跳过**——"没产出"本身就是被测差异 |
+
+## 4. 指标定义（可被第三方照着复算）
+
+### 4.1 质量指标（D 组：只看 deck，条件无关）
+
+| 指标 | 精确口径 |
+|-|-|
+| D1 页数 | `len(prs.slides)` |
+| D2 页数偏差 | `|页数 − case.slide_count|`（0 = 与冻结页数一致） |
+| D3 讲稿覆盖率 | 有非空 speaker notes 的页数 ÷ 总页数 |
+| D4 正文段落数（最大/均值） | 每页去掉标题占位符后，所有文本框中的非空段落数 |
+| D5 每段平均字符数 | 正文总字符 ÷ 正文总段落（信息密度代理，越小越"每行一句话"） |
+| D6 **可见文本逐字可溯源率** | 对每页取"标题 + 正文"，按 `。．.!?！？\n` 切句，**任一句（去空白后 ≥12 字符）逐字出现在任一源材料文本中**即记该页达标；达标页数 ÷ 总页数 |
+| D7 数字可对源率 | 页面可见文本里的数字 token（`\d+(\.\d+)?%?`）中，逐字出现在源材料文本里的比例；同时记录未命中样本 |
+| D8 嵌入图片数 | deck 中图片形状总数（含模板带来的） |
+
+> D6/D7 是**对 B 臂不利**的指标（见 §7.1），保留它们正是为了不把对照做成单向宣传。
+
+### 4.2 结构化指标（C 组：看产物目录，测"可核验性"）
+
+| 指标 | 精确口径 |
+|-|-|
+| C1 `result.json` 是否存在 / 顶层键数 | 文件存在性与 `len(json.keys())` |
+| C2 来源定位覆盖率 | 内容页（排除 `title/cover/agenda/toc/qa/backup/thanks`）中 `evidence[0].locator` 非空的页数占比 |
+| C3 证据行数 | 所有页 `evidence` 数组长度之和 |
+| C4 问答条目数 | 所有页 `qa` 数组长度之和 |
+| C5 门与审计 | `audit.plan_gates.valid`、`audit.evidence.valid`、`audit.deck.valid` 三个布尔 |
+| C6 不确定性/变更记录 | `len(uncertainty)`、`len(change_records)` |
+| C7 预览 PNG 有效数 | `previews/` 下以 PNG 魔数（`\x89PNG\r\n\x1a\n`）开头的文件数 |
+
+### 4.3 效率指标（E 组）
+
+| 指标 | 精确口径 |
+|-|-|
+| E1 单臂墙钟秒 | 该臂从开始到产物落盘的 wall time（同一台机器、同一时刻连续跑） |
+| E2 达到冻结页数的运行轮数 | 首轮产物页数 ≠ `case.slide_count` 时，按最小返工（重新分块以对齐页数）再跑一轮并累加；轮数 = 实际执行次数 |
+| E3 返工定位成本（定性） | 出问题后需要重跑的范围：B 臂可只改 `talk_plan.json` / `templates/talk_config.json` 后重跑；A 臂是整册重建 |
+
+## 5. 复跑步骤（第三方可逐步照做）
+
+```bash
+# $SKILL_DIR = 本包根目录（含 SKILL.md）；所有脚本自定位，cwd 任意
+# RUN = 任选一个包外临时目录（不要在包内跑，否则会生成 __pycache__ 影响提交预检）
+RUN=<包外临时目录>
+
+# 0) 示例案例需要运行时生成的二进制输入（正式案例由平台提供材料，不需要这一步）
+python "$SKILL_DIR/scripts/make_synthetic_inputs.py"
+
+# 1) 一次跑完两个臂 + 度量（A 臂模拟器 + B 臂 main.py），写出 gain_report.json
+python "$SKILL_DIR/scripts/gain_ab.py" \
+    --case "$SKILL_DIR/examples/case.json" \
+    --work "$RUN/gain" --skill-dir "$SKILL_DIR"
+
+# 2) 只想量 A 臂（或只想量已存在的 B 臂产物）时
+python "$SKILL_DIR/scripts/gain_ab.py" --case "$SKILL_DIR/examples/case.json" \
+    --work "$RUN/gain-A" --skip-arm-b
+
+# 3) 逐项核对 B 臂的自我声明（与 A 臂无关，可独立执行）
+python "$SKILL_DIR/scripts/validate_result.py"     "$RUN/gain/arm-B/result.json"
+python "$SKILL_DIR/scripts/check_contract.py"      "$RUN/gain/arm-B/result.json"
+python "$SKILL_DIR/scripts/evidence_audit.py"      "$RUN/gain/arm-B/result.json"
+python "$SKILL_DIR/scripts/verify_deck.py" "$RUN/gain/arm-B/editable_deck.pptx" \
+       --expect-pages 12 --plan "$RUN/gain/arm-B/talk_plan.json"
+```
+
+`gain_ab.py` 的退出码：**0 = 度量完成**（不代表任何一臂合格）；2 = 输入不合法。
+它**不 import 本包模块**这一条是协议硬要求（避免"用被测者自己的尺子量被测者"）。
+
+## 6. 实测记录（2026-11-22，本机真实跑，非编造）
+
+**环境**：Windows / Python 3.13.9 / python-pptx 1.0.2 / Pillow 12.3.0 / pypdf 6.14.2。
+**输入**：包内合成示例案例 `examples/case.json`（`case_id=example-synthalign-talk-01`，
+20 分钟、冻结 12 页、组会汇报、3 个声明材料 + 运行时生成的 `fig2.png`）。
+**原始记录**：`references/GAIN-PROTOCOL.md（附录）`（`generated_at = 2026-11-22T18:14:33+0800`）。
+
+| 指标 | A 臂（基础形态） | B 臂（本 Skill） | B − A |
+|-|-|-|-|
+| D1 页数 | 12（**首轮仅 3 页**，返工后 12） | 12（首轮即 12） | 0 |
+| D2 页数偏差 vs 冻结 12 | 0（返工后） | 0 | 0 |
+| D3 讲稿覆盖率 | **0.0** | **1.0** | **+1.0** |
+| D4 最大 / 平均正文段落数 | 2 / 2.0 | 12 / 9.833 | +10 / +7.833 |
+| D5 每段平均字符数 | 97.8 | 28.9 | −68.9 |
+| D6 可见文本逐字可溯源率 | **0.75** | **0.3333** | **−0.4167**（不利于 B） |
+| D7 数字可对源率（token 数） | **1.0**（77） | **0.8679**（159） | **−0.1321**（不利于 B） |
+| D8 嵌入图片数 | 0 | 1 | +1 |
+| C1 `result.json` / 顶层键数 | 无 / 0 | 有 / **20** | +20 |
+| C2 来源定位覆盖率 | 无该字段 / 0 | **1.0**（10/10 内容页） | +1.0 |
+| C3 证据行数 | 0 | 11 | +11 |
+| C4 问答条目数 | 0 | 4 | +4 |
+| C5 计划门 / 证据审计 / deck 审计 | 无 / 无 / 无 | true / true / true | — |
+| C6 不确定性条数 / 变更记录条数 | 0 / 0 | 3 / 16 | +3 / +16 |
+| C7 预览 PNG 有效数 | 0 | **12** | +12 |
+| E1 单臂墙钟秒 | **0.26** | **1.67**（复跑 1.78） | +1.41（B 更慢） |
+| E2 达到冻结页数的运行轮数 | **2**（首轮 3 页 → 返工 1 轮） | **1** | −1 |
+
+**度量器自证**（同一输入连跑两次，`gain1` / `gain2`）：两个臂的 D 组指标两次**完全相等**；
+差异只出现在 E1 墙钟时间（1.67 s vs 1.78 s，机器噪声）。
+
+**两臂产物落盘位置**（复跑时可核对）：`<work>/arm-A/{baseline_deck.pptx, baseline_result.json}`、
+`<work>/arm-B/{result.json, editable_deck.pptx, previews/, …}`。
+
+## 7. 结论与边界（哪些增益成立、哪些没测）
+
+### 7.1 如实写明：两项指标 A 臂更好，以及为什么
+
+1. **D6 可见文本逐字可溯源率（A 0.75 > B 0.3333）**：A 臂**整段照搬材料**，可见文本自然与源文本
+   高度重合；B 臂页面上放的是**压缩后的主张 + 证据定位 + 短行**，长主张在渲染时被截断
+   （页面上是 `两个基线（BM25-only 80.9%、…`），因此"可见文本逐字命中"这项对 B 不利。
+   B 臂的可溯源性是**结构化**的：C2 来源定位覆盖率 1.0、C3 证据行 11 条、且
+   `evidence_audit` 独立逐字校验 `quote`（`audit.evidence.valid=true, errors=0`）。
+   ⇒ 两个指标测的不是同一件事，必须并列呈报；**不把 D6 说成"B 更强"**。
+2. **D7 数字可对源率（A 1.0 > B 0.8679）**：B 臂未逐字命中的数字样本为
+   `['20.0','100.0','19','01','16','01',…]`，其中 `01…12` 是**页脚页码**，`20.0/100.0` 是
+   时长换算值——都不是科学数据，但确实"不在源文本中逐字出现"。A 臂照搬整段所以全部命中。
+   ⇒ 如实登记，并把"页脚页码是否应计入数字一致性"作为待改进项（§8）。
+
+### 7.2 成立的结构性差异（有机器可判定字段支撑）
+
+- **讲稿与问答**：0 → 1.0 的备注覆盖 + 4 条预判追问（C4）；
+- **可核验性**：`result.json` 20 个顶层键 + 每页定位 + 11 条证据行 + 三道审计内嵌
+  ——A 臂没有这些字段，第三方**无法复核它的任何一句话**；
+- **页数纪律**：A 臂首轮 3 页、需要 1 轮返工才对齐冻结 12 页；B 臂首轮即 12 页（P3 门）；
+- **导出可检查性**：B 臂 12 张有效 PNG 预览；A 臂 0；
+- **诚实降级**：B 臂在缺依赖/缺材料时仍产出并如实标注（见 `TEST.md` 的降级用例）——A 臂无此概念。
+
+### 7.3 明确"没有测"的东西（不得当成结论）
+
+- **不是平台白板**：本对照不含组织方 3 个固定案例，也不是基础 Agent 的真实运行；
+- **没有测人工排版耗时**：协议只测机器可判定的结构指标与墙钟时间，不测"人把稿子改到能讲"的工时；
+- **没有测跨模板族泛化**：示例案例不带模板，模板适配路径由 `TEST.md` 的 T5 单独覆盖；
+- **没有测像素级渲染保真**：预览是 PIL 示意（带水印），只证明"布局可检查"，不证明与 Office 一致；
+- **单案例、单机、单次**：样本量小，故本文件只把它当作**机制差异与可测性**的证据，
+  不作"质量提升 X%"这类量化断言（题面禁止用文字自述替代实际运行证据）。
+
+## 8. 由此协议暴露出的待改进项（如实登记）
+
+| # | 问题 | 影响 | 处置方向 |
+|-|-|-|-|
+| 1 | 页面可见文本被截断（`…`），削弱"可见文本逐字可命中" | D6 偏低 | 渲染时保留完整句子、把截断改为换行或缩小字号 |
+| 2 | 页脚页码被计入"页面数字"，拉低 D7 | D7 偏低 | 在数字一致性检查里把页脚/页码元素单独归类 |
+| 3 | A 臂只贴 case 显式声明的图片（示例案例声明里没有 `fig2.png`），而 B 臂会扫描材料目录 | D8 差异被放大 | 若要更严的对照，应让 A 臂也扫描材料目录；届时 D8 差异归零（本文件按实际跑的设置呈报） |
+| 4 | 墙钟时间 B > A（1.67 s vs 0.26 s） | E1 不利 | 这是"多做计划/审计/预览"的必然成本；可用 `--skip-previews` 换取部分时间 |
+
+## 9. 复跑核对清单
+
+- [ ] `scripts/gain_ab.py` 与 `references/GAIN-PROTOCOL.md（附录）` 的指标名逐项对得上；
+- [ ] 复跑后 A 臂首轮页数 = `pages_before_rework`（示例案例上为 3），`rerun_rounds_to_frozen` = 2；
+- [ ] B 臂 `rerun_rounds_to_frozen` = 1，且 `contract.page_count_delta_vs_frozen` = 0；
+- [ ] 两个臂的 D 组指标在重复运行时逐项相等（度量器本身是确定性的；E1 允许噪声）；
+- [ ] 未命中样本 `numbers_not_in_source_sample` 与 §7.1 的第 2 条一致（页脚页码 + 换算值）；
+- [ ] 任何"B 更强"的结论都能指到 C 组的某个字段，而不是指到文字说明。
+
+---
+
+## 附录：机器可读对照记录（原 `references/gain-run-record.json`）
+
+> v6 把该 JSON 并入本文以守住文件数硬门；JSON 内容逐字保留在下方的 fenced 块中，
+> 需要机器读取时把该块原样存成 `.json` 即可（结构与 `scripts/gain_ab.py --report` 的输出一致）。
+
+```json
+{
+  "harness": "gain_ab.py",
+  "case": {
+    "path": "case.json",
+    "case_id": "example-synthalign-talk-01",
+    "slide_count": 12,
+    "duration_min": 20,
+    "materials": [
+      {
+        "file": "paper_extract.md",
+        "role": "论文主体（摘要/引言/方法/结果/局限）",
+        "text_read": true
+      },
+      {
+        "file": "figures.md",
+        "role": "图表清单与引用定位",
+        "text_read": true
+      },
+      {
+        "file": "dataset_card.pdf",
+        "role": "数据卡片（演示 PDF 文本解析路径，pypdf）",
+        "text_read": true
+      }
+    ]
+  },
+  "arms": {
+    "A": {
+      "kind": "baseline_emulator",
+      "out_dir": "arm-A",
+      "wall_seconds": 0.26,
+      "wall_seconds_first_pass_only": null,
+      "rerun_rounds_to_frozen": 2,
+      "pages_before_rework": 3,
+      "pages_final": 12,
+      "deck": {
+        "available": true,
+        "slides": 12,
+        "notes_coverage": 0.0,
+        "max_body_paragraphs": 2,
+        "mean_body_paragraphs": 2.0,
+        "mean_body_chars": 195.6,
+        "mean_paragraph_chars": 97.8,
+        "verbatim_grounded_ratio": 0.75,
+        "numbers_in_source_ratio": 1.0,
+        "numbers_total": 77,
+        "numbers_not_in_source_sample": [],
+        "embedded_pictures": 0,
+        "slides_detail": [
+          {
+            "index": 1,
+            "title": "",
+            "paras": 2,
+            "chars": 72,
+            "notes": false,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 2,
+            "title": "",
+            "paras": 2,
+            "chars": 131,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 3,
+            "title": "",
+            "paras": 2,
+            "chars": 271,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 4,
+            "title": "",
+            "paras": 2,
+            "chars": 224,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 5,
+            "title": "",
+            "paras": 2,
+            "chars": 261,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 6,
+            "title": "",
+            "paras": 2,
+            "chars": 319,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 7,
+            "title": "",
+            "paras": 2,
+            "chars": 189,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 8,
+            "title": "",
+            "paras": 2,
+            "chars": 96,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 9,
+            "title": "",
+            "paras": 2,
+            "chars": 320,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 10,
+            "title": "",
+            "paras": 2,
+            "chars": 320,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 11,
+            "title": "",
+            "paras": 2,
+            "chars": 72,
+            "notes": false,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 12,
+            "title": "",
+            "paras": 2,
+            "chars": 72,
+            "notes": false,
+            "verbatim_grounded": false
+          }
+        ]
+      },
+      "contract": {
+        "available": false,
+        "result_json": false
+      }
+    },
+    "B": {
+      "kind": "skill",
+      "out_dir": "arm-B",
+      "run": {
+        "exit_code": 0,
+        "seconds": 1.67,
+        "stdout_tail": [
+          "status=completed pages=12 deck=True validate_valid=True contract_valid=True"
+        ]
+      },
+      "wall_seconds": 1.67,
+      "rerun_rounds_to_frozen": 1,
+      "deck": {
+        "available": true,
+        "slides": 12,
+        "notes_coverage": 1.0,
+        "max_body_paragraphs": 12,
+        "mean_body_paragraphs": 9.833,
+        "mean_body_chars": 284.4,
+        "mean_paragraph_chars": 28.9,
+        "verbatim_grounded_ratio": 0.3333,
+        "numbers_in_source_ratio": 0.8679,
+        "numbers_total": 159,
+        "numbers_not_in_source_sample": [
+          "20.0",
+          "100.0",
+          "19",
+          "01",
+          "16",
+          "01",
+          "17",
+          "01",
+          "01",
+          "36",
+          "01",
+          "32",
+          "01",
+          "33",
+          "01",
+          "34",
+          "01",
+          "35",
+          "01",
+          "41"
+        ],
+        "embedded_pictures": 1,
+        "slides_detail": [
+          {
+            "index": 1,
+            "title": "",
+            "paras": 4,
+            "chars": 172,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 2,
+            "title": "",
+            "paras": 11,
+            "chars": 291,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 3,
+            "title": "",
+            "paras": 11,
+            "chars": 298,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 4,
+            "title": "",
+            "paras": 11,
+            "chars": 274,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 5,
+            "title": "",
+            "paras": 11,
+            "chars": 264,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 6,
+            "title": "",
+            "paras": 12,
+            "chars": 346,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 7,
+            "title": "",
+            "paras": 12,
+            "chars": 378,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 8,
+            "title": "",
+            "paras": 11,
+            "chars": 379,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 9,
+            "title": "",
+            "paras": 10,
+            "chars": 325,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 10,
+            "title": "",
+            "paras": 11,
+            "chars": 339,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 11,
+            "title": "",
+            "paras": 11,
+            "chars": 290,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 12,
+            "title": "",
+            "paras": 3,
+            "chars": 57,
+            "notes": true,
+            "verbatim_grounded": false
+          }
+        ]
+      },
+      "contract": {
+        "available": true,
+        "result_json": true,
+        "status": "completed",
+        "top_level_keys": 20,
+        "pages": 12,
+        "locator_coverage": 1.0,
+        "content_pages": 10,
+        "evidence_rows": 11,
+        "qa_items": 4,
+        "uncertainty_entries": 3,
+        "change_records": 16,
+        "plan_gates_valid": true,
+        "evidence_valid": true,
+        "deck_valid": true,
+        "preview_pngs_valid": 12,
+        "slide_count_field": 12,
+        "page_count_delta_vs_frozen": 0
+      }
+    }
+  },
+  "notes": [
+    "A 臂 = 本脚本内置的确定性基线模拟器（代理臂），不是平台真实基础 Agent。",
+    "缺项记 0/null 并标 available=false，不跳过。",
+    "指标定义见 references/GAIN-PROTOCOL.md §4。"
+  ],
+  "deltas_B_minus_A": {
+    "slides": 0,
+    "notes_coverage": 1.0,
+    "max_body_paragraphs": 10,
+    "mean_body_chars": 88.8,
+    "verbatim_grounded_ratio": -0.4167,
+    "numbers_in_source_ratio": -0.1321,
+    "embedded_pictures": 1,
+    "result_json_top_level_keys": 20,
+    "evidence_rows": 11,
+    "qa_items": 4
+  },
+  "generated_at": "2026-11-22T18:14:33+0800"
+}
+```

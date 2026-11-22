@@ -1,0 +1,61 @@
+{
+  "case_id": "caseA-lake-eutrophication",
+  "title": "案例 A：湖泊中试的富营养化响应（叶绿素 a，mean ± SE，n=4）",
+  "challenge_id": "challenge-1bd90d8a",
+  "dataset_version": "2026-11-22-synthetic-caseA-v1",
+  "case_note": "合成案例：数值为演示用，非真实观测；用于考察 panel(bar+line) 与单位/误差线语义。",
+  "output_contract": {
+    "case_id": "string",
+    "status": "string",
+    "sources": "array",
+    "outputs": "array",
+    "editable_source": "array",
+    "rendered_preview": "object",
+    "field_mapping": "string",
+    "validation_report": "string",
+    "uncertainty": "array",
+    "change_records": "array",
+    "checkpoints": "object",
+    "gates": "object",
+    "figure_checks": "array",
+    "spec_lint": "object"
+  },
+  "manual_confirmations": [
+    {"ts": "2026-11-22T19:00:00+08:00", "who": "case-author", "what": "面板 A 取 time_day=21 的四行；p 值与检验名直接沿用合成材料，未重算"}
+  ],
+  "figures": [
+    {
+      "id": "fig-A1",
+      "type": "panel",
+      "title": "Figure A1：氮磷富集对叶绿素 a 的影响（合成中试数据）",
+      "subtitle": "A: 第 21 天叶绿素 a（mean ± SE，n=4，**p=0.002 vs Control，two-way ANOVA + Tukey HSD）；B: 时间进程",
+      "width": 2200,
+      "height": 900,
+      "style": "nature",
+      "panels": [
+        {
+          "id": "fig-A1a",
+          "type": "bar",
+          "data_file": "data.csv",
+          "filter": {"column": "time_day", "eq": "21"},
+          "order": ["Control", "N", "P", "N+P"],
+          "x": {"column": "treatment", "label": "Nutrient treatment", "unit": ""},
+          "y": {"column": "chl_a_ug_L", "label": "Chlorophyll a", "unit": "μg/L"},
+          "error": {"column": "se_chl_a", "semantics": "SE"},
+          "annotations": [
+            {"from": "Control", "to": "N+P", "text": "**", "p": 0.002, "source": "two-way ANOVA + Tukey HSD, 合成源材料 n=4/组"}
+          ]
+        },
+        {
+          "id": "fig-A1b",
+          "type": "line",
+          "data_file": "data.csv",
+          "x": {"column": "time_day", "label": "Incubation time", "unit": "d"},
+          "y": {"column": "chl_a_ug_L", "label": "Chlorophyll a", "unit": "μg/L"},
+          "error": {"column": "se_chl_a", "semantics": "SE"},
+          "hue": {"column": "treatment", "labels": {"Control": "Control", "N": "N only", "P": "P only", "N+P": "N+P"}}
+        }
+      ]
+    }
+  ]
+}

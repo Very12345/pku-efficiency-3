@@ -1,0 +1,39 @@
+{
+  "case_id": "mbr-wastewater-flow-01",
+  "title": "示例：市政污水 MBR 工段物质流向图（题集 C-1，合成案例·非正式案例）",
+  "figure_type": "flow",
+  "canvas": {"width_mm": 340, "height_mm": 200},
+  "text": "本工段物料自进水起，经提升、格栅、调节后进入缺氧池与 MBR 膜池；膜池设污泥回流与剩余污泥排出两条支路；膜池出水经紫外消毒后分两路：达标排放与中水回用。",
+  "entities": [
+    {"id": "M1", "name": "厂区进水", "kind": "material", "stage": "预处理", "source": "task.md §1.1", "label": "进水"},
+    {"id": "D1", "name": "进水提升泵", "kind": "device", "stage": "预处理", "source": "task.md §1.1", "label": "提升泵"},
+    {"id": "D2", "name": "细格栅除污机", "kind": "device", "stage": "预处理", "source": "task.md §1.2", "label": "细格栅"},
+    {"id": "W1", "name": "栅渣外运", "kind": "waste", "stage": "预处理", "source": "task.md §1.2", "label": "栅渣"},
+    {"id": "D3", "name": "调节池", "kind": "container", "stage": "预处理", "source": "task.md §1.3", "label": "调节池"},
+    {"id": "D4", "name": "缺氧池", "kind": "container", "stage": "生化处理", "source": "task.md §2.1", "label": "缺氧池"},
+    {"id": "D5", "name": "MBR 膜池", "kind": "device", "stage": "生化处理", "source": "task.md §2.2", "label": "MBR 膜池"},
+    {"id": "D6", "name": "鼓风曝气机组", "kind": "device", "stage": "生化处理", "source": "task.md §2.2", "label": "鼓风机"},
+    {"id": "D7", "name": "污泥回流泵", "kind": "device", "stage": "生化处理", "source": "task.md §2.3", "label": "回流泵"},
+    {"id": "W2", "name": "剩余污泥外运处置", "kind": "waste", "stage": "生化处理", "source": "task.md §2.3", "label": "剩余污泥"},
+    {"id": "D8", "name": "紫外消毒渠", "kind": "device", "stage": "出水", "source": "task.md §3.1", "label": "紫外消毒"},
+    {"id": "P1", "name": "达标排放水", "kind": "product", "stage": "出水", "source": "task.md §3.2", "label": "达标出水"},
+    {"id": "P2", "name": "中水回用水", "kind": "product", "stage": "出水", "source": "task.md §3.3", "label": "中水回用"},
+    {"id": "X1", "name": "在线水质监测记录", "kind": "data", "stage": "出水", "source": "task.md §3.2", "label": "水质数据"}
+  ],
+  "relations": [
+    {"id": "R1", "from": "M1", "to": "D1", "kind": "flow", "source": "task.md §1.1"},
+    {"id": "R2", "from": "D1", "to": "D2", "kind": "flow", "source": "task.md §1.2"},
+    {"id": "R3", "from": "D2", "to": "W1", "kind": "flow", "source": "task.md §1.2", "label": "栅渣排出"},
+    {"id": "R4", "from": "D2", "to": "D3", "kind": "flow", "source": "task.md §1.3"},
+    {"id": "R5", "from": "D3", "to": "D4", "kind": "flow", "source": "task.md §2.1"},
+    {"id": "R6", "from": "D4", "to": "D5", "kind": "flow", "source": "task.md §2.2"},
+    {"id": "R7", "from": "D6", "to": "D5", "kind": "connect", "source": "task.md §2.2", "label": "供气"},
+    {"id": "R8", "from": "D5", "to": "D4", "kind": "recycle", "source": "task.md §2.3", "label": "污泥回流"},
+    {"id": "R9", "from": "D7", "to": "D5", "kind": "connect", "source": "task.md §2.3", "label": "回流泵接入"},
+    {"id": "R10", "from": "D5", "to": "W2", "kind": "flow", "source": "task.md §2.3", "label": "剩余污泥"},
+    {"id": "R11", "from": "D5", "to": "D8", "kind": "flow", "source": "task.md §3.1"},
+    {"id": "R12", "from": "D8", "to": "P1", "kind": "flow", "source": "task.md §3.2"},
+    {"id": "R13", "from": "D8", "to": "P2", "kind": "flow", "source": "task.md §3.3"},
+    {"id": "R14", "from": "D8", "to": "X1", "kind": "causation", "source": "task.md §3.2", "label": "监测记录"}
+  ]
+}

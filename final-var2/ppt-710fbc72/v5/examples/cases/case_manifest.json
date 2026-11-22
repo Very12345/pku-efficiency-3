@@ -1,0 +1,80 @@
+{
+  "_meta": "Case-set manifest for the academic-slide-adapt Skill. Every entry declares, up front, what a correct run on that case must produce; scripts/run_case_set.py measures the real run against these declarations. Difficulty tiers: L0 baseline-interface (the shipped example), L1 structure-complete (every storyline field supplied), L2 degraded-input (only minimal fields; the storyline must be recovered from the material markdown), L3 adversarial-shape (a case designed to stress page-budget cropping and figure/table scarcity).",
+  "ranges_note": "Numeric fields are the acceptable range for a correct run, not a target to tune: slide_count must be exact (the plan is deterministic and the case freezes the budget); the *_frac fields are minimum acceptable coverage; null_top_keys must be 0 because the contract forbids null placeholders.",
+  "cases": [
+    {
+      "case_id": "example-catalyst-201",
+      "dir": "..",
+      "theme": "催化化学（Cu-ZnO/γ-Al2O3 双金属催化剂，CO2 加氢制甲醇）",
+      "difficulty": "L0-baseline-interface",
+      "purpose": "接口冒烟与回归基线：案例给全部结构化字段，用来确认改动没有破坏既有行为。",
+      "input_shape": {
+        "structured_fields": "complete",
+        "material_sections": "all six buckets present",
+        "figures": 2,
+        "tables": 1,
+        "slide_count": 10
+      },
+      "expected": {
+        "status_any_of": ["success", "partial"],
+        "slide_count": 10,
+        "notes_frac_min": 1.0,
+        "evidence_loc_frac_min": 0.9,
+        "figures_placed_frac_min": 1.0,
+        "contract_gates_pass": 8,
+        "null_top_keys": 0,
+        "adopt_plan_applied_frac_min": 1.0
+      }
+    },
+    {
+      "case_id": "case-b-gnn-potential-301",
+      "dir": "case-b-gnn-potential-301",
+      "theme": "计算材料（图神经网络势函数 + 固态电解质 Li6PS5Cl 的锂离子输运 MD）",
+      "difficulty": "L1-structure-complete",
+      "purpose": "换题材、换页预算（12 页/15 分钟）：验证页型序列与批量规则不依赖原案例的题材或页数。",
+      "input_shape": {
+        "structured_fields": "complete (39 locators, all file:line)",
+        "material_sections": "all six buckets present",
+        "figures": 2,
+        "tables": 1,
+        "slide_count": 12
+      },
+      "expected": {
+        "status_any_of": ["success", "partial"],
+        "slide_count_range": [12, 13],
+        "boundary_note": "本案例是**已知边界命中**，不是笔误。它的 7 条 results 里有 7 条各自引用了图/表，而 deckplan 的『每张图/表一页』分支要求 (target-fixed-3) >= result_pages_needed；本案例该式左边 = 4 < 7，于是走另一分支（每条带媒体的结果各占一页）⇒ 结果页 7 张。确定性裁剪策略是一次性的三步（合并讨论+局限 / 删议程 / 合并末两页结果），**最多回收 3 页**；本案例需要回收的比 3 页更多 ⇒ 最终 13 页 > 声明的 12 页。实测见 references/CASE-SET.md §4。上限 13 是实测值，不是设计目标。",
+        "notes_frac_min": 1.0,
+        "evidence_loc_frac_min": 0.9,
+        "figures_placed_frac_min": 1.0,
+        "contract_gates_pass": 8,
+        "null_top_keys": 0,
+        "adopt_plan_applied_frac_min": 1.0
+      }
+    },
+    {
+      "case_id": "case-c-uhi-remote-302",
+      "dir": "case-c-uhi-remote-302",
+      "theme": "城市环境遥感（Landsat 9 + Sentinel-2 地表温度反演与城市热岛归因）",
+      "difficulty": "L2-degraded-input",
+      "purpose": "故意让案例只给最小字段：研究问题/方法/结果/讨论/局限/结论六个故事线字段全部缺席，主线必须从 material.md 的 # 小节里抽出来。这是对 extract.py 分桶能力与 D2/D3 降级路径的直接考核。",
+      "input_shape": {
+        "structured_fields": "minimal (12 keys; storyline fields absent)",
+        "material_sections": "all six buckets present (must be recovered)",
+        "figures": 1,
+        "tables": 1,
+        "slide_count": 9
+      },
+      "expected": {
+        "status_any_of": ["success", "partial"],
+        "slide_count": 9,
+        "notes_frac_min": 1.0,
+        "evidence_loc_frac_min": 0.9,
+        "figures_placed_frac_min": 1.0,
+        "contract_gates_pass": 8,
+        "null_top_keys": 0,
+        "adopt_plan_applied_frac_min": 1.0,
+        "material_supplemented_required": true
+      }
+    }
+  ]
+}
