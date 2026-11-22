@@ -1,3 +1,8 @@
+---
+name: academic-ppt-builder-v2
+description: 把论文/研究材料组织成结构清楚、证据可追溯、可编辑、符合模板约束的学术汇报演示稿（PPTX）。加载后按"读实际文件→抽主线与页级证据→页面蓝图与角色分配→CP2 lint→模板槽位建稿+图表绑定→预览渲染+QA→CP4 导出校验（G1–G8）→带全部 output_contract 字段的 result.json"全流程执行；支持 --edit 局部编辑与版本回退；页面数字逐一核验材料、缺失显式标注、绝不编造。Use when a task asks to generate or edit an academic presentation / slide deck from a paper or research material（组会汇报、开题与中期、答辩、项目评审、基金申请；学术PPT、slides from paper、presentation from paper），especially when /input/case.json and task.md are present and /app/output must contain the editable deck plus previews and evidence mapping.
+---
+
 # 学术 PPT 生成与编辑 Skill v2（学术效率 · ppt-6ad93034） · 整合版（决策层 + 增益层）
 
 > 本包整合了基线 Skill 与 2 个强化层,各层对应不同的评分维度:可靠体验 10 + 实际效果 40 · 使用增益 25。

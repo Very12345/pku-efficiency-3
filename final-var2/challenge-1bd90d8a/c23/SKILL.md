@@ -1,3 +1,17 @@
+---
+name: scientific-figure-craft
+description: >
+  科研数据图表生成与编辑 Skill（v2，带检查点 CP1–CP6 与决策规则 D1–D18）。
+  当输入包含科研数据表格（CSV/TSV/JSON）、统计结果、实验记录、生物源材料，
+  或需要生成/编辑示意图、机制图、流程图、柱状图、折线图、散点图、箱线图、热图、
+  扇区图、通路图、多面板组合图（关键词：figure、chart、plot、diagram、数据图、
+  科研绘图、机制图、通路图、graphical abstract、SVG、可编辑图稿、制图、出图）时使用。
+  流程：读实际文件（CP1）→ 抽取字段/实体（CP2）→ spec lint（CP3）→ 生成可编辑
+  分层 SVG（每个图元带 data-* 溯源属性）+ PNG/PDF 预览 → 双校验（figcheck G1–G8 /
+  mapcheck 数据↔图元双向核对 + 确定性再跑）→ 按契约写 result.json（输出契约四形态
+  回显，禁止 null）。严格以真实文件为准，不臆造数据、不提交预制答案。
+---
+
 # 科研数据图表生成与编辑（scientific-figure-craft）v2 · 整合版（增益层 + 机制层）
 
 > 本包整合了基线 Skill 与 2 个强化层,各层对应不同的评分维度:使用增益 25 · 创新增益 15 + 生态贡献 10。

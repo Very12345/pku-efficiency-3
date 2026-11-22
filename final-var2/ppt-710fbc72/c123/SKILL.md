@@ -1,3 +1,25 @@
+---
+name: academic-slide-adapt
+description: >-
+  Academic slide deck creation from research material with real template
+  adaptation (学术 PPT 模板与格式适配): read the actual paper/material and
+  template files, extract the research storyline (question → method →
+  results → limitations) with per-item source locators, plan a page structure
+  that respects a fixed audience/duration/slide count, then follow a
+  two-phase workflow — phase 1 builds a machine-readable adaptation plan
+  (adopt_plan: template master/layout/placeholder audit + page→layout
+  assignment + batch rules + figure placement), phase 2 applies the plan
+  through the given PowerPoint template's real placeholder inheritance
+  (falling back with full disclosure when placeholders are missing), embed
+  figures/tables contain-fit with figure numbers cross-checked against the
+  text, add per-slide speaker notes plus an appendix evidence map, and
+  deliver an editable .pptx, PNG previews and a verifiable result.json
+  (CP3 gate: check_contract G1–G8). Use when the task says "make an academic
+  presentation / 学术PPT / 学术汇报 / 论文转PPT / adapt this paper into
+  slides / 套模板 / 模板适配 / 按模板生成PPT / deck from paper", or when a
+  starting deck must be re-edited on its own template.
+---
+
 # Academic Slide Adapter（学术 PPT 模板与格式适配）Skill — slides 组 · 整合版（决策层 + 增益层 + 机制层）
 
 > 本包整合了基线 Skill 与 3 个强化层,各层对应不同的评分维度:可靠体验 10 + 实际效果 40 · 使用增益 25 · 创新增益 15 + 生态贡献 10。

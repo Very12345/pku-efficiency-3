@@ -1,3 +1,8 @@
+---
+name: paper-to-academic-ppt
+description: 把论文/研究材料转换成主线清晰、证据可追溯、可编辑的学术汇报 PPT。加载后按"读实际文件→抽主线与证据→蓝图规划 deck-spec→CP1 lint→模板适配生成可编辑 .pptx→渲染预览→导出检查→写带全部 output_contract 字段的 result.json"全流程执行，页级主张、图表编号引用、讲解备注分离生成，缺失证据显式标注、不编造数据，五维评分在 RUBRIC_MAP.md 中逐条自评。Use when a task asks to turn a paper or research material into an academic slide deck (论文转PPT、学术汇报PPT、slides from paper、presentation from paper), especially when /input/case.json and task.md are present and /app/output must contain the editable deck plus previews.
+---
+
 # 论文转学术 PPT（paper-to-academic-ppt） · 整合版（增益层 + 机制层）
 
 > 本包整合了基线 Skill 与 2 个强化层,各层对应不同的评分维度:使用增益 25 · 创新增益 15 + 生态贡献 10。

@@ -1,3 +1,16 @@
+---
+name: biological-mechanism-pathway-diagram
+description: >-
+  把科研机制/通路材料（文本、Markdown、表格或 PDF 中的通路描述）转成可逐条核验的
+  生物机制图与通路图：从真实材料抽取实体与相互作用（激活/抑制/结合/修饰/转运），
+  按区室约束布局（胞外—膜—胞质—核），生成带语义箭头的可编辑分层 SVG 源文件及
+  PNG/PDF 预览，自动执行拓扑审计与图例/数据编码审计，并输出符合契约的 result.json。
+  Use when the task asks to draw, generate, edit, re-export or validate a biological
+  mechanism map, pathway diagram, signaling cascade, regulatory network or flow
+  diagram (figures group of the biology mechanism & pathway challenge), including
+  tasks that require editable sources with per-element provenance.
+---
+
 # biological-mechanism-pathway-diagram（合规文本包 · 图件运行时生成） · 整合版（决策层 + 增益层）
 
 > 本包整合了基线 Skill 与 2 个强化层,各层对应不同的评分维度:可靠体验 10 + 实际效果 40 · 使用增益 25。

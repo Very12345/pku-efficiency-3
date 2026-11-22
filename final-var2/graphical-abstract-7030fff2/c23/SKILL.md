@@ -1,3 +1,19 @@
+---
+name: graphical-abstract
+description: >-
+  Generate or edit a single-page Graphical Abstract (图形摘要) from research
+  material: 方案先行（scaffold 出设计方案 → plan lint）→ extract scientific
+  entities, relations and data with source provenance → lay out the question →
+  method → results → conclusion story (四要素) → encode data into
+  bars/colors/lengths with consistent legends → delivery: editable layered SVG
+  (layer-naming 契约) plus rendered PNG/PDF previews and a verifiable
+  result.json（四形态契约回显 + G1–G8 硬性门）。每个元素 data-src 可溯源、同输入
+  同布局、失败分支 D1–D10 显式决策。Use when the task says "graphical abstract",
+  "graphic abstract", "示意图 / 机制图 / 流程图 / 图稿", "make a figure for the
+  paper / grant / report", "edit an existing figure", or asks to draw a
+  mechanism, scheme or flow figure from experiment records.
+---
+
 # Graphical Abstract（图形摘要）Skill v2 — figures group · 整合版（增益层 + 机制层）
 
 > 本包整合了基线 Skill 与 2 个强化层,各层对应不同的评分维度:使用增益 25 · 创新增益 15 + 生态贡献 10。
@@ -46,6 +62,8 @@
 - `examples/output/render_log.json`
 - `examples/output/result.json`
 - `examples/output/spec.json`
+- `scripts/__pycache__/common.cpython-313.pyc`
+- `scripts/__pycache__/extract.cpython-313.pyc`
 
 ---
 

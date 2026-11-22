@@ -1,3 +1,19 @@
+---
+name: scientific-schematic-editor
+description: >-
+  Generate and edit editable scientific schematics, mechanism/relationship
+  diagrams, flow diagrams and data charts from source materials. Extracts an
+  entity-relation manifest (traceable to sources), draws a layered editable
+  SVG source plus PNG/PDF (and TIFF/EPS) exports, runs CP1 plan-lint and
+  legend/data-mapping and export-compliance checks, and writes a structured
+  result.json with all output_contract fields. Use when a task asks to draw,
+  regenerate or edit a scientific figure from papers, tables or notes:
+  科研示意图/机制图/信号通路图/流程图/实验装置图/图表的生成与编辑.
+  Execute in order: read actual files → extract ER (draft via scripts) →
+  write/lint manifest (CP1) → main.py draw → checks (CP2) → edit & re-check
+  (CP4) → contract gates (CP3) → self-check & determinism (CP5).
+---
+
 # scientific-schematic-editor — 科研示意图生成与编辑 · 整合版（决策层 + 增益层 + 机制层）
 
 > 本包整合了基线 Skill 与 3 个强化层,各层对应不同的评分维度:可靠体验 10 + 实际效果 40 · 使用增益 25 · 创新增益 15 + 生态贡献 10。
