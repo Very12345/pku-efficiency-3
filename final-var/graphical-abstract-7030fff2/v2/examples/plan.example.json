@@ -1,0 +1,169 @@
+{
+  "schema": "plan-schema/v2",
+  "case_id": "example-micelle-001",
+  "title": "pH 响应型聚合物胶束用于肿瘤药物递送",
+  "four_elements": {
+    "question": "生理 pH（7.4）下胶束稳定、避免泄漏；肿瘤微环境低 pH 触发快速释放",
+    "method": "mPEG-PLA 嵌段共聚物自组装包载 DOX，DLS 与分光光度表征",
+    "results": "粒径 95 nm / PDI 0.12；载药量 14.2 %；pH 5.5 释放 85% vs pH 7.4 释放 18%",
+    "conclusion": "pH 响应型胶束按微环境 pH 定向释药，未包载前保持稳定（示例结论，以材料为准）"
+  },
+  "entities": [
+    {
+      "name": "DOX（阿霉素）",
+      "type": "molecule",
+      "panel": "method",
+      "src": "material.md:10",
+      "note": "化疗药物"
+    },
+    {
+      "name": "mPEG-PLA 胶束",
+      "type": "material",
+      "panel": "method",
+      "src": "material.md:9",
+      "note": "纳米递送载体"
+    },
+    {
+      "name": "肿瘤微环境（低 pH）",
+      "type": "tissue",
+      "panel": "method",
+      "src": "material.md:5"
+    },
+    {
+      "name": "肿瘤细胞",
+      "type": "cell",
+      "panel": "results",
+      "src": "material.md:15"
+    },
+    {
+      "name": "血液（pH 7.4）",
+      "type": "sample",
+      "panel": "question",
+      "src": "material.md:4"
+    },
+    {
+      "name": "肿瘤组织",
+      "type": "tissue",
+      "panel": "results",
+      "src": "material.md:14"
+    }
+  ],
+  "relations": [
+    {
+      "from": "mPEG-PLA 胶束",
+      "to": "DOX（阿霉素）",
+      "label": "自组装包载",
+      "kind": "positive",
+      "src": "material.md:9"
+    },
+    {
+      "from": "DOX（阿霉素）",
+      "to": "肿瘤组织",
+      "label": "递送",
+      "kind": "positive",
+      "src": "material.md:14"
+    },
+    {
+      "from": "mPEG-PLA 胶束",
+      "to": "肿瘤微环境（低 pH）",
+      "label": "pH 响应释放",
+      "kind": "positive",
+      "src": "material.md:12"
+    },
+    {
+      "from": "DOX（阿霉素）",
+      "to": "肿瘤细胞",
+      "label": "内化杀伤",
+      "kind": "positive",
+      "src": "material.md:15"
+    },
+    {
+      "from": "DOX（阿霉素）",
+      "to": "肿瘤细胞",
+      "label": "抑制增殖",
+      "kind": "negative",
+      "src": "material.md:15"
+    }
+  ],
+  "data": [
+    {
+      "label": "粒径",
+      "value": 95,
+      "unit": "nm",
+      "kind": "bar_length",
+      "src": "material.md:19"
+    },
+    {
+      "label": "PDI",
+      "value": 0.12,
+      "unit": null,
+      "kind": "bar_length",
+      "src": "material.md:20"
+    },
+    {
+      "label": "载药量",
+      "value": 14.2,
+      "unit": "%",
+      "kind": "bar_length",
+      "src": "material.md:21"
+    },
+    {
+      "label": "包封率",
+      "value": 72,
+      "unit": "%",
+      "kind": "bar_length",
+      "src": "material.md:22"
+    },
+    {
+      "label": "释放率 pH 5.5 (48 h)",
+      "value": 85,
+      "unit": "%",
+      "kind": "bar_length",
+      "src": "material.md:23"
+    },
+    {
+      "label": "释放率 pH 7.4 (48 h)",
+      "value": 18,
+      "unit": "%",
+      "kind": "bar_length",
+      "src": "material.md:24"
+    },
+    {
+      "label": "细胞存活率 (50 µg/mL)",
+      "value": 18,
+      "unit": "%",
+      "kind": "color_scale",
+      "src": "material.md:25"
+    }
+  ],
+  "figure_constraints": {
+    "width": 1200,
+    "height": 800,
+    "dpi": 300,
+    "colorblind": true,
+    "flow_arrows": true,
+    "raster_scale": 2,
+    "pdf": true,
+    "language": "zh"
+  },
+  "panels_hint": {
+    "question": [
+      "生理 pH（7.4）下胶束应保持稳定、避免提前泄漏。",
+      "肿瘤微环境 pH 约 5.5-6.5，希望触发快速释放。"
+    ],
+    "method": [
+      "合成 mPEG-PLA 嵌段共聚物，自组装包载 DOX（阿霉素）。",
+      "DLS 测定粒径与 PDI；紫外分光光度法测定载药量与包封率。"
+    ],
+    "results": [
+      "粒径 95 nm，PDI 0.12，分布均一。",
+      "载药量 14.2 %，包封率 72 %。"
+    ],
+    "conclusion": [
+      "pH 响应型胶束在肿瘤微环境定向释药。",
+      "交付可编辑 SVG 源文件与渲染预览（PNG/PDF）。"
+    ]
+  },
+  "plan_source": "agent-plan",
+  "skeleton": false
+}

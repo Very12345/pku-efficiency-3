@@ -1,0 +1,245 @@
+---
+name: biological-mechanism-pathway-diagram
+description: >-
+  把机制/通路材料转成可逐条质疑的生物机制图与通路图：先落一份声明式机制规格，
+  再按区室约束确定性布局，输出可编辑分层 SVG 源文件与 PNG/PDF 预览，并自动跑
+  拓扑审计与图例/数据编码审计，最后写出契约化 result.json。
+  本版的重点是**决策显性化**：22 条决策规则 D1–D23（触发信号 / 动作 / 失败时降级）
+  与五类失败分支表一一对应，遇到边界情况按表处置而不是临场发挥。
+  Use when the task asks to draw, generate, edit, re-export or validate a biological
+  mechanism map, pathway diagram, signaling cascade, regulatory network or flow
+  diagram (figures group of the biology mechanism & pathway challenge), including
+  tasks that require editable sources with per-element provenance.
+---
+
+# biological-mechanism-pathway-diagram（决策显性化版 · 文本包 · 图件运行时生成）
+
+机制图是**一份可以被逐条质疑的机制陈述**，不是装饰性插图。本 Skill 把"画对"拆成两件事：
+**每一步都有明文决策规则**（§1 的 D1–D23），以及**每一种失败都有明文处置与记录位点**
+（§2 的五类失败分支表）。脚本只负责执行与审计；**遇到边界情况时，Agent 查规则表，不临场发挥**。
+
+判断一次运行是否合格，只看三条：每个实体和每条边能否回溯到材料原文或权威命名；
+图例、颜色映射与图面是否自洽；别人能否打开可编辑源文件改掉一个标签并重新导出。
+
+## 0. 本文档怎么读（三步）
+
+1. **先读 §0–§2**：资源形态（什么能放进包）、规则表（怎么办）、失败分支表（出错了怎么办）。
+2. **再读 §3**：CP1–CP5 流水线——每条 CP 后面括号里标注了相关的 D 规则编号。
+3. **交付前读 §7 自查清单**：逐条打勾，任何一条打不上就不要报 `success`。
+
+资源形态受运行时契约约束：`at most 50 UTF-8 text files, 500KB each and 2MB total,
+no symlinks`。因此本包**只有文本**（`.md .py .json .txt .csv .yaml .yml` 七种扩展名）；
+`diagram.svg` / `diagram.png` / `diagram.pdf` 一律由 `scripts/` 在 `--out` 目录**运行时生成**，
+包里看不到图是设计而不是缺失。运行产物可以任意格式，技能资源必须全是文本。
+
+## 1. 决策规则 D1–D23（触发信号 → 动作 → 失败时降级）
+
+用法：**先找到触发信号所在的行，按"动作"执行；若动作也无法完成，走"失败时降级"这一列，
+并把降级理由写进该行指定的记录位点。** 不要跳过记录位点——记录位点就是可核验性的落点。
+
+### 1.1 材料与实体判定（D1–D7）
+
+| # | 触发信号 | 动作 | 失败时降级（记录位点） |
+|---|---|---|---|
+| D1 | 材料写了实体但**没写上下游方向** | 只画结合类无向语义边，`uncertain=true`，布局不给箭头方向暗示 | 连结合关系也无法判定 → **不画该边**，在 `uncertainty` 写明"材料未给出关系依据"（宁可少画，不可编） |
+| D2 | 同名**基因与蛋白**同时出现 | 拆成两个实体：gene 用斜体大写名、protein 用正体名，`note` 写判定依据 | 无法区分 → 合并为一个实体并 `uncertain=true`，在 `uncertainty` 说明（P04） |
+| D3 | **同一种分子出现在多个区室**（如胞质 ERK / 核内 ERK） | 按区室拆实体，各自 `note` 注明去向；跑 P04b 确认区室归属 | 区室无法判定 → 归 `other` 并置 `uncertain=true`（不猜膜内/膜外） |
+| D4 | 材料数值与图面意图**矛盾** | 以材料原文为准；矛盾点同时写 `uncertainty` 与 `change_records` | 数值不可解释 → 该实体**禁止**用颜色编码，退回类型默认色并在图例注明"该值不参与映射"（E01/T03） |
+| D5 | 材料是 **PDF/扫描件** | 先抽文本另存为 `.md` 材料，再走 CP2；或直接 CP2b 手工建规格，`extraction.method=manual` | 抽取与手工都不可行 → `status=failed`，`reason` 写明并给补救路径（换材料 / `--model-file`） |
+| D6 | 材料**只有实体、没有关系** | 正常画实体与区室，`edges=[]`，图例只列实体；`status=partial` 并说明"边清单为空" | 实体也为空 → `failed`，**不画空图凑数** |
+| D7 | `case.json` 的 materials 路径失效或目录为空 | 依次尝试：case 相对路径 → `--materials-dir <目录>` → case 同目录下的材料文件 | 三处都没有 → CP1.3 fail → `failed`（实测 exit 3，只写 `result.json`） |
+
+### 1.2 语义与拓扑判定（D8–D11）
+
+| # | 触发信号 | 动作 | 失败时降级（记录位点） |
+|---|---|---|---|
+| D8 | 动词**不在五类语义枚举**内（"调控""影响""参与"） | 按材料字面就近判为 activation / inhibition，并在 `note` 写判据 | 判据不足 → 归 `binding` + `uncertain=true`（P 系列不阻断，但必须留痕） |
+| D9 | 出现**逆流边**（下游 → 上游） | 反馈/回流：`feedback=true`，右侧绕行；非反馈：给出科学理由（转运/转位/修饰回落） | 无理由 → 改方向或删边；保留则必须在 `uncertainty` 说明（P03/P07） |
+| D10 | **重复边**（同 from/to/type 出现多次） | 合并为一条，`source[]` 保留全部来源行 | 语义确实不同 → 保留两条，各写 `subtype` 区分（P05） |
+| D11 | **自环**（A → A，如自磷酸化） | 允许，但必须写 `subtype` 并在 `note` 说明机制 | 无机制依据 → 删除该边（P06） |
+
+### 1.3 图例与数据编码（D12–D15）
+
+| # | 触发信号 | 动作 | 失败时降级（记录位点） |
+|---|---|---|---|
+| D12 | 图面用了某类型，**图例没列** | 阻断：补图例项，重跑（L01/L02 是 fail） | 类型枚举拼错 → 修正 `type` 后重跑；不得"用了却不列" |
+| D13 | 画布颜色**不在图例 ∪ 映射**内 | 阻断：改回图例色，或把该编码方式补进图例（L05） | 无法归属 → 该元素改用类型默认色并记 `uncertainty` |
+| D14 | 数值**找不到来源行** | 阻断：补 `source`；或降为 `assumption` 并进 `uncertainty` | 降级后该值**不得**用于颜色/线宽编码（E01/T03） |
+| D15 | 数值范围退化（全等值 / 只有一个值） | 关闭插值，用类型默认色，图例注明"本案例无梯度" | 材料声明了 0–1 归一化但样本退化 → 按声明域画色带，实体用默认色（`legend_audit` 记录） |
+
+### 1.4 资产与依赖缺失（D16–D18）
+
+| # | 触发信号 | 动作 | 失败时降级（记录位点） |
+|---|---|---|---|
+| D16 | `import matplotlib` 失败 | 只交付可编辑 SVG，`status=partial`、exit 2、G5=false，原因写入 `export_checks` + `uncertainty` | **绝不**伪造 PNG/PDF；`deliverables.previews/exports` 保持空数组 |
+| D17 | 系统缺中文字体 | SVG 用 CSS 字体栈（查看端决定字体，不受影响）；PNG 渲染告警并记录 `font` | 仍渲染出乱码 → 改为 ASCII 标签 + 图注中文，并把替换记录进 `change_records` |
+| D18 | 包内资产缺失（`assets/palettes.json` / `assets/mechanism-spec.schema.json` / `templates/relation-checklist-template.md`） | 调色板 → 回退 `scripts/model.py` 内置默认并记 `uncertainty`；schema → S01 warn 不阻断；核对清单 → 用本文档 §7 清单代替 | **不得**因为少一个资产就静默改变图例/配色语义；三处缺失都要在当前运行的 `uncertainty` 留痕 |
+
+### 1.5 契约四形态与状态一致性（D19–D23）
+
+| # | 触发信号 | 动作 | 失败时降级（记录位点） |
+|---|---|---|---|
+| D19 | `case.json` 的 `output_contract` 声明了字段 | 先判**形态**再填空：①标量→`""` ②列表→`[]` ③布尔→`false` ④数值/字典→`0`/`{}`；声明值是 `null` 时按 ① 处理 | 形态无法判定（值为对象数组）→ 按 ② 给 `[]` 并在 `uncertainty` 写明判据；**任何情况下顶层不得出现 `null`** |
+| D20 | 契约回显失败（`check_contract.py` 非 0） | 按报出的缺项补齐：缺字段按 D19 四形态填空，多出 `null` 的字段改成对应空值 | 同一缺项连续两次修不好 → 停止重跑，在 `uncertainty` 写明缺哪个字段与原因，`status` 不得为 `success` |
+| D21 | 走到 **exit 3 / status=failed** 之后仍要交付 | 注意实测：failed 路径只写**最小信封**（14 个顶层键），缺 `title / skill / data_mapping / extraction / export_checks / provenance` 六项 | 补写这六项（值按 D19 空值形态）后再自查；**不得**把 failed 谎报为 success，也不得用 result.json 冒充完整交付 |
+| D22 | `status` / `gates` / **退出码**三者互相矛盾 | 以**退出码为真**重算：0 ⇔ success（且 gates 8/8、提取已核验、有预览）；2 ⇔ partial；3 ⇔ failed | 修不了矛盾 → 取更保守的一档（success→partial→failed），并在 `uncertainty` 写明"三元组不一致及取值理由" |
+| D23 | 命令报"找不到文件"或 cwd 不是技能根 | 用自定位写法：`SKILL_DIR` 指向含 `SKILL.md` 的那一层，命令一律 `python3 "$SKILL_DIR/scripts/main.py" ...`；先跑 `--help` 自检 | 仍失败 → 用脚本内 `__file__` 自定位特性，改在技能根外任意 cwd 重试；把失败命令原文记入 `change_records` |
+
+> 规则表的边界（诚实声明）：`--materials-dir` 在基线版会以
+> `TypeError: path should be string... not list` 崩溃（实测 exit 1）；本包已修（见 `worklog.md` §4），
+> 修复只做入参归一化，**不改 CLI 参数名与退出码语义**。
+
+## 2. 失败分支总表（五类 · 与 `references/failure-modes.md` 的 F 编号一一对应）
+
+| 类别 | 分支 | 触发信号 | 处置与降级 | 记录位点 | F 编号 | 关联规则 |
+|---|---|---|---|---|---|---|
+| **材料异常** | 材料缺失/目录为空 | CP1.3 fail | `failed`（exit 3），给补救路径 | `status/reason/uncertainty` | F01 | D7 |
+| | PDF/扫描件不可结构化 | extract method=manual-required | 抽文本或手工建规格（CP2b） | `extraction.method` | F02 | D5 |
+| | 方向缺失 | 边无法定向 | 无向语义 + `uncertain=true` | `uncertainty` | F03 | D1 |
+| | 同名歧义 | P04 | 拆两个实体或合并 + `uncertain` | `note/uncertainty` | F04 | D2 |
+| | 数值矛盾 | 人工核验 | 以原文为准，双处标注 | `uncertainty + change_records` | F05 | D4 |
+| | 只有实体无关系 / 全空 | 边清单或实体清单为空 | `partial`（有实体）或 `failed`（全空） | `status/scientific_content.counts` | F06 | D6 |
+| **资产缺失** | `palettes.json` 缺失 | 读资产失败 | 回退内置默认调色板 | `uncertainty` | F07 | D18 |
+| | `mechanism-spec.schema.json` 缺失 | S01 warn | 用内置默认 schema，不阻断 | `self_check` | F08 | D18 |
+| | 核对清单模板缺失 | 模板路径不存在 | 用 SKILL.md §7 清单代替 | `change_records` | F09 | D18 |
+| **依赖缺失** | matplotlib 不可用 | import 异常 | 仅 SVG + `partial` + exit 2 | `export_checks/uncertainty` | F10 | D16 |
+| | Pillow 缺失 | 尺寸校验降级 | PNG 交给 matplotlib 写，尺寸校验降为 warn | `self_check.warnings` | F11 | D16 |
+| | 中文字体缺失 | 渲染告警 | SVG 不受影响；PNG 记录 font 与告警 | `export_checks` | F12 | D17 |
+| **契约四形态** | ① 标量字段 | 声明值为 str | 无值填 `""` | `result.json` 顶层 | F13 | D19/D20 |
+| | ② 列表字段 | 声明值为 list | 无值填 `[]` | 同上 | F14 | D19/D20 |
+| | ③ 布尔字段 | 声明值为 bool | 无值填 `false` | 同上 | F15 | D19/D20 |
+| | ④ 数值/字典字段 | 声明值为 number/dict | 无值填 `0` / `{}` | 同上 | F16 | D19/D20 |
+| **状态不一致** | schema 门失败 | CP2 S01 fail | `failed`（exit 3），只写最小信封 | `status/reason` | F17 | D21 |
+| | 契约回显失败 | `check_contract.py` 非 0 | 按缺项补齐后重跑 | `result.json` | F18 | D20 |
+| | failed 路径信封不全 | 实测 14 键、缺 6 项 | 补写 6 项空值（见 D21） | `result.json` | F19 | D21 |
+| | status/退出码矛盾 | 三者不一致 | 以退出码为真，取更保守档 | `uncertainty` | F20 | D22 |
+| **可读性/导出** | 图面元素过多 | 布局溢出/字号过小 | 收缩节点或拆子图，记 `layout.warnings` | `layout.warnings` | F21 | — |
+| | 目标导出格式不支持 | F01_xxx fail | 至少交付 SVG + PNG，其余如实说明 | `export_checks` | F22 | — |
+
+**这张表是"可核验性"的骨架**：任何一次运行结束时，如果表里任一分支被触发，
+它的"记录位点"里必须能找到对应内容；找不到就是漏记，属于交付缺陷。
+
+## 3. 执行流水线 CP1–CP5（括号内为相关决策规则）
+
+> 所有脚本通过 `os.path.dirname(__file__)` 自定位，**与 cwd 无关**。命令统一用 `$SKILL_DIR`
+> （含 `SKILL.md` 的那一层）：平台容器 `export SKILL_DIR=/skills/weekly-skill`；本机指向包根。
+
+### CP1 读真实文件（D1–D7、D23）
+用 `read` 读 `/input/case.json`、`/input/task.md`，再逐个读材料文件。产出三样东西：
+**任务要求**、**事实（实体/区室/相互作用/方向/数值）**、**约束（色调/符号/图号/导出格式）**。
+每个事实记出处（文件 + 行号）。材料缺失时 CP1.3 直接 fail——先按 D7 的三级查找补齐。
+
+### CP2 生成或提供机制规格（D5、D8、D17–D18）
+```bash
+python3 "$SKILL_DIR/scripts/main.py" --case /input/case.json --out /app/output --verbose
+```
+结构化材料（表格 / `A | 动词 | B` / `- A 动词 B（证据）`）由 `scripts/extract.py` 出草稿 `model.json`，
+草稿先过 `assets/mechanism-spec.schema.json`（**对未归一化规格校验**，未知类型不会被静默改写）。
+散文/PDF 材料走 CP2b：Agent 按 `references/mechanism-spec.md` §1 手写 `/app/work/model.json`，再
+```bash
+python3 "$SKILL_DIR/scripts/main.py" --model-file /app/work/model.json \
+    --case /input/case.json --out /app/output
+```
+
+### CP2b 手工建规格（D5）
+手写规格时逐条对照材料：实体类型、区室、边类型、方向、证据强度、来源行号。
+写完先自查 D8/D9/D10/D11 四条语义规则，再交给 CP3。
+
+### CP3 人工核验（本文档 §7 · 强制）
+逐条核对草稿与材料原文；核对完成后把 `extraction.verified_by_agent` 置 `true`，
+在 `change_records` 记"改了什么/为什么改"。用 `templates/relation-checklist-template.md`
+（实体/边/图例/拓扑/导出五张表）作为核验载体——**这张表就是核验动作的执行证据**。
+未核验的草稿**永远不能**报 `success`（见 D22）。
+
+### CP4 布局、渲染与双审计（D1、D3、D9、D12–D15）
+- `scripts/layout.py` 按区室带确定性布局（胞外→膜→胞质→核；跨膜受体在膜带内；反馈环右侧绕行）；
+- `scripts/pathway_svg.py` 写可编辑分层 SVG（7 个 `layer-*` 组 + `data-id/data-type/data-source`）；
+- `scripts/mpl_backend.py` 渲染 PNG/PDF（缺失时按 D16 降级）；
+- `scripts/topology.py` 拓扑审计 P01–P08；`scripts/legend_audit.py` 图例/编码审计 L01–L08、E01–E02；
+- `scripts/validate_figure.py` 聚合 M/T/P/L/E/S/F/D 检查 + 契约后置检查 + 确定性探针。
+
+### CP5 写 result.json 并自查（D19–D22）
+`status` 三值按 §2 表；交付前逐条过 §7 清单；然后跑两个独立复查命令：
+```bash
+python3 "$SKILL_DIR/scripts/check_contract.py" --result <out>/result.json --case <case.json>
+python3 "$SKILL_DIR/scripts/validate_figure.py" --out <out>
+```
+两条都 exit 0 才允许写 `success`。
+
+## 4. 输入输出速览
+
+**输入**：`case.json`（`case_id/title/task/materials/render/output_contract`）、`task.md`、材料文件。
+**输出**（`--out` 目录，全部运行时生成）：`result.json`（唯一评分产物）、`diagram.svg`（可编辑源，
+7 层 + `data-*` 溯源）、`diagram.png`、`diagram.pdf`、`model.json`（机制规格）、
+`topology.json`、`legend_audit.json`。字段契约与硬性门 G1–G8 见 `references/OUTPUT_CONTRACT.md`。
+
+## 5. 实体与箭头语义速查
+
+| 实体类型 | 图形 | 书写 | 箭头类型 | 端点 | 颜色 |
+|---|---|---|---|---|---|
+| gene | 矩形（直角） | *斜体*大写 | activation | 实心三角 | 绿 |
+| protein | 圆角矩形 | 正体 | inhibition | 端点横杠 | 红 |
+| complex | 圆角矩形 + 内描边 | 成分间 "–" | binding | 无端点 | 蓝 |
+| rna | 圆角矩形（虚线边） | 正体 | modification | 圆点（可带 P） | 橙 |
+| small_molecule | 圆形 | 正体 | transport | 菱形 | 紫 |
+
+- 线宽编码证据强度：strong 2.8 / moderate 2.2 / weak 1.6；**虚线只表示证据弱或不确定**，与类型无关。
+- 颜色与线宽集中在 `assets/palettes.json`（缺省回退 `scripts/model.py` 内置值，见 D18）。
+- 命名/区室/导出的完整规范见 `references/mechanism-spec.md` 与 `references/legend-encoding.md`。
+
+## 6. 布局与图例硬约束
+
+- 流向自上而下：胞外 → 膜 → 胞质 → 核；跨膜受体必须在膜带内；核内因子在核框内（D3、P04b）。
+- 图例必须覆盖图面在用的**全部**实体类型与边类型，色值与线宽与图面**逐值一致**（D12/D13）。
+- 有数值时按映射画色带并标"低/高"；无数值时用类型默认色并在图例注明（D15）。
+
+## 7. 交付前自查清单（逐条打勾，任一条打不上就不报 success）
+
+- [ ] 我实际读了 `case.json` / `task.md` / 全部材料，没有按文件名猜内容（D7、D23）；
+- [ ] 实体、边、图例项与材料一一对应，每条都有 `source`（文件:行）（D14）；
+- [ ] 基因/蛋白/复合物/RNA/小分子没有混用，命名符合规范（D2、D3）；
+- [ ] 每个箭头语义 = 图例声明；虚线只出现在弱证据/不确定处（D8、D12）；
+- [ ] 数据映射（颜色/线宽/大小）与图例、图面三方一致，数值可溯源（D13、D14、D15）；
+- [ ] 可编辑分层 SVG 已生成、7 层齐全且 well-formed；PNG/PDF 或明确记录原因（D16、D17）；
+- [ ] `result.json` 契约字段齐全（含 `output_contract` 全部字段，按 D19 四形态），**顶层无 null**；
+- [ ] `topology.json` / `legend_audit.json` 已产出；`uncertainty` / `change_records` 诚实（§2 表）；
+- [ ] `status` 与 exit code、gates 三元组一致（D22）；failed 路径按 D21 补齐信封；
+- [ ] 命令与产物记入 `TEST.md`；任何跳过或降级都有对应记录位点。
+
+## 8. 反预制答案规则
+
+`examples/` 里的一切都是**演示示例（非正式案例）**：图内与 `result.json` 均带示例标记。
+正式运行**禁止**把示例的实体、边或数值抄进正式输出；平台案例的材料与示例不同，
+必须现场从真实材料推导（D1–D7 都是为这件事服务的）。`assets/result.template.json` 只是结构模板，
+不得冒充运行产物；不给自己编造任何评分数字。
+
+## 9. 限制与维护
+
+- SVG 为手写图层制式，供 SVG 生态（浏览器、Inkscape、draw.io 导入、脚本改属性）编辑；
+  不做 Word/PPT 内嵌（需要时另用 office 类 Skill 二次嵌入）。
+- 自动抽取只处理结构化语句；散文/PDF 走 CP2b 人工抽取，这是"准确率优先于全自动"的刻意设计。
+- 图件不在包内，每次运行现场生成；PDF 与 `result.json` 含时间戳，**不作确定性承诺**
+  （确定性承诺 = SVG/PNG/model/topology/legend_audit，见 `TEST.md`）。
+- 改动流程：改色 → `assets/palettes.json`；改契约/门 → `references/OUTPUT_CONTRACT.md` +
+  `scripts/check_contract.py` + `scripts/result_writer.py` 三处同步；改校验规则 → `topology.py` /
+  `legend_audit.py` / `validate_figure.py` 并更新 `references/mechanism-spec.md`。
+  改完跑 `TEST.md` 全套，再在 `worklog.md` 追加一条带时间的记录。
+- **明令禁止**：向包内添加二进制资源或 `__pycache__`（图件必须运行时生成）。
+
+## 10. 文件索引（相对 `$SKILL_DIR`）
+
+| 文件 | 作用 |
+|---|---|
+| `references/OUTPUT_CONTRACT.md` | 字段契约 + 四形态回显 + G1–G8 硬性门 + **§10 状态一致性矩阵** |
+| `references/failure-modes.md` | 失败模式表（F01–F22，与本文档 §2 一一对应） |
+| `references/RUBRIC_MAP.md` | 五维评分（40/25/15/10/10）逐条落点 |
+| `references/mechanism-spec.md` | 机制规格结构、命名与区室规范、校验一览 |
+| `references/legend-encoding.md` | 箭头语义、数据编码、调色板与审计规则 |
+| `assets/mechanism-spec.schema.json` | CP2 的 schema 门（对 raw 规格校验） |
+| `assets/palettes.json` | 调色板与 glyph 语义（单点改色） |
+| `assets/result.template.json` | `result.json` 结构模板（示例） |
+| `templates/relation-checklist-template.md` | CP3 人工核验载体（五张表） |
+| `scripts/main.py` | 单一入口（CP1–CP5、退出码 0/2/3） |
+| `scripts/{extract,model,layout,pathway_svg,mpl_backend,topology,legend_audit,validate_figure,check_contract,result_writer}.py` | 抽取 / 规格 / 布局 / 渲染 / 审计 / 契约 / 写盘 |
+| `examples/` | 最小可运行示例（输入 + `EXPECTED-OUTPUT.md` + 实跑 JSON 产物） |
+| `README.md` / `TEST.md` / `COMPARE.md` / `worklog.md` | 依赖与用法 / 自测与实测 / 对照方案 / 构建与修复记录 |

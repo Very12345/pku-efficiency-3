@@ -1,0 +1,78 @@
+{
+  "case_id": "example-science-figure-01",
+  "title": "示例：剂量-时间响应与信号通路机制图（仅演示接口，非正式案例）",
+  "challenge_id": "challenge-1bd90d8a",
+  "dataset_version": "2026-11-21-example-v2",
+  "output_contract": {
+    "case_id": "string",
+    "status": "string",
+    "title": "string",
+    "sources": "array",
+    "outputs": "array",
+    "editable_source": "array",
+    "rendered_preview": "object",
+    "field_mapping": "string",
+    "validation_report": "string",
+    "uncertainty": "array",
+    "change_records": "array",
+    "checkpoints": "object",
+    "gates": "object"
+  },
+  "manual_confirmations": [
+    {"ts": "2026-11-21T00:00:00+08:00", "who": "skill-owner", "what": "示例材料自拟；实体名与 p 值来自示例材料，非真实实验"}
+  ],
+  "figures": [
+    {
+      "id": "fig-01",
+      "type": "panel",
+      "title": "示例 Figure 1：剂量-时间响应的肿瘤体积（mean ± SE，n=6）",
+      "subtitle": "A: 24 h 剂量响应柱状图（**p=0.004 vs vehicle，one-way ANOVA + Tukey HSD）；B: 时间曲线",
+      "width": 2200,
+      "height": 900,
+      "style": "nature",
+      "panels": [
+        {
+          "id": "fig-01a",
+          "type": "bar",
+          "title": null,
+          "data_file": "data.csv",
+          "filter": {"column": "time_h", "eq": "24"},
+          "order": ["0", "1", "5", "20"],
+          "x": {"column": "dose_mg_kg", "label": "Dose of compound X", "unit": "mg/kg"},
+          "y": {"column": "mean_um3", "label": "Tumor volume", "unit": "μm³"},
+          "error": {"column": "se_um3", "semantics": "SE"},
+          "annotations": [
+            {"from": "0", "to": "20", "text": "**", "p": 0.004, "source": "one-way ANOVA + Tukey HSD, 源材料 n=6/组"}
+          ]
+        },
+        {
+          "id": "fig-01b",
+          "type": "line",
+          "title": null,
+          "data_file": "data.csv",
+          "x": {"column": "time_h", "label": "Time", "unit": "h"},
+          "y": {"column": "mean_um3", "label": "Tumor volume", "unit": "μm³"},
+          "error": {"column": "se_um3", "semantics": "SE"},
+          "hue": {"column": "dose_mg_kg", "labels": {"0": "Vehicle", "1": "1 mg/kg", "5": "5 mg/kg", "20": "20 mg/kg"}}
+        }
+      ]
+    },
+    {
+      "id": "fig-02",
+      "type": "network",
+      "title": "示例 Figure 2：Wnt 信号转导简化机制图（实体与关系引自材料，逐元素标注来源）",
+      "subtitle": "箭头=激活/促进；末端横线=抑制；每个节点含 cite 引用来源图表编号",
+      "width": 1400,
+      "height": 700,
+      "entities_file": "entities.json",
+      "layout": "auto",
+      "colors": {
+        "Ligand": "#937860",
+        "Receptor": "#4C72B0",
+        "Cytosolic": "#55A868",
+        "Destruction complex": "#C44E52",
+        "Nuclear": "#8172B3"
+      }
+    }
+  ]
+}
