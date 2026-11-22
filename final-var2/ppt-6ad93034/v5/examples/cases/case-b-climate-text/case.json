@@ -1,0 +1,72 @@
+{
+  "case_id": "ppt-6ad93034-case-b-climate-text-001",
+  "title": "从文献计量看气候政策研究的议题迁移（合成案例 B，理论/文本题材，无数据表）",
+  "_note": "本案例为**合成题集**的一部分，材料由本包作者虚构，刻意不含任何数值数据表，用于检验 Skill 在'无表可画'时的诚实降级；不得冒充正式结果。",
+  "_case_set": {
+    "difficulty": "困难层（无数据表、位图无取数、页数受限、材料含大量编号引用）",
+    "topic": "理论 / 文本与文献计量（质性材料）",
+    "expect": {
+      "status_any_of": [
+        "success",
+        "partial"
+      ],
+      "slide_count": 6,
+      "roles_head": "cover",
+      "roles_tail": "takeaway",
+      "must_have_figure_kind": [
+        "none",
+        "placeholder"
+      ],
+      "forbid_figure_kind": [
+        "chart_image"
+      ],
+      "unverified_claims_max": 3,
+      "min_notes_coverage": 1.0,
+      "min_evidence_footer_coverage": 1.0,
+      "forbid_in_deck": [
+        "87.6％",
+        "12.4 万篇",
+        "Nature Climate Change 影响因子"
+      ]
+    },
+    "known_gaps": {
+      "note": "以下是**实测未达成**的内容覆盖项（advisory，仅记录不计入通过判定）；逐条证据见 references/CASE-SET.md §3。",
+      "must_mention_in_deck": [
+        "2009",
+        "2015",
+        "议题"
+      ],
+      "why": "角色→章节的映射按章节标题关键词定位；本案例章节名为『三阶段/争论焦点/方法与数据争议』，年份所在的 §2 未被分配到任何页，因此 2009/2015 没进页（GAP-B2）。"
+    }
+  },
+  "inputs": {
+    "task_md": "task.md",
+    "material": [
+      "material.md"
+    ]
+  },
+  "spec": {
+    "audience": "同行",
+    "duration_minutes": 8,
+    "max_slides": 6,
+    "language": "zh",
+    "template": "default",
+    "style": {
+      "colors": {
+        "accent": "#6A1B9A"
+      },
+      "footer": {
+        "text": "合成案例 B · 非正式案例"
+      }
+    }
+  },
+  "output_contract": {
+    "case_id": "string",
+    "deck": "dict",
+    "evidence": "dict",
+    "previews": "dict",
+    "case_topic": "string",
+    "difficulty": "string",
+    "is_synthetic": "bool"
+  }
+}

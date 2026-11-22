@@ -1,0 +1,246 @@
+{
+  "generated_at": "2026-11-22T15:41:25",
+  "schema": "academic-ppt-plan/v2",
+  "pages": [
+    {
+      "_type": "page",
+      "index": 1,
+      "role": "cover",
+      "role_label": "封面",
+      "title": "基于注意力机制改进的蛋白质二级结构预测（虚构示例材料）",
+      "claims": [],
+      "figure": {
+        "ref": "",
+        "kind": "none",
+        "table_id": "",
+        "image": "",
+        "note": ""
+      },
+      "notes": [
+        "开场白要点：一句话交代题目、动机和本次要讲清的问题。"
+      ],
+      "agenda_item": ""
+    },
+    {
+      "_type": "page",
+      "index": 2,
+      "role": "overview",
+      "role_label": "主线与贡献",
+      "title": "汇报主线",
+      "claims": [
+        {
+          "text": "蛋白质二级结构（α 螺旋、β 折叠、无规卷曲）预测是结构生物信息学的基础任务。",
+          "evidence": [
+            "摘要/引言"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "蛋白质二级结构（α 螺旋、β 折叠、无规卷曲）预测是结构生物信息学的基础任务。",
+          "evidence": [
+            "摘要/结论"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        }
+      ],
+      "figure": {
+        "ref": "",
+        "kind": "none",
+        "table_id": "",
+        "image": "",
+        "note": ""
+      },
+      "notes": [
+        "面向实验室内部：突出方法与下一步计划，术语可深入，进度感要强。",
+        "受众=组会，时长=10 分钟，共 6 页（按 spec.max_slides 压缩）"
+      ],
+      "agenda_item": "背景 · 问题 · 方法 · 结果 · 局限与展望"
+    },
+    {
+      "_type": "page",
+      "index": 3,
+      "role": "question",
+      "role_label": "研究问题",
+      "title": "研究问题",
+      "claims": [
+        {
+          "text": "研究问题：能否用轻量的注意力编码器替代深层卷积网络完成蛋白质二级结构预测， 同时保持精度与可解释性？",
+          "evidence": [
+            "引言"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "相关工作表明，注意力机制能够捕捉序列内的长程依赖， 但此前多与深层主干结合，推理开销大。",
+          "evidence": [
+            "引言"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        }
+      ],
+      "figure": {
+        "ref": "",
+        "kind": "none",
+        "table_id": "",
+        "image": "",
+        "note": ""
+      },
+      "notes": [
+        "一页只放一个核心问题；回答“为什么值得做”。"
+      ],
+      "agenda_item": ""
+    },
+    {
+      "_type": "page",
+      "index": 4,
+      "role": "method",
+      "role_label": "方法",
+      "title": "方法",
+      "claims": [
+        {
+          "text": "模型由三层组成：输入层将 PSSM 与 one-hot 编码拼接为 23 维特征向量；",
+          "evidence": [
+            "§方法"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "中间层为两层多头注意力（头数 8，隐藏维度 128），窗口受限至 31 个残基；",
+          "evidence": [
+            "§方法"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "输出层为逐残基的三态/八态分类头。",
+          "evidence": [
+            "§方法"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "训练使用 PDB-25 训练集，AdamW 优化器， 学习率 1e-3，批大小 64，共训练 40 轮，早停阈值取验证集 Q3 连续 5 轮不升。",
+          "evidence": [
+            "§方法"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        }
+      ],
+      "figure": {
+        "ref": "",
+        "kind": "none",
+        "table_id": "",
+        "image": "",
+        "note": ""
+      },
+      "notes": [
+        "方法压到 4 条以内：核心思路 > 关键步骤 > 与基线的差异。"
+      ],
+      "agenda_item": ""
+    },
+    {
+      "_type": "page",
+      "index": 5,
+      "role": "result",
+      "role_label": "结果",
+      "title": "结果",
+      "claims": [
+        {
+          "text": "results.csv 为 82.4（Q3 (%)）",
+          "evidence": [
+            "表(results)",
+            "列=Q3 (%)"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "results.csv 为 81.1（Q3 (%)）",
+          "evidence": [
+            "表(results)",
+            "列=Q3 (%)"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "表中数值直接取自源数据，未取整、未编造。",
+          "evidence": [
+            "表(results)"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        }
+      ],
+      "figure": {
+        "ref": "表(results)",
+        "kind": "chart_image",
+        "table_id": "results.csv",
+        "image": "work/chart_results.csv.png",
+        "note": "重绘自数据表 results.csv（2 行）；字体=Microsoft YaHei；未对数据做修改"
+      },
+      "notes": [
+        "讲出“这个数字说明什么”，而不是念表。"
+      ],
+      "agenda_item": ""
+    },
+    {
+      "_type": "page",
+      "index": 6,
+      "role": "takeaway",
+      "role_label": "结论与展望",
+      "title": "结论与下一步",
+      "claims": [
+        {
+          "text": "S2-Attn 以约四分之一的参数达到高于基线 B-CNN 的 Q3/Q8 精度，验证了浅层 注意力主干用于蛋白质二级结构预测的可行性；",
+          "evidence": [
+            "§结论"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        },
+        {
+          "text": "后续将扩展基准并研究端到端 结构解码。",
+          "evidence": [
+            "§结论"
+          ],
+          "level": 0,
+          "verified": true,
+          "missing_numbers": []
+        }
+      ],
+      "figure": {
+        "ref": "",
+        "kind": "none",
+        "table_id": "",
+        "image": "",
+        "note": ""
+      },
+      "notes": [
+        "最后一页给听众一个“带走”的句子。",
+        "下一步/开放问题请主讲人根据材料补充，并在备注中标注来源（本行是讲稿约定，不是材料结论）。"
+      ],
+      "agenda_item": ""
+    }
+  ]
+}

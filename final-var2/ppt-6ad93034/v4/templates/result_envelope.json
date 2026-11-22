@@ -1,0 +1,31 @@
+{
+  "_doc": "result_envelope.json — result.json 结果信封声明（模板）。result_tool.py 依据它检查顶层字段的必备类型；OUTPUT_CONTRACT.md §8 给出判读规则。字段组只需在声明中出现；缺失即视为不合规（G8）。",
+  "envelope_version": "2.0",
+  "required_fields": [
+    {"field": "case_id", "type": "string"},
+    {"field": "title", "type": "string"},
+    {"field": "status", "type": "string"},
+    {"field": "created_at", "type": "string"},
+    {"field": "skill_version", "type": "string"},
+    {"field": "deck", "type": "object"},
+    {"field": "evidence", "type": "object"},
+    {"field": "previews", "type": "object"},
+    {"field": "sources", "type": "array"},
+    {"field": "uncertainty", "type": "array"},
+    {"field": "change_records", "type": "array"},
+    {"field": "evidence_map_json", "type": "string"},
+    {"field": "manifest", "type": "string"},
+    {"field": "log", "type": "string"},
+    {"field": "checks", "type": "object"},
+    {"field": "environment", "type": "object"},
+    {"field": "run_meta", "type": "object"}
+  ],
+  "deck_required": ["editable", "format", "template", "slide_count", "slides", "notes", "receipt"],
+  "evidence_required": ["map", "unverified_claims", "material_warnings"],
+  "previews_required": ["pngs", "pdf", "method", "warnings"],
+  "status_vocabulary": ["success", "partial", "failed"],
+  "contract_echo": {
+    "_rule": "case.json output_contract 声明的每个字段必须镜像到 result.json 顶层，禁止 null；按类型给 ''/[]/{}/0/false",
+    "container_defaults": {"string": "", "list": [], "dict": {}, "int": 0, "float": 0, "bool": false}
+  }
+}

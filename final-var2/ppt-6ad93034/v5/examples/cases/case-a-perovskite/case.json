@@ -1,0 +1,71 @@
+{
+  "case_id": "ppt-6ad93034-case-a-perovskite-001",
+  "title": "钙钛矿太阳能电池界面钝化：长链铵盐对开路电压的增益（合成案例 A，实验科学题材）",
+  "_note": "本案例为**合成题集**的一部分，材料由本包作者按真实论文结构虚构，用于演示与交叉验证；正式案例由组织方提供，本案例不得冒充正式结果。",
+  "_case_set": {
+    "difficulty": "基础层（数据表齐备、结构清晰）",
+    "topic": "实验科学 / 材料器件",
+    "expect": {
+      "status_any_of": [
+        "success",
+        "partial"
+      ],
+      "slide_count": 8,
+      "roles_head": "cover",
+      "roles_tail": "takeaway",
+      "must_have_figure_kind": [
+        "chart_image",
+        "table"
+      ],
+      "unverified_claims_max": 2,
+      "min_notes_coverage": 1.0,
+      "min_evidence_footer_coverage": 1.0,
+      "must_mention_in_deck": [
+        "PABr",
+        "1.12",
+        "92"
+      ],
+      "forbid_in_deck": [
+        "95.0％",
+        "30 年",
+        "Science 2024"
+      ]
+    },
+    "known_gaps": {
+      "note": "advisory，仅记录不计入通过判定；详见 references/CASE-SET.md §3。",
+      "unverified_claims_max": 0,
+      "why": "材料没有『背景』小节时，background 页会写一条占位主张并进 unverified_claims（GAP-A1），使 status=partial；这是设计上的诚实降级，不是错误。"
+    }
+  },
+  "inputs": {
+    "task_md": "task.md",
+    "material": [
+      "material.md",
+      "jv.csv"
+    ]
+  },
+  "spec": {
+    "audience": "答辩",
+    "duration_minutes": 12,
+    "max_slides": 8,
+    "language": "zh",
+    "template": "default",
+    "style": {
+      "colors": {
+        "accent": "#1565C0"
+      },
+      "footer": {
+        "text": "合成案例 A · 非正式案例"
+      }
+    }
+  },
+  "output_contract": {
+    "case_id": "string",
+    "deck": "dict",
+    "evidence": "dict",
+    "previews": "dict",
+    "case_topic": "string",
+    "difficulty": "string",
+    "is_synthetic": "bool"
+  }
+}
