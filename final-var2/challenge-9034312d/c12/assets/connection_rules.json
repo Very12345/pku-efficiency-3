@@ -1,0 +1,63 @@
+{
+  "_doc": "装置图/技术路线图连接规则资产（v2）。svg_verify.py 读取本文件做连接语义审计（CP3 校验门）。规则可被他人直接扩展：allowed_kinds / allowed_relation_kinds 是类别词表；rules[] 是检查项（check 取值见 svg_verify.py）。severity=error 的违规会让 status 降为 partial（D11），warn 仅提示人工复核。",
+  "allowed_kinds": [
+    "step", "phase", "device", "material", "product",
+    "data", "decision", "milestone", "waste", "container"
+  ],
+  "allowed_relation_kinds": [
+    "flow", "connect", "depend", "recycle", "sequence", "causation"
+  ],
+  "rules": [
+    {
+      "id": "kind-vocabulary",
+      "severity": "error",
+      "check": "kind_vocabulary",
+      "reason": "图元类别必须来自统一词表（references/vocabulary.md），否则图例/配色/形状无法一致映射"
+    },
+    {
+      "id": "relation-kind-vocabulary",
+      "severity": "error",
+      "check": "relation_kind_vocabulary",
+      "reason": "关系类别必须来自统一词表（flow/connect/depend/recycle/sequence/causation）"
+    },
+    {
+      "id": "no-self-loop",
+      "severity": "error",
+      "check": "no_self_loop",
+      "reason": "关系两端不能是同一实体（自环箭头通常是解析错误）"
+    },
+    {
+      "id": "sequence-step-only",
+      "severity": "error",
+      "check": "sequence_step_only",
+      "reason": "sequence(顺序) 关系两端必须是 step/phase/milestone 类步骤实体，否则步骤编号与正文顺序无法逐条对照"
+    },
+    {
+      "id": "connect-structural",
+      "severity": "error",
+      "check": "connect_structural",
+      "reason": "connect(连接) 关系至少一端应为 device/container（结构连接），否则与 flow 混淆"
+    },
+    {
+      "id": "apparatus-flow-into-material",
+      "severity": "error",
+      "check": "no_flow_into_material",
+      "when_figure_types": ["apparatus"],
+      "reason": "装置图中物料列位于最左：除 recycle 外，物料不应作为流向的终点（断头流入=方向或连接错误）"
+    },
+    {
+      "id": "product-terminal",
+      "severity": "warn",
+      "check": "product_is_terminal",
+      "when_figure_types": ["apparatus"],
+      "reason": "装置图三桶布局中产物/数据/废料位于最右列并通常是终点：若其有非 recycle 出边，需 Agent 复核是否为真实分叉"
+    },
+    {
+      "id": "recycle-review",
+      "severity": "warn",
+      "check": "recycle_review",
+      "when_rel_kind": "recycle",
+      "reason": "回流(虚线箭头)存在：须人工确认回流环路与正文一致（是否闭环、回流方向）"
+    }
+  ]
+}

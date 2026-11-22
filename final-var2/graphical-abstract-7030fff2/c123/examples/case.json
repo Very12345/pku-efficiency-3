@@ -1,0 +1,44 @@
+{
+  "case_id": "example-micelle-001",
+  "title": "pH 响应型聚合物胶束用于肿瘤药物递送",
+  "_meta": "示例案例（非正式案例）。用于演示 Skill 接口；数据为合成示意，不代表任何真实论文结果。",
+  "source_material": "material.md",
+  "entities": [
+    {"name": "DOX（阿霉素）", "type": "molecule", "panel": "method", "note": "化疗药物"},
+    {"name": "mPEG-PLA 胶束", "type": "material", "panel": "method", "note": "纳米递送载体"},
+    {"name": "肿瘤微环境（低 pH）", "type": "tissue", "panel": "method"},
+    {"name": "肿瘤细胞", "type": "cell", "panel": "results"},
+    {"name": "血液（pH 7.4）", "type": "sample", "panel": "question"},
+    {"name": "肿瘤组织", "type": "tissue", "panel": "results"}
+  ],
+  "relations": [
+    {"from": "mPEG-PLA 胶束", "to": "DOX（阿霉素）", "label": "自组装包载"},
+    {"from": "DOX（阿霉素）", "to": "肿瘤组织", "label": "递送"},
+    {"from": "mPEG-PLA 胶束", "to": "肿瘤微环境（低 pH）", "label": "pH 响应释放", "kind": "positive"},
+    {"from": "DOX（阿霉素）", "to": "肿瘤细胞", "label": "内化杀伤"},
+    {"from": "DOX（阿霉素）", "to": "肿瘤细胞", "label": "抑制增殖", "kind": "negative"}
+  ],
+  "data": [
+    {"label": "粒径", "value": "95 nm", "kind": "bar_length", "note": "DLS 测定"},
+    {"label": "PDI", "value": "0.12", "kind": "bar_length"},
+    {"label": "载药量", "value": "14.2 %", "kind": "bar_length"},
+    {"label": "包封率", "value": "72 %", "kind": "bar_length"},
+    {"label": "释放率 pH 5.5 (48 h)", "value": "85 %", "kind": "bar_length"},
+    {"label": "释放率 pH 7.4 (48 h)", "value": "18 %", "kind": "bar_length"},
+    {"label": "细胞存活率 (50 µg/mL)", "value": "18 %", "kind": "color_scale"}
+  ],
+  "figure_constraints": {
+    "width": 1200, "height": 800, "dpi": 300, "colorblind": true,
+    "flow_arrows": true, "raster_scale": 2, "pdf": true
+  },
+  "output_contract": {
+    "target_format": ["svg", "png", "pdf"],
+    "resolution_dpi": 300,
+    "colorblind_safe": true,
+    "require_legend": true,
+    "require_scale_bar": true,
+    "layer_names": ["background", "panels", "entities", "relations", "data", "legend", "annotations"],
+    "provenance_attr": "data-src",
+    "deliverable": "editable_svg_plus_preview"
+  }
+}

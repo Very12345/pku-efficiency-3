@@ -1,0 +1,2 @@
+Preview PNGs are PIL-drawn schematic previews from the same plan that built the pptx.
+They are NOT pixel-perfect exports. Open the .pptx in PowerPoint/LibreOffice for the true rendering.

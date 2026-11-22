@@ -1,0 +1,59 @@
+{
+  "_doc": "result.json 最小形态示例（复用参考，非正式案例产物）。正式产出见 examples/output/*/result.json。结构与 references/OUTPUT_CONTRACT.md 一致，字段类型/语义以契约为准。",
+  "case_id": "demo-route-000",
+  "title": "示意图标题",
+  "status": "success",
+  "workorder": "apparatus_and_technical_route",
+  "figure_type": "route",
+  "extraction": "structured",
+  "entities": [
+    {"id": "E1", "name": "步骤/部件名", "kind": "step", "stage": "阶段一", "step_no": "1", "source": "task.md §2.1"}
+  ],
+  "relations": [
+    {"id": "R1", "from": "E1", "to": "E2", "kind": "flow", "label": "流向", "source": "task.md §2.2"}
+  ],
+  "output_contract": {
+    "editable_sources": [
+      {"kind": "svg", "path": "figure.svg", "format": "image/svg+xml",
+       "layers": ["layer-background", "layer-title", "layer-arrows", "layer-entities", "layer-legend"],
+       "editability": "text 元素真实文本、实体组带 data-entity/data-source/data-step-no",
+       "checksum_sha256": "…"}
+    ],
+    "exports": [
+      {"kind": "png", "path": "figure.png", "format": "image/png", "width_px": 2362, "height_px": 1496, "dpi": 200},
+      {"kind": "pdf", "path": "figure.pdf", "format": "application/pdf", "vector": true, "font": "STSong-Light"}
+    ],
+    "data_mapping": [
+      {"entity_id": "E1", "kind": "step", "source": "task.md §2.1", "svg_group": "entity-E1"}
+    ],
+    "element_traceability": [
+      {"element": "entity-E1", "source": "task.md §2.1", "kind": "step", "stage": "阶段一"},
+      {"element": "arrow-R1", "from": "E1", "to": "E2", "source": "task.md §2.2"}
+    ]
+  },
+  "evidence": {
+    "source": "gain_evidence",
+    "extraction": "structured",
+    "items": [
+      {"id": "EV1", "type": "entity", "ref": "E1", "locator": "task.md §2.1", "quote": "原文句子…"}
+    ],
+    "source_files": [{"file": "case.json", "sha256": "…", "size": 1024, "role": "case"}],
+    "notes": [],
+    "meta": {"source": "gain_evidence", "item_count": {}, "notes": []}
+  },
+  "verify": {
+    "ok": true,
+    "checks": {},
+    "errors": [],
+    "warnings": [],
+    "determinism": {"spec_sha16": "…"},
+    "summary": {"status": "pass", "entities": 1, "relations": 1, "errors": 0, "warnings": 0, "issues": 0}
+  },
+  "canvas": {"width_mm": 311.11, "height_mm": 166.0, "requested": {"width_mm": 300, "height_mm": 190}},
+  "fonts": [],
+  "sources": [{"id": "input-case", "file": "case.json", "note": "case.json"}],
+  "uncertainty": [],
+  "change_record": [],
+  "execution": {"script": "main.py", "skill_version": "2.0.0", "python": "3.13.9", "out_dir": "…"},
+  "checksum": "sha256(case_id+entities+relations+svg_sha)"
+}

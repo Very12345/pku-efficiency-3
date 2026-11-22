@@ -1,0 +1,40 @@
+{
+  "$template": "result.json 结构模板（示例，非正式案例）。字段契约见 references/OUTPUT_CONTRACT.md；本文件只用于说明结构，正式结果由流水线实跑生成。",
+  "case_id": "<case_id>",
+  "title": "<图标题>",
+  "example": true,
+  "status": "success",
+  "contract_version": "1.1",
+  "skill": {"name": "biological-mechanism-pathway-diagram", "version": "2.0.0", "contract": "1.1"},
+  "deliverables": {
+    "editable_sources": [
+      {"path": "diagram.svg", "format": "svg", "layers": ["layer-compartment", "layer-edge", "layer-entity", "layer-label", "layer-title", "layer-legend", "layer-meta"], "well_formed": true, "note": "分层可编辑源文件"}
+    ],
+    "previews": [{"path": "diagram.png", "format": "png", "dpi": 150, "width_px": 1200, "height_px": 900}],
+    "exports": [{"path": "diagram.pdf", "format": "pdf", "note": "matplotlib 矢量导出（预览用；可编辑源为 SVG）"}],
+    "audits": ["topology.json", "legend_audit.json"]
+  },
+  "scientific_content": {
+    "entities": [
+      {"id": "e1", "name": "EGFR", "type": "protein", "compartment": "membrane", "data": {"表达量": 0.82}, "note": "", "uncertain": false, "source": [{"ref": "materials/example_material.md", "kind": "material", "line": 9}]}
+    ],
+    "edges": [
+      {"id": "r1", "from": "e1", "to": "e2", "type": "binding", "subtype": "", "evidence": "strong", "label": "", "note": "", "feedback": false, "source": [{"ref": "materials/example_material.md", "kind": "material", "line": 19}]}
+    ],
+    "legend": {"title": "图例 Legend", "entities": {}, "edges": {}, "evidence_width": {"strong": 2.8, "moderate": 2.2, "weak": 1.6}, "data_mapping": {"field": "表达量", "low": "#FFF7E0", "high": "#1F4E79"}},
+    "layout": {"canvas": {"width": 1200, "height": 900}, "compartments": [], "constraints": {}, "note": "布局规则见 references/mechanism-spec.md §4"},
+    "counts": {"entities": 1, "edges": 1, "compartments": 1}
+  },
+  "evidence_sources": [{"ref": "materials/example_material.md", "kind": "material", "line": 9}],
+  "data_mapping": {"field": "表达量", "low": "#FFF7E0", "high": "#1F4E79"},
+  "extraction": {"method": "manual", "verified_by_agent": true, "note": ""},
+  "export_checks": [],
+  "topology": {"checks": [], "failures": [], "warnings": []},
+  "legend_audit": {"checks": [], "failures": [], "warnings": []},
+  "self_check": {"passed": true, "checks": [], "failures": [], "warnings": [], "determinism": {"model_sha16": "", "svg_sha16": ""}},
+  "gates": {"g1_case_id": {"pass": true}, "g2_contract_echo": {"pass": true}, "g3_status": {"pass": true}, "g4_svg_layers": {"pass": true}, "g5_png": {"pass": true}, "g6_legend_cover": {"pass": true}, "g7_sources": {"pass": true}, "g8_audits": {"pass": true}},
+  "uncertainty": [],
+  "change_records": [{"ts": "", "what": "读取输入", "why": "", "by": "main.py"}],
+  "files": ["diagram.svg", "diagram.png", "diagram.pdf", "model.json", "result.json", "topology.json", "legend_audit.json"],
+  "provenance": {"skill": "biological-mechanism-pathway-diagram", "skill_version": "2.0.0", "contract": "1.1", "ts": "", "command": "", "material_refs": [], "case_file": ""}
+}

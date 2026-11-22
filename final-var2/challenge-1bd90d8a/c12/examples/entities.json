@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {"id": "L", "label": "Wnt3a (配体)", "group": "Ligand", "shape": "rect", "cite": "Fig. 2A", "x": 150, "y": 350},
+    {"id": "Fz", "label": "Frizzled (FZD)", "group": "Receptor", "cite": "Fig. 2A", "x": 450, "y": 220},
+    {"id": "LRP", "label": "LRP5/6 共受体", "group": "Receptor", "cite": "Fig. 2B", "x": 450, "y": 480},
+    {"id": "Dvl", "label": "Dishevelled (DVL)", "group": "Cytosolic", "cite": "Fig. 2C", "x": 760, "y": 220},
+    {"id": "APC", "label": "APC/Axin/GSK3β 复合物", "group": "Destruction complex", "cite": "Fig. 2C", "x": 760, "y": 480},
+    {"id": "beta", "label": "β-catenin", "group": "Cytosolic", "cite": "Fig. 2D", "x": 1030, "y": 350},
+    {"id": "nucl", "label": "TCF/LEF 转录激活", "group": "Nuclear", "shape": "rect", "cite": "Fig. 2E", "x": 1270, "y": 350}
+  ],
+  "relations": [
+    {"from": "L", "to": "Fz", "label": "结合", "type": "activation"},
+    {"from": "L", "to": "LRP", "label": "结合", "type": "activation"},
+    {"from": "Fz", "to": "Dvl", "label": "磷酸化激活", "type": "phosphorylation"},
+    {"from": "LRP", "to": "APC", "label": "抑制复合物装配", "type": "inhibition"},
+    {"from": "Dvl", "to": "APC", "label": "抑制", "type": "inhibition"},
+    {"from": "APC", "to": "beta", "label": "磷酸化降解", "type": "inhibition"},
+    {"from": "beta", "to": "nucl", "label": "入核", "type": "activation"}
+  ],
+  "_layout_note": "节点 x/y 为手工布局坐标（D13 处置网络标签遮挡）；layout=auto 时引擎按坐标绘制、画布取包围盒外扩。"
+}

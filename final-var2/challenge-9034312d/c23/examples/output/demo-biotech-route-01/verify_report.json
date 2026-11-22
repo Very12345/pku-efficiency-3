@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "checks": {
+    "layers": true,
+    "editable_text": true,
+    "entity_groups": true,
+    "entity_source_coverage": true,
+    "arrows": true,
+    "no_dangling": true,
+    "numbering_continuous": true,
+    "legend_kinds": true,
+    "kind_vocabulary": true,
+    "relation_kind_vocabulary": true,
+    "connection_rules": true,
+    "all": true
+  },
+  "issues": [],
+  "rule_violations": [],
+  "errors": [],
+  "warnings": [],
+  "determinism": {
+    "spec_sha16": "e04e9d47e8ca0099"
+  },
+  "summary": {
+    "status": "pass",
+    "figure_type": "route",
+    "entities": 10,
+    "relations": 9,
+    "errors": 0,
+    "warnings": 0,
+    "issues": 0,
+    "spec_sha16": "e04e9d47e8ca0099"
+  }
+}

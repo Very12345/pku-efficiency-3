@@ -1,0 +1,13 @@
+{
+  "_comment": "配色模板（图元库）。与 scripts/layout.py 的 DEFAULT_PALETTE 合并覆盖。色板兼顾打印灰度与色觉友好。",
+  "step":      {"fill": "#EAF3FB", "stroke": "#2E6DA4", "text": "#1B3A5C", "shape": "rect"},
+  "phase":     {"fill": "#DCE9F7", "stroke": "#2E6DA4", "text": "#1B3A5C", "shape": "rect"},
+  "device":    {"fill": "#FDF3E3", "stroke": "#C07A1B", "text": "#6E4408", "shape": "rect"},
+  "container": {"fill": "#FDF3E3", "stroke": "#C07A1B", "text": "#6E4408", "shape": "rect"},
+  "material":  {"fill": "#E8F6E4", "stroke": "#4C8A3A", "text": "#28521B", "shape": "rounded"},
+  "product":   {"fill": "#E4F0FB", "stroke": "#3E77B8", "text": "#1E3D66", "shape": "rounded"},
+  "data":      {"fill": "#F7EAF6", "stroke": "#9A4FA4", "text": "#5B2A62", "shape": "diamond"},
+  "decision":  {"fill": "#FBEEE2", "stroke": "#C07A1B", "text": "#6E4408", "shape": "diamond"},
+  "milestone": {"fill": "#EAF3FB", "stroke": "#2E6DA4", "text": "#1B3A5C", "shape": "rect"},
+  "waste":     {"fill": "#F1F1F1", "stroke": "#777777", "text": "#444444", "shape": "rounded"}
+}

@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "checks": {
+    "layers": true,
+    "editable_text": true,
+    "entity_groups": true,
+    "entity_source_coverage": true,
+    "arrows": true,
+    "no_dangling": true,
+    "numbering_continuous": true,
+    "legend_kinds": true,
+    "kind_vocabulary": true,
+    "relation_kind_vocabulary": true,
+    "connection_rules": true,
+    "all": true
+  },
+  "issues": [],
+  "rule_violations": [],
+  "errors": [],
+  "warnings": [],
+  "determinism": {
+    "spec_sha16": "4603787adcb287d7"
+  },
+  "summary": {
+    "status": "pass",
+    "figure_type": "apparatus",
+    "entities": 6,
+    "relations": 5,
+    "errors": 0,
+    "warnings": 0,
+    "issues": 0,
+    "spec_sha16": "4603787adcb287d7"
+  }
+}

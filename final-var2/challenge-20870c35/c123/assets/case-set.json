@@ -1,0 +1,71 @@
+{
+  "asset": "case-set",
+  "asset_version": "1.0",
+  "purpose": "可复用题集骨架：把'一场汇报的输入'参数化成三个可直接复制的 case.json 模板。它们只定义输入（听众/时长/页数/报告类型/材料清单形状），不含任何内容答案；正式案例的内容由使用方自己填。",
+  "how_to_use": [
+    "复制其中一个模板为新的 case.json，填入 case_id / title / report_goal 与真实 materials 路径；",
+    "把 output_contract 保持为 16 个内置字段（或按需追加）；",
+    "python \"$SKILL_DIR/scripts/main.py\" --case <新 case.json> --out <out>，再按 references/quality-gates.md 复核。"
+  ],
+  "contract_note": "三个模板的 output_contract 与本包 DEFAULT_CONTRACT_FIELDS 对齐；追加字段遵守'契约只增不减、禁 null'。",
+  "templates": [
+    {
+      "template_id": "case-template-group-meeting",
+      "report_type": "group_meeting",
+      "audience_example": "组会：同组研究生与导师，熟悉本领域、不熟悉本工作的技术细节",
+      "duration_min": 20,
+      "slide_count": 12,
+      "narrative_focus": "问题—进度—方法—结果—风险—问答",
+      "success_criteria_example": [
+        "讲清当前进度与两个主要风险",
+        "关键数字能定位到源材料",
+        "提前准备对局限与下一步的追问"
+      ],
+      "materials_shape": [
+        {"path": "materials/paper_extract.md", "role": "论文主体（摘要/引言/方法/结果/局限）"},
+        {"path": "materials/figures.md", "role": "图表清单与引用定位"}
+      ]
+    },
+    {
+      "template_id": "case-template-defense",
+      "report_type": "defense",
+      "audience_example": "答辩：评审专家，关注创新点、边界与证据强度",
+      "duration_min": 15,
+      "slide_count": 14,
+      "narrative_focus": "问题—方法—结果—创新点与边界（后置）—结论—问答",
+      "success_criteria_example": [
+        "创新点与适用边界各有一页明确主张",
+        "证据强度分级与结论强度匹配",
+        "预判机制/数据/对照类追问"
+      ],
+      "materials_shape": [
+        {"path": "materials/thesis_extract.md", "role": "论文主体"},
+        {"path": "materials/figures.md", "role": "图表清单"},
+        {"path": "materials/dataset_card.pdf", "role": "数据卡片（PDF 解析路径）"}
+      ]
+    },
+    {
+      "template_id": "case-template-review",
+      "report_type": "review",
+      "audience_example": "评审：同行评议人，关注结论的证据强度与适用范围",
+      "duration_min": 10,
+      "slide_count": 10,
+      "narrative_focus": "结论先行—证据链—方法可信度—局限与适用范围—问答",
+      "success_criteria_example": [
+        "结论先行的首页给出结论与其证据强度",
+        "每个结论都能回溯到源材料位置",
+        "明确写出适用范围与不适用情形"
+      ],
+      "materials_shape": [
+        {"path": "materials/report_extract.md", "role": "研究报告主体"},
+        {"path": "materials/figures.md", "role": "图表清单"}
+      ]
+    }
+  ],
+  "output_contract": [
+    "case_id", "status", "title", "report_goal", "audience", "duration_min",
+    "slide_count", "summary", "main_line", "pages", "evidence_map", "artifacts",
+    "sources", "uncertainty", "change_records", "contract"
+  ],
+  "disclaimer": "三个模板均为输入骨架（合成），不含任何正式案例的内容或答案；不得当作平台案例的作答使用。"
+}

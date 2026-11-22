@@ -1,0 +1,39 @@
+{
+  "_meta": "可复制的设计方案骨架（合法 JSON；尖括号 <> 内为占位符，落地时替换为真实值）。data[].value 初始为 null，必须替换为材料中可定位的真实数值后才可上画布。schema 说明见 references/plan-schema.md。",
+  "schema": "plan-schema/v2",
+  "case_id": "<case_id>",
+  "title": "<研究标题>",
+  "four_elements": {
+    "question": "<一句话：研究问题与缺口>",
+    "method": "<一句话：方法/机制>",
+    "results": "<一句话：核心结果>",
+    "conclusion": "<一句话：结论与意义>"
+  },
+  "entities": [
+    { "name": "<实体>", "type": "molecule|cell|material|tissue|sample|device|other",
+      "panel": "question|method|results|conclusion",
+      "src": "<material.md:行号 或 case.json[字段]>",
+      "note": "<可选说明>" }
+  ],
+  "relations": [
+    { "from": "<实体名>", "to": "<实体名>", "label": "<关系动词>",
+      "kind": "positive|negative", "src": "<定位>" }
+  ],
+  "data": [
+    { "label": "<指标名>", "value": null, "unit": "<单位>",
+      "kind": "bar_length|color_scale|area|value_label",
+      "src": "<定位>", "note": "<可选>" }
+  ],
+  "figure_constraints": {
+    "width": 1200, "height": 800, "dpi": 300, "colorblind": true,
+    "flow_arrows": true, "raster_scale": 2, "pdf": true, "language": "zh"
+  },
+  "panels_hint": {
+    "question": [],
+    "method": [],
+    "results": [],
+    "conclusion": []
+  },
+  "plan_source": "scaffold",
+  "skeleton": true
+}

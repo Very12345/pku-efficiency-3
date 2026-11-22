@@ -1,0 +1,48 @@
+{
+  "sample": true,
+  "case_id": "example-synthalign-talk-01",
+  "challenge_id": "challenge-20870c35",
+  "title": "示例（非正式案例）：SynthAlign 跨语言句子对齐方法的组会汇报",
+  "report_goal": "让合作者理解方法改进的进度与主要风险，并对下一步（扩展领域、λ 搜索）给出反馈",
+  "report_type": "group_meeting",
+  "audience": "组会：同组研究生与导师，熟悉本领域（文献挖掘/信息抽取），不熟悉本工作的技术细节",
+  "duration_min": 20,
+  "slide_count": 12,
+  "success_criteria": [
+    "讲清两阶段框架的进度与两个主要风险",
+    "能把 92.3% 等关键数字定位到源材料",
+    "提前给出关于缩写易错样本与 λ 未搜索的追问准备"
+  ],
+  "materials": [
+    {
+      "path": "materials/paper_extract.md",
+      "role": "论文主体（摘要/引言/方法/结果/局限）"
+    },
+    {
+      "path": "materials/figures.md",
+      "role": "图表清单与引用定位"
+    },
+    {
+      "path": "materials/dataset_card.pdf",
+      "role": "数据卡片（演示 PDF 文本解析路径，pypdf）"
+    }
+  ],
+  "output_contract": [
+    "case_id",
+    "status",
+    "title",
+    "report_goal",
+    "audience",
+    "duration_min",
+    "slide_count",
+    "summary",
+    "main_line",
+    "pages",
+    "evidence_map",
+    "artifacts",
+    "sources",
+    "uncertainty",
+    "change_records",
+    "contract"
+  ]
+}

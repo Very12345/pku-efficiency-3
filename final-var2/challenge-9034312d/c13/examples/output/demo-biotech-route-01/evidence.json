@@ -1,0 +1,352 @@
+{
+  "source": "gain_evidence",
+  "extraction": "structured",
+  "entities": [
+    {
+      "id": "E1",
+      "name": "设计并合成 gRNA 文库",
+      "kind": "step",
+      "stage": "文库构建",
+      "source": "task.md §2.1",
+      "label": null,
+      "locator": "task.md §2.1",
+      "quote": ""
+    },
+    {
+      "id": "E2",
+      "name": "慢病毒包装与转导",
+      "kind": "step",
+      "stage": "文库构建",
+      "source": "task.md §2.2",
+      "label": null,
+      "locator": "task.md §2.2",
+      "quote": ""
+    },
+    {
+      "id": "E3",
+      "name": "sgRNA 文库质粒",
+      "kind": "material",
+      "stage": "文库构建",
+      "source": "task.md §2.1",
+      "label": null,
+      "locator": "task.md §2.1",
+      "quote": ""
+    },
+    {
+      "id": "E4",
+      "name": "药筛处理并富集耐药克隆",
+      "kind": "step",
+      "stage": "筛选",
+      "source": "task.md §3.1",
+      "label": null,
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "E5",
+      "name": "药物化合物",
+      "kind": "material",
+      "stage": "筛选",
+      "source": "task.md §3.1",
+      "label": null,
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "E6",
+      "name": "存活克隆扩增",
+      "kind": "step",
+      "stage": "筛选",
+      "source": "task.md §3.2",
+      "label": null,
+      "locator": "task.md §3.2",
+      "quote": ""
+    },
+    {
+      "id": "E7",
+      "name": "基因组 DNA 提取与 PCR 扩增 sgRNA 区域",
+      "kind": "step",
+      "stage": "鉴定",
+      "source": "task.md §4.1",
+      "label": null,
+      "locator": "task.md §4.1",
+      "quote": ""
+    },
+    {
+      "id": "E8",
+      "name": "高通量测序",
+      "kind": "step",
+      "stage": "鉴定",
+      "source": "task.md §4.2",
+      "label": null,
+      "locator": "task.md §4.2",
+      "quote": ""
+    },
+    {
+      "id": "E9",
+      "name": "测序数据下机文件",
+      "kind": "data",
+      "stage": "鉴定",
+      "source": "task.md §4.3",
+      "label": null,
+      "locator": "task.md §4.3",
+      "quote": ""
+    },
+    {
+      "id": "E10",
+      "name": "鉴别耐药相关靶基因",
+      "kind": "milestone",
+      "stage": "鉴定",
+      "source": "task.md §5",
+      "label": null,
+      "locator": "task.md §5",
+      "quote": ""
+    }
+  ],
+  "relations": [
+    {
+      "id": "R1",
+      "from": "E3",
+      "to": "E2",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §2.1-2.2",
+      "locator": "task.md §2.1-2.2",
+      "quote": ""
+    },
+    {
+      "id": "R2",
+      "from": "E1",
+      "to": "E2",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §2.1-2.2",
+      "locator": "task.md §2.1-2.2",
+      "quote": ""
+    },
+    {
+      "id": "R3",
+      "from": "E2",
+      "to": "E4",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §3.1",
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "R4",
+      "from": "E5",
+      "to": "E4",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §3.1",
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "R5",
+      "from": "E4",
+      "to": "E6",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §3.2",
+      "locator": "task.md §3.2",
+      "quote": ""
+    },
+    {
+      "id": "R6",
+      "from": "E6",
+      "to": "E7",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §4.1",
+      "locator": "task.md §4.1",
+      "quote": ""
+    },
+    {
+      "id": "R7",
+      "from": "E7",
+      "to": "E8",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §4.2",
+      "locator": "task.md §4.2",
+      "quote": ""
+    },
+    {
+      "id": "R8",
+      "from": "E8",
+      "to": "E9",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §4.3",
+      "locator": "task.md §4.3",
+      "quote": ""
+    },
+    {
+      "id": "R9",
+      "from": "E9",
+      "to": "E10",
+      "kind": "flow",
+      "label": null,
+      "source": "task.md §5",
+      "locator": "task.md §5",
+      "quote": ""
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EV1",
+      "type": "entity",
+      "ref": "E1",
+      "locator": "task.md §2.1",
+      "quote": ""
+    },
+    {
+      "id": "EV2",
+      "type": "entity",
+      "ref": "E2",
+      "locator": "task.md §2.2",
+      "quote": ""
+    },
+    {
+      "id": "EV3",
+      "type": "entity",
+      "ref": "E3",
+      "locator": "task.md §2.1",
+      "quote": ""
+    },
+    {
+      "id": "EV4",
+      "type": "entity",
+      "ref": "E4",
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "EV5",
+      "type": "entity",
+      "ref": "E5",
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "EV6",
+      "type": "entity",
+      "ref": "E6",
+      "locator": "task.md §3.2",
+      "quote": ""
+    },
+    {
+      "id": "EV7",
+      "type": "entity",
+      "ref": "E7",
+      "locator": "task.md §4.1",
+      "quote": ""
+    },
+    {
+      "id": "EV8",
+      "type": "entity",
+      "ref": "E8",
+      "locator": "task.md §4.2",
+      "quote": ""
+    },
+    {
+      "id": "EV9",
+      "type": "entity",
+      "ref": "E9",
+      "locator": "task.md §4.3",
+      "quote": ""
+    },
+    {
+      "id": "EV10",
+      "type": "entity",
+      "ref": "E10",
+      "locator": "task.md §5",
+      "quote": ""
+    },
+    {
+      "id": "EV11",
+      "type": "relation",
+      "ref": "R1",
+      "locator": "task.md §2.1-2.2",
+      "quote": ""
+    },
+    {
+      "id": "EV12",
+      "type": "relation",
+      "ref": "R2",
+      "locator": "task.md §2.1-2.2",
+      "quote": ""
+    },
+    {
+      "id": "EV13",
+      "type": "relation",
+      "ref": "R3",
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "EV14",
+      "type": "relation",
+      "ref": "R4",
+      "locator": "task.md §3.1",
+      "quote": ""
+    },
+    {
+      "id": "EV15",
+      "type": "relation",
+      "ref": "R5",
+      "locator": "task.md §3.2",
+      "quote": ""
+    },
+    {
+      "id": "EV16",
+      "type": "relation",
+      "ref": "R6",
+      "locator": "task.md §4.1",
+      "quote": ""
+    },
+    {
+      "id": "EV17",
+      "type": "relation",
+      "ref": "R7",
+      "locator": "task.md §4.2",
+      "quote": ""
+    },
+    {
+      "id": "EV18",
+      "type": "relation",
+      "ref": "R8",
+      "locator": "task.md §4.3",
+      "quote": ""
+    },
+    {
+      "id": "EV19",
+      "type": "relation",
+      "ref": "R9",
+      "locator": "task.md §5",
+      "quote": ""
+    }
+  ],
+  "sources": [
+    {
+      "id": "input-case",
+      "file": "case.json",
+      "path": "examples/case.json",
+      "sha256": "938ae7f6598f4e111910df1d3e52713e899081181a37ffd7c7de7f133a128734",
+      "size": 2681,
+      "role": "case"
+    },
+    {
+      "id": "input-task",
+      "file": "task.md",
+      "path": "examples/task.md",
+      "sha256": "ebe20988f88cfff3e7aa1761ec542fa827e2ef90639cb5edff7f5985180ba7e0",
+      "size": 1301,
+      "role": "task"
+    }
+  ],
+  "notes": []
+}

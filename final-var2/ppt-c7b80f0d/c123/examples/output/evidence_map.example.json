@@ -1,0 +1,102 @@
+{
+  "source": "deck-spec.json",
+  "deck": "academic_deck.pptx",
+  "rows": [
+    {
+      "page": 1,
+      "title": "研究问题：评语通用、缺上下文",
+      "claim": "代码评审自动化受限于评审模型缺少项目上下文。",
+      "location": "§1 Introduction (p.1)",
+      "status": "mapped",
+      "evidence": [
+        {
+          "type": "section",
+          "ref": "§1 Introduction",
+          "page": "p.1",
+          "quote": "Recent language-model reviewers produce fluent but generic comments"
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "title": "方法：索引→检索→条件生成",
+      "claim": "ExampleNet 用三阶段流水线实现免微调的检索增强评审。",
+      "location": "§2 Method (p.2)",
+      "status": "mapped",
+      "evidence": [
+        {
+          "type": "section",
+          "ref": "§2 Method",
+          "page": "p.2",
+          "quote": "No model weights are updated."
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "title": "结果：主表（Table 1）",
+      "claim": "k=5 时 ROUGE-L F1 提到 0.695，超过基线 8.3 点。",
+      "location": "Table 1 (p.3)",
+      "status": "mapped",
+      "evidence": [
+        {
+          "type": "table",
+          "ref": "Table 1",
+          "page": "p.3",
+          "quote": "ExampleNet (k=5) 0.695 / 0.217 / 0.55 / 1.2 s"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "title": "结果：检索量 vs 质量（重建图）",
+      "claim": "重建图：ROUGE-L F1 随 k 先升后降，k=5 为甜点。",
+      "location": "Table 1 (p.3); Fig. 1 (p.3)",
+      "status": "mapped",
+      "evidence": [
+        {
+          "type": "table",
+          "ref": "Table 1",
+          "page": "p.3",
+          "quote": "ROUGE-L F1 column: 0.612 / 0.638 / 0.695 / 0.681"
+        },
+        {
+          "type": "figure",
+          "ref": "Fig. 1",
+          "page": "p.3",
+          "quote": "precision-at-k of the retriever; the bar for k=5 is 0.82"
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "title": "结论",
+      "claim": "所有配置均优于基线；k=5 是信息量与噪声的平衡点。",
+      "location": "§4 Conclusion (p.4)",
+      "status": "mapped",
+      "evidence": [
+        {
+          "type": "section",
+          "ref": "§4 Conclusion",
+          "page": "p.4",
+          "quote": "Retrieval augmentation improves code-review comment quality without fine-tuning."
+        }
+      ]
+    },
+    {
+      "page": 6,
+      "title": "局限与展望",
+      "claim": "局限明确：合成基准、索引内存、服务成本、非英语未测。",
+      "location": "§4 Limitations (p.4)",
+      "status": "mapped",
+      "evidence": [
+        {
+          "type": "section",
+          "ref": "§4 Limitations",
+          "page": "p.4",
+          "quote": "Limitations: (i) benchmark is synthetic; …"
+        }
+      ]
+    }
+  ]
+}
