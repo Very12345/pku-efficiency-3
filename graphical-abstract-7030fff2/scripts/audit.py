@@ -110,6 +110,53 @@ def audit(spec: dict, content: dict, svg_path: str, png_path: str,
     report["missing_values"] = missing_vals
     report["layout_log"] = spec.get("layout_log", [])
 
+    # 8a. four-element coverage (question/method/results/conclusion) ------------
+    panels_spec = spec.get("panels") or {}
+    panel_ids = set()
+    for el in spec.get("elements", []):
+        if el.get("panel"):
+            panel_ids.add(el["panel"])
+        for k in ("question", "method", "results", "conclusion"):
+            if el.get("role") == f"panel:{k}":
+                panel_ids.add(k)
+    report["four_element_coverage"] = {
+        "expected": ["question", "method", "results", "conclusion"],
+        "on_canvas": sorted(p for p in ("question", "method", "results", "conclusion")
+                            if (p in panel_ids or p in panels_spec)),
+        "missing": [p for p in ("question", "method", "results", "conclusion")
+                    if p not in panel_ids and p not in panels_spec],
+        "content_panels": {p: len(panels_spec.get(p, [])) if isinstance(panels_spec.get(p), list) else 0
+                           for p in ("question", "method", "results", "conclusion")},
+    }
+
+    # 8b. layer naming: every <g id="layer:*"> matches the documented set -------
+    EXPECTED_LAYERS = ["background", "panels", "entities", "relations",
+                       "data", "legend", "annotations"]
+    found_layers = set(re.findall(r'<g id="layer:([^"]+)"', svg_text))
+    bad_layers = sorted(found_layers - set(EXPECTED_LAYERS))
+    missing_layers = sorted(set(EXPECTED_LAYERS) - found_layers)
+    elements_without_src = 0
+    missing_src_roles = []
+    for el in spec.get("elements", []):
+        role = el.get("role", "")
+        # source binding is mandatory for the scientific data carriers;
+        # layout/decor/panel-point roles are content-level
+        if not role.startswith(("entity:", "relation:", "datum:", "icon")):
+            continue
+        if not (el.get("src") or el.get("data_src")):
+            elements_without_src += 1
+            missing_src_roles.append(role)
+    report["layer_naming"] = {
+        "expected": EXPECTED_LAYERS,
+        "found": sorted(found_layers),
+        "bad": bad_layers,
+        "missing": missing_layers,
+        "elements_without_src": elements_without_src,
+        "missing_src_roles": missing_src_roles[:10],
+        "note": "layers must match references/layer-naming.md; entity/relation/datum/icon "
+                "elements must carry src",
+    }
+
     # 9. determinism probe: spec hash (pure function of content) ----------------
     probe = hashlib.sha256(str(spec).encode("utf-8")).hexdigest()[:16]
     report["determinism_probe"] = {

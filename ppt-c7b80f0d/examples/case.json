@@ -3,7 +3,12 @@
   "title": "ExampleNet: 一种检索增强的代码评审方法（合成示例论文）",
   "task": "将材料中的论文转成学术汇报 PPT：主线清晰、页级证据可追溯、可编辑、适配给定模板。",
   "material": "materials/paper-mini.txt",
-  "template": { "path": "template-example.pptx", "kind": "organizer-example" },
+  "template": {
+    "path": "template-example.pptx",
+    "kind": "organizer-example",
+    "generated_at_runtime_by": "scripts/make_template.py",
+    "note": "示例模板不随包携带（技能资源只允许文本文件）；先跑 make_template.py --out examples 生成。若未生成，main.py 会自动回退内置 16:9 学术版式并记录 template.kind=builtin。"
+  },
   "audience": "研究组组会（research group seminar）",
   "duration_minutes": 15,
   "slide_count": 8,

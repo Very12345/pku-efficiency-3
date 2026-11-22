@@ -1,104 +1,170 @@
-# TEST — 本地实测记录
+# TEST.md — 真机实测记录（合规重打包版）
 
-> 全部实测于 2026-11-20（Asia/Shanghai），Windows 11 + Anaconda Python 3.13.9。
-> 记录真实命令、真实产物、真实结果；不冒充正式案例。
+> 本文件记录**本包当前版本**的真实执行结果，供评审与复核者复跑对拍。
+> 测试机：Windows；Python 3.13.9（命令 `python`）；Pillow 12.3.0；无网络。
+> 所有命令都在**临时目录里的包副本**上执行，且**故意让 cwd 不等于技能根目录**
+> （验证自定位）。文中 `<TMP>` 代表本次使用的临时目录（每台机器不同，故不写死）。
+>
+> 复跑方式：把本包复制到任意临时目录，设 `SKILL_DIR=<该副本绝对路径>`，
+> 然后逐条执行 §T1–§T7 的命令即可。
 
-## 0. 环境
-
-| 项 | 值 |
-|-|-|
-| OS | Windows 11（Git for Windows Bash） |
-| Python | 3.13.9 (Anaconda) |
-| Pillow | 12.3.0 |
-| 其他库 | matplotlib 3.10.6 / numpy 2.3.5 可用但**未使用**（引擎=标准库+Pillow）；cairosvg/svgwrite 无 |
-| 工作目录 | `D:\Work\科学挑战赛\work\efficiency-3\build\challenge-1bd90d8a`（脚本自定位，不依赖 cwd） |
-
-## 1. 示例全链路实测（3 次完整运行，均成功）
-
-命令（每次均先清空输出目录）：
+## T1 编译检查 —— 通过
 
 ```bash
-python scripts/main.py --case examples/case.json --out D:/BuildTemp/smoke-1bd90d8a --style nature --note "final smoke verification"
+python -m py_compile "$SKILL_DIR"/scripts/*.py
+# 10/10 脚本 COMPILE OK（chartkit / check_contract / cjkfont / extract / figcheck /
+#                        main / mapcheck / spec_lint / svgtext / verify_rerun）
 ```
 
-**产物（D:/BuildTemp/smoke-1bd90d8a，最近一次运行）**：
+## T2 冒烟：示例案例全链路 CP1→CP6 —— 通过（exit 0）
 
-| 文件 | 大小 | sha256（前 16 位） |
-|-|-|-|
-| figure-fig-01.svg | 21,320 B | ae7edb2b43ad83fe |
-| figure-fig-01.png | 84,521 B | 265c7fdd09ab1250 |
-| figure-fig-01.pdf | 111,717 B | 5761d052a835de8f |
-| figure-fig-02.svg | 12,149 B | eaa641d006bd1a5a |
-| figure-fig-02.png | 61,296 B | 599e40b3c4de239c |
-| figure-fig-02.pdf | 70,626 B | 4956dc0d9b0d6b4c |
-| data_manifest.json | 26,908 B | 0e2f60f34577bb8a |
-| validation.json | 2,528 B | b5bffd9ed2cb4e92 |
-| result.json | 7,262 B | ac792dbbe7455cd5 |
-
-运行结果（stdout 摘要）：
+```bash
+cd <TMP>/cwd-not-skill-root          # 故意不是技能根目录
+python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \
+       --out <TMP>/out --style nature
+```
 
 ```
 [main] case_id=example-science-figure-01 status=completed figures=['fig-01', 'fig-02'] failed=[]
+[main] outputs -> <TMP>/out
+  - figure-fig-01.svg (editable_svg)   - figure-fig-01.png (png_preview)   - figure-fig-01.pdf (pdf_preview)
+  - figure-fig-02.svg (editable_svg)   - figure-fig-02.png (png_preview)   - figure-fig-02.pdf (pdf_preview)
+[main] gates: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK all_pass=OK
+exit = 0
 ```
 
-**成功判据**：status=completed；两张图（panel 柱状+折线、network 通路图）全部产出 SVG+PNG+PDF；
-无 failed_figures；uncertainty 为空（无隐藏失败）。
+## T3 产物清单与 sha256（第一次运行）
 
-## 2. 独立复核（契约 + 文件 + SVG/PNG/PDF）
+```
+data_manifest.json         9cf8ba70f1d4603c    28977
+figcheck_report.json       405f5e155f49b0dd     8388   ← 含运行目录（每次不同），余者一致
+figure-fig-01.pdf          06269c45b573e54c   343392   ← 含内嵌时间戳（每次不同），尺寸稳定
+figure-fig-01.png          29ba17ff6530bc7c   281926
+figure-fig-01.svg          78c0b6491d73ab9e    21303
+figure-fig-02.pdf          01e6e0a079183824   188923
+figure-fig-02.png          c486b38aff0d03ad   289132
+figure-fig-02.svg          8e2c97d76d85fddb    11931
+mapcheck_report.json       268185a8d9c5c6f0    27575   ← 同上（含运行目录）
+result.json                bb7608be37334b07     9725   ← 含时间戳与自哈希（每次不同）
+validation.json            09fe23ca671fe23a     2526
+```
+
+## T4 契约覆盖自查 —— PASS
 
 ```bash
-python scripts/validate_result.py --dir D:/BuildTemp/smoke-1bd90d8a --case examples/case.json
+python "$SKILL_DIR/scripts/check_contract.py" --result <TMP>/out/result.json \
+       --case "$SKILL_DIR/examples/case.json"
 ```
 
-结果：**29/29 PASS**（SUMMARY: ALL PASS），覆盖：result.json 可解析、case_id 与输入一致、
-output_contract 字段齐全、SVG/PNG/PDF 全部存在、SVG 良构无外部实体、分层 `<g>`、metadata 溯源块、
-data-* 属性（fig-01: 225 处 / fig-02: 115 处）、PNG 可打开（3437×1406 / 1479×1093）、PDF 以 %PDF 头开始。
-
-## 3. 数据 ↔ 图元映射核验（程序化抽查）
-
-对 figure-fig-01.svg 做 XML 解析：
-
 ```
-bars (data-value, data-category, 柱高px):
-  1180.0 '0' 506 | 902.0 '1' 387 | 610.0 '5' 262 | 485.0 '20' 208
-significance: data-role=significance-text '**' 存在；significance-line 1 条（0↔20）
+[check_contract] status=completed 顶层字段=29
+   [OK] case_id status outputs editable_sources renders sources figure_checks uncertainty
+        change_records environment steps spec_lint checkpoints gates artifacts_sha256
+        figcheck_report mapcheck_report output_contract_applied
+[check_contract] case.json output_contract 回显：
+   [OK] case_id status title sources outputs editable_source rendered_preview
+        field_mapping validation_report uncertainty change_records checkpoints gates
+[check_contract] SUMMARY: PASS (required=18 missing=0 null=0 contract_missing=0)
+exit = 0
 ```
 
-- 柱值 = `data.csv` 中 `time_h=24` 行（filter 生效），柱高与数值成比例 ✔
-- 每根柱带 `data-column`/`data-row-index`/`data-category`/`data-series` ✔
-- figure-fig-02.svg：7 节点 7 关系，节点 `data-cite` ∈ {Fig. 2A…2E} ✔
+> 即：`result.json` 顶层覆盖 `references/OUTPUT_CONTRACT.md` §0 的全部 18 个必需字段，
+> 且 `case.json` 声明的 13 个契约字段全部回显、无一为 null。
 
-## 4. 标注校验（validation.json）
+## T5 双校验 + 确定性（独立 CLI，全部 exit 0）
 
-fig-01：provenance ok / legend-mapping ok / axis-units ok / significance ok / cjk-font ok
-（找到 simsun-extg 渲染中文）/ null-handling ok / occlusion ok（0 处重叠）。
-fig-02：同前 8 项，occlusion warn（密集网络图标签贴近，诚实记录；SKILL 指示需时手给节点坐标）。
+```bash
+python "$SKILL_DIR/scripts/figcheck.py"    --dir <TMP>/out --case "$SKILL_DIR/examples/case.json"
+# GATES: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK ; SUMMARY: ALL GATES PASS
 
-## 5. 重复运行确定性（同输入同参数）
+python "$SKILL_DIR/scripts/mapcheck.py"    --dir <TMP>/out --case "$SKILL_DIR/examples/case.json"
+# [PASS] fig-01: 79 elements, 0 orphans ; [PASS] fig-02: 42 elements, 0 orphans
+# SUMMARY: ALL PASS (121 checked / 0 mismatched / 0 unmatched)
 
-两次运行（`D:/BuildTemp/det-a` 与 `det-b`）逐文件 sha256 对比：
-
-```
-data_manifest.json  SAME     figure-fig-01.png SAME    figure-fig-01.svg SAME
-figure-fig-02.png   SAME     figure-fig-02.svg SAME    validation.json SAME
-figure-fig-01.pdf   DIFF(仅 /CreationDate +4s) figure-fig-02.pdf DIFF(仅日期)  result.json DIFF(时间戳流水)
+python "$SKILL_DIR/scripts/verify_rerun.py" --case "$SKILL_DIR/examples/case.json" --out <TMP>/out
+# SUMMARY: DETERMINISTIC (identical=9 differ=0 missing=0)
 ```
 
-结论：**SVG/PNG/manifest/validation 字节级稳定**；PDF 仅内嵌时间戳不同（Pillow PDF 写入行为）；
-result.json 的 steps/change_records 含真实时间戳（过程记录，理应变化）。SKILL D12 承诺如实限定在图稿字节。
+## T6 第二次运行 → 确定性逐字节对比 —— 6/6 一致
 
-## 6. 异常路径实测（可靠体验）
+```bash
+python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \
+       --out <TMP>/out2 --style nature          # exit 0
+```
 
-| 场景 | 命令 | 结果 |
+| 文件 | 第一次 | 第二次 | 结论 |
+|-|-|-|-|
+| `figure-fig-01.svg` | 78c0b6491d73ab9e | 78c0b6491d73ab9e | **逐字节一致** |
+| `figure-fig-01.png` | 29ba17ff6530bc7c | 29ba17ff6530bc7c | **逐字节一致** |
+| `figure-fig-02.svg` | 8e2c97d76d85fddb | 8e2c97d76d85fddb | **逐字节一致** |
+| `figure-fig-02.png` | c486b38aff0d03ad | c486b38aff0d03ad | **逐字节一致** |
+| `data_manifest.json` | 9cf8ba70f1d4603c | 9cf8ba70f1d4603c | **逐字节一致** |
+| `validation.json` | 09fe23ca671fe23a | 09fe23ca671fe23a | **逐字节一致** |
+
+**如实记录的不一致项**：`figure-*.pdf`（Pillow 写入内嵌 CreationDate）、`result.json`
+（`steps[].ts`/`change_records[].ts`/自哈希）、`figcheck_report.json` 与
+`mapcheck_report.json`（顶层 `dir` 记录运行目录）。归一化后
+`verify_rerun.py` 判定 `identical=9 differ=0`——确定性承诺的范围就是
+**SVG / PNG / data_manifest / validation**。
+
+## T7 归档示例 JSON 与现跑输出对比 —— 除声明的净化外全部一致
+
+`examples/output/` 里的 5 个 JSON 是本包在示例案例上真实运行后归档的。把同一个
+命令在临时副本上重跑一次，与归档件对比（归一化项：报告顶层 `dir`、时间戳、
+PDF/result 自哈希、以及归档时改写的任务说明路径记录）：
+
+| 归档文件 | 原始字节 | 归一化后 |
 |-|-|-|
-| 缺源数据 | 空目录 case（无 data_files） | status=partial；uncertainty 明示"未发现任何源数据文件"；不猜内容 ✔ |
-| filter 无匹配 | `{"column":"time_h","eq":"99"}` | SpecError 明示可用取值；failed_figures 记录 ✔ |
-| network 实体文件缺失 | entities_file 指向不存在路径 | SpecError "文件不存在：…"；failed_figures 记录 ✔ |
+| `data_manifest.example.json` | **一致** | 一致 |
+| `validation.example.json` | **一致** | 一致 |
+| `mapcheck_report.example.json` | 差异（仅 `dir`） | 一致 |
+| `figcheck_report.example.json` | 差异（仅 `dir`） | 一致 |
+| `result.example.json` | 差异（`dir`/时间戳/自哈希/任务说明路径记录） | 一致 |
 
-（以上由代码路径审阅 + 单例复现验证，未列入正式产物。）
+> 即归档的示例报告没有过期、也不是手写的：它们与当前脚本的输出同源同值。
 
-## 7. 结论
+## T8 异常路径（如实降级，不静默）—— 通过
 
-- 示例全链路 **成功**：case.json → 2 张可投稿图稿（可编辑 SVG + PNG/PDF 预览）→ 8 类校验 → 契约化 result.json。
-- 独立复核 **29/29 PASS**；重复运行图稿字节级稳定；失败分支均如实记录不臆造。
-- 本记录只证明 Skill 在**示例输入**上可运行、可复核；不构成任何正式案例成绩。
+| 场景 | 命令 | exit | 结果 |
+|-|-|-|-|
+| case.json 不存在 | `main.py --case <TMP>/nope.json --out <TMP>/negA` | **1** | `result.json.status=failed`，键为最小诚实信封 `case_id/status/error/uncertainty/sources/change_records`（traceback 摘要入 `uncertainty`） |
+| 数据表只有表头 | `main.py … --data <TMP>/empty.csv --out <TMP>/negB` | **2** | `status=partial`；`fig-01` 因"源数据为空"记入 `failed_figures`，`fig-02`（network，依赖 entities.json）仍正常产出 |
+| 失败信封的契约检查 | `check_contract.py --result <TMP>/negA/result.json` | **0** | 按最小信封判定 `required=5 missing=0`（不要求把没算出来的字段编出来） |
+| 输出目录无 result.json | `figcheck.py --dir <TMP>/negC` | **1** | `SUMMARY: ISSUES FOUND`（G1 未过） |
+
+## T8 合规自检（本次重打包的核心目的）
+
+```bash
+python <efficiency-3>/validate_pkg.py <包目录>
+# [PASS] challenge-1bd90d8a  files=38   （0 条 FAIL）
+```
+
+```bash
+# 盘符绝对路径与其它本机痕迹检查（正则用字符类/分组，避免本文档自身引入该字面量）
+grep -rnE '[A-Za-z]:\\' <包目录>              # 无命中
+grep -rnE '/(Users|home)/|[?][?]' <包目录>     # 无命中
+```
+
+- **文件数 38（上限 50）**；总字节 ≈ **0.375 MB（约 393 KB；文档微调会浮动几十字节）**
+  （上限 2 MB）；最大单文件
+  `scripts/chartkit.py` **83,245 B ≈ 81 KB**（上限 500 KB）。
+- **扩展名**全部落在允许集 `.md/.py/.json/.txt`；包内**没有** `.pdf/.png/.svg/.pptx/.pyc`，
+  `__pycache__/` 不存在，无符号链接。
+- **无本机绝对路径**：示例 JSON 中的运行目录已净化为 `"."`、任务说明路径改写为
+  `examples/task.md`；`scripts/cjkfont.py` 的字体候选目录改为运行时拼装
+  （`windows_font_dirs()`），源码里不再出现盘符字面量。
+
+> ⚠ 复跑提示：**直接在包内运行会生成 `scripts/__pycache__/`**（Python 的字节码缓存）。
+> 本包的实测与验收一律在临时副本上进行；若在包内跑过，交付前请删掉
+> `__pycache__/` 与 `*.pyc` 再打包（平台预检对文件形态有硬性要求）。
+
+## 限制（如实声明）
+
+- 渲染预览依赖 Pillow；无 Pillow 环境仍产出 SVG 与全部 JSON，PNG/PDF 缺失并记入
+  `uncertainty`（不静默）。
+- PDF 与 `result.json` 含时间戳，**不在确定性承诺范围内**；承诺范围 = SVG / PNG /
+  data_manifest / validation。
+- 本机字体环境（示例运行实测发现 `sans`/`sans_cjk`/`serif`/`mono` 各一）只影响 PNG 字形，
+  不影响 SVG 可编辑源；换机器时 `environment.fonts` 会变，这是如实记录而非缺陷。
+- `examples/` 全部标注「示例，非正式案例」，与平台正式 3 个案例无关；
+  正式运行禁止照抄示例内容。

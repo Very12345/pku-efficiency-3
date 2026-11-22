@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Rendered preview / export generation.
+"""Rendered preview / export generation (scientific-schematic-editor v2).
+
+Font resolution is delegated to scripts/textfont.py (shared probe), so the
+same verdict is reported by render, checks and result.json.
 
 Two responsibilities:
 
@@ -41,30 +44,13 @@ from matplotlib.lines import Line2D
 
 from layout import compute_layout, edge_endpoints
 from svgbuilder import TYPE_FILLS, EDGE_STYLES
+from textfont import resolve_font_stack
 
 # Okabe-Ito-inspired colour-blind-safe palette for categorical data
 CATEGORY_COLORS = [
     "#0072B2", "#E69F00", "#009E73", "#D55E00", "#56B4E9",
     "#CC79A7", "#F0E442", "#000000", "#999999", "#661100",
 ]
-
-
-def resolve_font_stack():
-    """Pick the best available font for the OS; return (family, ok_cjk)."""
-    try:
-        from matplotlib import font_manager
-        if sys.platform.startswith("win"):
-            for name in ("Microsoft YaHei", "SimHei", "SimSun"):
-                if any(name.lower() in (f.name or "").lower()
-                       for f in font_manager.fontManager.ttflist):
-                    return name, True
-        for name in ("Noto Sans CJK SC", "WenQuanYi Zen Hei", "PingFang SC"):
-            if any((f.name or "").lower() == name.lower()
-                   for f in font_manager.fontManager.ttflist):
-                return name, True
-    except Exception:
-        pass
-    return "DejaVu Sans", False
 
 
 def _prep_axis(ax, W, H):

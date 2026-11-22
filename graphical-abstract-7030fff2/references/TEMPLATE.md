@@ -58,9 +58,11 @@
 ## 5. 复用步骤（他人套用到新论文/基金图）
 
 1. 复制 `examples/case.json`，替换 `entities/relations/data/figure_constraints`（数值必须同时在材料文件中出现）。
-2. 运行 `python scripts/main.py --case yours/case.json --out yours/out`。
-3. 检查 `audit.json`：关注 `missing_values / entity_coverage / bounds`。
-4. 打开 SVG 微调：改 `<text>` 文案、移动面板层元素、换 `background` 底色；保存后重新 `python scripts/main.py`（spec.json 为新基线）。
+2. 运行 `python "$SKILL_DIR/scripts/main.py" --case yours/case.json --out yours/out`。
+3. 检查 `audit.json`：关注 `missing_values / entity_coverage / bounds`，
+   并跑 `python "$SKILL_DIR/scripts/check_contract.py" --result yours/out/result.json --case yours/case.json`（exit 0 为准）。
+4. 打开 SVG 微调：改 `<text>` 文案、移动面板层元素、换 `background` 底色；保存后重新
+   `python "$SKILL_DIR/scripts/main.py" ...`（spec.json 为新基线）。
 5. 导出：PNG/PDF 已随运行产出；如需期刊专用分辨率 `--raster-scale 3`。
 
 ## 6. 扩展点（新增面板类型）

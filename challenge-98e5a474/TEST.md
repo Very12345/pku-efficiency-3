@@ -1,135 +1,116 @@
-# TEST.md — 本地实测记录
+# TEST.md — 本机实测记录（challenge-98e5a474 合规形态包）
 
-记录建包机（Windows 11 + Anaconda Python 3.13.9）上的真实运行记录。
-每段给出**实际命令、退出码、产物**；结论（通过/部分/失败）如实标注，
-不虚构。
+> 实测环境：Windows 10/11 + Python **3.13.9 (Anaconda)**；
+> 已装 matplotlib / Pillow / numpy / reportlab / PyMuPDF(fitz)；
+> **无 cairosvg/svgwrite**（与平台运行时同类：预览走 matplotlib 镜像）。
+> 所有命令用 `$SKILL_DIR` 指向技能根（= 本 SKILL.md 所在目录），
+> **脚本自定位不依赖 cwd**；示例产物全部写在包外临时目录。
+>
+> 复跑方式：把本包复制到任意临时目录，按下面命令逐条执行即可。
 
-## 0. 环境
+## T0 打包形态（验收：只有 UTF-8 文本、数量/体积达标、无残留）
 
-| 项 | 值 |
+```bash
+find "$SKILL_DIR" -type f | wc -l        # 34 个文件（上限 50）
+du -sb "$SKILL_DIR"                      # 275838 B ≈ 269 KB（上限 2 MB）
+find "$SKILL_DIR" -type f -printf '%s %p\n' | sort -rn | head -1
+#                                         # 最大单文件 23016 B（scripts/main.py，上限 500KB）
+```
+
+- 扩展名仅 `.md/.py/.json/.txt/.csv`（均属许可的 7 种文本类型之一）；
+- **无** `__pycache__/`、`*.pyc`、`*.pdf`、`*.png`、`*.svg`、`*.pptx`、
+  `*.jsonl`、`*.zip`、字体文件、符号链接；
+- 包内绝对路径残留检查无命中：不含 Windows 盘符绝对路径（形如「盘符 + 冒号
+  + 反斜杠」）、不含 `/Users/` 前缀、不含 UNC 扩展前缀、不含 `/d/Work` 这类
+  本机 staging 路径（脚本只用 `os.path.dirname(__file__)` 自定位，文档统一
+  用 `$SKILL_DIR` 与临时目录）。
+
+## T1 语法编译（验收：15 个脚本全过，退出码 0）
+
+```bash
+python -m py_compile "$SKILL_DIR"/scripts/*.py     # exit 0
+```
+
+## T2 自测（本机实测：35 项 PASS / 0 FAIL，退出码 0）
+
+```bash
+python "$SKILL_DIR/scripts/selftest.py"
+# [PASS] ×35 → "selftest: all checks passed"，exit 0
+```
+
+覆盖：kind 词表映射/未知 kind 标记、布局裁剪与分层、SVG 分层+内嵌清单可
+编辑性、chart 三导出+映射一致、图例双向、编辑动作（含残留引用解析）、
+**spec_lint CP1（好清单 valid / 坏清单捕获 unknown+legend+containment）**、
+**textfont 探针（本机解析到 Microsoft YaHei, cjk_ok=True，确定性）**、
+**extract 草稿（从合成材料抽到 TNF-α…IL6 等实体+4 条关系）**、
+**pdftext（backend 探测 + stdlib 回退不崩）**、
+**validate_result G 门（缺产物/假成功均被拒）**、checklist CP1–CP5 齐备。
+
+## T3 冒烟：主脚本真实出图（验收：exit 0 + 产物落盘）
+
+| 命令 | 实测结果 |
 |-|-|
-| OS | Windows 11（Git Bash，cp936 控制台） |
-| python | 3.13.9（Anaconda，命令 `python`） |
-| matplotlib | 3.10.6（Agg 后端） |
-| Pillow | 12.3.0 |
-| numpy | 2.3.5 |
-| reportlab | 5.0.0（未在流水线中使用，仅报告版本） |
-| cairosvg / svgwrite | **不可用**（实测 import 失败）→ 预览采用同 layout 的 matplotlib 镜像，见 §4 |
+| `python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples" --out <tmp>/out1` | **exit 0**；SPEC_LINT(CP1) **VALID (0 fails/0 warns)** → CHECK SUMMARY **success (0 fails, 0 warns, 0 acks)** → `figure.svg` 15241 B + `figure.pdf` 37929 B + `figure.png` 124129 B + `result.json` |
+| 同上但 **cwd 在包外**（只给绝对路径） | **exit 0**，输出与上一致 —— 证明自定位成立 |
+| `python "$SKILL_DIR/scripts/run_examples.py" --out <tmp>/examples` | **exit 0**；schematic / chart / edit 三步各 exit 0，三份 `result.json` 的 G1–G8 契约校验各 **exit 0（VALID）** |
 
-## 1. 语法编译
+schematic 冒烟检查明细（`result.json.verification.checks`，全部 ok）：
+`svg.editable_text`（19 个 `<text>`，0 个被 path 化的文字）· `svg.layers`（6 个
+语义图层）· `svg.manifest_embedded` · `svg.manifest_matches` ·
+`svg.data_entity_attrs` 6/6 · `svg.data_relation_attrs` 5/5 ·
+`svg.data_source_attrs` 5/5 · `pdf.header/pages/fonts_embedded` ·
+`bitmap.dimensions` 4500×2580 · `bitmap.dpi_print`（18 cm 宽有效 ≈635 DPI ≥300）·
+`bitmap.colourspace` RGBA · `legend.missing_kinds` / `legend.orphan_items` ·
+`font.cjk`（Microsoft YaHei, True）· `traceability` 实体 6/6、关系 5/5（100%）。
 
-```bash
-cd build/challenge-98e5a474/scripts
-python -m py_compile main.py manifest.py layout.py svgbuilder.py render.py checks.py edit.py report.py validate_result.py selftest.py
-# 结果：COMPILE_OK（无 SyntaxError；修正过一处 SyntaxWarning 后以
-# -W error::SyntaxWarning 复核通过）
-```
-
-## 2. 逻辑自测（selftest.py，23 项）
+## T4 契约门（验收：三份 result.json 均 VALID，退出码 0）
 
 ```bash
-python scripts/selftest.py
+python "$SKILL_DIR/scripts/validate_result.py" \
+    --case "$SKILL_DIR/examples/case.json" --result <tmp>/out1/result.json
+# VALID: ... satisfies OUTPUT_CONTRACT (G1-G8 gates pass, contract echoed).  exit 0
 ```
-结果：**23/23 PASS**（关系词表映射、未知类型标记、清单 JSON 往返、
-射线裁剪、分层布局、SVG 可编辑性/内嵌清单/图例分层、图表渲染与
-图例一致性、图例缺项检测、编辑动作 rename/add/remove 与 change records）。
 
-## 3. 三条冒烟链路（exit code 均 0）
+- `result.json` 顶层键 **21/21** 覆盖 `references/OUTPUT_CONTRACT.md` §1 全部字段；
+- 额外回显 `case.json.output_contract` 声明的 2 个键（`entities_relations`、
+  `deliverables`，四形态默认值），顶层共 **23** 键；
+- chart / edit 两份 result.json 各 **21** 键，`validate_result.py` 同样 VALID。
 
-### 3.1 schematic（验收命令）
+## T5 确定性（CP5，验收：两次运行 figure.svg 逐字节一致）
 
 ```bash
-python scripts/main.py --case examples/case.json --out D:/BuildTemp/smoke-98e5a474
-# rc=0  CHECK SUMMARY: success (0 fails, 0 warns, 0 acks)
-# 产物：
-#   figure.svg  15241 B  （可编辑源：19 个 <text>、6 个 data-entity 组、
-#                        5 个 data-relation 组、3 个图例项、3 个 marker、
-#                        内嵌 ER 清单且与绘图清单一致）
-#   figure.png  124129 B （4500x2580 RGBA；18 cm 宽有效 DPI ≈ 635）
-#   figure.pdf  37929 B  （1 页；2 个 Type3 字体定义）
-#   result.json 8993 B   （契约全字段 + case_id=example-schematic-001）
+python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples" --out <tmp>/d1 \
+    --fixed-time 2026-01-01T00:00:00+0800      # exit 0
+python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples" --out <tmp>/d2 \
+    --fixed-time 2026-01-01T00:00:00+0800      # exit 0
 ```
 
-### 3.2 chart（数据表驱动）
+实测 `figure.svg` sha256 两跑相同：
+`163e20f75dc51d9ffb09fd1b6520f2ab7e6e7ff858dfedec64265328b6ffe61e`。
+`result.json` 在 `--fixed-time` 下除 `artifacts[].abspath`（输出目录不同）
+外一致；不加 `--fixed-time` 时差异**仅限 `generated_at`**——这是如实差异。
 
-```bash
-python scripts/main.py --case examples/case_chart.json --out D:/BuildTemp/smoke-98e5a474-chart
-# rc=0  CHECK SUMMARY: success (0 fails, 0 warns, 0 acks)
-# 说明：matplotlib 默认 svg.fonttype=path 会把文字转成路径（实测第 1 版
-# 图表 SVG 为 0 个 <text>，被 svg.editable_text 判 fail）；已强制
-# rcParams["svg.fonttype"]="none" 后 16 个真实 <text>，检查全绿。
-```
+## T6 失败分支（异常处理，实测退出码语义）
 
-### 3.3 源文件级编辑（source-preserving edit）
+| 场景 | 实测 |
+|-|-|
+| `--case <不存在的文件>` | **exit 2**，`FATAL: case not found: … (pass a case.json file or a directory containing case.json)`，不写产物 |
+| `--case <空目录>` | **exit 2**，`FATAL: no case.json found under directory: …` |
+| case 无 manifest/entities，work 区也没有 `entities.json` | **exit 1**，写出 `status=failed` 的 `result.json`（`verification.checks.fails=[pipeline]`），工作不丢失 |
+| manifest 含未知 kind（`gibberish`） | **exit 1**，`SPEC_LINT (CP1): INVALID (1 fails, 0 warns)` → `status=partial`、`verification.spec_lint.valid=false`，明细可查 |
+| 渲染致命异常 | 捕获 → 写 `status=failed` 的 result.json（代码路径同上报错分支） |
+| 编辑目标 SVG 无内嵌清单 | 退出码 2 + 明确说明需先用本 Skill 生成 |
 
-```bash
-python scripts/main.py --case examples/case_edit.json \
-    --edit-svg D:/BuildTemp/smoke-98e5a474/figure.svg \
-    --out D:/BuildTemp/smoke-98e5a474-edit
-# rc=0  CHECK SUMMARY: success (0 fails, 0 warns, 0 acks)
-# result.json change_records = [rename E2 TNFR1→"TNFR1 (receptor)",
-#   relabel R5→"upregulates IL6 transcription", note]（before→after 齐）
-```
+## T7 辅助脚本实测
 
-## 4. 契约校验（validate_result.py）
+| 命令 | 实测结果 |
+|-|-|
+| `python "$SKILL_DIR/scripts/extract.py" --inputs "$SKILL_DIR/examples/sources/figure03-note.md" --out <tmp>/draft.json` | exit 0；**17 实体 / 4 关系 / 5 组**（候选草稿，含重复需人工复核）；全部带 `_draft`+`source`+行号；`spec_lint` 对草稿判 INVALID（缺图例）——证明"草稿必须复核后才可绘图"的门有效 |
+| `python "$SKILL_DIR/scripts/textfont.py" --probe` | exit 0；本机 164 个字体族，resolved family=Microsoft YaHei, cjk_ok=True |
+| `python "$SKILL_DIR/scripts/textfont.py" --list` | exit 0；逐候选族打印 `[x]/[ ]` 与最终解析结果 |
+| `--help`（main / spec_lint / extract / pdftext / textfont / validate_result / run_examples） | 逐个 **exit 0**；此前 `spec_lint.py --help` 在 Windows GBK 控制台会因帮助文本中的箭头字符触发 `UnicodeEncodeError`，现 8 个 CLI 入口在导入区统一加 `sys.stdout/stderr.reconfigure(errors="replace")` 兜底（try/except 包裹，不改任何逻辑与接口），窄编码控制台不再崩溃 |
 
-```bash
-python scripts/validate_result.py --case examples/case.json \
-    --result D:/BuildTemp/smoke-98e5a474/result.json          → VALID rc=0
-python scripts/validate_result.py --result ...-chart/result.json → VALID rc=0
-python scripts/validate_result.py --result ...-edit/result.json  → VALID rc=0
-```
-（初版把空 `change_records`/`legend_mapping` 当退化值误判 INVALID，已按
-"合法空列表"修正——无编辑、无图例的案例是正常状态。）
-
-## 5. 失败路径（异常处理实测）
-
-| 用例 | 命令 | 结果 |
-|-|-|-|
-| 无 ER 清单且 case 无数据 | `--case D:/BuildTemp/fail-no-manifest/case.json` | rc=1；明确提示"不画无依据的图"；写出 **status=failed** 的 result.json（pipeline fail 明细），不编造 |
-| 图例缺"抑制"项但图上有抑制箭头 | `--case D:/BuildTemp/fail-legend/case.json` | rc=1；`legend.missing_kinds fail`；校验汇总 **partial**，检查明细进 result.json |
-| 来源材料路径不存在 | 上述 no-manifest 用例附带 | 记录 WARN + 写入 result.json uncertainty("unresolved source materials")，不静默 |
-
-修复记录：`_write_failed_result` 曾因位置参数错位抛 TypeError（
-"could not write failed result.json"），已修为关键字参数并复测通过。
-
-## 6. 产物程序化审计（可信度证据）
-
-```python
-# SVG：xml.etree 解析 well-formed；6 entity groups、5 relation groups、
-# 19 <text>、marker×3（activation/open/inhibition）、legend-item×3、
-# <metadata id=er-manifest> 可解析且 entities 与绘图清单一致
-# PNG：PIL 采样 46 种颜色；实体填充色 #DEEBF7/#FCE4D6/#E2EFDA 均在；
-# 箭头色 activation-#0072B2 出现 284 像素、recruitment-#009E73 940 像素、
-# transcriptional-#CC79A7 112 像素；inhibition-#D55E00 为 0 —— 因为示例
-# 图无抑制关系，0 像素符合预期（不是 bug）
-```
-
-## 7. 限制（已如实入包，见 README/result.json uncertainty）
-
-- 无 cairosvg/svgwrite：PNG/PDF 预览 = 同一 layout+manifest 的
-  matplotlib 镜像（语义一致、非逐像素）——这是环境的**故意降级设计**，
-  不是隐藏故障；
-- CJK 字体：resolve_font_stack 优先微软雅黑/SimHei/Noto CJK（本机命中
-  微软雅黑）；无 CJK 字体的机器上 PNG 预览可能缺字（SVG 文字不受影响）；
-- PDF 字体嵌入审计为尽力而为（Type3/FontFile 计数），完整审计在无
-  专用 PDF 库的情况下如实标注 warn；
-- 控制台在 Windows cp936 下不显示 §/≈ 等字符（文件内容为 UTF-8，无损）。
-
-## 8. 包约束检查
-
-```bash
-find . -type f | wc -l        # 34（阈值 50 文本文件；剔除 __pycache__ 后）
-find . -type f -size +500k    # 0
-du -sb .                      # ≈ 492 KB（阈值 2MB）
-find . -type l | wc -l        # 0（无符号链接）
-```
-
-## 9. 结论
-
-- 必做验收 `python scripts/main.py --case examples/case.json --out
-  <目录>`：**通过**（rc=0，真实产出 figure.svg/png/pdf + result.json）；
-- SKILL.md：**完整**（YAML frontmatter + 用途/条件/输入输出/七步执行/
-  异常处理表/自查清单/资源/限制/禁止）；
-- OUTPUT_CONTRACT.md：**定义了完整 result.json 契约**；
-- 失败分支全部能在不编造的前提下落盘说明（failed/partial 语义）。
+> 复核：以上全部为本机真实运行输出，命令列于此即可复跑（示例产物写在
+> 包外临时目录）。示例输入与产物均标注"示例，非正式案例"，不得作为正式
+> 案例答案或预置答案提交。**未实测**：TIFF/EPS 导出（`--exports tiff,eps`）
+> 与真实期刊 PDF 字体嵌入审计，本机未逐项验证，故不声称。

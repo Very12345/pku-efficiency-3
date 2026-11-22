@@ -1,20 +1,29 @@
 # -*- coding: utf-8 -*-
-"""Graphical Abstract skill -- orchestrator (figures group, pku-efficiency-3).
+"""Graphical Abstract skill -- orchestrator (figures group, pku-efficiency-3) v2.
 
-Usage:
-    python scripts/main.py --case examples/case.json --out <outdir> \
-        [--task examples/task.md] [--material examples/] [--raster-scale 2] \
-        [--pdf|--no-pdf]
+Usage (self-locating: cwd may be anywhere, $SKILL_DIR = this package root):
+    python "$SKILL_DIR/scripts/main.py" --case <case.json> --out <outdir> \
+        [--task task.md] [--material <file|dir>] [--raster-scale 2] \
+        [--pdf|--no-pdf] [--plan plan.json]
+
+    # example (synthetic case shipped in this package)
+    python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" --out /tmp/ga-out
+    # official runtime shape
+    python "$SKILL_DIR/scripts/main.py" --case /input/case.json --task /input/task.md --out /app/output
 
 Pipeline (all steps operate on *actual* input files; nothing is assumed):
+    0. plan-first (design-first): optional --plan plan.json (scaffolded by
+       scripts/scaffold.py, finalized by the agent); linted with spec_lint.
     1. read case.json  (hard fail if unreadable)
     2. resolve task.md + material files (CLI override > case.json > defaults)
     3. extract entities / relations / data / panel points (source-bound)
     4. build deterministic figure spec + layout
-    5. write editable layered SVG (real source file)
-    6. render PNG (+ optional PDF) preview  (backend chain w/ honest log)
-    7. audit self-checks on the produced files
-    8. write result.json (output_contract echo + envelope + provenance)
+    5. lint the produced spec (spec_lint) — problems recorded in result.json
+    6. write editable layered SVG (real source file)
+    7. render PNG (+ optional PDF) preview  (backend chain w/ honest log)
+    8. audit self-checks on the produced files (incl. four-element coverage,
+       layer naming, determinism)
+    9. write result.json (output_contract echo + envelope + provenance + plan)
 
 Exit codes: 0 = success (may include warnings -> status "partial"),
             1 = hard input error, 2 = internal error (stderr explains).
@@ -36,6 +45,7 @@ from figurespec import build as spec_build  # noqa: E402
 from svgbuilder import write as svg_write  # noqa: E402
 from preview import render as preview_render  # noqa: E402
 from audit import audit  # noqa: E402
+import spec_lint  # noqa: E402
 
 RESERVED_ENVELOPE = {
     "schema_version", "case_id", "status", "summary", "deliverables",
@@ -56,6 +66,28 @@ def main() -> int:
     args = _parse_args()
     out_dir = os.path.abspath(args.out)
     os.makedirs(out_dir, exist_ok=True)
+
+    # ---- 0. design-first plan (optional) ------------------------------------
+    plan = None
+    plan_source = "none"
+    plan_lint = {"valid": True, "problems": []}
+    if args.plan:
+        if os.path.isfile(args.plan):
+            with open(args.plan, encoding="utf-8") as fh:
+                plan = json.load(fh)
+            plan_source = os.path.abspath(args.plan)
+            plan_lint = spec_lint.lint_plan(plan)
+        else:
+            plan_lint = {"valid": False,
+                         "problems": [f"plan file not found: {args.plan}"]}
+    # plan may carry figure_constraints the case does not (design first)
+    plan_overrides = {}
+    if plan:
+        pc = plan.get("figure_constraints") or plan.get("constraints") or {}
+        for k in ("width", "height", "dpi", "colorblind", "flow_arrows",
+                  "raster_scale", "pdf", "language"):
+            if k in pc and pc[k] is not None:
+                plan_overrides[k] = pc[k]
 
     # ---- 1. read the actual case -----------------------------------------
     case_path = os.path.abspath(args.case)
@@ -84,6 +116,14 @@ def main() -> int:
     if not content["title"]:
         content["title"] = f"Graphical Abstract — {case_id}"
 
+    # 0b. design-first plan overrides applied to constraints (plan wins on
+    #     design decisions; source content still comes from the material).
+    for k, v in plan_overrides.items():
+        content.setdefault("constraints", {})[k] = v
+    if plan_source != "none" and plan_overrides:
+        change_notes.append(f"plan {os.path.basename(plan_source)} overrode constraints: "
+                            + ", ".join(sorted(plan_overrides)))
+
     # ---- 2. figure spec (deterministic layout) ----------------------------
     try:
         spec = spec_build(content)
@@ -91,6 +131,11 @@ def main() -> int:
         print(json.dumps({"status": "failed", "error": f"layout failed: {type(e).__name__}: {e}"},
                          ensure_ascii=False))
         return 2
+
+    # ---- 2b. lint the produced spec before drawing (CP1b) --------------------
+    spec_lint_rep = spec_lint.lint(spec, content)
+    for p in spec_lint_rep["problems"]:
+        change_notes.append("spec_lint: " + p)
 
     # ---- 3. editable SVG source -------------------------------------------
     stem = f"{case_id}_graphical_abstract"
@@ -145,6 +190,11 @@ def main() -> int:
         uncertainty.append("matplotlib 渲染不可用，已回退到备用渲染器："
                            + str(render_report["matplotlib_failed"]))
     uncertainty += [u for u in content.get("uncertainty", [])]
+    for p in spec_lint_rep["problems"]:
+        uncertainty.append("spec_lint: " + p)
+
+    if plan_lint.get("problems"):
+        uncertainty.append("plan lint problems: " + "; ".join(plan_lint["problems"][:6]))
 
     change_records = [
         {"ts": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "what": "skill run (graphical-abstract v" + SKILL_VERSION + ")"},
@@ -182,11 +232,19 @@ def main() -> int:
         deliverables.append({"kind": "preview", "format": "pdf",
                              "path": None, "present": False, "reason": pdf_reason})
 
+    main_status = _status(audit_report, render_report, content)
+    if main_status == "success" and not spec_lint_rep["valid"]:
+        main_status = "partial"   # lint problems must never be hidden behind success
+
     result = {
         "schema_version": SCHEMA_VERSION,
         "skill": {"name": "graphical-abstract", "version": SKILL_VERSION},
         "case_id": case_id,
-        "status": _status(audit_report, render_report, content),
+        "status": main_status,
+        "plan": {"source": plan_source,
+                 "hash": plan_lint.get("plan_hash"),
+                 "lint": plan_lint},
+        "spec_lint": spec_lint_rep,
         "summary": (f"已生成 {len(spec['elements'])} 个图形元素（实体 {len(content['entities'])}、"
                     f"关系 {len(content['relations'])}、数据 {len(content['data'])}）的图形摘要；"
                     f"SVG 可编辑源 + PNG{'+PDF' if any(d.get('format')=='pdf' and d.get('present') for d in deliverables) else ''} 预览已导出。"),
@@ -260,6 +318,8 @@ def _parse_args():
                     help="output directory (default: <skill>/out)")
     ap.add_argument("--raster-scale", type=int, default=None,
                     help="PNG scale vs canvas (default: constraints.raster_scale)")
+    ap.add_argument("--plan", default=None,
+                    help="design plan json from scripts/scaffold.py (design-first; optional)")
     ap.add_argument("--pdf", dest="pdf", action="store_true", default=None,
                     help="produce PDF preview (default: constraints.pdf)")
     ap.add_argument("--no-pdf", dest="pdf", action="store_false", default=None)

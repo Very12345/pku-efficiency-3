@@ -1,81 +1,80 @@
-# RUBRIC_MAP.md —— 五维评分 → 设计覆盖
+# RUBRIC_MAP.md — 评分五维 → 本 Skill 设计覆盖
 
-官方题面评分维度（总分 100，另加 GitHub 公开链接 5 分）：
+> 本题最强高分信号之一：五维评分逐条落到**可执行产物或可复跑命令**上，而不是文件清单。
+> 文件名按合规包要求为 `references/RUBRIC_MAP.md`（与 `OUTPUT_CONTRACT.md` 并列全大写）。
+> 题面评分维度：**实际效果 40 · 使用增益 25 · 创新增益 15 · 可靠体验 10 ·
+> 生态贡献 10 · GitHub 公开链接 +5**（合计 105）。证据路径相对 Skill 根 `$SKILL_DIR`。
+> **文字自述不替代实际运行证据**——每条落点都给出脚本、产物或命令。
+> 与"不加载 Skill 的基础 Agent"的对照口径见包根 `COMPARE.md`。
+> 本包为**合规重打包版**：只收 `.md/.py/.json/.txt/.csv/.yaml/.yml` 七种文本资源，
+> SVG/PNG/PDF 等图件一律由 `scripts/` 在运行时生成（见 `examples/EXPECTED-OUTPUT.md`）。
 
-| 维度 | 分值 | 子项 | 本包的覆盖设计 |
-|---|---|---|---|
-| **实际效果** | 40 | 任务完成度 15 / 结果正确性 15 / 结果完整性 5 / 结果可核验性 5 | 见 §1 |
-| **使用增益** | 25 | 质量增益 15 / 效率增益 5 / 增益可验证性 5 | 见 §2 |
-| **创新增益** | 15 | 新增能力 5 / 方法改进 5 / 创新证据 5 | 见 §3 |
-| **可靠体验** | 10 | 调用与易用性 3 / 运行稳定性 4 / 异常处理 3 | 见 §4 |
-| **生态贡献** | 10 | 文档完整性 3 / 资源可复用性 4 / 分享推广价值 3 | 见 §5 |
-| GitHub 链接 | 5 | 公开可访问、可找到作品 | `GITHUB_URL.txt`（发布时替换为精确链接） |
+## 1. 实际效果（40 分）
 
-## §1 实际效果（40 分）
+| 评分点 | 本 Skill 覆盖 | 证据位置（本包内） |
+|-|-|-|
+| 任务完成度 15 | "读机制材料—定实体与关系—定布局与图例—出源文件与导出件"完整闭环，四个检查点全部是**可执行门**：CP1 读真实文件（材料缺失直接 failed）→ CP2 机制规格（自动草稿或 `--model-file`，再过 schema 门）→ CP3 确定性布局 + SVG/PNG/PDF 渲染 + 双审计 → CP4 写 `result.json` 并判定 status | 入口 `scripts/main.py`（CP1–CP4 与退出码 0/2/3）；流程叙述见 `SKILL.md` §3 |
+| 结果正确性 15 | 实体类型（gene/protein/complex/rna/small_molecule/other）、箭头语义（activation/inhibition/binding/modification/transport）、通路方向与区室、数据编码全部**可机器校验**：`topology.py`（P01–P08 方向/区室/同名消歧/重复边/自环/反馈）、`legend_audit.py`（L01–L08、E01–E02 图例覆盖/箭头=图例/颜色⊆图例∪映射/虚线语义/线宽/数值溯源）、schema 门对 **raw** 规格校验防静默归一 | `scripts/topology.py`、`scripts/legend_audit.py`、`scripts/validate_figure.py`、`assets/mechanism-spec.schema.json`；规则依据 `references/legend-encoding.md`、`references/mechanism-spec.md` |
+| 结果完整性 5 | 实体/边/图例项/并行分支/反馈环全覆盖：示例案例实测 9 实体 / 9 边 / 4 区室 / 5 类箭头全在用 / 负反馈环右侧绕行 / 弱证据虚线；产物 4+3 类（SVG·PNG·PDF·result.json + model.json·topology.json·legend_audit.json） | `examples/output/result.json`（实跑，含 `scientific_content.counts`）；`examples/EXPECTED-OUTPUT.md`（应产出清单与契约字段） |
+| 结果可核验性 5 | 追溯链可独立复核：材料行号 → 实体/边 `source[]` → SVG 元素 `data-source` → `evidence_sources` → `export_checks[].sha256` → `change_records`；审计产物独立落盘（topology.json / legend_audit.json），契约可独立复查 | `references/OUTPUT_CONTRACT.md`；`scripts/check_contract.py`（独立 CLI，exit 0/2/3）、`scripts/validate_figure.py` |
 
-- **任务完成度（15）**：SKILL.md §3 定义 0→6 步完整闭环——读真实材料（步骤0）→
-  实体/关系抽取（步骤1）→ 人工核验（步骤2）→ 区室布局（步骤3）→ 可编辑 SVG + PNG/PDF
-  导出（步骤3/4）→ 契约 result.json（步骤5）。`scripts/main.py` 一条命令跑通全链
-  （`--case examples/case.json` 冒烟成功，示例包内已附实测产物）。
-- **结果正确性（15）**：`scripts/extract.py` 把材料动词映射为 5 类箭头语义
-  （激活=三角头、抑制=横杠、结合=无线、修饰=圆点、转运=菱形），基因斜体/蛋白正体、
-  复合物、小分子、区室带分离绘制；`scripts/validate.py` 强制“边类型→箭头”“图例↔图面颜色”
-  “来源标注”“方向上游→下游”一致，任何一致性问题把 status 降级。实体写错（如把基因当蛋白、
-  把区室错放）由 agent 步骤2 逐条对照材料把关并被校验器 M01–M03/T01–T03 卡住。
-- **结果完整性（5）**：可交付 4 类产物（SVG 源 / PNG / PDF / model.json）+ 图例自动生成
-  覆盖全部在用类型 + 数据映射色带 + 反馈环右侧绕行，覆盖线性/分支/反馈/多区室通路（示例
-  即含 4 区室、激活/抑制/结合/修饰/转运 5 类边、负反馈环、弱证据虚线）。
-- **结果可核验性（5）**：实体/边均带 `source[{ref,kind,line}]`（SVG 内 data-source 属性 +
-  result.json evidence_sources）；`export_checks` 记录 sha256/尺寸/dpi；`self_check` 输出
-  每条检查结果；`change_records` 完整记录从读取到导出的修改链；model.json 独立存放供复核。
+## 2. 使用增益（25 分）
 
-## §2 使用增益（25 分）
+| 评分点 | 本 Skill 覆盖 | 证据位置（本包内） |
+|-|-|-|
+| 质量增益 15 | 基础 Agent 的典型失败（名词平铺成圈、箭头不区分激活/抑制、无图例、无源文件、通路方向颠倒）被本 Skill 的**机器审计**逐条挡住：拓扑 + 图例/编码审计 + 契约门任一 fail 就不允许 `status=success`；对照口径（同输入、同工具权限、可核验判据）写在 `COMPARE.md` | `COMPARE.md`（对照方案与判据）、`scripts/topology.py`、`scripts/legend_audit.py`、`scripts/validate_figure.py`、`TEST.md` 实测段 |
+| 效率增益 5 | 结构化材料一步出草稿（`extract.py`）；改一个标签无需重画——改 `model.json` 后 `--model-file` 重跑即重导出 SVG/PNG/PDF（0 次重画、1 次重跑）；一个 JSON 规格驱动两条渲染后端（SVG 手写图层 + matplotlib），杜绝两版图不一致；关系核对清单模板把人工核验变成逐行填空 | `scripts/extract.py`、`scripts/layout.py`、`scripts/pathway_svg.py`、`scripts/mpl_backend.py`、`templates/relation-checklist-template.md` |
+| 增益可验证性 5 | 增益不靠自述：`check_contract.py` 与 `validate_figure.py` 各自有明确退出码（0 通过 / 2 有告警 / 3 失败），`self_check.determinism`（model_sha16 / svg_sha16）承诺同输入同输出，`TEST.md` 记录可复跑命令与逐文件 sha256 | `TEST.md`（T1–T9，含双跑确定性）、`scripts/check_contract.py`、`scripts/validate_figure.py`、`result.json.self_check.determinism` |
 
-- **质量增益（15）**：对照试验可复现——同一 case.json/材料输入，本 Skill 管线输出
-  结构一致、图例自洽、可编辑的多层图（结构一致性由固定布局算法 + 校验器保证）；而
-  基础 Agent 手工画图常见“平铺节点/箭头不区分/无图例/无源文件”，本包逐项规避。
-- **效率增益（5）**：材料→图一次成形（结构化材料可全自动草稿 + agent 快速核验）；
-  改图零重画——改 model.json 的一个标签/一条边，`--model-file` 重跑即可重新导出 SVG/PNG/PDF
-  与校验，无需手修位图。
-- **增益可验证性（5）**：`examples/` 内置最小 case 与对照输出；README/TEST.md 记录实测
-  命令与产物 sha256；评判方可按说明在同一输入上复跑（三条固定案例脚本路径见 SKILL.md §3）。
+## 3. 创新增益（15 分）
 
-## §3 创新增益（15 分）
+| 评分点 | 本 Skill 覆盖 | 证据位置（本包内） |
+|-|-|-|
+| 新增能力 5 | ① 机制文字 → 图元与边边界的**结构化映射**（动词→5 类箭头 + 证据强度→线宽 + 弱证据→虚线）；② **机制规格 schema 门前置**（对 raw 规格校验，未知类型不会被静默改写成 other，而是 failed）；③ 拓扑 / 图例编码双 linter；④ 可编辑分层 SVG 自动生成（7 个 `layer-*` 组 + `data-id/data-type/data-source`） | `scripts/extract.py`、`scripts/validate_figure.py`（`check_schema`）、`scripts/topology.py`、`scripts/legend_audit.py`、`scripts/pathway_svg.py`、`assets/mechanism-spec.schema.json` |
+| 方法改进 5 | ① 单一 JSON 规格驱动双渲染后端（零漂移）；② 审计矩阵（M/T/P/L/E/S/F/D 系列）把"图例↔图面一致、来源可核、方向正确"从目检变为机器强制；③ 确定性布局与去时间戳 SVG（同输入双跑逐字节一致）；④ 调色板 / glyph 语义集中于 `assets/palettes.json`，改一处全图与图例同步 | `scripts/layout.py`、`scripts/validate_figure.py`、`scripts/model.py`、`assets/palettes.json`；实测见 `TEST.md` T4 |
+| 创新证据 5 | 与常规绘图方案的边界写清楚了：通用画图工具不保留机制语义与来源链，本 Skill 用枚举 schema + 稳定审计 id（P/L/E/T/F/S/D）+ 确定性探针证明"**正确 vs 像**"的差异是可检查的；CJK 实体名与字体缺失被显式化处理（SVG 用 CSS 字体栈，PNG 缺中文字体时告警） | `references/legend-encoding.md`、`references/mechanism-spec.md`、`references/failure-modes.md`、`TEST.md` |
 
-- **新增能力（5）**：机制文字→图元/边的**结构化映射**（动词→箭头类型+证据宽度+虚线规则）；
-  区室与跨膜位置约束布局（胞外/膜/胞质/核分层，核嵌入胞质）；图例-数据编码一致性校验
-  （颜色/线宽逐值对拍）；**可编辑源文件自动生成**（分层命名、data-* 溯源属性、字体栈可替换）。
-- **方法改进（5）**：单一 JSON 模型驱动双后端（SVG + matplotlib）保证图面两版零漂移；
-  自检器把“图例↔图面一致”从人工目检变机器强制；来源标注下沉到 SVG 元素（data-source）。
-- **创新证据（5）**：DIAGRAM_SPEC.md 给出形状/箭头/区室/命名/导出全套规范；示例材料与产物
-  展示 5 类箭头、反馈环、数据映射的完整数据流；TEST.md 记录本机实测成功记录；对比基线
-  （无 Skill 的基础 Agent）由平台固定案例对照，本包不做自我宣称。
+## 4. 可靠体验（10 分）
 
-## §4 可靠体验（10 分）
+| 评分点 | 本 Skill 覆盖 | 证据位置（本包内） |
+|-|-|-|
+| 调用与易用性 3 | 单一入口 + 稳定 CLI：`python3 "$SKILL_DIR/scripts/main.py" --case <case.json> --out <out_dir>`（可选 `--model-file/--task/--materials-dir/--formats/--dpi/--verbose`）；`SKILL.md` 的命令与 `scripts/` 实际入口逐字一致，且用 `$SKILL_DIR` 自定位（cwd 不是技能根也能跑） | `SKILL.md` §3、`README.md` §2、`scripts/main.py` 的 `argparse` 定义 |
+| 运行稳定性 4 | 覆盖线性/分支/反馈/多区室四种通路形态（示例含全部形态），重复运行结构一致；matplotlib 缺失时自动降级为"仅 SVG + 显式记录"，绝不假装有预览；PDF/PNG 导出失败不让 SVG 源失效 | `TEST.md`（T2/T3/T4）、`scripts/mpl_backend.py` 降级分支、`scripts/main.py` 的 preview try/except |
+| 异常处理 3 | 失败模式表 + 决策规则双覆盖：材料缺失/为空、PDF 扫描件、方向缺失、基因与蛋白同名、多区室同一蛋白、数值与图面矛盾、规格不过 schema、图例缺项、数值无源、字体缺失、导出失败、元素过多不可读——每项都有处置与记录位置 | `references/failure-modes.md`（对照表）、`SKILL.md` §4（D1–D12）与 §8（速查表） |
 
-- **调用与易用性（3）**：SKILL.md 自包含：用途/适用/输入输出/步骤/命令/自查清单；脚本
-  自定位（`os.path.dirname(__file__)`），不依赖 cwd；一条命令生成全部产物。
-- **运行稳定性（4）**：纯标准库可跑通 SVG 主干；matplotlib 缺失自动降级并如实记录；
-  布局对线性/分支/反馈/多区室稳定（示例 4 区室 12 边复跑 3 次产物 sha 稳定，见 TEST.md）；
-  重复运行结构一致（确定性布局，无随机）。
-- **异常处理（3）**：SKILL.md §7 异常表覆盖：缺方向信息（标 uncertain 不臆造方向）、
-  同名基因/蛋白歧义、数据与图示矛盾、PDF 材料、字体缺失、导出失败、图面元素过多、
-  材料无实体（failed 并给补救路径）等，每类都有处置与记录位置。
+## 5. 生态贡献（10 分）
 
-## §5 生态贡献（10 分）
+| 评分点 | 本 Skill 覆盖 | 证据位置（本包内） |
+|-|-|-|
+| 文档完整性 3 | 说明（`SKILL.md`）/ 依赖与安装（`README.md` §5）/ 自测（`TEST.md`）/ 对照（`COMPARE.md`）/ 构建与重打包记录（`worklog.md`）+ references 5 件（`OUTPUT_CONTRACT.md`、`RUBRIC_MAP.md`、`mechanism-spec.md`、`legend-encoding.md`、`failure-modes.md`）+ assets 3 件 + 模板 + examples 输入与期望输出 | 包根与 `references/`、`assets/`、`templates/`、`examples/` |
+| 资源可复用性 4 | 可复用件：机制规格 schema（`assets/mechanism-spec.schema.json`）、调色板与 glyph 语义（`assets/palettes.json` + `legend-encoding.md`）、关系核对模板（`templates/relation-checklist-template.md`）、四个可独立调用的校验 CLI（`check_contract.py`/`validate_figure.py`/`topology.py`/`legend_audit.py`）、示例材料与已核验模型（`examples/`） | `assets/`、`templates/`、`scripts/`、`examples/` |
+| 分享推广价值 3 | 沉淀为可复用规则而非一次性脚本：箭头语义=科学论断、图例/图面/数据三方一致、数值必须溯源、拓扑方向与区室约束、契约四形态回显——可直接作为机制图题集 / 绘图规范 / 校验清单的起点；公开链接见 `GITHUB_URL.txt` | `references/*`、`GITHUB_URL.txt` |
 
-- **文档完整性（3）**：README.md（运行方法/依赖/限制/失败处理）+ SKILL.md + DIAGRAM_SPEC.md +
-  OUTPUT_CONTRACT.md + TEST.md 五件齐全，示例自带输入输出。
-- **资源可复用性（4）**：可复用件 = 绘图规范（DIAGRAM_SPEC.md）、样式常量表
-  （scripts/model.py 集中维护）、校验器（validate.py）、契约（OUTPUT_CONTRACT.md）、示例材料；
-  他人可直接扩展新边类型/新映射字段。
-- **分享推广价值（3）**：GITHUB_URL.txt 提供公开仓库入口（发布代理覆写为精确链接）；
-  包内题材自带教学意义（机制图规范），可作为题集/图元库起点。
+## 6. GitHub 公开作品链接（+5 分）
 
-## 疑点与边界（如实声明）
+`GITHUB_URL.txt` 为单行公开仓库定位：
+`https://github.com/Very12345/pku-efficiency-3/tree/main/challenge-83d4f050`。
+评审无需登录即可打开该目录并看到 `SKILL.md` 与全部文本资源（本包不含任何二进制，
+所有图件由脚本在运行时生成，因此链接内不存在无法预览的图元文件）。
 
-- 本包不实现 PDF 直接解析（环境无 cairosvg/PyMuPDF 依赖假设）；PDF 材料走 agent 抽文或
-  --model-file 手工建模（SKILL.md §7），这是刻意准确优先的设计。
-- 自动抽取器只保证结构化材料可解析；散文材料依赖 agent 核验（步骤 2 强制），
-  不宣称全自动 NLP 能力。
-- 本包不包含正式案例的预制答案；examples/ 全部标注“示例，非正式案例”。
+## 7. 相对 build 基础包与 v2 的覆盖变化
+
+**算法/接口层（v2 已建立，本版不改）**
+
+- 新增：CP1–CP4 检查点流水线 + 决策规则 D1–D12（`SKILL.md`）；
+- 新增：机制规格 schema 门（`assets/mechanism-spec.schema.json`，对 raw 规格校验防静默归一）；
+- 新增：`topology.py`（P 系列）与 `legend_audit.py`（L/E 系列）双审计、独立 `check_contract.py`；
+  审计产物 topology.json / legend_audit.json 落盘；
+- 新增：`templates/relation-checklist-template.md`（人工核验执行载体）、`assets/result.template.json`；
+- 强化：契约四形态回显 + G1–G8 硬性门；未人工核验的草稿 / schema 不过 / 门不过时不允许 `success`；
+  SVG 去时间戳（确定性）；数值溯源 E01 成为阻断检查；
+- 修复（基包缺陷）：抽取器对 `A 动词 B` 的 left 尾随空格；约束行被误抽为实体。
+
+**资源形态层（本合规重打包版新增）**
+
+- 删除全部非文本资源（`examples/output/diagram.pdf|png|svg`）与 `__pycache__`，包内只留七种文本扩展名；
+- 图件全部改为**运行时生成**：`scripts/main.py` + `pathway_svg.py` + `mpl_backend.py` 现场产出
+  `diagram.svg`（可编辑源，7 层）、`diagram.png`、`diagram.pdf`；缺 matplotlib 时降级并如实记录；
+- `examples/output/**` 改为"示例案例上的实跑 JSON + 文字化期望输出"（`EXPECTED-OUTPUT.md`），
+  并清除全部本机绝对路径痕迹（provenance 只记相对/环境路径）；
+- 文档文件名对齐合规形态（`OUTPUT_CONTRACT.md` / `RUBRIC_MAP.md`），`SKILL.md` 改为 `$SKILL_DIR` 自定位命令。

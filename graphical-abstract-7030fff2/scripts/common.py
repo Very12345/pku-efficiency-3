@@ -15,7 +15,7 @@ import json
 import os
 import re
 
-SKILL_VERSION = "1.0.0"
+SKILL_VERSION = "2.0.0"
 SCHEMA_VERSION = "1.0"
 
 # ---------------------------------------------------------------------------

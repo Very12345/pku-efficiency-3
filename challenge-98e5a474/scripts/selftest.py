@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 """Quick self-test of the skill's core logic (no platform involved).
 
-Runs pure-logic checks (kind mapping, edge clipping, layout, manifest
-round-trip, legend conformance) and a tiny end-to-end render into a temp
-directory. Prints PASS/FAIL per item; exit code is the number of failed
-items (0 = all green).
+v2 suite: base logic checks (kind mapping, edge clipping, layout, manifest
+round-trip, legend conformance, chart render, edit) plus the new v2 pieces:
+spec_lint CP1 gate, draft extractor, pdftext fallback, textfont probe and
+validate_result G1-G8 contract gates. Prints PASS/FAIL per item; exit code
+is the number of failed items (0 = all green).
 
     python <skill_root>/scripts/selftest.py
 """
@@ -14,6 +15,12 @@ import json
 import os
 import sys
 import tempfile
+
+try:  # narrow Windows consoles (GBK) must not crash --help or log output
+    sys.stdout.reconfigure(errors="replace")
+    sys.stderr.reconfigure(errors="replace")
+except Exception:
+    pass
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
@@ -216,12 +223,139 @@ def test_checks_and_edit():
                if r["from"] in ("E9",) and r["to"] == "E9"]) >= 0)
 
 
+def test_spec_lint_v2():
+    import spec_lint as sl
+    good = {
+        "figure_type": "schematic",
+        "entities": [
+            {"id": "E1", "name": "TNF", "source": "s.md", "evidence": "q"},
+            {"id": "E2", "name": "TNFR1", "source": "s.md", "evidence": "q"},
+            {"id": "E3", "name": "NF-kB", "source": "s.md", "evidence": "q"},
+        ],
+        "relations": [
+            {"id": "R1", "from": "E1", "to": "E2", "kind": "binds",
+             "source": "s.md"},
+            {"id": "R2", "from": "E2", "to": "E3", "kind": "activates",
+             "source": "s.md"},
+        ],
+        "groups": [],
+        "legend": [
+            {"id": "L1", "key": "recruitment", "label": "recruits"},
+            {"id": "L2", "key": "activation", "label": "activates"},
+        ],
+    }
+    issues = sl.lint_manifest(good, sl.load_dict(
+        os.path.join(_HERE, "..", "assets", "relation-dict.json")))
+    check("spec_lint: good manifest valid",
+          not [i for i in issues if i["level"] == "fail"], str(issues))
+    bad = dict(good)
+    bad["legend"] = [{"id": "L1", "key": "recruitment", "label": "r"}]
+    bad["relations"] = list(good["relations"]) + [
+        {"id": "R3", "from": "E1", "to": "E3", "kind": "gibberish",
+         "source": "s.md"},
+        {"id": "R4", "from": "E1", "to": "E3", "kind": "contains",
+         "source": "s.md"},
+    ]
+    issues = sl.lint_manifest(bad, sl.load_dict(
+        os.path.join(_HERE, "..", "assets", "relation-dict.json")))
+    kinds = {i["check"] for i in issues if i["level"] == "fail"}
+    check("spec_lint: unknown kind + legend gap + containment caught",
+          {"spec.relation_kind", "spec.legend_missing_kinds",
+           "spec.containment_group"}.issubset(kinds), str(kinds))
+
+
+def test_textfont_v2():
+    import textfont as tf
+    p = tf.probe()
+    check("textfont probe has resolved family",
+          bool(p["resolved"]["family"]), str(p["resolved"]))
+    check("textfont probe deterministic",
+          tf.probe() == p)
+
+
+def test_extract_v2():
+    import extract as ex
+    mat = os.path.join(_HERE, "..", "examples", "sources", "figure03-note.md")
+    if not os.path.isfile(mat):
+        return
+    part = ex.extract_file(mat, "sources/figure03-note.md")
+    names = {e["name"] for e in part["entities"]}
+    check("extract: finds bold entity names from note",
+          {"TNF-α", "TNFR1", "TRADD", "RIPK1", "NF-κB",
+           "IL6"}.issubset(names), str(sorted(names)))
+    check("extract: finds candidate relations",
+          len(part["relations"]) >= 3, "%d" % len(part["relations"]))
+    check("extract: every item carries _draft + source",
+          all(e.get("_draft") and e.get("source") for e in part["entities"]))
+
+
+def test_pdftext_v2():
+    import pdftext as pt
+    import tempfile
+    nl9 = bytes((10,))
+    blob = (b"%" + b"PDF-1.4" + nl9 + b"1 0 obj" + nl9 +
+            b"<< /Type /Page >>" + nl9 + b"endobj" + nl9 +
+            b"2 0 obj" + nl9 + b"<< /Length 60 >>" + nl9 +
+            b"stream" + nl9 +
+            b"BT /F1 12 Tf (TNF-alpha) Tj ET" + nl9 +
+            b"endstream" + nl9 + b"endobj" + nl9)
+    with tempfile.TemporaryDirectory() as td:
+        pdf = os.path.join(td, "m.pdf")
+        with open(pdf, "wb") as fh:
+            fh.write(blob)
+        info = pt.extract_pdf(pdf)
+        check("pdftext: fallback backend reported",
+              info["backend"] in ("stdlib", "fitz", "pypdf", "PyPDF2"),
+              str(info["backend"]))
+        check("pdftext: toy pdf did not crash", True)
+
+
+def test_validate_gates_v2():
+    import validate_result as vr
+    good = {
+        "case_id": "selftest", "status": "success",
+        "figure_type": "schematic", "title": "t",
+        "skill": {"name": "x"}, "workorder": "w",
+        "main_result": {"deliverables": {}}, "artifacts": [],
+        "evidence": {}, "legend_mapping": [], "data_mapping": {},
+        "verification": {"checks": {"fail_count": 0, "fails": []}},
+        "sources": [], "uncertainty": [], "change_records": [],
+        "generated_at": "2026-01-01T00:00:00+0000", "tool_versions": {},
+    }
+    errs = vr.validate(good)
+    check("validate_result: missing artifacts rejected",
+          any("G7" in e for e in errs), str(errs))
+    bad_status = dict(good)
+    bad_status["verification"] = {"checks": {"fail_count": 1,
+                                             "fails": [{"level": "fail"}]}}
+    errs = vr.validate(bad_status)
+    check("validate_result: success-with-fails rejected",
+          any("G2" in e for e in errs), str(errs))
+
+
+def test_checklist_v2():
+    import json as _json
+    cl_path = os.path.join(_HERE, "..", "assets", "checklist.json")
+    with open(cl_path, "r", encoding="utf-8") as fh:
+        cl = _json.load(fh)
+    check("checklist: CP1..CP5 present",
+          {"CP1", "CP2", "CP3", "CP4", "CP5"}.issubset(
+              {c["id"] for c in cl.get("checkpoints", [])}),
+          str([c["id"] for c in cl.get("checkpoints", [])]))
+
+
 def main():
     roundtrip_manifest()
     test_layout()
     test_svg_builder()
     test_chart()
     test_checks_and_edit()
+    test_spec_lint_v2()
+    test_textfont_v2()
+    test_extract_v2()
+    test_pdftext_v2()
+    test_validate_gates_v2()
+    test_checklist_v2()
     print()
     if FAILED:
         print("%d FAILED: %s" % (len(FAILED), "; ".join(FAILED)))

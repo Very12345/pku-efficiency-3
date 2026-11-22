@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""scientific-schematic-editor -- CLI orchestrator.
+"""scientific-schematic-editor v2 -- CLI orchestrator.
 
-Reads a case (case.json + task.md + source materials), draws an editable
-SVG from the ER manifest, renders PNG/PDF (and optional TIFF/EPS)
-previews/exports, runs honest export & correctness checks, and writes a
-structured result.json per references/OUTPUT_CONTRACT.md.
+Reads a case (case.json + task.md + source materials), runs the CP1
+plan-lint gate (scripts/spec_lint.py) against assets/relation-dict.json,
+draws an editable SVG from the ER manifest, renders PNG/PDF (and optional
+TIFF/EPS) previews/exports, runs honest export & correctness checks, and
+writes a structured result.json per references/OUTPUT_CONTRACT.md (with a
+determinism sha probe so identical inputs produce identical output).
 
 Typical invocation (paths absolute -- the script does NOT depend on the
 working directory):
@@ -14,6 +16,11 @@ working directory):
         --case <case.json> \\
         --manifest <entities.json> \\      # optional: ER manifest
         --out <output-dir>
+
+`--case` also accepts a *directory* (`--case examples` resolves to
+`examples/case.json`), so the documented one-liner works without knowing
+the file name. `--out` is always given explicitly in the docs; when it is
+omitted it defaults to ./output relative to cwd.
 
 `--manifest` is optional: if the case.json already carries `entities` /
 `relations` / `manifest` / `data`, they are used directly. In the
@@ -38,6 +45,8 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
+import hashlib
+
 from manifest import (normalize_manifest, load_manifest, case_to_manifest,
                       validate_manifest, traceability_score, persist_manifest)
 from layout import compute_layout
@@ -45,7 +54,14 @@ from svgbuilder import build_schematic_svg, write_svg
 import render as render_mod
 import checks as checks_mod
 import edit as edit_mod
+import spec_lint as spec_lint_mod
 from report import build_result, write_result
+
+try:  # narrow Windows consoles (GBK) must not crash --help or log output
+    sys.stdout.reconfigure(errors="replace")
+    sys.stderr.reconfigure(errors="replace")
+except Exception:
+    pass
 
 
 def log(msg, *args):
@@ -112,6 +128,49 @@ def fetch_manifest(args, case, work_dir):
         "rule.")
 
 
+def resolve_case_path(raw):
+    """Resolve --case to an actual case.json file.
+
+    Accepts, in order:
+      1. a file path (used as-is);
+      2. a directory containing `case.json`
+         (e.g. `--case <skill_root>/examples`);
+      3. a directory containing `examples/case.json`
+         (e.g. `--case <skill_root>`);
+      4. a directory whose only JSON file looks like a case
+         (has case_id / figure_type / workorder).
+
+    Returns (case_path, None) on success or (None, error_message).
+    Directories are supported so the documented smoke command
+    `main.py --case examples --out <dir>` works without guessing a
+    filename; nothing else about case handling changes.
+    """
+    p = os.path.abspath(raw)
+    if os.path.isfile(p):
+        return p, None
+    if not os.path.isdir(p):
+        return None, ("case not found: %s (pass a case.json file or a "
+                      "directory containing case.json)" % p)
+    for cand in (os.path.join(p, "case.json"),
+                 os.path.join(p, "examples", "case.json")):
+        if os.path.isfile(cand):
+            return cand, None
+    import glob
+    for cand in sorted(glob.glob(os.path.join(p, "*.json"))):
+        try:
+            with open(cand, "r", encoding="utf-8") as fh:
+                probe = json.load(fh)
+        except Exception:
+            continue
+        if isinstance(probe, dict) and (probe.get("case_id")
+                                        or probe.get("figure_type")
+                                        or probe.get("workorder")):
+            return cand, None
+    return None, ("no case.json found under directory: %s (expected "
+                  "case.json, examples/case.json or a single case-like "
+                  "*.json)" % p)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(
         prog="scientific-schematic-editor",
@@ -119,7 +178,9 @@ def main(argv=None):
                     "charts from source materials, with traceability and "
                     "export checks.")
     ap.add_argument("--case", required=True,
-                    help="path to case.json (platform: /input/case.json)")
+                    help="path to case.json, or a directory containing "
+                         "case.json (platform: /input/case.json; smoke: "
+                         "--case <skill_root>/examples)")
     ap.add_argument("--manifest",
                     help="optional path to the ER manifest (entities.json)")
     ap.add_argument("--out", default=None,
@@ -139,13 +200,23 @@ def main(argv=None):
                     help="raster resolution for PNG/TIFF (default 300)")
     ap.add_argument("--skip-checks", action="store_true",
                     help="write artifacts without running checks")
+    ap.add_argument("--lint", dest="lint", action="store_true",
+                    default=True,
+                    help="run CP1 spec_lint before drawing (default on)")
+    ap.add_argument("--no-lint", dest="lint", action="store_false",
+                    help="skip the CP1 spec_lint gate")
+    ap.add_argument("--fixed-time", default=None,
+                    help="override generated_at with this ISO time (used by "
+                         "TEST.md for byte-identical determinism double-runs)")
     args = ap.parse_args(argv)
 
-    # ---- locate case ----
-    case_path = os.path.abspath(args.case)
-    if not os.path.isfile(case_path):
-        log("FATAL: case file not found: %s", case_path)
+    # ---- locate case (file or directory; see resolve_case_path) ----
+    case_path, case_err = resolve_case_path(args.case)
+    if case_err:
+        log("FATAL: %s", case_err)
         return 2
+    if os.path.abspath(case_path) != os.path.abspath(args.case):
+        log("case resolved: %s", case_path)
     case_dir = os.path.dirname(case_path)
     try:
         with open(case_path, "r", encoding="utf-8") as fh:
@@ -220,6 +291,46 @@ def main(argv=None):
     if args.manifest:
         shutil.copyfile(args.manifest, os.path.join(work_dir, "entities.json"))
 
+    # ---- CP1 gate: plan/spec lint (SKILL.md CP1) ----
+    spec_lint_verdict = None
+    if args.lint:
+        dict_path = os.path.normpath(os.path.join(_HERE, "..", "assets",
+                                                  "relation-dict.json"))
+        rel_dict = None
+        if os.path.isfile(dict_path):
+            with open(dict_path, "r", encoding="utf-8") as fh:
+                rel_dict = json.load(fh)
+        spec_lint_issues = spec_lint_mod.lint_manifest(manifest, rel_dict)
+        spec_fails = [i for i in spec_lint_issues if i["level"] == "fail"]
+        spec_lint_verdict = {
+            "valid": not spec_fails,
+            "fail_count": len(spec_fails),
+            "warn_count": sum(1 for i in spec_lint_issues
+                              if i["level"] == "warn"),
+            "issues": spec_lint_issues,
+        }
+        for i in spec_lint_issues:
+            log("   [spec_lint] %-28s %-4s %s", i["check"], i["level"],
+                i["detail"][:110])
+        log("SPEC_LINT (CP1): %s (%d fails, %d warns)",
+            "VALID" if spec_lint_verdict["valid"] else "INVALID",
+            spec_fails and len(spec_fails) or 0,
+            spec_lint_verdict["warn_count"])
+
+    # ---- determinism probe (CP5): sha of normalised manifest + lint ----
+    determinism = {}
+    try:
+        m_flat = json.dumps(manifest, sort_keys=True, ensure_ascii=False)
+        l_flat = json.dumps(spec_lint_verdict or {}, sort_keys=True)
+        determinism = {
+            "spec_sha16": hashlib.sha256(
+                (m_flat + "|" + l_flat).encode("utf-8")).hexdigest()[:16],
+            "note": "same manifest+lint -> same sha; SVG is byte-identical "
+                    "across runs (result.json differs only in generated_at "
+                    "unless --fixed-time is set)"}
+    except Exception:
+        determinism = {"spec_sha16": "", "note": "probe failed"}
+
     # ---- draw ----
     layout = None
     artifacts = {}
@@ -243,6 +354,12 @@ def main(argv=None):
                 artifacts["figure"]["extra"] = {
                     "role_hint": "editable source (matplotlib SVG, text "
                                  "kept as <text>)"}
+            if "png" in artifacts:
+                # PNG is the raster preview, same role for charts as for
+                # schematics (G7 wants figure + preview + export)
+                artifacts["preview"] = artifacts.pop("png")
+                artifacts["preview"]["extra"] = {
+                    "role_hint": "raster preview of the editable source"}
         else:
             layout = compute_layout(manifest)
             svg_xml = build_schematic_svg(manifest, layout)
@@ -300,6 +417,17 @@ def main(argv=None):
         ack = (manifest.get("acknowledged_issues")
                or case.get("acknowledged_issues") or [])
         overall = checks_mod.summarize(all_issues, ack)
+        if spec_lint_verdict and not spec_lint_verdict.get("valid"):
+            # CP1 gate: hard lint fails downgrade the run honestly (never
+            # silently pretend a non-compliant plan produced full success)
+            spec_fails = [i for i in (spec_lint_verdict.get("issues") or [])
+                          if i["level"] == "fail"]
+            overall["status"] = "partial"
+            overall["fail_count"] += len(spec_fails)
+            overall["fails"] = list(overall.get("fails") or []) + [
+                {"check": "spec_lint." + i.get("check", "gate"),
+                 "level": "fail",
+                 "detail": "CP1: " + i["detail"]} for i in spec_fails]
         for i in all_issues:
             log("   [check] %-26s %-4s %s", i["check"], i["level"],
                 i["detail"][:110])
@@ -346,7 +474,10 @@ def main(argv=None):
 
     # ---- result.json ----
     result = build_result(case, manifest, overall, artifacts, render_info,
-                          source_records, uncertainty, change_records)
+                          source_records, uncertainty, change_records,
+                          spec_lint=spec_lint_verdict, determinism=determinism)
+    if args.fixed_time:
+        result["generated_at"] = args.fixed_time
     rp = write_result(os.path.join(out_dir, "result.json"), result)
     log("wrote %s", rp)
 

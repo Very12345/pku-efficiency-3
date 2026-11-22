@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""matplotlib preview renderer (PNG/PDF).
+"""matplotlib preview renderer (PNG/PDF) for the pathway diagram.
 
 This backend is OPTIONAL: it renders the very same layout/model that the SVG
 backend draws, so the PNG/PDF preview is a faithful raster/vector copy of the
@@ -13,8 +13,8 @@ import math
 import matplotlib
 matplotlib.use("Agg")
 
-from model import (SKILL_NAME, CONTRACT_VERSION, NODE_TYPES, EDGE_TYPES,
-                   EVIDENCE_WIDTH, data_color, data_scale)
+from model import (SKILL_NAME, SKILL_VERSION, CONTRACT_VERSION, NODE_TYPES,
+                   EDGE_TYPES, EVIDENCE_WIDTH, data_color, data_scale)
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, FancyBboxPatch, Circle
@@ -81,7 +81,6 @@ def render_preview(model, layout, png_path=None, pdf_path=None, dpi=150):
         hx, hy = r["head"]
         if not pts:
             continue
-        # orientation from the last two points
         p2 = pts[-1]
         p1 = pts[-2] if len(pts) > 1 else (p2[0] + 10, p2[1])
         ang = math.atan2(p2[1] - p1[1], p2[0] - p1[0])
@@ -122,7 +121,7 @@ def render_preview(model, layout, png_path=None, pdf_path=None, dpi=150):
     ax.text(36, 44, model.get("title") or "机制图 / Pathway diagram",
             fontsize=20, fontweight="bold", color="#1B2631", ha="left", va="center")
     sub = "case: %s · skill: %s v%s · contract %s" % (
-        model.get("case_id") or "-", SKILL_NAME, "1.0", CONTRACT_VERSION)
+        model.get("case_id") or "-", SKILL_NAME, SKILL_VERSION, CONTRACT_VERSION)
     if model.get("example"):
         sub = "【示例，非正式案例】 " + sub
     ax.text(36, 68, sub, fontsize=11, color="#566573", ha="left", va="center")
@@ -176,18 +175,16 @@ def render_preview(model, layout, png_path=None, pdf_path=None, dpi=150):
     ax.text(lx0, ly, case_zh, fontsize=9, color="#566573", ha="left", va="top")
     ly += 18
     if dm.get("field"):
-        import matplotlib.colors as mcolors
-        import matplotlib.cm as cm
         from matplotlib.colors import LinearSegmentedColormap
         cmap = LinearSegmentedColormap.from_list(
             "ramp", [dm.get("low", "#FFF7E0"), dm.get("high", "#1F4E79")])
         gx = lx0
-        ax.add_patch(Rectangle((gx, ly), 90, 10, facecolor=cmap(0.5),
-                               edgecolor="#85929E", linewidth=0.8))
         n = 50
         for i in range(n):
             ax.add_patch(Rectangle((gx + 90.0 * i / n, ly), 90.0 / n + 0.2, 10,
                                    facecolor=cmap(i / (n - 1)), edgecolor="none"))
+        ax.add_patch(Rectangle((gx, ly), 90, 10, facecolor="none",
+                               edgecolor="#85929E", linewidth=0.8))
         ax.text(gx, ly + 22, dm.get("label_zh", "") or dm.get("label_en", ""),
                 fontsize=9, color="#17202A", ha="left", va="top")
         ax.text(gx + 96, ly + 9, "低 %s  高 %s" % (dm.get("low", ""), dm.get("high", "")),
@@ -228,7 +225,7 @@ def render_preview(model, layout, png_path=None, pdf_path=None, dpi=150):
         warnings.append("未找到支持中文的字体，预览 PNG/PDF 中的中文可能显示为方框；"
                         "可编辑 SVG 不受影响（字体由查看端决定）。font=%s" % font_path)
 
-    out = {"warnings": warnings, "font": font_path}
+    out = {"png": None, "pdf": None, "warnings": warnings, "font": font_path}
     if png_path:
         fig.savefig(png_path, dpi=dpi)
         out["png"] = {"path": png_path, "dpi": dpi,
@@ -246,7 +243,6 @@ def _draw_head(ax, x, y, angle, marker, color):
     L = 9.0
 
     def pt(ux, uy):
-        # unit point (ux, uy) scaled by L and rotated by `angle`
         return (x + (ux * ca - uy * sa) * L, y + (ux * sa + uy * ca) * L)
 
     if marker == "arrow":
@@ -273,7 +269,8 @@ def _label_pos(points):
 
 
 if __name__ == "__main__":
-    import json, sys
+    import json
+    import sys
     from layout import compute_layout
     from model import normalize_model, load_json
     model = normalize_model(load_json(sys.argv[1]))

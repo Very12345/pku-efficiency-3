@@ -1,103 +1,128 @@
-# README.md —— 生物机制图与通路图 Skill 包
+# README.md — 生物机制图与通路图 Skill（合规文本包）
 
-挑战：`challenge-83d4f050`（生物机制图与通路图 · figures 组，学术效率第三期）。
-类型：Skill 创作题——平台加载本 Skill 后，用 DeepSeek Harness 在 3 个固定案例上运行，
-自动判分（实际效果 40 / 使用增益 25 / 创新增益 15 / 可靠体验 10 / 生态贡献 10，另有
-GitHub 公开链接 5 分）。
+> 题目：玻尔产品周赛·北大专区·学术效率·第三期 — `challenge-83d4f050`
+> （生物机制与通路图，组：figures）。
+> 本题面固定 3 个案例由平台提供，参赛者只提交 Skill 与运行必需的**文本**资源。
 
 ## 1. 这是什么
 
-把科研机制/通路材料（文本、表格、PDF 中的通路描述、基因-蛋白-化合物关系）变成：
+一个可被 Agent 调用的 Skill，把科研机制/通路材料转成**可逐条质疑的机制图**：
+实体（基因/蛋白/复合物/RNA/小分子/区室）与相互作用（激活/抑制/结合/修饰/转运）
+全部 source-bound，图例 / 数据编码与图面自洽，交付可编辑分层 SVG 源 + PNG/PDF 预览
++ 审计产物 + 契约化 `result.json`。
 
-- **可编辑分层 SVG 源文件**（`diagram.svg`）：图层分组、元素带 data-id/data-type/data-source，
-  改一个标签即可重新导出；
-- **PNG/PDF 预览**（`diagram.png` / `diagram.pdf`）：同一布局引擎渲染，与源文件一致；
-- **契约化 result.json**：case_id、deliverables、scientific_content（实体/边/图例/布局）、
-  来源、uncertainty、change_records、export_checks、self_check。
-- 每个实体/边带来源（材料文件+行号），图例与图面颜色/线宽逐值自洽，5 类箭头语义
-  （激活/抑制/结合/修饰/转运）由材料动词映射，区室按 胞外→膜→胞质→核 分层布局。
+**资源形态（本包最重要的约定）**：包内**只有文本文件**，扩展名限定
+`.md .py .json .txt .csv .yaml .yml` 七种，无二进制、无符号链接、无 `__pycache__`。
+`diagram.svg` / `diagram.png` / `diagram.pdf` 全部由 `scripts/` 在**运行时生成**：
 
-## 2. 目录结构
+| 产物 | 生成者 | 缺失时 |
+|-|-|-|
+| `diagram.svg`（可编辑源，7 层 + `data-*` 溯源） | `scripts/pathway_svg.py`（纯标准库） | 不适用：SVG 必须产出，否则 `failed` |
+| `diagram.png` | `scripts/mpl_backend.py`（matplotlib，可选 Pillow 校验尺寸） | 降级：只交付 SVG，`status=partial` 并写入 `uncertainty`/`export_checks` |
+| `diagram.pdf` | 同上 | 同上 |
+| `model.json` / `topology.json` / `legend_audit.json` / `result.json` | `scripts/main.py` 流水线 | 不适用（流程自身产物） |
 
-```
-SKILL.md                    # Skill 定义（frontmatter + 完整执行说明）
-README.md                   # 本文件
-TEST.md                     # 本机实测记录（命令/产物/结论）
-GITHUB_URL.txt              # GitHub 公开作品链接（占位，发布时覆写）
-references/
-  OUTPUT_CONTRACT.md        # result.json 字段契约（机器校验基准）
-  RUBRIC_MAP.md             # 五维评分 → 设计覆盖映射
-  DIAGRAM_SPEC.md           # 绘图规范（形状/箭头/区室/命名/导出参数/校验规则）
-scripts/
-  main.py                   # 入口：读 case → 建模 → 布局 → SVG/PNG/PDF → 校验 → result.json
-  model.py                  # 数据模型 + 样式常量表（改风格只改这里）
-  extract.py                # 结构化材料草稿抽取器（表格/动词/数据映射）
-  layout.py                 # 确定性区室布局 + 正交边路由（反馈右侧绕行）
-  svg_backend.py            # 可编辑分层 SVG 生成 + well-formed 检查
-  mpl_backend.py            # matplotlib PNG/PDF 预览（可选依赖，缺失自动降级）
-  validate.py               # 独立校验器（M/T/L/D/S/F 检查族）
-  result_writer.py          # result.json 契约生成 + output_contract 合并
-examples/
-  case.json                 # 最小示例输入（标注 示例，非正式案例）
-  materials/example_material.md
-  output/                   # 示例输出（result.json/diagram.svg/png/pdf/model.json）
-```
+## 2. 快速开始（自定位，cwd 不是技能根也能跑）
 
-## 3. 运行方法
-
-依赖：Python ≥3.8 标准库（必）；matplotlib ≥3.5（选，用于 PNG/PDF 预览；缺失时 SVG
-仍可生成，status 记 partial 并写明原因）。
-
-**平台运行时（容器）**
 ```bash
-cd /skills/weekly-skill                      # 脚本自定位，不依赖 cwd
-python3 scripts/main.py --case /input/case.json --out /app/output
-# 材料若为 PDF/散文，先由 agent 读取并建模：
-#   python3 scripts/main.py --model-file /app/work/model.json \
-#     --case /input/case.json --out /app/output
+# 技能根目录 = 含 SKILL.md 的那一层
+export SKILL_DIR=/skills/weekly-skill          # 平台容器安装路径
+# export SKILL_DIR=/path/to/challenge-83d4f050  # 本机解压后的包根目录
+
+# 1) 已核验规格路径（人工核验后正式出图；推荐）
+python3 "$SKILL_DIR/scripts/main.py" \
+    --case "$SKILL_DIR/examples/case.json" \
+    --model-file "$SKILL_DIR/examples/model.example.json" \
+    --out /app/output
+
+# 2) 自动草稿路径（产出 partial，提示 Agent 逐条复核）
+python3 "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" --out /app/output-draft
+
+# 3) 独立复查（两个 CLI 各自有明确退出码）
+python3 "$SKILL_DIR/scripts/check_contract.py" --result /app/output/result.json \
+    --case "$SKILL_DIR/examples/case.json"      # exit 0 = 契约通过
+python3 "$SKILL_DIR/scripts/validate_figure.py" --out /app/output   # exit 0 = 全检查通过
 ```
 
-**本地演示**
+平台运行时：输入是 `/input/case.json` 与 `/input/task.md`（+ 材料目录），输出写 `/app/output`：
+
 ```bash
-python scripts/main.py --case examples/case.json --out examples/output --verbose
+python3 "$SKILL_DIR/scripts/main.py" --case /input/case.json --out /app/output --verbose
 ```
 
-**CLI 参数**
-| 参数 | 默认 | 说明 |
-|---|---|---|
-| `--case` | /input/case.json → examples/case.json | case.json 路径 |
-| `--task` | /input/task.md | task.md 路径 |
-| `--out` | $TASK_OUTPUT → `<case目录>/output` | 输出目录 |
-| `--materials-dir` | 由 case.json `materials` 提供 | 材料目录（可重复） |
-| `--model-file` | 无（自动草稿抽取） | 人工核验后的 model.json |
-| `--formats` | svg,png,pdf | 导出格式 |
-| `--dpi` | 150 | 预览分辨率 |
+相对路径 `--case examples/case.json` 也可用（main.py 先按 cwd 解析，找不到再回退技能根）；
+`--model-file` / `--materials-dir` 请写完整路径。
 
-## 4. 失败处理
+## 3. 输入与输出
 
-| 现象 | 原因 | 处置 |
-|---|---|---|
-| `failed` 且无 SVG | 材料无可解析实体/关系 | Agent 读材料手工建 model.json 后用 `--model-file` |
-| 有 SVG、无 PNG/PDF | matplotlib 不可用 | 记录 partial + export_checks 说明；SVG 仍是有效源文件 |
-| `partial`（checks 有 fail） | 实体/边缺来源、图例不一致等 | 按 self_check.failures 逐项修复 model.json 后重跑 |
-| 中文成方框（预览） | 容器无中文字体 | 告警写进 export_checks；SVG 字体栈由查看端决定，不受影响 |
+**输入**：`case.json`（`case_id`/`title`/`task`/`materials`/`render`/`output_contract`）
+＋ `task.md` ＋ 材料文件（文本、Markdown、表格；PDF 由 Agent 抽文或用 `--model-file`
+手工建规格）。
 
-## 5. 限制
+**输出**（`--out` 目录）：`result.json`（契约，见 `references/OUTPUT_CONTRACT.md`）、
+`diagram.svg`（7 层可编辑源，`data-id`/`data-type`/`data-source`）、
+`diagram.png`、`diagram.pdf`（同一布局引擎渲染，与 SVG 一致）、`model.json`（机制规格）、
+`topology.json` / `legend_audit.json`（审计产物）。
 
-- 不解析 PDF 内部布局（无第三方 PDF 依赖设计）；PDF 材料由 Agent 抽文本后再走本管线。
-- 自动抽取只覆盖结构化语句；散文材料依赖人工核验（SKILL.md 步骤 2，准确优先设计）。
-- 位图编辑（直接在 PNG 上改）不在范围内——本包的设计是“改源文件（SVG/model.json）再导出”。
+## 4. 目录结构
 
-## 6. 自查与验证
+```
+SKILL.md                 入口：资源形态 / 用途 / 输入输出 / CP1–CP5 检查点 / D1–D12 决策规则 / 自查
+README.md                本文件：依赖、安装、适用范围、限制、维护
+TEST.md                  自测方法、期望输出与实测记录（含本机 sha256 与确定性双跑）
+COMPARE.md               与"不加载 Skill 的基础 Agent"的同输入对照方案与可复算判据
+worklog.md               构建与合规重打包记录（改了什么、为什么、验证结果）
+GITHUB_URL.txt           公开作品链接（单行）
+scripts/                 11 个脚本：
+                           build   = extract / model / main
+                           render  = layout / pathway_svg / mpl_backend
+                           verify  = topology / legend_audit / validate_figure /
+                                     check_contract / result_writer
+references/              OUTPUT_CONTRACT.md / RUBRIC_MAP.md / mechanism-spec.md /
+                         legend-encoding.md / failure-modes.md
+assets/                  mechanism-spec.schema.json / palettes.json / result.template.json
+templates/               relation-checklist-template.md（关系核对清单，CP3 核验载体）
+examples/                合成示例案例：case.json / task.md / materials/ /
+                         model.example.json / README.md / EXPECTED-OUTPUT.md /
+                         output/（示例案例实跑得到的 JSON 产物）
+```
 
-`scripts/validate.py` 提供机器校验（实体 id/端点/来源/图例覆盖/箭头语义/颜色自洽/方向/
-产物/契约），`main.py` 每次运行末自动执行并写入 result.json `self_check`。
-验收示例：`python scripts/main.py --case examples/case.json --out <tmp>` 应输出
-`status=success, failures=0` 且产物齐全（见 TEST.md）。
+## 5. 依赖与环境
 
-## 7. 维护与分享
+- **运行必需**：Python 3.8+，**仅标准库**（可编辑 SVG、机制规格、审计、契约全部无第三方依赖）。
+- **可选**：`matplotlib`（渲染 PNG/PDF 预览；缺失时自动降级为仅 SVG 并如实记录）、
+  `Pillow`（校验 PNG 尺寸/可打开性；缺失时该检查降级为 warn）。
+- 安装（可选依赖）：`pip install matplotlib pillow`。
+- 实测环境（`TEST.md` 有原始输出）：Python 3.13 + matplotlib + Pillow；
+  纯标准库路径（`--formats svg`）在无 matplotlib 环境下同样可用。
+- **字体**：SVG 使用 CSS 标准字体栈，由查看端决定实际字体，无需随包字体文件；
+  PNG/PDF 由 matplotlib 选用系统字体，材料含中文而系统缺中文字体时**告警**并写入
+  `export_checks`/`uncertainty`（不静默产出乱码图）。包内不含任何 `.ttf/.otf`。
+- **无本机路径依赖**：脚本用 `os.path.dirname(__file__)` 自定位；包内文本不含本机盘符
+  绝对路径（示例产物中的 provenance 只记相对路径或容器环境路径）。自检方式见 `TEST.md` §12。
 
-- 改风格：`scripts/model.py` 顶部的 NODE_TYPES / EDGE_TYPES / COMPARTMENT_DEFAULT /
-  data_mapping（全图与图例自动同步）。
-- 增类型：在 model.py 加样式 + 词表，validate.py 自动纳入 L01/L02 校验。
-- 公开链接：`GITHUB_URL.txt` 首行仓库地址、次行作品相对路径（发布代理覆写）。
+## 6. 适用范围与限制
+
+- 适用：机制图 / 通路图 / 信号级联 / 调控网络 / 流程图 / 图表编辑，包括"改一个错误箭头"
+  "按数据给节点上色""补图例""按模板重导出"。
+- 不适用：数值统计与统计分析结论、实验方案设计、论文写作与版式美化（相邻课题负责）；
+  本 Skill 只对图形中的科学内容表达、布局、可编辑性与导出质量负责。
+- 自动抽取器只处理结构化语句（表格 / `A | 动词 | B` / `- A 动词 B（证据）`）；
+  散文与 PDF 材料依赖 Agent 人工抽取并用 `--model-file` 重跑（CP2b/CP3 强制），
+  这是"准确率优先于全自动"的刻意设计。
+- 图件不在包内，是运行时产物；包里"看不到图"是设计而非缺失
+  （见 `SKILL.md` §0 与 `examples/EXPECTED-OUTPUT.md`）。
+- PDF 与 `result.json` 含时间戳，不作为确定性承诺对象；确定性承诺 = SVG / PNG / model /
+  topology / legend_audit（同输入双跑逐字节一致）。
+- 完整失败模式见 `references/failure-modes.md`；构建与变更见 `worklog.md`。
+
+## 7. 维护与更新
+
+- 改颜色/线宽：只改 `assets/palettes.json`（全图与图例同步）；
+- 改契约/门：`references/OUTPUT_CONTRACT.md` + `scripts/check_contract.py`
+  + `scripts/result_writer.py` 三处同步；
+- 改校验规则：`scripts/topology.py` / `legend_audit.py` / `validate_figure.py`，
+  并更新 `references/mechanism-spec.md` 的校验一览；
+- 改完跑 `TEST.md` 的 T1–T8 全套，更新实测记录，并在 `worklog.md` 追加一条带时间的记录；
+- 明令禁止：向包内添加二进制资源（`.png/.pdf/.svg/.pptx/.ttf/...`）或 `__pycache__`——
+  图件必须运行时生成，包内只留七种文本扩展名。

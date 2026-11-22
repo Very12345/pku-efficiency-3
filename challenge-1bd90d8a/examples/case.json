@@ -2,11 +2,24 @@
   "case_id": "example-science-figure-01",
   "title": "示例：剂量-时间响应与信号通路机制图（仅演示接口，非正式案例）",
   "challenge_id": "challenge-1bd90d8a",
-  "dataset_version": "2026-11-20-example",
-  "output_contract": [
-    "case_id", "status", "title", "sources", "outputs",
-    "editable_source", "rendered_preview", "field_mapping",
-    "validation_report", "uncertainty", "change_records"
+  "dataset_version": "2026-11-21-example-v2",
+  "output_contract": {
+    "case_id": "string",
+    "status": "string",
+    "title": "string",
+    "sources": "array",
+    "outputs": "array",
+    "editable_source": "array",
+    "rendered_preview": "object",
+    "field_mapping": "string",
+    "validation_report": "string",
+    "uncertainty": "array",
+    "change_records": "array",
+    "checkpoints": "object",
+    "gates": "object"
+  },
+  "manual_confirmations": [
+    {"ts": "2026-11-21T00:00:00+08:00", "who": "skill-owner", "what": "示例材料自拟；实体名与 p 值来自示例材料，非真实实验"}
   ],
   "figures": [
     {
@@ -29,7 +42,7 @@
           "y": {"column": "mean_um3", "label": "Tumor volume", "unit": "μm³"},
           "error": {"column": "se_um3", "semantics": "SE"},
           "annotations": [
-            {"from": "0", "to": "20", "text": "**", "p": 0.004, "source": "one-way ANOVA + Tukey HSD, 源数据 n=6/组"}
+            {"from": "0", "to": "20", "text": "**", "p": 0.004, "source": "one-way ANOVA + Tukey HSD, 源材料 n=6/组"}
           ]
         },
         {
@@ -52,7 +65,7 @@
       "width": 1400,
       "height": 700,
       "entities_file": "entities.json",
-      "layout": "layer",
+      "layout": "auto",
       "colors": {
         "Ligand": "#937860",
         "Receptor": "#4C72B0",

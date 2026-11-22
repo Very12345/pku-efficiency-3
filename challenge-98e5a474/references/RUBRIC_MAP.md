@@ -1,57 +1,87 @@
-# RUBRIC_MAP — 评分维度 → 设计覆盖
+# RUBRIC_MAP — 五维评分 → 本包文件/机制（逐条映射）
 
-官方评分维度：**实际效果 40 · 使用增益 25 · 创新增益 15 · 可靠体验 10 ·
-生态贡献 10**（另加 GitHub 公开链接 5 分）。下表逐维说明本 Skill 包的
-设计如何覆盖每个评分点，以及证据落在哪个文件。
+官方题面评分维度：**实际效果 40 · 使用增益 25 · 创新增益 15 · 可靠体验 10 ·
+生态贡献 10**，外加 **GitHub 公开作品链接 5 分**（`GITHUB_URL.txt`）。
 
-## 1. 实际效果（40）
+下面的每一行都指向**本包里真实存在的文件或可执行的机制**（脚本、检查门、
+退出码语义），不是文字自述；"自述不替代运行证据"这一条由
+`scripts/run_examples.py`（示例现场复跑 + G1–G8 校验）与 `TEST.md`（本机
+实测记录）承担。**行文中的路径均相对技能根**，命令一律写成
+`"$SKILL_DIR/..."` 以便在任意 cwd 下执行。
 
-| 评分点 | 分值 | 覆盖设计 | 证据位置 |
+---
+
+## 1. 实际效果 40 分
+
+| 评分点 | 分值 | 本包机制 | 落到哪个文件 |
 |-|-|-|-|
-| 任务完成度 | 15 | 完整"材料→图稿→导出"链路：读材料 → ER 清单 → 可编辑 SVG → PNG/PDF → result.json；3 个示例（schematic/chart/edit）各跑通并留真实产物 | `SKILL.md` 执行步骤、`examples/output/*`、`TEST.md` |
-| 结果正确性 | 15 | 实体/关系/方向/层级逐条绑定 `source+evidence`；关系 kind 规范化（激活/抑制/招募/转录/包含），方向以材料原文为准；图例与图面箭头双向校验，缺项/孤儿项即 fail/warn；图表类别↔颜色↔图例由同一数据表生成 | `references/ER_MANIFEST.md`、`scripts/manifest.py`、`scripts/checks.py` |
-| 结果完整性 | 5 | 覆盖示意图的实体、关系、分组、图例、子图编号/标题、单位、来源脚注；图表含轴标签+单位 | `scripts/svgbuilder.py`（layer-nodes/edges/groups/legend/footer） |
-| 可核验性 | 5 | 每个图元带 `data-entity/data-relation/data-source` 与内嵌 manifest；`verification.checks` 记录全部检查明细；`validate_result.py` 可独立复验 | `scripts/svgbuilder.py`、`scripts/validate_result.py` |
+| 任务完成度 | 15 | 完整"材料→图稿→导出"链路，一条命令可跑：读实际文件 →（`extract.py` 候选草稿）→ ER 清单 → CP1 lint → 可编辑分层 SVG → PNG/PDF → result.json；示例三件套（schematic / chart / edit）**现场跑通并留真实产物**（产物不入包，见下条） | `scripts/main.py`、`scripts/extract.py`、`scripts/spec_lint.py`、`scripts/run_examples.py`、`examples/EXPECTED-OUTPUT.md` |
+| 结果正确性 | 15 | ①每个实体/关系带 `source`+`evidence`，写入 result.json `evidence` 与 SVG `data-*` 属性；②关系 kind 经 7 类规范词表映射（**激活≠抑制**，未知 kind = fail 而非猜）；③**containment 必须用分组框**，禁止画箭头（`spec.containment_group`）；④图例↔图面双向一致（缺项 fail / 孤儿项 warn）；⑤chart 类别只来自数据表：表外类别触发 **G8 硬门 INVALID** | `references/DRAWING_GRAMMAR.md`、`references/ER_MANIFEST.md`、`assets/relation-dict.json`、`scripts/spec_lint.py`、`scripts/checks.py`、`scripts/validate_result.py` |
+| 结果完整性 | 5 | 图面要素齐全：实体节点、关系边（方向语义）、分组框、图题/副题、图例（每项带 `source`）、单位上轴（chart）、来源页脚；SVG 语义图层 `layer-background/groups/edges/nodes/legend/footer` + `<title>/<desc>` | `scripts/svgbuilder.py`、`scripts/layout.py`、`scripts/render.py` |
+| 结果可核验性 | 5 | 元素级 `data-entity`/`data-relation`/`data-canon`/`data-source` 审计（写入 `verification.checks`）；`<metadata id="er-manifest">` 内嵌 ER 清单 → 图稿自描述；`validate_result.py` 的 G1–G8 可由第三方独立复跑；`determinism.spec_sha16` 提供双跑一致性探针 | `scripts/checks.py`、`scripts/svgbuilder.py`、`scripts/validate_result.py`、`references/OUTPUT_CONTRACT.md` |
 
-## 2. 使用增益（25）
+> **产物形态声明**：包内**不预置**任何 PDF/PNG/SVG（平台不支持的文件类型 +
+> 预置产物容易被误当正式答案）。示例期望产物以文字清单形式写在
+> `examples/EXPECTED-OUTPUT.md`，并由 `scripts/run_examples.py` 现场生成
+> 到包外目录 —— 这条同时也是"实际效果"的可复核入口。
 
-| 评分点 | 分值 | 覆盖设计 | 证据位置 |
+## 2. 使用增益 25 分
+
+| 评分点 | 分值 | 本包机制 | 落到哪个文件 |
+|-|-|-| -|
+| 质量增益 | 15 | 同一输入/画布/导出参数下，**三层门每次运行自动执行**：CP1 生成前 lint（`spec_lint.py`）→ CP2 产物检查（`checks.py`：溯源/图例/数据映射/DPI/色彩/PDF 结构/字体）→ CP3 契约门（`validate_result.py` G1–G8）；失败不静默：`status` 降为 `partial` 并列出 fail 明细；生成→检查→编辑→再校验闭环 | `scripts/spec_lint.py`、`scripts/checks.py`、`scripts/validate_result.py`、`SKILL.md` §3 S3/S5/S7 |
+| 效率增益 | 5 | 素材→图稿一条命令；`extract.py` 现场产出**带定位的候选 ER 清单**，减少人工抽取；数据/图例改动只改 manifest 即整体重绘（不是重画）；编辑任务直接读 SVG 内嵌清单做增量修改（`--edit-svg`），无需重新抽取；`run_examples.py` 一条命令复跑三示例并校验契约 | `scripts/main.py`、`scripts/extract.py`、`scripts/edit.py`、`scripts/run_examples.py` |
+| 增益可验证性 | 5 | `TEST.md` 记录本机实测（脚本自测项数、三示例 exit code、契约校验 VALID、确定性双跑）；`run_examples.py` 输出每步 exit code + result.json 顶层键覆盖 + 声明产物落盘核对，任何一步失败即非零退出；`verification.determinism.spec_sha16` 提供同输入同 sha 探针 | `TEST.md`、`scripts/run_examples.py`、`scripts/selftest.py` |
+
+> **对照口径**：白板/基础 Agent 对照由平台按相同案例执行，参赛者不提供
+> 隐藏测试；本包给出的自证是"同一夹具可复跑 + 门控结果可独立复核"。
+
+## 3. 创新增益 15 分
+
+| 评分点 | 分值 | 本包机制（相对"基础 Agent 直接画图"新增的能力） | 落到哪个文件 |
 |-|-|-|-|
-| 质量增益 | 15 | 同一输入/画布/导出参数下，正确性检查（图例一致性、方向语义、溯源完整性、DPI/字体/色彩检查）在每次运行自动执行并计入 result.json；方形"画图即核验"闭环 | `scripts/checks.py`、`SKILL.md` Step 4-5 |
-| 效率增益 | 5 | 素材→图稿一条命令；数据改动只改 manifest 即可重绘（数据驱动重绘）；编辑任务直接从已有 SVG 内嵌清单增量修改，无需重新抽取 | `scripts/main.py`、`scripts/edit.py` |
-| 增益可验证性 | 5 | 同源材料对照记录（Task 记录基准条件）；`verification.checks`+`TEST.md` 复跑记录即公平对照证据；示例产物全部落盘 | `TEST.md`、`examples/output/` |
+| 新增能力 | 5 | ①**CP1 生成前 lint 门**：在画之前就拦下未知 kind、containment 画成箭头、图例缺项、调色板 < 类别数；②材料→候选 ER 清单抽取（中英文关系动词词表 + `_draft` 标注 + 未知类型 fail 而不猜）；③PDF 文本抽取（fitz→pypdf→PyPDF2→**stdlib 回退**，诚实记录 backend）；④数据表驱动图例/颜色重绘；⑤导出前合规检查（有效 DPI、色彩、`<text>` 可编辑性、PDF 结构、字体） | `scripts/spec_lint.py`、`scripts/extract.py`、`scripts/pdftext.py`、`scripts/render.py`、`scripts/checks.py` |
+| 方法改进 | 5 | ①SVG **内嵌 ER 清单** → 源文件自包含、可源文件级增量编辑（未改动元素保持原样）；②手写分层 SVG（语义图层 + id + `data-*`）+ matplotlib 镜像预览保持语义一致；③matplotlib `svg.fonttype=none` 保住文字可编辑（默认 path 化会毁掉可编辑性）；④共享字体探针 `textfont.py` 让 render/checks/result 三方同源、不再各猜字体 | `scripts/svgbuilder.py`、`scripts/edit.py`、`scripts/render.py`、`scripts/textfont.py` |
+| 创新证据 | 5 | `selftest.py` 覆盖模块级断言（含 CP1 好/坏清单、G 门拒绝假成功、pdftext 回退、字体探针确定性）；`run_examples.py` 复跑三示例并逐份跑 G1–G8；示例编辑任务产出恰 3 条 `change_records`（rename/relabel/note）且未改动元素保持 | `scripts/selftest.py`、`scripts/run_examples.py`、`examples/EXPECTED-OUTPUT.md` §3 |
 
-## 3. 创新增益（15）
+## 4. 可靠体验 10 分
 
-| 评分点 | 分值 | 覆盖设计 | 证据位置 |
+| 评分点 | 分值 | 本包机制 | 落到哪个文件 |
 |-|-|-|-|
-| 新增能力 | 5 | ①文字材料→ER 清单抽取（中英文关系动词词表，含歧义检测，未知类型 fail 而非猜）；②数据表驱动图例重绘；③导出前合规检查（DPI/字体/色彩/文字可编辑性） | `scripts/manifest.py`（词表）、`scripts/checks.py`、`scripts/render.py` |
-| 方法改进 | 5 | SVG 内嵌 ER manifest（`<metadata id=er-manifest>`）→ 真正的"源文件自包含修改"；手写分层 SVG（语义图层+id+data-*）+ matplotlib 镜像预览保持语义一致；matplotlib `svg.fonttype=none` 保住文字可编辑（默认 path 会毁掉可编辑性，这是本次实测发现并规避的坑） | `scripts/svgbuilder.py`、`scripts/edit.py`、`scripts/render.py`、`TEST.md` 第 4 节 |
-| 创新证据 | 5 | selftest 23 项 + 3 条冒烟链路（schematic/chart/edit）真实运行记录；SVG 结构与 PNG 调色板程序化审计 | `scripts/selftest.py`、`TEST.md` |
+| 调用与易用性 | 3 | YAML frontmatter 的 name/description 明确触发条件；**自定位**：文档命令用 `"$SKILL_DIR/..."` 绝对路径，脚本内部用 `os.path.dirname(__file__)`，任意 cwd 可跑；`--case` 同时接受 case.json 文件与目录（`--case examples`）；一条命令出图；`--help` 覆盖全部参数 | `SKILL.md` §2/S4、`scripts/main.py` |
+| 运行稳定性 | 4 | 三类图型（schematic/chart/edit）重复运行稳定；无 cairosvg/svgwrite 时镜像渲染降级并如实标注；无 PDF 第三方库时 stdlib 回退；产物写出后再汇总；失败仍写 `status=failed` 的 result.json（工作不丢失）；确定性 sha 探针 | `scripts/render.py`、`scripts/pdftext.py`、`scripts/main.py`、`scripts/report.py` |
+| 异常处理 | 3 | 明确退出码语义：**0** = success（可含 warn 且已 ack）/ **1** = partial 或 failed（result.json 仍写出）/ **2** = 致命（case 缺失、目录无 case.json、编辑目标无内嵌清单、渲染致命错）；D1–D12 覆盖材料缺失、方向矛盾、未知 kind、图表不符、颜色×类别数、CJK 字体缺失、PDF 加密/扫描件、导出失败 | `scripts/main.py`、`SKILL.md` §4§5、`references/failure-modes.md` |
 
-## 4. 可靠体验（10）
+## 5. 生态贡献 10 分
 
-| 评分点 | 分值 | 覆盖设计 | 证据位置 |
+| 评分点 | 分值 | 本包机制 | 落到哪个文件 |
 |-|-|-|-|
-| 调用与易用性 | 3 | YAML frontmatter 规范触发；一条命令出图；`--case/--manifest/--out` 均支持绝对路径，脚本自定位不依赖 cwd | `SKILL.md`、`scripts/main.py` |
-| 运行稳定性 | 4 | 三图型（schematic/chart/编辑）重复运行稳定；无 cairosvg/svgwrite 环境下用镜像渲染降级并如实标注；产物原子写出；失败时仍写 failed result.json | `scripts/render.py`、`scripts/main.py` |
-| 异常处理 | 3 | 来源缺失（列出清单+写 uncertainty）、材料矛盾（方向/图例冲突→检查 fail）、数据与图例不符、字体缺失（CJK 探测+警告）、导出失败 → 全部识别并落到 result.json，不静默绕过 | `scripts/checks.py`、`SKILL.md` 异常处理表 |
+| 文档完整性 | 3 | 用途/适用条件/输入输出/调用方式/执行步骤/决策规则/异常处理/依赖与字体/限制/维护一应俱全；示例明确标注"示例，非正式案例"；资源形态约束（≤50 文本文件、≤500KB、≤2MB、无符号链接）写在 SKILL.md 与 README.md | `SKILL.md`、`README.md`、`TEST.md`、`references/*`、`examples/README.md` |
+| 资源可复用性 | 4 | **机器可读连接规则字典**（kind→arrow/line/dash/color）可直接被别的绘图流程复用；CP1–CP5 自查清单（机器可读）；ER 清单规范 + 图形语法规范；契约校验器（G1–G8）与示例题集（schematic/chart/edit）可直接复跑或改造成新案例 | `assets/relation-dict.json`、`assets/checklist.json`、`references/ER_MANIFEST.md`、`references/DRAWING_GRAMMAR.md`、`scripts/validate_result.py`、`examples/*` |
+| 分享推广价值 | 3 | 失败形态文档（本题 12 类失败的检测→处置）可迁移到同类示意图题；三示例题集 + 期望产物清单构成最小可复现题集；GITHUB_URL.txt 指向公开仓库（未登录可读） | `references/failure-modes.md`、`examples/EXPECTED-OUTPUT.md`、`GITHUB_URL.txt` |
 
-## 5. 生态贡献（10）
+## 6. GitHub 公开作品链接 5 分
 
-| 评分点 | 分值 | 覆盖设计 | 证据位置 |
-|-|-|-|-|
-| 文档完整性 | 3 | SKILL.md/README/规范三件套/示例任务书/测试记录；依赖与安装方式、运行方法、限制、失败处理齐全 | `README.md`、`SKILL.md`、`references/*` |
-| 资源可复用性 | 4 | ER 清单规范、配色/箭头/图例规范、导出预检(DPI 300/字体/色彩)、可复用脚本（main/render/checks/edit/validate/selftest） | `references/ER_MANIFEST.md`、`scripts/*` |
-| 分享推广价值 | 3 | 合成示例题集（schematic/chart/edit 三件套）标注"示例，非正式案例"可直接复跑；GITHUB_URL.txt 指向公开仓库 | `examples/*`、`GITHUB_URL.txt` |
+`GITHUB_URL.txt`（包根，第一行）：
 
-## GitHub 附加分（5）
+```
+https://github.com/Very12345/pku-efficiency-3/tree/main/challenge-98e5a474
+```
 
-`GITHUB_URL.txt` 第一行 `https://github.com/Very12345/pku-efficiency-3`，
-第二行给出本作品相对路径；发布代理将覆写为精确链接并保证未登录可访问。
+发布前需用**未登录**的浏览器窗口打开一次确认可访问；链接无效则本项 0 分，
+其余评分项按原规则计分。
 
-## 对照口径提示
+---
 
-"白板/基础 Agent 对照"由平台执行。本包在自身夹具上保留的对照证据：
-`TEST.md` 记录了**同一示例三遍复跑 + 失败用例的异常路径输出**，供
-评审按相同输入/画布/导出参数复核我们的稳定增益。
+## 7. 自查方式（交付前逐条自评）
+
+```bash
+python "$SKILL_DIR/scripts/selftest.py"                          # 逻辑自测
+python "$SKILL_DIR/scripts/run_examples.py" --out /tmp/sse-ex     # 三示例 + G1–G8
+python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples" --out /tmp/sse-out
+python "$SKILL_DIR/scripts/validate_result.py" \
+    --case "$SKILL_DIR/examples/case.json" --result /tmp/sse-out/result.json
+```
+
+四条命令都应 **exit 0**；示例产物全部落在包外（`/tmp/...`），
+包内只保留 UTF-8 文本资源。

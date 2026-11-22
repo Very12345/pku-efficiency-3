@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
-"""Bootstrap entity/relation extractor for mechanism/pathway materials.
+"""Bootstrap entity/relation extractor for mechanism/pathway materials (v2).
 
-Design intent
--------------
+Design intent (unchanged from v1, keep accurate over automatic):
 Real materials arrive in many shapes.  This extractor is NOT an omniscient NLP
 parser: it reads *structured* statements (Markdown tables, `A | verb | B` rows,
 bulleted `- A 激活 B（证据）` lines, data-mapping declarations) and turns them
-into a draft model whose every element carries a source (file + line).
+into a *draft* mechanism spec whose every element carries a source (file+line).
 
-The Skill instructs the calling agent to ALWAYS:
-  1. read the real material files first,
+The Skill instructs the calling agent to ALWAYS (CP4, SKILL.md):
+  1. read the real material files first (CP1),
   2. run this extractor to get a draft,
   3. verify every entity/edge against the actual text (fix, split, merge,
-     disambiguate gene vs protein, decide evidence strength),
+     disambiguate gene vs protein, decide evidence strength, mark feedback),
   4. record every manual correction in change_records / uncertainty.
 
 If the material is pure prose without structured statements the extractor
-reports method="manual-required" so the agent builds the model by hand
+reports method="manual-required" so the agent builds the spec by hand
 (scripts/main.py --model-file model.json).
 """
-import os, re, json
+import os
+import re
+import json
 
 from model import (EDGE_VERB_MAP, EDGE_TYPES, NODE_TYPE_ALIASES,
                    COMPARTMENT_ALIASES, EVIDENCE_WIDTH)
@@ -28,10 +29,10 @@ SKIP_ENTITY_HEADERS = {"名称", "名字", "实体", "name", "names", "entity", 
 VERB_KEYS = set(EDGE_VERB_MAP) | set(EDGE_TYPES)
 VERB_RE = re.compile(
     r"(激活|促进|正向调控|磷酸化|去磷酸化|泛素化|甲基化|乙酰化|糖基化|修饰|降解|"
-    "抑制|阻断|负向调控|结合|互作|募集|转位|转运|内化|"
-    "activate|activates|activate|promote|promotes|inhibit|inhibits|repress|block|blocks|"
-    "bind|binds|recruit|recruits|interact|phosphorylate|phosphorylates|"
-    "ubiquitinate|methylate|translocate|translocates)",
+    r"抑制|阻断|负向调控|结合|互作|募集|转位|转运|内化|"
+    r"activate|activates|promote|promotes|inhibit|inhibits|repress|block|blocks|"
+    r"bind|binds|recruit|recruits|interact|phosphorylate|phosphorylates|"
+    r"ubiquitinate|methylate|translocate|translocates)",
     re.IGNORECASE,
 )
 DATA_MAP_RE = re.compile(r"数据映射\s*[:：]\s*(?P<phrase>[^\n]{4,120})", re.I)
@@ -83,7 +84,6 @@ def _norm_verb(v):
         return key, ""
     hit = EDGE_VERB_MAP.get(v) or EDGE_VERB_MAP.get(key)
     if hit is None:
-        # fuzzy: contains match
         for k2, tup in EDGE_VERB_MAP.items():
             if k2 in v.lower() or v.lower() in k2:
                 hit = tup
@@ -92,16 +92,17 @@ def _norm_verb(v):
 
 
 def extract(lines, src_ref=""):
-    """Extract a draft model from text lines.
+    """Extract a draft mechanism spec from text lines.
 
-    Returns {"entities", "edges", "legend_overrides", "method",
-             "warnings", "sources"}.
+    Returns {"entities", "edges", "legend_overrides", "method", "warnings",
+             "sources"}.
     """
     entities, edges = [], []
     warnings, sources = [], []
     by_name = {}
     data_map_override = None
     in_entity_sec = in_rel_sec = False
+    t_label = ""
 
     def add_entity(name, etype, comp, data, note, lineno, force_id=None):
         if name in by_name:
@@ -115,8 +116,6 @@ def extract(lines, src_ref=""):
         })
         sources.append({"ref": src_ref, "line": lineno, "text": t_label[:180]})
         return eid
-
-    t_label = ""
 
     for i, ln in enumerate(lines):
         t = ln.strip()
@@ -165,7 +164,6 @@ def extract(lines, src_ref=""):
                 ent_like = (c1.lower() in NODE_TYPE_ALIASES or
                             cells[2].strip().lower() in COMPARTMENT_ALIASES)
                 if (in_rel_sec or loose) and verb_like:
-                    # relation row: from | verb | to | [evidence] | [note]
                     etype, subtype = _norm_verb(c1)
                     if c1.lower() in EDGE_TYPES:
                         etype = c1.lower()
@@ -187,7 +185,6 @@ def extract(lines, src_ref=""):
                     sources.append({"ref": src_ref, "line": i + 1, "text": t[:200]})
                     continue
                 if (in_entity_sec or loose) and ent_like:
-                    # entity row: name | type | compartment | [data] | [note]
                     etype_name = NODE_TYPE_ALIASES.get(c1.lower(), "other")
                     comp = COMPARTMENT_ALIASES.get(cells[2].strip().lower(), cells[2].strip())
                     data = _parse_data_cell(cells[3]) if cn >= 4 else {}
@@ -202,7 +199,7 @@ def extract(lines, src_ref=""):
             vm = VERB_RE.search(body)
             if vm:
                 verb = vm.group(0)
-                left = body[:vm.start()].strip("（()[]（)")
+                left = body[:vm.start()].strip(" \t（）()[]（）()")
                 right = body[vm.end():].strip()
                 right_no_par = re.split(r"[（(]", right)[0].strip().rstrip("，。;；")
                 if left and right_no_par:
@@ -241,6 +238,11 @@ def extract(lines, src_ref=""):
         mm = re.match(r"^(.+?)[（(]([^）)]+)[）)]\s*$", right)
         name, etype = (mm.group(1).strip(), NODE_TYPE_ALIASES.get(mm.group(2).strip().lower(), "protein")) if mm \
             else (right, "protein")
+        # require at least one structural anchor: a compartment in the left
+        # label, or a typed name on the right; otherwise it is prose, not an
+        # entity declaration (e.g. "信号流向：…" constraint lines are skipped)
+        if mc is None and mm is None:
+            continue
         if name and name not in by_name and len(name) <= 40:
             eid = "e%d" % (len(entities) + 1)
             by_name[name] = eid
@@ -263,7 +265,7 @@ def extract(lines, src_ref=""):
 
 
 def draft_model(material_files, src_ref=None):
-    """Run extraction over text files and merge into one draft."""
+    """Run extraction over text files and merge into one draft spec."""
     agg = {"entities": [], "edges": [], "warnings": [], "sources": [],
            "method": "auto-draft"}
     for path, name, lines in read_text_files(material_files):
@@ -299,5 +301,9 @@ def draft_model(material_files, src_ref=None):
 
 if __name__ == "__main__":
     import sys
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
     for f in sys.argv[1:] or ["../examples/materials/example_material.md"]:
         print(json.dumps(draft_model([os.path.abspath(f)]), ensure_ascii=False, indent=2))

@@ -1,0 +1,34 @@
+{
+  "_doc": "连接规则字典 + 实体词表。chartkit.load_relation_rules() 读取 relation_rules 用于通路图边着色/线型；extract.py 用 entity_glossary 做材料文本候选扫描（命中仅提示，标注 uncertain，未经 Agent 确认不得上图）。",
+  "relation_rules": [
+    {
+      "type_keywords": ["inhibit", "抑制", "block", "repress", "负调控", "degrade", "降解"],
+      "color": "#B2182B",
+      "dash": false,
+      "semantics": "inhibition"
+    },
+    {
+      "type_keywords": ["activ", "激活", "促进", "磷酸化", "phosphoryl", "正调控", "translocat", "入核"],
+      "color": "#2166AC",
+      "dash": false,
+      "semantics": "activation"
+    },
+    {
+      "type_keywords": ["transcript", "转录", "express", "表达", "binding", "结合"],
+      "color": "#1B7837",
+      "dash": true,
+      "semantics": "transcription"
+    }
+  ],
+  "entity_glossary": {
+    "Wnt3a": {"label": "Wnt3a (配体)", "pattern": "Wnt3a"},
+    "Frizzled": {"label": "Frizzled (FZD)", "pattern": "Frizzled|FZD"},
+    "LRP5/6": {"label": "LRP5/6 共受体", "pattern": "LRP5|LRP6"},
+    "Dishevelled": {"label": "Dishevelled (DVL)", "pattern": "Dishevelled|DVL"},
+    "APC": {"label": "APC", "pattern": "\\bAPC\\b"},
+    "Axin": {"label": "Axin", "pattern": "Axin"},
+    "GSK3β": {"label": "GSK3β", "pattern": "GSK3"},
+    "β-catenin": {"label": "β-catenin", "pattern": "catenin"},
+    "TCF/LEF": {"label": "TCF/LEF", "pattern": "TCF|LEF"}
+  }
+}

@@ -8,10 +8,11 @@ Source: `sources/figure03-note.md`（合成演示材料）。
 2. 从材料提取实体、关系、分组与图例要求，形成 ER 清单
    （本示例的 `case.json` 已含一份完整 `manifest`，可直接运行；
    正式案例中由 Agent 在 `/app/work/entities.json` 现场抽取）。
-3. 运行流水线脚本：
+3. 运行流水线脚本（`$SKILL_DIR` = 本 SKILL.md 所在目录，任意 cwd 可跑）：
    ```
-   python <skill_root>/scripts/main.py --case examples/case.json --out <out>
+   python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples" --out /tmp/sse-task
    ```
+   期望产物清单见 `EXPECTED-OUTPUT.md`（包内不预置任何图稿/渲染件）。
 4. 核对生成物：`figure.svg`（可编辑分层源文件）、`figure.png`、
    `figure.pdf`、`result.json`；检查项全部记录在 result.json 的
    `verification.checks`。

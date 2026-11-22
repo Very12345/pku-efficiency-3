@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Honest export / correctness checks.
+"""Honest export / correctness checks (scientific-schematic-editor v2).
 
 Checks are the "figure can be independently verified" evidence:
 
@@ -9,6 +9,8 @@ Checks are the "figure can be independently verified" evidence:
   the legend entries; no orphan entries, no missing kinds
 * data mapping -- chart categories <-> colours <-> legend entries align; the
   numbers placed on the figure come from the data table
+* svg data-* audit -- every node/edge carries data-entity/data-relation/
+  data-source attributes so the figure is machine-verifiable
 * export compliance -- PNG resolution/DPI, SVG text editability, PDF font
   embedding (best effort), colour mode
 
@@ -28,6 +30,10 @@ if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
 from manifest import CANONICAL_KINDS, traceability_score
+try:
+    from textfont import resolve_font_stack as _rf
+except Exception:
+    _rf = None
 
 
 # ---------------------------------------------------------------------------
@@ -105,6 +111,25 @@ def check_svg(path, manifest=None, schematic=True):
                    "level": "ok" if has_title else "warn",
                    "detail": "<title> present" if has_title
                              else "<title> missing"})
+    # data-* audit: every node/edge carries its traceability attributes
+    n_nodes = len(re.findall(r'<g id="node-', text))
+    n_edges = len(re.findall(r'<g id="edge-', text))
+    n_node_data = len(re.findall(r'<g id="node-[^>]*data-entity=', text))
+    n_edge_data = len(re.findall(r'<g id="edge-[^>]*data-relation=', text))
+    n_edge_src = len(re.findall(r'<g id="edge-[^>]*data-source=', text))
+    if schematic and n_nodes:
+        issues.append({"check": "svg.data_entity_attrs", "level":
+                       "ok" if n_node_data == n_nodes else "fail",
+                       "detail": "%d/%d nodes carry data-entity attribute"
+                                 % (n_node_data, n_nodes)})
+        issues.append({"check": "svg.data_relation_attrs", "level":
+                       "ok" if n_edge_data == n_edges else "fail",
+                       "detail": "%d/%d edges carry data-relation attribute"
+                                 % (n_edge_data, n_edges)})
+        issues.append({"check": "svg.data_source_attrs", "level":
+                       "ok" if n_edge_src >= n_edges * 0.9 else "warn",
+                       "detail": "%d/%d edges carry data-source attribute"
+                                 % (n_edge_src, n_edges)})
     return issues
 
 
@@ -283,6 +308,17 @@ def check_data_mapping(manifest, render_info=None):
     else:
         issues.append({"check": "data_mapping.unit", "level": "warn",
                        "detail": "no unit declared for chart values"})
+    # colour mapping must cover every unique category (审稿硬伤)
+    palette = data.get("colors") or data.get("palette")
+    if palette:
+        issues.append({"check": "data_mapping.color_count", "level":
+                       "ok" if len(palette) >= len(uniq) else "fail",
+                       "detail": "palette %d colours vs %d unique categories"
+                                 % (len(palette), len(uniq))})
+    else:
+        issues.append({"check": "data_mapping.color_count", "level": "ok",
+                       "detail": "auto palette assigned for %d categories; "
+                                 "count matches by construction" % len(uniq)})
     return issues
 
 
@@ -311,6 +347,16 @@ def check_all(manifest, artifacts, layout=None, render_info=None):
 
     issues += check_legend_conformance(manifest)
     issues += check_data_mapping(manifest, render_info)
+
+    if _rf is not None:
+        _fam, _cjk = _rf()
+        issues.append({"check": "font.cjk", "level":
+                       "ok" if _cjk else "warn",
+                       "detail": "resolved font %r; CJK support: %s. If "
+                                 "labels are Chinese and cjk_ok is false, "
+                                 "PNG previews may show boxes (SVG keeps "
+                                 "the text) -- record in uncertainty"
+                                 % (_fam, _cjk)})
 
     tr = traceability_score(manifest)
     if fig_type == "chart":

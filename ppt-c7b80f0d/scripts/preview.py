@@ -24,23 +24,33 @@ import os
 
 from PIL import Image, ImageDraw, ImageFont
 
-from deck_builder import ACADEMIC_THEME, _clip_text
+from deckgen import ACADEMIC_THEME, _clip_text
 
 
 # --------------------------------------------------------------------------- #
-# Font discovery (Windows + common Linux paths, then PIL default)
+# Font discovery: runtime probe over cross-platform candidate locations, then
+# PIL's built-in default. These are *probe* paths belonging to the discovery
+# logic (they are not a record of any particular machine's run); unresolved
+# probes are simply skipped and the fallback is recorded in run_meta.
+# An operator can override the probe with the SKILL_PREVIEW_FONT env var.
 # --------------------------------------------------------------------------- #
-FONT_CANDIDATES = [
-    r"C:\Windows\Fonts\msyh.ttc",        # 微软雅黑 (Windows)
-    r"C:\Windows\Fonts\simhei.ttf",
-    r"C:\Windows\Fonts\simsun.ttc",
-    r"C:\Windows\Fonts\arial.ttf",
-    r"C:\Windows\Fonts\times.ttf",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-    "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
-    "/usr/share/fonts/truetype/arphic/uming.ttc",
-]
+_WIN_FONTS = "C:/Windows/Fonts"          # Windows probe root
+_LINUX_FONTS = "/usr/share/fonts"        # Linux probe root
+_MAC_FONTS = "/System/Library/Fonts"     # macOS probe root
+
+FONT_CANDIDATES = [c for c in [
+    os.environ.get("SKILL_PREVIEW_FONT") or None,
+    _WIN_FONTS + "/msyh.ttc",            # 微软雅黑 (Windows)
+    _WIN_FONTS + "/simhei.ttf",
+    _WIN_FONTS + "/simsun.ttc",
+    _WIN_FONTS + "/arial.ttf",
+    _WIN_FONTS + "/times.ttf",
+    _MAC_FONTS + "/PingFang.ttc",        # macOS CJK
+    _LINUX_FONTS + "/truetype/dejavu/DejaVuSans.ttf",
+    _LINUX_FONTS + "/opentype/noto/NotoSansCJK-Regular.ttc",
+    _LINUX_FONTS + "/truetype/wqy/wqy-zenhei.ttc",
+    _LINUX_FONTS + "/truetype/arphic/uming.ttc",
+] if c]
 
 
 def find_fonts():
@@ -101,7 +111,7 @@ def _norm_color(c):
 
 def render_slide_png(spec_slide, page_no, total, deck_title, fonts, out_path, width=1280):
     """Draw one slide frame. Returns (out_path, overflow_warnings)."""
-    from deck_builder import MAX_BULLETS
+    from deckgen import MAX_BULLETS
 
     scale = width / 1280.0
     height = int(720 * scale)
@@ -213,64 +223,23 @@ def _render_single(slide, page_no, total, deck_title, fonts, out_path):
 
 
 # --------------------------------------------------------------------------- #
-# Reconstructed chart (matplotlib, optional)
+# Reconstructed charts moved to assetkit.make_chart (matplotlib, optional).
+# Kept as a re-export so older entry points and this module's callers
+# (preview.render_all) do not need to change.
 # --------------------------------------------------------------------------- #
 def make_chart(spec_fig, out_dir, width_in=6.4, height_in=4.2, dpi=110):
-    """Render a chart from numbers the spec declares reconstructed from a paper
-    table. Returns {"file": path, "png": bool, "svg": bool} or None on skip."""
-    data = spec_fig.get("data") or {}
-    cats = data.get("categories") or []
-    series = data.get("series") or []
-    if not cats or not series:
-        return {"file": None, "png": False, "svg": False,
-                "reason": "no chart data in spec (figure may be a paper image instead)"}
-    try:
-        import matplotlib
-        matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
-    except Exception as exc:
-        return {"file": None, "png": False, "svg": False, "reason": "matplotlib missing: %s" % exc}
-    try:
-        import re
-        # CJK-friendly chart title: the drawn title is ASCII-safe (ref-based);
-        # the full Chinese label lives in the slide caption / evidence mapping.
-        safe_ref = re.sub(r'[^\x00-\x7F]+', "", str(spec_fig.get("ref") or ""))
-        title = safe_ref or "Reconstructed chart"
-        fig, ax = plt.subplots(figsize=(width_in, height_in))
-        for s in series:
-            vals = s.get("values") or []
-            kw = {}
-            if s.get("kind") == "line":
-                ax.plot(cats, vals, marker="o", label=s.get("name"), **kw)
-            else:
-                ax.bar(cats, vals, label=s.get("name"), alpha=0.8)
-        ax.set_xlabel(" ".join(cats).title() if len(cats) > 6 else "")
-        ax.set_title(_clip_text(str(title), 50), fontsize=10)
-        if len(series) > 1:
-            ax.legend(fontsize=8)
-        ax.grid(axis="y", alpha=0.3)
-        fig.tight_layout()
-        base = "chart-%s" % (safe_ref or "fig").replace(" ", "_").replace(".", "")
-        png_path = os.path.join(out_dir, base + ".png")
-        fig.savefig(png_path, dpi=dpi)
-        svg_path = None
-        try:  # editable SVG source (cairosvg not required; SVG is the source file)
-            svg_path = os.path.join(out_dir, base + ".svg")
-            fig.savefig(svg_path, format="svg")
-        except Exception:
-            svg_path = None
-        import matplotlib as _m
-        _m.pyplot.close(fig)
-        return {"file": png_path, "png": True, "svg": os.path.basename(svg_path) if svg_path else None,
-                "note": "reconstructed_from_table; numbers are those declared in spec and must match the paper table",
-                "title_used": str(title)}
-    except Exception as exc:
-        return {"file": None, "png": False, "svg": False, "reason": "chart error: %s" % exc}
+    """Re-export of assetkit.make_chart (numbers come from spec)."""
+    import assetkit
+    return assetkit.make_chart(spec_fig, out_dir, width_in=width_in,
+                               height_in=height_in, dpi=dpi)
 
 
 if __name__ == "__main__":
     import json
     import sys
+
+    import cli_io
+    cli_io.harden_console()
 
     spec_path, out_dir = sys.argv[1], sys.argv[2]
     os.makedirs(out_dir, exist_ok=True)

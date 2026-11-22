@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Deterministic layered layout for pathway diagrams.
+"""Deterministic layered layout for pathway diagrams (v2).
 
-Layout rules (see references/DIAGRAM_SPEC.md for the science behind them):
+Layout rules (see references/mechanism-spec.md §4 for the science behind them):
   * compartments are horizontal bands ordered by rank
       extracellular(0) -> membrane(1) -> cytoplasm(2) -> nucleus(3);
     nucleus is drawn as an inner box inside the cytoplasm band.
@@ -14,6 +14,8 @@ Layout rules (see references/DIAGRAM_SPEC.md for the science behind them):
       - feedback / upward edges: routed on the right side of the drawing.
   * the same layout dict feeds BOTH the editable-SVG backend and the
     matplotlib PNG/PDF preview, so the two representations cannot drift.
+  * the algorithm is a pure function of the model: same input, same output
+    (determinism probe in result.self_check.determinism).
 """
 from model import COMPARTMENT_DEFAULT, COMPARTMENT_ALIASES, clamp
 
@@ -188,7 +190,8 @@ def compute_layout(model, canvas=None):
 
 def _ent_style(e):
     return {"type": e["type"], "italic": bool(e["type"] == "gene"),
-            "double": bool(e["type"] == "complex")}
+            "double": bool(e["type"] == "complex"),
+            "dash": bool(e["type"] == "rna")}
 
 
 def _edge_style(r):

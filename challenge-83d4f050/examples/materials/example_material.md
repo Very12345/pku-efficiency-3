@@ -1,56 +1,38 @@
-# 示例材料：EGF/EGFR–MAPK/ERK 通路（教学简化版）
+# 示例材料：EGF/EGFR → RAS → RAF → MEK → ERK → MYC 信号通路（教学简化版）
 
-> **本文件是示例材料，非正式案例**。它只用于演示本 Skill 的读入 → 实体/关系抽取 → 布局 → 可编辑 SVG → PNG/PDF 预览 → 校验 → result.json 的完整数据流。正式评测案例由组织方提供。
-> 本材料中的分子关系是教材级别的教学简化表述，数值（表1 表达量）为演示数据，均标注于表内，不冒充真实实验数据。
+> 本材料为 Skill 自带的最小演示材料（**示例，非正式案例**），用于说明"读取真实材料 →
+> 抽取实体/关系 → 人工核验 → 出图 → 审计"的完整流程。平台正式案例的材料由组织方提供，
+> 与本材料不同，正式运行必须现场从真实材料推导，禁止照抄示例内容。
 
-## 实体清单
+## 实体表
 
-- EGF | protein | extracellular | 表达量=0.95 | 分泌型生长因子配体；示例材料 表1
-- EGFR | protein | membrane | 表达量=0.82 | 受体酪氨酸激酶（跨膜）；示例材料 表1
-- GRB2 | protein | membrane | 表达量=0.60 | 衔接蛋白；示例材料 表1
-- SOS | protein | membrane | 表达量=0.55 | 鸟苷酸交换因子(GEF)；示例材料 表1
-- PIP3 | small_molecule | membrane | 表达量=0.50 | 磷脂酰肌醇三磷酸；示例材料 表1
-- PTEN | protein | membrane | 表达量=0.30 | 脂磷酸酶；示例材料 表1
-- RAS | protein | cytoplasm | 表达量=0.72 | 小 GTP 酶；示例材料 表1
-- RAF | protein | cytoplasm | 表达量=0.68 | MAP3K 家族激酶；示例材料 表1
-- MEK | protein | cytoplasm | 表达量=0.70 | MAP2K 激酶；示例材料 表1
-- ERK | protein | cytoplasm | 表达量=0.66 | MAPK 激酶；示例材料 表1
-- ELK1 | protein | nucleus | 表达量=0.50 | 转录因子；示例材料 表1
-- MYC | protein | nucleus | 表达量=0.45 | 转录因子；示例材料 表1
-- MYC（基因） | gene | nucleus | 表达量=0.40 | 转录靶标基因（书写区分基因/蛋白）；示例材料 表1
+| 名称 | 类型 | 区室 | 数据 | 备注 |
+| EGF | 小分子 | 胞外 | 表达量=0.90 | 表皮生长因子配体 |
+| EGFR | 蛋白质 | 细胞膜 | 表达量=0.82 | 跨膜受体酪氨酸激酶 |
+| EGFR–EGF 复合物 | 复合物 | 细胞质 | 表达量=0.78 | 受体-配体复合物，内化进入胞质 |
+| RAS | 蛋白质 | 细胞质 | 表达量=0.60 | 小 GTP 酶 |
+| RAF | 蛋白质 | 细胞质 | 表达量=0.50 | 丝氨酸/苏氨酸激酶 |
+| MEK | 蛋白质 | 细胞质 | 表达量=0.55 | 双特异性激酶 |
+| ERK | 蛋白质 | 细胞质 | 表达量=0.70 | 胞质 ERK，被 MEK 磷酸化激活 |
+| 核内 ERK | 蛋白质 | 细胞核 | 表达量=0.72 | ERK 转位入核后的形式，与 ERK 同一种蛋白 |
+| MYC | 基因 | 细胞核 | 表达量=0.85 | 转录因子基因，正体=蛋白、斜体=基因 |
 
-## 关系清单
+## 关系（箭头语义）
 
-- EGF | binding | EGFR | strong | 配体-受体结合；示例材料 表2
-- EGFR | activation | GRB2 | moderate | 活化受体募集衔接蛋白；示例材料 表2
-- GRB2 | binding | SOS | strong | 组成型结合；示例材料 表2
-- SOS | activation | RAS | strong | GEF 催化 GDP→GTP 交换；示例材料 表2
-- RAS | activation | RAF | strong | 转位至膜并被激活；示例材料 表2
-- RAF | modification | MEK | moderate | 磷酸化激活；示例材料 表2
-- MEK | modification | ERK | strong | 磷酸化激活；示例材料 表2
-- ERK | transport | ELK1 | moderate | MAPK 核转位；示例材料 表2
-- ERK | modification | ELK1 | strong | 磷酸化转录因子；示例材料 表2
-- ELK1 | activation | MYC（基因） | weak | 转录激活（间接证据，虚线）；示例材料 表2
-- ERK | inhibition | RAF | moderate | 负反馈环（右侧绕行绘制）；示例材料 表2
-- PTEN | inhibition | PIP3 | strong | 去磷酸化负调控；示例材料 表2
+- EGF 结合 EGFR（强）
+- EGFR 内化 EGFR–EGF 复合物（强，转运进入胞质）
+- EGFR–EGF 复合物 激活 RAS（强）
+- RAS 激活 RAF（强）
+- RAF 磷酸化 MEK（强）
+- MEK 磷酸化 ERK（强）
+- ERK 转位 核内 ERK（强）
+- 核内 ERK 激活 MYC（中）
+- 核内 ERK 抑制 RAF（弱，负反馈环，虚线）
 
-数据映射：实体填充色=表达量（低 #FFF7E0 → 高 #1F4E79），数值来自示例材料 表1；边宽=证据强度（strong 2.8 / moderate 2.2 / weak 1.6，weak 或 uncertain 用虚线）。
+## 数据映射
 
-## 表1 示例表达量（教学演示数据，非真实实验值）
+数据映射：field=表达量；低 #FFF7E0 → 高 #1F4E79（实体填充色按相对表达量插值）。
 
-| 实体 | 表达量 |
-| --- | --- |
-| EGF | 0.95 |
-| EGFR | 0.82 |
-| RAS | 0.72 |
-| MEK | 0.70 |
-| RAF | 0.68 |
-| ERK | 0.66 |
+## 图面约束
 
-## 表2 示例证据强度（教学演示标注）
-
-| 关系 | 证据强度 | 依据 |
-| --- | --- | --- |
-| EGF→EGFR | strong | 经典配体-受体对（教材） |
-| ERK→ELK1 | strong | 磷酸化位点已表征 |
-| ELK1→MYC 基因 | weak | 间接/报道不一致，不明确 |
+- 信号流向：胞外 → 膜 → 胞质 → 核；跨膜受体位于膜带内；反馈环在右侧绕行。

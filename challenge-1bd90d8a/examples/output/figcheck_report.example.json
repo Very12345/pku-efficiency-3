@@ -1,0 +1,330 @@
+{
+  "dir": ".",
+  "gates": {
+    "G1": true,
+    "G2": true,
+    "G5": true,
+    "G6": true,
+    "G3": true,
+    "G4": true,
+    "G7": true,
+    "G8": true
+  },
+  "checks": [
+    {
+      "id": "G1-result-json",
+      "pass": true,
+      "detail": "case_id='example-science-figure-01' 与输入 'example-science-figure-01' 一致",
+      "gate": "G1"
+    },
+    {
+      "id": "G2-contract-fields",
+      "pass": true,
+      "detail": "声明 13 字段，缺失/为空 []",
+      "gate": "G2"
+    },
+    {
+      "id": "outputs-exist",
+      "pass": true,
+      "detail": "SVG 2 / PNG 2 / PDF 2 存在",
+      "gate": null
+    },
+    {
+      "id": "svg:figure-fig-01.svg:wellformed",
+      "pass": true,
+      "detail": "wellformed",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-01.svg:layers",
+      "pass": true,
+      "detail": "layers",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-01.svg:provenance",
+      "pass": true,
+      "detail": "provenance",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-01.svg:no_xxe",
+      "pass": true,
+      "detail": "no_xxe",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-01.svg:real_text",
+      "pass": true,
+      "detail": "real_text",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-01.svg:n_text",
+      "pass": true,
+      "detail": "n_text",
+      "gate": null
+    },
+    {
+      "id": "svg:figure-fig-01.svg:n_data_roles",
+      "pass": true,
+      "detail": "n_data_roles",
+      "gate": null
+    },
+    {
+      "id": "svg:figure-fig-02.svg:wellformed",
+      "pass": true,
+      "detail": "wellformed",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-02.svg:layers",
+      "pass": true,
+      "detail": "layers",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-02.svg:provenance",
+      "pass": true,
+      "detail": "provenance",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-02.svg:no_xxe",
+      "pass": true,
+      "detail": "no_xxe",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-02.svg:real_text",
+      "pass": true,
+      "detail": "real_text",
+      "gate": "G5"
+    },
+    {
+      "id": "svg:figure-fig-02.svg:n_text",
+      "pass": true,
+      "detail": "n_text",
+      "gate": null
+    },
+    {
+      "id": "svg:figure-fig-02.svg:n_data_roles",
+      "pass": true,
+      "detail": "n_data_roles",
+      "gate": null
+    },
+    {
+      "id": "png:figure-fig-01.png",
+      "pass": true,
+      "detail": "PNG 6875x2812",
+      "gate": "G6"
+    },
+    {
+      "id": "png:figure-fig-02.png",
+      "pass": true,
+      "detail": "PNG 4218x1750",
+      "gate": "G6"
+    },
+    {
+      "id": "pdf:figure-fig-01.pdf",
+      "pass": true,
+      "detail": "开头 %PDF",
+      "gate": "G6"
+    },
+    {
+      "id": "pdf:figure-fig-02.pdf",
+      "pass": true,
+      "detail": "开头 %PDF",
+      "gate": "G6"
+    },
+    {
+      "id": "G6-export-params",
+      "pass": true,
+      "detail": "导出参数已记录 dpi=300",
+      "gate": null
+    },
+    {
+      "id": "G3-manifest-svg-1to1",
+      "pass": true,
+      "detail": "unmatched=0 mismatched=0",
+      "gate": "G3"
+    },
+    {
+      "id": "G4-element-source-located",
+      "pass": true,
+      "detail": "每个映射元素均可定位（值核对或实体来源）。",
+      "gate": "G4"
+    },
+    {
+      "id": "G7-validate:fig-01",
+      "pass": true,
+      "detail": "fail=[] missing=[]",
+      "gate": "G7"
+    },
+    {
+      "id": "G7-validate:fig-02",
+      "pass": true,
+      "detail": "fail=[] missing=[]",
+      "gate": "G7"
+    },
+    {
+      "id": "six-checkpoint:科学实体",
+      "pass": true,
+      "detail": "实体名/标签存在且来自源材料（data-* 或 manifest source 记录）",
+      "gate": null
+    },
+    {
+      "id": "six-checkpoint:空间关系",
+      "pass": true,
+      "detail": "network 边/panel 布局/柱位置等几何关系与规格一致",
+      "gate": null
+    },
+    {
+      "id": "six-checkpoint:数据编码",
+      "pass": true,
+      "detail": "柱高/点位/热图色阶/扇区角度/误差线长度映射正确（mapcheck 值核对）",
+      "gate": null
+    },
+    {
+      "id": "six-checkpoint:图例标注",
+      "pass": true,
+      "detail": "图例与系列一一对应、轴标签与单位、显著性标注",
+      "gate": null
+    },
+    {
+      "id": "six-checkpoint:可编辑源文件",
+      "pass": true,
+      "detail": "分层 SVG + 图元 id + 溯源属性 + 文字未转曲",
+      "gate": null
+    },
+    {
+      "id": "six-checkpoint:导出格式",
+      "pass": true,
+      "detail": "SVG/PNG/PDF 存在，dpi/色彩空间等导出参数已记录",
+      "gate": null
+    },
+    {
+      "id": "G8-status-honest",
+      "pass": true,
+      "detail": "status=completed；存在检查失败/映射缺口=False",
+      "gate": "G8"
+    }
+  ],
+  "figures": {
+    "fig-01": {
+      "figure_id": "fig-01",
+      "checks": {
+        "provenance": {
+          "level": "ok",
+          "pass": true,
+          "detail": "图元 79 个，带 role 溯源 79 个。"
+        },
+        "legend-mapping": {
+          "level": "ok",
+          "pass": true,
+          "detail": "无系列型图（heatmap/box/network 图例另检）。"
+        },
+        "cjk-font": {
+          "level": "ok",
+          "pass": true,
+          "detail": "CJK 文本 2 处；CJK 字体已找到 stfangsong。"
+        },
+        "axis-units": {
+          "level": "ok",
+          "pass": true,
+          "detail": "2 个面板；缺少 y 轴标签的面板：[]。"
+        },
+        "significance": {
+          "level": "ok",
+          "pass": true,
+          "detail": "显著性线段 1 条，文字 1 个（p 值脚注见 annotation_footnotes）。"
+        },
+        "null-handling": {
+          "level": "ok",
+          "pass": true,
+          "detail": "共使用 24 个源数据行位置。"
+        },
+        "occlusion": {
+          "level": "ok",
+          "pass": true,
+          "detail": "文本重叠 0 处（检测到的最大处数；旋转/轴外文本不参与）。"
+        }
+      }
+    },
+    "fig-02": {
+      "figure_id": "fig-02",
+      "checks": {
+        "provenance": {
+          "level": "ok",
+          "pass": true,
+          "detail": "图元 42 个，带 role 溯源 42 个。"
+        },
+        "legend-mapping": {
+          "level": "ok",
+          "pass": true,
+          "detail": "无系列型图（heatmap/box/network 图例另检）。"
+        },
+        "cjk-font": {
+          "level": "ok",
+          "pass": true,
+          "detail": "CJK 文本 13 处；CJK 字体已找到 stfangsong。"
+        },
+        "axis-units": {
+          "level": "ok",
+          "pass": true,
+          "detail": "图型 network 无坐标轴标签要求。"
+        },
+        "significance": {
+          "level": "ok",
+          "pass": true,
+          "detail": "显著性线段 0 条，文字 0 个（p 值脚注见 annotation_footnotes）。"
+        },
+        "null-handling": {
+          "level": "ok",
+          "pass": true,
+          "detail": "共使用 0 个源数据行位置。"
+        },
+        "occlusion": {
+          "level": "warn",
+          "pass": false,
+          "detail": "文本重叠 2 处（检测到的最大处数；旋转/轴外文本不参与）。"
+        }
+      }
+    }
+  },
+  "all_pass": true,
+  "mapcheck": {
+    "checked": 121,
+    "mismatches": 0,
+    "unmatched": 0
+  },
+  "g7_warnings": [
+    "occlusion"
+  ],
+  "six_checkpoints": {
+    "科学实体": {
+      "covered": true,
+      "required": "实体名/标签存在且来自源材料（data-* 或 manifest source 记录）"
+    },
+    "空间关系": {
+      "covered": true,
+      "required": "network 边/panel 布局/柱位置等几何关系与规格一致"
+    },
+    "数据编码": {
+      "covered": true,
+      "required": "柱高/点位/热图色阶/扇区角度/误差线长度映射正确（mapcheck 值核对）"
+    },
+    "图例标注": {
+      "covered": true,
+      "required": "图例与系列一一对应、轴标签与单位、显著性标注"
+    },
+    "可编辑源文件": {
+      "covered": true,
+      "required": "分层 SVG + 图元 id + 溯源属性 + 文字未转曲"
+    },
+    "导出格式": {
+      "covered": true,
+      "required": "SVG/PNG/PDF 存在，dpi/色彩空间等导出参数已记录"
+    }
+  }
+}

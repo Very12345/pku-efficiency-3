@@ -1,74 +1,216 @@
-# TEST.md —— 本机实测记录
+# TEST.md — 自测方法、期望输出与实测记录（合规文本包）
 
-本文件记录本 Skill 包在本地（Windows / Python 3.13.9 / Anaconda）的真实测试命令与结果。
-测试时间：2026-11-20 22:1x（Asia/Shanghai）。所有路径均可在本仓库根目录 `build/challenge-83d4f050/` 下复现。
+> 本文件回答两件事：**别人怎么自测**、**期望看到什么**；附录是本次打包机器上的真实实测
+> 输出（含 sha256 与确定性双跑），供复核与复跑。
+> 实测时间：2026-11-22（+08）。环境：Windows，Python 3.13.9（`python`），
+> matplotlib + Pillow 可用；命令均在**临时目录的包副本**上执行，`cwd` 不是技能根目录
+> （用于证明自定位）。
 
-## 0. 环境
-
-- 系统：Windows（Git for Windows Bash）；Python 3.13.9（Anaconda）。
-- 关键包：matplotlib 3.10.6（可用）、Pillow 12.3.0、reportlab 5.0.0、numpy 2.3.5；
-  cairosvg / svgwrite **不可用**（本包不依赖它们）。
-- 中文字体：SimHei、Microsoft YaHei 可用（PNG 预览中文正常；缺失时脚本会告警并降级）。
-
-## 1. 验收命令（与派单验收一致）
+## 0. 自测三步（任何人可复跑）
 
 ```bash
-cd build/challenge-83d4f050
-python scripts/main.py --case examples/case.json --out D:/BuildTemp/smoke-83d4f050
+# 0) 定位技能根目录（含 SKILL.md 的那一层），复制到临时目录
+export SKILL_DIR=/tmp/challenge-83d4f050          # 本机解压路径；平台容器为 /skills/weekly-skill
+
+# 1) 冒烟：示例案例 + 已核验规格 → 期望 exit 0、status=success、gates 8/8
+python3 "$SKILL_DIR/scripts/main.py" \
+    --case "$SKILL_DIR/examples/case.json" \
+    --model-file "$SKILL_DIR/examples/model.example.json" --out /tmp/t2
+
+# 2) 契约独立复查 → 期望 exit 0（C01–C07 全 pass）
+python3 "$SKILL_DIR/scripts/check_contract.py" --result /tmp/t2/result.json \
+    --case "$SKILL_DIR/examples/case.json"
+
+# 3) 图面/模型/图例/导出全检 → 期望 exit 0（fails=0）
+python3 "$SKILL_DIR/scripts/validate_figure.py" --out /tmp/t2
 ```
 
-**结果：成功。**
+**判据**（三条都成立才算自测通过）：
+1. 第 1 步退出码 0，`/tmp/t2` 下出现 7 个文件
+   （`diagram.svg` / `diagram.png` / `diagram.pdf` / `result.json` / `model.json` /
+   `topology.json` / `legend_audit.json`）；
+2. 第 2、3 步退出码均为 0；
+3. `result.json` 顶层含 `references/OUTPUT_CONTRACT.md` §2 的全部字段
+   ＋ `case.json` 的 `output_contract` 字段，且**顶层无 null**。
+
+## 1. 期望输出速查
+
+| 场景 | 命令要点 | 期望 status / exit | 产物 |
+|-|-|-|-|
+| 已核验规格 + matplotlib | `--model-file ...` | `success` / **0** | 7 件，`gates 8/8` |
+| 已核验规格 + 只要求 SVG | `--model-file ... --formats svg` | `partial` / **2**（G5=false，诚实说明未请求预览） | SVG + 4 个 JSON |
+| 已核验规格 + 无 matplotlib | 同 1 | `partial` / **2**（仅缺 PNG/PDF，SVG 与有 matplotlib 时逐字节相同） | SVG + 4 个 JSON |
+| 自动草稿（未人工核验） | 省略 `--model-file` | `partial` / **2**（`uncertainty` 提示逐条复核） | 7 件 |
+| 规格不过 schema 门 | `--model-file <bad.json>`（如 `type="banana"`） | `failed` / **3**（`reason="schema gate fail"`） | 仅 `result.json` |
+| 材料缺失/不可读 | 空材料目录 | `failed` / **3** | 仅 `result.json` |
+
+## 2. T1 编译检查 —— 通过
+
+```bash
+python -m py_compile "$SKILL_DIR"/scripts/*.py
+```
+
+11 个脚本全部 COMPILE OK（打包时 `python -m py_compile` 无输出、退出码 0）。
+
+## 3. T2 冒烟：示例案例 + 已核验机制规格 —— 通过（success）
+
+```bash
+python3 "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \
+    --model-file "$SKILL_DIR/examples/model.example.json" --out /tmp/t2
+```
 
 ```
-SUMMARY {"status": "success", "case_id": "example-egfr-mapk", ...,
-         "self_check_passed": true, "failures": 0, "warnings": 0,
-         "extraction": {"method": "auto-draft", "verified_by_agent": false}}
+[main] case_id=example-egfr-mapk status=success entities=9 edges=9 bands=4 verified=True
+SUMMARY {... "status": "success", "self_check_passed": true, "failures": 0, "warnings": 0,
+         "gates": "8/8", "extraction": {"method": "manual", "verified_by_agent": true}}
+exit=0
 ```
 
-产出文件（sha256 为该次运行实测值）：
+产物 7 件（sha256 前 16 位 / 字节数）：
 
-| 文件 | 大小 | sha256(前16位) | 说明 |
-|---|---|---|---|
-| diagram.svg | 18,641 B | 15e309dc316594cd | 可编辑分层 SVG（7 图层，13 实体组，12 条语义边） |
-| diagram.png | 184,318 B | e21a4ce437f1b49d | 预览 1200×900 @150dpi |
-| diagram.pdf | 107,456 B | d4aa29b5c4b917c1 | 矢量 PDF 预览 |
-| result.json | 22,779 B | 7b67a95e1506674a | 契约化结果（23 项自检全过） |
-| model.json | 13,709 B | 5a181c0bd63d4ef7 | 规范化模型（实体/边/图例/来源） |
+```
+diagram.svg         27f344a0dfb2e90f   17771
+diagram.png         9137715961238f3f  203655
+diagram.pdf         （每次不同，见 T4） 108045
+result.json         （含时间戳，见 T4）   ~28.8 KB
+model.json          f93a20a283492f73   11418
+topology.json       eb826fc5557fccfc    1434
+legend_audit.json   efdb1805c839d648    1807
+```
 
-## 2. 附加验证
+`self_check`：32 项检查全 pass、`failures=0`、`warnings=0`；`gates` G1–G8 全 `pass`；
+实体 9 / 边 9 / 区室 4（胞外→膜→胞质→核），5 类箭头全部在用，负反馈环 1 条右侧绕行；
+`export_checks` 三项全 pass；`output_contract` 的两个自定义字段回显到顶层
+（`custom_demo_field`: str、`custom_list_field`: list），**顶层无 null**。
 
-| # | 命令 | 结果 |
-|---|---|---|
-| V1 | 从工作区根目录用绝对脚本路径运行（验证自定位） | `status=success, failures=0` ✅ |
-| V2 | `--model-file examples/output/model.json`（验证人工建模路径） | `status=success, failures=0` ✅ |
-| V3 | `python -m py_compile scripts/*.py` | 全部通过 ✅ |
-| V4 | SKILL.md YAML frontmatter（PyYAML safe_load） | name/description 合法，description > 40 字符 ✅ |
-| V5 | 重复运行 3 次 | model.json sha 恒定；SVG 除时间戳/注释外逐字节一致（结构稳定） ✅ |
-| V6 | 布局体检（脚本内） | 同区室节点两两无重叠；全部边在画布内；4 区室带 y/h 正常 ✅ |
-| V7 | SVG 审计（grep） | 图例 4 种箭头 marker：三角×5、横杠×3、圆点×4、菱形×2；`data-type` 覆盖全部 12 边/13 实体 ✅ |
-| V8 | 结果契约核对 | result.json 含 OUTPUT_CONTRACT.md §1 全部字段 + case.json output_contract 自定义字段回显 ✅ |
-| V9 | 素材点检 | 材料 13 实体/12 关系全部被抽取；方向与示例材料一致（激活/抑制/结合/修饰/转运各就各位） ✅ |
-| V10 | 中文渲染 | SimHei 命中；PNG 图例/区室/标题中文正常（像素级抽查非空） ✅ |
+## 4. T3 冒烟：自动草稿（未核验路径） —— 通过（partial，符合设计）
 
-## 3. 冒烟过程中发现并修复的问题（诚实记录）
+```bash
+python3 "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" --out /tmp/t3
+# [main] ... status=partial entities=9 edges=9 bands=4 verified=False ; exit=2
+```
 
-1. `extract.py` 表行解析：把材料“表1/表2”普通数据行误当实体（症状：实体多出、区室带多出）；
-   修复：行解析按“实体清单/关系清单”章节门控 + 复合类型判定，普通数据表行不再入模型。
-2. 关系行首格残留 `"- "` 前缀导致实体名错配；修复：`_strip_table_row` 剥离项目符号。
-3. `svg_backend` 对 `marker=none`（binding）误查 MARKERS 表 → KeyError；修复：跳过无箭头 marker 定义。
-4. `LEGEND_W` 未在 svg_backend 定义 → NameError；修复：本地常量。
-5. 校验器 L05 把区室带/标题装饰色当成语义色误报；修复：颜色审计限定在实体组与类型边内。
-6. PNG 预览缺 SVG 中的 sources 页脚；修复：mpl_backend 增加同源 footer，源/预览保持一致。
-7. T03 逻辑反了（无假设来源时误报 warn）；修复。
+- `status=partial`、`exit=2`：**未人工核验的草稿不允许 success**；
+- `self_check`：32 项、`failures=0`、`warnings=1`（`P03` 逆流边 `r9`：核内 ERK→RAF 需人工
+  确认是否反馈环——正是留给 Agent 核验的信号）；`gates 8/8`；
+- `uncertainty` 明确写出"实体/关系由草稿提取器自动生成，尚未由 Agent 逐条复核（CP4 未过）"；
+- 草稿提取器：`entities=9`、`edges=9`、`method=auto-draft`，无解析告警。
 
-## 4. 已知限制（与 README/SKILL 一致）
+## 5. T4 确定性：同输入双跑 —— SVG/PNG/JSON 逐字节一致，PDF 仅时间戳差异
 
-- PDF 材料不做直接解析（无第三方 PDF 依赖设计）；Agent 抽文本或经 `--model-file` 手工建模。
-- 自动抽取只保证结构化语句；散文材料依赖 Agent 核验（SKILL.md 步骤 2）。
-- 容器若缺 matplotlib，PNG/PDF 降级（status=partial，export_checks 写明），SVG 仍有效。
+```bash
+python3 "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \
+    --model-file "$SKILL_DIR/examples/model.example.json" --out /tmp/t4a
+python3 "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \
+    --model-file "$SKILL_DIR/examples/model.example.json" --out /tmp/t4b
+```
 
-## 5. 结论
+| 文件 | 双跑 sha256（前 16 位） | 结论 |
+|-|-|-|
+| `diagram.svg` | `27f344a0dfb2e90f` / `27f344a0dfb2e90f` | **一致**（SVG 无时间戳，为输入+布局纯函数） |
+| `diagram.png` | `9137715961238f3f` / `9137715961238f3f` | **一致** |
+| `model.json` | `f93a20a283492f73` / `f93a20a283492f73` | **一致** |
+| `topology.json` | `eb826fc5557fccfc` / `eb826fc5557fccfc` | **一致** |
+| `legend_audit.json` | `efdb1805c839d648` / `efdb1805c839d648` | **一致** |
+| `diagram.pdf` | `b3c8d1c4bf147d8` / `8ed51b8a1cd35c7` | 差异：matplotlib 内嵌 PDF `CreationDate` 时间戳（如实记录） |
+| `result.json` | 含 `provenance.ts` / `change_records[].ts` | 去时间戳后与本次一致（自检探针 `model_sha16`/`svg_sha16` 双跑相等） |
 
-端到端管线（读材料 → 抽取 → 建模 → 布局 → 可编辑 SVG → PNG/PDF 预览 → 校验 →
-契约 result.json）**在本机真实跑通**：验收命令成功、0 失败、双后端一致、重复运行稳定。
-示例输入与输出位于 `examples/`（明确标注“示例，非正式案例”）。
+`self_check.determinism` = `model_sha16=f93a20a283492f73`、`svg_sha16=27f344a0dfb2e90f`，
+两次运行相同。**确定性承诺 = SVG/PNG/model/topology/legend_audit**；PDF 与 result.json
+含时间戳，不作确定性承诺。
+
+## 6. T5 契约独立复查 —— 通过
+
+```bash
+python3 "$SKILL_DIR/scripts/check_contract.py" --result /tmp/t2/result.json \
+    --case "$SKILL_DIR/examples/case.json"
+```
+
+```
+pass C01 case_id 非空 / C02 status 三值枚举 / C03 信封字段齐全 / C04 顶层禁止 null /
+     C05 output_contract 全部回显 / C06 deliverables 路径存在 / C07 硬性门 G1–G8 全过
+contract|ok|case=example-egfr-mapk|status=success|checks=7      exit=0
+```
+
+## 7. T6 图面全检（build 后 verify 成对） —— 通过
+
+```bash
+python3 "$SKILL_DIR/scripts/validate_figure.py" --out /tmp/t2
+# standalone-verify|ok=True|fails=0|warns=0     exit=0
+```
+
+30 项检查全 pass：M（模型）、T（溯源）、P01–P08（拓扑/方向/区室/消歧/反馈）、
+L01–L08 与 E01/E02（图例覆盖、箭头=图例、颜色⊆图例∪映射、虚线语义、线宽映射、
+数值溯源、色带端点、图层命名）、F01/F02（产物存在、PNG 可打开）、S01（schema 门）、
+D01（确定性探针）。
+
+## 8. T7 schema 门拦截（CP2 阻断） —— 通过
+
+```bash
+# 把示例规格的首个实体 type 改成 "banana"（raw 未归一化直接校验，防静默改写）
+python3 "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \
+    --model-file /tmp/bad.json --out /tmp/t7
+# SUMMARY {"status": "failed", ..., "reason": "schema gate fail"}      exit=3
+```
+
+## 9. T8 抽取器独立 CLI —— 通过
+
+```bash
+python3 "$SKILL_DIR/scripts/extract.py" "$SKILL_DIR/examples/materials/example_material.md"
+# {"entities": 9, "edges": 9, "method": "auto-draft", "warnings": []}
+```
+
+## 10. T9 降级路径（两条都真跑过） —— 通过
+
+| 场景 | 命令 | 实测 | SVG 是否仍产出 |
+|-|-|-|-|
+| 显式只要 SVG | `--formats svg` | `partial` / exit 2 / G5=false / `previews=[]`、`exports=[]`，`uncertainty` 记"PNG/PDF 预览未生成或未请求" | 是，`svg_sha16=27f344a0dfb2e90f`（与全量运行**逐字节相同**） |
+| matplotlib 不可用 | `PYTHONPATH=<shadow> ` 模拟 `import matplotlib` 失败 | 同上（异常被捕获，降级为仅 SVG） | 是，`svg_sha16` 同样为 `27f344a0dfb2e90f` |
+
+⇒ 预览能力缺失时**绝不假装有预览**：`deliverables.previews/exports` 为空数组、
+`uncertainty` 写明原因与补救命令，可编辑源不受影响。
+
+## 11. T10 本次合规重打包中发现并修复的缺陷（诚实记录）
+
+均为本机实跑发现，修复后重新验证：
+
+1. **`deliverables.audits` 恒为空**：`result_writer.py` 用 `out_paths.get("topology.json")`
+   查键，而实际键名是 `topology` / `legend_audit` → 审计产物永远列不进交付物，
+   与 `OUTPUT_CONTRACT.md` §5 不一致；已改为按真实键取 basename（现输出
+   `["topology.json","legend_audit.json"]`）。
+2. **`--formats svg` 直接崩溃**：`mpl_backend.render_preview` 在只请求 SVG 时返回的字典
+   没有 `png`/`pdf` 键（与它自己的 docstring 矛盾）→ `KeyError: 'png'`，退出码 1；
+   已改为始终携带 `png/pdf` 键，并在 `main.py` 中未请求预览时**跳过预览渲染**
+   （纯标准库路径因此成立）。
+3. **`UnboundLocalError: ex`**：`uncertainty` 记录复制了 except 分支里才存在的 `ex`
+   变量，改成对 `preview_meta["warnings"]` 统一记录。
+4. **`files` 依赖目录残留**：首次运行时 `files` 不含 `result.json`，重跑才含
+   （因为清单在写盘前生成）→ 现固定并集 `{"result.json"}`，首次与重跑一致。
+5. **本机绝对路径泄漏**（合规硬门）：`examples/output/result.json` 里既有
+   `provenance.command/case_file` 的 Windows 盘符绝对路径，也有检查详情里的绝对产物路径；
+   `scripts/main.py` 增加 `portable_path()`（技能根内 → 相对路径，容器路径如
+   `/input`、`/app/output` 原样保留），`scripts/validate_figure.py` 的检查详情改用
+   basename；示例产物已用**相对命令**重跑生成（`--out examples/output`）。
+6. **`provenance.schema` 在 Windows 上写成反斜杠**（`assets\mechanism-spec.schema.json`）
+   → 统一走 `portable_path()`，输出 `assets/mechanism-spec.schema.json`。
+
+## 12. 合规自检（本包文本形态）
+
+| 项 | 实测 | 上限 |
+|-|-|-|
+| 文件数 | 见包根汇报（`validate_pkg.py` 输出） | 50 |
+| 扩展名 | 仅 `.md .py .json .txt` | 七种白名单 |
+| 包内二进制 | 无（`diagram.svg/png/pdf` 运行时生成） | 禁止 |
+| `__pycache__` / `.pyc` | 无 | 禁止 |
+| 包内本机盘符绝对路径（字母＋冒号＋反斜杠） | 无（`grep -rn` 0 命中） | 禁止 |
+| 单文件 / 总字节 | 见汇报（均远低于 500KB / 2MB） | 500KB / 2MB |
+
+## 13. 环境备注与限制（如实声明）
+
+- **终端编码**：脚本入口把 stdout/stderr 重配置为 UTF-8；Windows 控制台若仍按 GBK 解码，
+  中文摘要可能显示为乱码——用 `chcp 65001` 或 UTF-8 终端即可，**文件内容始终是 UTF-8**。
+- 渲染后端本文档实测为 matplotlib；无 matplotlib 时按 T9 降级，SVG 源不受影响。
+- 实体抽取依赖材料文本结构（表格 / `A | 动词 | B` / `- A 动词 B（证据）`）；散文与 PDF
+  材料需 Agent 手工建规格（CP2b/CP3），这是"准确率优先"的刻意设计。
+- PDF 与 `result.json` 含时间戳，不作确定性承诺；确定性承诺见 T4。
+- `examples/` 全部标注"示例，非正式案例"，与平台固定 3 个正式案例无关。

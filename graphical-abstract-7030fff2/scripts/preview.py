@@ -19,12 +19,21 @@ import os
 
 from common import write_json, write_text
 
+# Font candidates are *probed at run time* on every platform (Windows / macOS /
+# Linux); a missing file is simply skipped. Nothing here is baked in: when no
+# candidate exists the renderer falls back honestly (PIL default font, or the
+# pure-python placeholder boxes) and records that in render_log.json.
 PIXEL_FONT_CANDIDATES = [
     ("C:/Windows/Fonts/msyh.ttc", "Microsoft YaHei"),
     ("C:/Windows/Fonts/simhei.ttf", "SimHei"),
     ("C:/Windows/Fonts/arial.ttf", "Arial"),
     ("C:/Windows/Fonts/segoeui.ttf", "Segoe UI"),
     ("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", "DejaVu Sans"),
+    ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", "Noto Sans CJK SC"),
+    ("/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc", "WenQuanYi Zen Hei"),
+    ("/System/Library/Fonts/PingFang.ttc", "PingFang SC"),
+    ("/System/Library/Fonts/Supplemental/Arial.ttf", "Arial"),
+    ("/Library/Fonts/Arial.ttf", "Arial"),
 ]
 
 

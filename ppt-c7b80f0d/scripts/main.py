@@ -1,53 +1,59 @@
 # -*- coding: utf-8 -*-
-"""main.py — end-to-end: material -> editable .pptx + previews + result.json.
+"""main.py — end-to-end orchestrator: material -> editable .pptx + previews +
+evidence mapping + result.json.
 
-Part of the "paper-to-academic-ppt" Skill (ppt-c7b80f0d, efficiency-3).
+Part of the "paper-to-academic-ppt" Skill v2 (ppt-c7b80f0d, efficiency-3).
 
 Usage
 -----
-    python main.py --case <case.json> [--task task.md] [--spec deck-spec.json] \\
-                   [--materials <dir>] [--out <output dir>] [--demo] [--verbose]
-    python main.py --case examples/case.json --spec examples/deck-spec.json \\
-                   --out D:/BuildTemp/smoke-ppt-c7b80f0d
+    python "$SKILL_DIR/scripts/main.py" --case <case.json> [--task task.md] \\
+                   [--spec deck-spec.json] [--materials <dir>] [--out <output dir>] \\
+                   [--demo] [--verbose]
+    python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" \\
+                   --spec "$SKILL_DIR/examples/deck-spec.json" --out "<output dir>"
 
-Behaviour
----------
-1. Reads the *actual* case file (case_id + output_contract + material refs).
-2. Locates the paper material (PDF/text/markdown; --materials or case refs).
-   PDFs are parsed with scripts/pdf_extract.py (PyMuPDF -> pypdf -> pdfplumber);
-   if no PDF library exists the agent's own PDF reader output is expected as
-   .txt input. The script NEVER invents paper content.
-3. Builds the deck from the agent-written deck-spec.json via deck_builder.py
-   (organizer template adaptation, or the built-in academic layout).
-4. Renders honest PIL-approximation previews (preview.py) — no PowerPoint /
-   LibreOffice is assumed. Reconstructed charts (spec kind=reconstructed_chart)
-   are emitted as PNG + editable SVG by matplotlib when available.
-5. Writes result.json containing every output_contract field declared by the
-   case (type-appropriate empty values when unknown), case_id, deck metadata,
-   evidence mapping, sources, uncertainty, change_records and run_meta.
-6. Runs a self-validation pass and prints a summary.
+$SKILL_DIR = the directory holding SKILL.md. Every sibling module is imported
+through sys.path.insert(HERE), so the command above works from any cwd.
+
+Pipeline (three-layer intent: assetkit -> deckgen -> ooxml_kit, with
+lint/export gates):
+    CP1  spec_lint   structural lint of the page plan (claim/evidence/bullets);
+    S1   assetkit    read the *actual* material (PDF -> page-tagged text + images)
+                     and discover chart data declared in the spec;
+    S2   deckgen     build the editable .pptx (template adaptation or built-in
+                     academic layout; every added shape named via ooxml_kit);
+    S3   assetkit    reconstructed charts (PNG + editable SVG, matplotlib);
+    S4   preview     honest PIL-approximation previews;
+    S5   export      write evidence mapping (markdown table + evidence_map.json
+                     machine-readable per-slide mapping) and check the .pptx
+                     OOXML container + reopen with python-pptx;
+    S6   result.json every output_contract field echoed (never null), honest
+                     status/sources/uncertainty/change_records/run_meta.
 
 Honesty: status is completed/partial/failed and *never* upgraded silently;
-material/software states are recorded, not assumed.
+material/software states are recorded, not assumed; lint problems are
+recorded, never hidden.
 """
 from __future__ import annotations
 
 import json
 import os
 import platform
-import re
 import sys
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-import deck_builder          # noqa: E402
-import pdf_extract           # noqa: E402
-import preview               # noqa: E402
+import assetkit            # noqa: E402
+import deckgen             # noqa: E402
+import ooxml_kit           # noqa: E402
+import preview             # noqa: E402
+import spec_lint           # noqa: E402
 
-VERSION = "1.0.0"
+VERSION = "2.1.0"
 DEFAULT_OUT_NAME = "academic_deck"
+CONTRACT_DOC = os.path.join(os.path.dirname(HERE), "references", "OUTPUT_CONTRACT.md")
 
 
 def _container_default(v):
@@ -61,10 +67,15 @@ def _container_default(v):
 
 def apply_output_contract(result, case, spec=None):
     """Echo every field the case declares under output_contract (never null for
-    declared containers). This mirrors how the evaluator expects contract fields
-    at the top level of result.json. Known semantic fields (title / main_claim /
-    slides / notes_separated) get real values from the run when available."""
+    declared containers). Known semantic fields get real values when available.
+
+    The declaration itself is echoed first as result["output_contract"] so a
+    reviewer can diff "what the case asked for" against "what the run produced"
+    without reading case.json; then each declared field lands at top level.
+    """
     contract = case.get("output_contract")
+    result.setdefault("output_contract",
+                      contract if isinstance(contract, (dict, list)) else {})
     if isinstance(contract, dict):
         spec_slides = (spec or {}).get("slides", [])
         semantic = {
@@ -96,99 +107,11 @@ def apply_output_contract(result, case, spec=None):
 
 
 # --------------------------------------------------------------------------- #
-# Material discovery
+# Evidence mapping (per-slide mapping table: markdown for review + JSON for QA)
 # --------------------------------------------------------------------------- #
-def _looks_like_paper_file(name):
-    return name.lower().endswith((".pdf", ".txt", ".md", ".tex", ".rst"))
-
-
-def discover_materials(case, materials_override, work_dir, case_dir=None):
-    """Return a list of candidate paper material paths."""
-    paths = []
-    if materials_override:
-        if os.path.isdir(materials_override):
-            for n in sorted(os.listdir(materials_override)):
-                p = os.path.join(materials_override, n)
-                if os.path.isfile(p) and _looks_like_paper_file(n):
-                    paths.append(p)
-        elif os.path.isfile(materials_override):
-            paths.append(materials_override)
-
-    bases = [work_dir]
-    if case_dir:
-        bases.append(case_dir)
-
-    def _resolve(candidate):
-        if not candidate:
-            return None
-        if os.path.isabs(candidate):
-            return candidate if os.path.exists(candidate) else None
-        for base in bases:
-            joined = os.path.join(base, candidate)
-            if os.path.exists(joined):
-                return joined
-        return None
-
-    for key in ("material", "materials", "paper", "document", "source_pdf", "pdf"):
-        val = case.get(key)
-        if isinstance(val, str):
-            p = _resolve(val)
-            if p and p not in paths:
-                paths.append(p)
-        elif isinstance(val, dict):
-            for sub in ("path", "paths", "path_pdf", "file", "files"):
-                v = val.get(sub)
-                if isinstance(v, str):
-                    p = _resolve(v)
-                    if p and p not in paths:
-                        paths.append(p)
-                elif isinstance(v, list):
-                    for x in v:
-                        if isinstance(x, str):
-                            p = _resolve(x)
-                            if p and p not in paths:
-                                paths.append(p)
-        elif isinstance(val, list):
-            for x in val:
-                if isinstance(x, str):
-                    p = _resolve(x)
-                    if p and p not in paths:
-                        paths.append(p)
-    # order: pdf first, then text
-    paths.sort(key=lambda p: (not p.lower().endswith(".pdf"), os.path.basename(p)))
-    return paths
-
-
-def read_material_text(path, work_dir):
-    """Read a text-like material with page markers from a PDF if possible."""
-    low = path.lower()
-    if low.endswith(".pdf"):
-        extract_dir = os.path.join(work_dir, "extract")
-        rep = pdf_extract.extract_pdf(path, extract_dir)
-        if rep.get("status") == "ok" and rep.get("text_chars", 0) > 0:
-            txt = rep.get("text_file")
-            full = os.path.join(extract_dir, txt)
-            with open(full, encoding="utf-8", errors="replace") as fh:
-                return fh.read(), rep
-        return "", rep
-    with open(path, encoding="utf-8", errors="replace") as fh:
-        text = fh.read()
-    rep = {"pdf": path, "status": "ok_text", "tool": "direct-read",
-           "text_chars": len(text), "pages_parsed": 0, "images_extracted": 0,
-           "errors": [], "text_file": os.path.relpath(path, work_dir)}
-    return text, rep
-
-
-# --------------------------------------------------------------------------- #
-# Evidence mapping markdown
-# --------------------------------------------------------------------------- #
-def write_evidence_mapping(spec, out_dir, deck_meta):
-    """Write the page-level evidence mapping (markdown) for review."""
-    lines = ["# 页级证据映射（复核用）", "",
-             "> 由 deck-spec.json 生成；引用项对应论文的图/表/章节/页码。",
-             "> “证据缺失”是显式标注，不是作者无中生有。", "",
-             "| 页 | 标题 | 主张（一句话） | 证据定位 | 状态 |",
-             "|---|---|---|---|---|"]
+def collect_slide_evidence(spec):
+    """Per-slide evidence rows: page, title, claim, mapped refs, gap status."""
+    rows = []
     for s in spec.get("slides", []):
         ev = s.get("evidence") or []
         gap = bool(s.get("evidence_gap"))
@@ -200,18 +123,44 @@ def write_evidence_mapping(spec, out_dir, deck_meta):
                 "%s (%s)" % (e.get("ref", "?"), e.get("page") or e.get("location") or "?")
                 for e in ev)
             st = "mapped"
+        rows.append({
+            "page": s.get("page", 0),
+            "title": s.get("title", ""),
+            "claim": s.get("claim", ""),
+            "location": loc,
+            "status": st,
+            "evidence": ev,
+        })
+    return rows
+
+
+def write_evidence_mapping(spec, out_dir, deck_meta):
+    """Write the per-slide evidence mapping: markdown table (review) +
+    evidence_map.json (machine-readable). Returns (md_path, json_path)."""
+    rows = collect_slide_evidence(spec)
+    lines = ["# 页级证据映射（复核用）", "",
+             "> 由 deck-spec.json 生成；引用项对应论文的图/表/章节/页码。",
+             "> “证据缺失”是显式标注，不是作者无中生有。", "",
+             "| 页 | 标题 | 主张（一句话） | 证据定位 | 状态 |",
+             "|---|---|---|---|---|"]
+    for r in rows:
         lines.append("| P%02d | %s | %s | %s | %s |" % (
-            s.get("page", 0),
-            (s.get("title") or "").replace("|", "\\|"),
-            (s.get("claim") or "").replace("|", "\\|")[:60],
-            loc.replace("|", "\\|"), st))
+            r["page"],
+            (r["title"] or "").replace("|", "\\|"),
+            (r["claim"] or "").replace("|", "\\|")[:60],
+            r["location"].replace("|", "\\|"), r["status"]))
     lines.append("")
     lines.append("附件：源文件 %s；导出预览见 previews/（PIL 近似渲染）。"
                  % (deck_meta.get("file") and os.path.basename(deck_meta["file"])))
-    path = os.path.join(out_dir, "evidence_mapping.md")
-    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+    md_path = os.path.join(out_dir, "evidence_mapping.md")
+    with open(md_path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("\n".join(lines))
-    return path
+    json_path = os.path.join(out_dir, "evidence_map.json")
+    with open(json_path, "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"source": "deck-spec.json", "deck": (
+            deck_meta.get("file") and os.path.basename(deck_meta["file"])),
+            "rows": rows}, fh, ensure_ascii=False, indent=2)
+    return md_path, json_path
 
 
 # --------------------------------------------------------------------------- #
@@ -224,7 +173,7 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
     uncertainty = []
     change_records = [{
         "time": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-        "what": "start run",
+        "what": "start run (paper-to-academic-ppt v%s)" % VERSION,
         "why": "case %s" % os.path.basename(case_path),
     }]
 
@@ -250,13 +199,13 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
     extract_rep = None
     template_path = None
 
-    # -- material -------------------------------------------------------------
-    candidates = discover_materials(case, materials_override, work_dir,
-                                    case_dir=os.path.dirname(os.path.abspath(case_path)))
+    # -- material (assetkit) --------------------------------------------------
+    candidates = assetkit.discover_materials(case, materials_override, work_dir,
+                                             case_dir=os.path.dirname(os.path.abspath(case_path)))
     if candidates:
         chosen = candidates[0]
         try:
-            paper_text, extract_rep = read_material_text(chosen, work_dir)
+            paper_text, extract_rep = assetkit.read_material_text(chosen, work_dir)
             material_ok = bool(paper_text.strip())
         except Exception as exc:
             extract_rep = {"status": "error", "errors": [str(exc)]}
@@ -269,16 +218,22 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
                         "reason": "no readable paper material found",
                         "extract_status": (extract_rep or {}).get("status", "not_attempted")})
 
-    # -- spec -----------------------------------------------------------------
+    # -- spec + CP1 lint --------------------------------------------------------
     spec = None
     spec_source = "none"
+    lint_report = {"valid": False, "problems": ["no spec loaded"]}
     if spec_path and os.path.isfile(spec_path):
         with open(spec_path, encoding="utf-8") as fh:
             spec = json.load(fh)
         spec_source = os.path.abspath(spec_path)
+        lint_report = spec_lint.lint(spec)
+        if not lint_report["valid"]:
+            uncertainty.append("CP1 spec lint problems: %s"
+                               % "; ".join(lint_report["problems"][:6]))
     elif demo or not material_ok:
-        spec = deck_builder.spec_from_case_meta(case, paper_text)
+        spec = deckgen.spec_from_case_meta(case, paper_text)
         spec_source = "auto-skeleton (demo / missing material)"
+        lint_report = spec_lint.lint(spec)
         uncertainty.append("deck-spec was auto-generated SKELETON — agent narration "
                            "required for a real deliverable." if not demo else
                            "this run is a DEMO skeleton; not a formal case result")
@@ -286,12 +241,12 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
         spec.setdefault("case_id", case_id)
         spec.setdefault("deck_title", spec.get("deck_title") or (case.get("title") or "Academic Talk"))
 
-    # -- build deck -----------------------------------------------------------
+    # -- build deck (deckgen + ooxml_kit) --------------------------------------
     deal_meta = {
         "file": None, "basename": None, "slide_count": 0,
         "template": {"kind": "none"}, "layouts_used": {},
         "figures": [], "tables": [], "notes_included": False,
-        "notes_separated": False, "error": None,
+        "notes_separated": False, "theme_fonts": {}, "error": None,
     }
     if not material_ok and not demo:
         uncertainty.append("paper material could not be read — no deck built, nothing invented.")
@@ -306,43 +261,52 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
             os.path.dirname(os.path.abspath(case_path)),
             work_dir)
         try:
-            deal_meta = deck_builder.build_deck(spec, template_path, work_dir, out_dir)
+            deal_meta = deckgen.build_deck(spec, template_path, work_dir, out_dir)
         except Exception as exc:
             deal_meta["error"] = "deck_build_failed: %s" % exc
             import traceback
             if verbose:
                 traceback.print_exc()
+        if template_path and (deal_meta.get("template") or {}).get("kind") == "builtin":
+            uncertainty.append(
+                "declared template %r was not usable — built-in 16:9 academic layout "
+                "used instead (deck.template.kind=builtin); run make_template.py if a "
+                "real .pptx template is needed" % str(template_path))
         if deal_meta.get("page_budget") and deal_meta.get("page_budget_met") is False:
             uncertainty.append(
-                "page budget %s exceeded (%s slides) — trim/merge per SKILL S7"
+                "page budget %s exceeded (%s slides) — trim/merge per SKILL decision rules"
                 % (deal_meta["page_budget"], deal_meta.get("slide_count")))
+        if deal_meta.get("theme_fonts", {}).get("note") \
+                and not deal_meta.get("theme_fonts", {}).get("applied"):
+            # a *failed* injection is a real limitation and belongs in uncertainty;
+            # a successful one is reported in deck.theme_fonts instead
+            uncertainty.append("theme fonts: %s" % deal_meta["theme_fonts"]["note"])
 
-    # -- reconstructed charts -------------------------------------------------
+    # -- reconstructed charts (assetkit) ---------------------------------------
     chart_records = []
     if deal_meta.get("file") and deal_meta.get("error") is None:
         for s in spec.get("slides", []):
             fig = s.get("figure") or {}
             if fig.get("kind") == "reconstructed_chart":
-                rec = preview.make_chart(fig, out_dir)
+                rec = assetkit.make_chart(fig, out_dir)
                 chart_records.append({"slide": s.get("page", 0),
                                       "ref": fig.get("ref"),
                                       "chart": rec})
                 if rec and rec.get("png"):
                     rel = os.path.relpath(rec["file"], out_dir)
-                    # re-embed the freshly generated chart into the slide figure
                     s["figure"]["image"] = rel
                 if rec and rec.get("reason"):
                     uncertainty.append("reconstructed chart skipped: %s" % rec["reason"])
 
-    # rebuild the deck so the generated chart image is embedded (second pass)
+    # rebuild the deck so the freshly generated chart image is embedded
     if deal_meta.get("file") and deal_meta.get("error") is None and any(
             (s.get("figure") or {}).get("kind") == "reconstructed_chart" for s in spec.get("slides", [])):
         try:
-            deal_meta = deck_builder.build_deck(spec, template_path, work_dir, out_dir)
+            deal_meta = deckgen.build_deck(spec, template_path, work_dir, out_dir)
         except Exception as exc:
             deal_meta["error"] = "deck_rebuild_failed: %s" % exc
 
-    # -- previews -------------------------------------------------------------
+    # -- previews (PIL approximation, honest) ----------------------------------
     preview_records = []
     if deal_meta.get("file") and deal_meta.get("error") is None:
         try:
@@ -354,12 +318,12 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
     else:
         rendered_with = "not-built"
 
-    # -- evidence mapping -----------------------------------------------------
-    ev_path = None
+    # -- evidence mapping (per-slide table + machine-readable) -----------------
+    ev_path = ev_json = None
     if deal_meta.get("file") and deal_meta.get("error") is None:
-        ev_path = write_evidence_mapping(spec, out_dir, deal_meta)
+        ev_path, ev_json = write_evidence_mapping(spec, out_dir, deal_meta)
 
-    # -- result.json ----------------------------------------------------------
+    # -- result.json -----------------------------------------------------------
     gaps = []
     for s in (spec or {}).get("slides", []):
         if s.get("evidence_gap") or not s.get("evidence"):
@@ -371,6 +335,10 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
     elif gaps:
         status = "partial"
         uncertainty.append("some slides carry explicit evidence gaps: %s" % "; ".join(map(str, gaps[:6])))
+    elif not lint_report["valid"]:
+        status = "partial"
+        uncertainty.append("CP1 lint had problems; deck built with recorded deviations: %s"
+                           % "; ".join(lint_report["problems"][:6]))
     else:
         status = "completed"
 
@@ -387,6 +355,8 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
             "editable": True,
             "overflow_guard": deal_meta["overflow_guard"],
             "auto_slides": deal_meta.get("auto_slides"),
+            "theme_fonts": deal_meta.get("theme_fonts"),
+            "export": {"ooxml": None, "naming": None},
         }
         if deal_meta.get("page_budget") is not None:
             deck_out["page_budget"] = deal_meta["page_budget"]
@@ -398,6 +368,9 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
         "spec_source": spec_source,
         "duration_seconds": round(time.time() - started, 2),
         "skill_version": VERSION,
+        "checkpoints": {"cp1_spec_lint": lint_report["valid"],
+                        "cp2_build": deal_meta.get("file") is not None and not deal_meta.get("error"),
+                        "cp3_export_check": None},
     })
     result = {
         "case_id": case_id,
@@ -406,6 +379,8 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
         "deck": deck_out,
         "evidence_mapping": {"file": os.path.basename(ev_path), "entries": len((spec or {}).get("slides", [])),
                              "gaps": gaps} if ev_path else {},
+        "evidence_map_json": os.path.basename(ev_json) if ev_json else None,
+        "spec_lint": lint_report,
         "previews": preview_records,
         "charts": chart_records,
         "sources": sources,
@@ -413,7 +388,7 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
         "change_records": change_records + [{
             "time": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
             "what": "run finished",
-            "why": "status=%s, deck=%s" % (status, bool(deal_meta.get("file"))),
+            "why": "status=%s, deck=%s, lint=%s" % (status, bool(deal_meta.get("file")), lint_report["valid"]),
         }],
         "run_meta": run_merged,
     }
@@ -422,10 +397,14 @@ def run(case_path, task_path, spec_path, materials_override, out_dir, demo, verb
     if deal_meta.get("error"):
         result["deck_error"] = deal_meta["error"]
 
-    apply_output_contract(result, case, spec)
+    # A failed run (unreadable material, no deck) must not echo skeleton text as
+    # if it were the deck's real claim: the contract semantics stay empty then,
+    # while a --demo run keeps its SKELETON marker on purpose.
+    apply_output_contract(result, case, spec if (material_ok or demo) else None)
 
-    # -- self-check -----------------------------------------------------------
+    # -- CP3 export check (self-validation on the produced artifacts) ----------
     problems = self_check(result, out_dir)
+    result["run_meta"]["checkpoints"]["cp3_export_check"] = not problems
     result["run_meta"]["self_check"] = {"ok": not problems, "problems": problems}
     _dump_result(out_dir, result)
     _print_summary(result, problems, verbose, out_dir)
@@ -439,7 +418,7 @@ def _run_meta():
         "ppt_version": _pkg_version("pptx"),
         "pillow_version": _pkg_version("PIL"),
         "matplotlib_available": _pkg_version("matplotlib") is not None,
-        "pdf_tools": pdf_extract._tool_snapshot(),
+        "pdf_tools": assetkit._tool_snapshot(),
         "rendered_with": None,  # filled below
         "preview_fidelity": "approximate — PIL re-composition, not PowerPoint rendering",
         "preview_font": preview.find_fonts().get("font_path"),
@@ -457,13 +436,17 @@ def _pkg_version(name):
 
 def _resolve_template_path(template_path, spec_dir, case_dir, work_dir):
     """Resolve a relative template path against spec dir -> case dir -> work dir.
-    Absolute paths (recommended in real runs, e.g. /input/template.pptx) pass
-    through unchanged."""
+
+    A missing base (e.g. no --spec in a --demo run) is skipped rather than
+    joined: os.path.join(None, ...) would abort the whole run.
+    """
     if not template_path:
         return template_path
     if os.path.isabs(template_path):
         return template_path
     for base in (spec_dir, case_dir, work_dir):
+        if not base:
+            continue
         cand = os.path.join(base, template_path)
         if os.path.exists(cand):
             return cand
@@ -478,32 +461,34 @@ def _dump_result(out_dir, result):
 
 
 def self_check(result, out_dir):
-    problems = []
-    for k in ("case_id", "status", "sources", "uncertainty", "change_records", "run_meta"):
-        if k not in result:
-            problems.append("missing result field: %s" % k)
-    if result.get("status") not in ("completed", "partial", "failed"):
-        problems.append("bad status value: %s" % result.get("status"))
-    if "output_contract" in result and not isinstance(result.get("output_contract"), (dict, list)):
-        problems.append("output_contract must be a dict/list of declared fields")
-    deck = result.get("deck") or {}
-    if deck.get("file"):
-        if not os.path.isfile(os.path.join(out_dir, deck["path"] or deck["file"])):
-            problems.append("deck file missing on disk: %s" % deck.get("file"))
+    """Final internal gate (mirrors export_check.py; in-process variant).
+
+    Two independent gates run here, because a run is only deliverable when both
+    the produced artifacts and the *documented* result contract hold:
+      1. export_check.validate  -> G1-G8 on the actual files;
+      2. check_contract          -> every field listed in
+         references/OUTPUT_CONTRACT.md section 1 is present at top level
+         (the contract document is the single source of truth, so a doc/code
+         drift fails loudly instead of silently shipping a short result.json).
+    """
+    import export_check
+    import check_contract
+    rep = export_check.validate(result, out_dir, quiet=True)
+    problems = list(rep["errors"])
+    try:
+        if os.path.isfile(CONTRACT_DOC):
+            fields = check_contract.fields_from_contract(CONTRACT_DOC)
+            if not fields:
+                problems.append("contract document lists no fields: %s" % CONTRACT_DOC)
+            else:
+                missing, _nulls = check_contract.check(result, fields)
+                if missing:
+                    problems.append("output contract fields missing: %s"
+                                    % ", ".join(missing))
         else:
-            from pptx import Presentation as _P
-            try:
-                _P(os.path.join(out_dir, deck["path"] or deck["file"]))
-            except Exception as exc:
-                problems.append("deck not reopenable with python-pptx: %s" % exc)
-    for p in result.get("previews", []):
-        f = os.path.join(out_dir, p.get("file", ""))
-        if not os.path.isfile(f):
-            problems.append("preview missing: %s" % f)
-    ev = result.get("evidence_mapping") or {}
-    if ev.get("file"):
-        if not os.path.isfile(os.path.join(out_dir, ev["file"])):
-            problems.append("evidence mapping missing on disk")
+            problems.append("contract document not found: %s" % CONTRACT_DOC)
+    except Exception as exc:  # noqa: BLE001 — never crash the deliverable path
+        problems.append("contract check failed: %s" % exc)
     return problems
 
 
@@ -518,6 +503,8 @@ def _print_summary(result, problems, verbose, out_dir=None):
           % ((result.get("evidence_mapping") or {}).get("file"),
              (result.get("evidence_mapping") or {}).get("entries"),
              len((result.get("evidence_mapping") or {}).get("gaps", []))))
+    print("spec_lint    : %s" % ("OK" if (result.get("spec_lint") or {}).get("valid") else
+                                 (result.get("spec_lint") or {}).get("problems")))
     print("sources      : %d  uncertainty: %d  changes: %d"
           % (len(result.get("sources", [])), len(result.get("uncertainty", [])),
              len(result.get("change_records", []))))
@@ -528,6 +515,9 @@ def _print_summary(result, problems, verbose, out_dir=None):
 
 def main(argv=None):
     import argparse
+
+    import cli_io
+    cli_io.harden_console()
 
     ap = argparse.ArgumentParser(description="paper -> academic PPT (editable) + previews + result.json")
     ap.add_argument("--case", required=True, help="case.json path (or a directory containing case.json)")

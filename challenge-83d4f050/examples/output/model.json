@@ -1,22 +1,23 @@
 {
   "case_id": "example-egfr-mapk",
-  "title": "EGF/EGFR → RAS → RAF → MEK → ERK 信号通路机制图（教学简化版）",
+  "title": "EGF/EGFR → RAS → RAF → MEK → ERK → MYC 通路机制图（教学简化版）",
   "example": true,
   "entities": [
     {
       "id": "e1",
       "name": "EGF",
-      "type": "protein",
+      "type": "small_molecule",
       "compartment": "extracellular",
       "data": {
-        "表达量": "0.95"
+        "表达量": 0.9
       },
-      "note": "分泌型生长因子配体；示例材料 表1",
+      "note": "表皮生长因子配体",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 10
         }
       ]
     },
@@ -26,201 +27,141 @@
       "type": "protein",
       "compartment": "membrane",
       "data": {
-        "表达量": "0.82"
+        "表达量": 0.82
       },
-      "note": "受体酪氨酸激酶（跨膜）；示例材料 表1",
+      "note": "跨膜受体酪氨酸激酶",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 11
         }
       ]
     },
     {
       "id": "e3",
-      "name": "GRB2",
-      "type": "protein",
-      "compartment": "membrane",
+      "name": "EGFR–EGF 复合物",
+      "type": "complex",
+      "compartment": "cytoplasm",
       "data": {
-        "表达量": "0.60"
+        "表达量": 0.78
       },
-      "note": "衔接蛋白；示例材料 表1",
+      "note": "受体-配体复合物，内化进入胞质",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 12
         }
       ]
     },
     {
       "id": "e4",
-      "name": "SOS",
+      "name": "RAS",
       "type": "protein",
-      "compartment": "membrane",
+      "compartment": "cytoplasm",
       "data": {
-        "表达量": "0.55"
+        "表达量": 0.6
       },
-      "note": "鸟苷酸交换因子(GEF)；示例材料 表1",
+      "note": "小 GTP 酶",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 13
         }
       ]
     },
     {
       "id": "e5",
-      "name": "PIP3",
-      "type": "small_molecule",
-      "compartment": "membrane",
+      "name": "RAF",
+      "type": "protein",
+      "compartment": "cytoplasm",
       "data": {
-        "表达量": "0.50"
+        "表达量": 0.5
       },
-      "note": "磷脂酰肌醇三磷酸；示例材料 表1",
+      "note": "丝氨酸/苏氨酸激酶",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 14
         }
       ]
     },
     {
       "id": "e6",
-      "name": "PTEN",
+      "name": "MEK",
       "type": "protein",
-      "compartment": "membrane",
+      "compartment": "cytoplasm",
       "data": {
-        "表达量": "0.30"
+        "表达量": 0.55
       },
-      "note": "脂磷酸酶；示例材料 表1",
+      "note": "双特异性激酶",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 15
         }
       ]
     },
     {
       "id": "e7",
-      "name": "RAS",
+      "name": "ERK",
       "type": "protein",
       "compartment": "cytoplasm",
       "data": {
-        "表达量": "0.72"
+        "表达量": 0.7
       },
-      "note": "小 GTP 酶；示例材料 表1",
+      "note": "胞质 ERK，被 MEK 磷酸化激活",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 16
         }
       ]
     },
     {
       "id": "e8",
-      "name": "RAF",
+      "name": "核内 ERK",
       "type": "protein",
-      "compartment": "cytoplasm",
+      "compartment": "nucleus",
       "data": {
-        "表达量": "0.68"
+        "表达量": 0.72
       },
-      "note": "MAP3K 家族激酶；示例材料 表1",
+      "note": "ERK 转位入核后的形式；与 ERK（e7）同一种蛋白，按区室拆分为两个实体（教学演示：同一蛋白不同区室分实体绘制，避免跨膜/区室语义混淆）",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 17
         }
       ]
     },
     {
       "id": "e9",
-      "name": "MEK",
-      "type": "protein",
-      "compartment": "cytoplasm",
-      "data": {
-        "表达量": "0.70"
-      },
-      "note": "MAP2K 激酶；示例材料 表1",
-      "uncertain": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "e10",
-      "name": "ERK",
-      "type": "protein",
-      "compartment": "cytoplasm",
-      "data": {
-        "表达量": "0.66"
-      },
-      "note": "MAPK 激酶；示例材料 表1",
-      "uncertain": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "e11",
-      "name": "ELK1",
-      "type": "protein",
-      "compartment": "nucleus",
-      "data": {
-        "表达量": "0.50"
-      },
-      "note": "转录因子；示例材料 表1",
-      "uncertain": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "e12",
       "name": "MYC",
-      "type": "protein",
-      "compartment": "nucleus",
-      "data": {
-        "表达量": "0.45"
-      },
-      "note": "转录因子；示例材料 表1",
-      "uncertain": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "e13",
-      "name": "MYC（基因）",
       "type": "gene",
       "compartment": "nucleus",
       "data": {
-        "表达量": "0.40"
+        "表达量": 0.85
       },
-      "note": "转录靶标基因（书写区分基因/蛋白）；示例材料 表1",
+      "note": "转录因子基因（斜体表示基因，正体为其蛋白）",
       "uncertain": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 18
         }
       ]
     }
@@ -235,12 +176,13 @@
       "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "配体-受体结合；示例材料 表2",
+      "note": "EGF 结合 EGFR",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 22
         }
       ]
     },
@@ -248,17 +190,18 @@
       "id": "r2",
       "from": "e2",
       "to": "e3",
-      "type": "activation",
+      "type": "transport",
       "subtype": "",
-      "evidence": "moderate",
+      "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "活化受体募集衔接蛋白；示例材料 表2",
+      "note": "受体-配体复合物内化（转运）进入胞质",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 23
         }
       ]
     },
@@ -266,179 +209,132 @@
       "id": "r3",
       "from": "e3",
       "to": "e4",
-      "type": "binding",
+      "type": "activation",
       "subtype": "",
       "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "组成型结合；示例材料 表2",
+      "note": "复合物激活 RAS",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 24
         }
       ]
     },
     {
       "id": "r4",
       "from": "e4",
-      "to": "e7",
+      "to": "e5",
       "type": "activation",
       "subtype": "",
       "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "GEF 催化 GDP→GTP 交换；示例材料 表2",
+      "note": "RAS 激活 RAF",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 25
         }
       ]
     },
     {
       "id": "r5",
-      "from": "e7",
-      "to": "e8",
-      "type": "activation",
-      "subtype": "",
+      "from": "e5",
+      "to": "e6",
+      "type": "modification",
+      "subtype": "磷酸化",
       "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "转位至膜并被激活；示例材料 表2",
+      "note": "RAF 磷酸化 MEK",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 26
         }
       ]
     },
     {
       "id": "r6",
-      "from": "e8",
-      "to": "e9",
+      "from": "e6",
+      "to": "e7",
       "type": "modification",
-      "subtype": "",
-      "evidence": "moderate",
+      "subtype": "磷酸化",
+      "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "磷酸化激活；示例材料 表2",
+      "note": "MEK 磷酸化 ERK",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 27
         }
       ]
     },
     {
       "id": "r7",
-      "from": "e9",
-      "to": "e10",
-      "type": "modification",
+      "from": "e7",
+      "to": "e8",
+      "type": "transport",
       "subtype": "",
       "evidence": "strong",
       "uncertain": false,
       "label": "",
-      "note": "磷酸化激活；示例材料 表2",
+      "note": "ERK 转位入核",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 28
         }
       ]
     },
     {
       "id": "r8",
-      "from": "e10",
-      "to": "e11",
-      "type": "transport",
+      "from": "e8",
+      "to": "e9",
+      "type": "activation",
       "subtype": "",
       "evidence": "moderate",
       "uncertain": false,
       "label": "",
-      "note": "MAPK 核转位；示例材料 表2",
+      "note": "核内 ERK 激活 MYC 转录",
       "feedback": false,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 29
         }
       ]
     },
     {
       "id": "r9",
-      "from": "e10",
-      "to": "e11",
-      "type": "modification",
-      "subtype": "",
-      "evidence": "strong",
-      "uncertain": false,
-      "label": "",
-      "note": "磷酸化转录因子；示例材料 表2",
-      "feedback": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "r10",
-      "from": "e11",
-      "to": "e13",
-      "type": "activation",
-      "subtype": "",
-      "evidence": "weak",
-      "uncertain": false,
-      "label": "",
-      "note": "转录激活（间接证据，虚线）；示例材料 表2",
-      "feedback": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "r11",
-      "from": "e10",
-      "to": "e8",
-      "type": "inhibition",
-      "subtype": "",
-      "evidence": "moderate",
-      "uncertain": false,
-      "label": "",
-      "note": "负反馈环（右侧绕行绘制）；示例材料 表2",
-      "feedback": false,
-      "source": [
-        {
-          "ref": "example_material.md",
-          "kind": "material"
-        }
-      ]
-    },
-    {
-      "id": "r12",
-      "from": "e6",
+      "from": "e8",
       "to": "e5",
       "type": "inhibition",
       "subtype": "",
-      "evidence": "strong",
+      "evidence": "weak",
       "uncertain": false,
-      "label": "",
-      "note": "去磷酸化负调控；示例材料 表2",
-      "feedback": false,
+      "label": "负反馈",
+      "note": "核内 ERK 负反馈抑制 RAF（弱证据，虚线）",
+      "feedback": true,
       "source": [
         {
-          "ref": "example_material.md",
-          "kind": "material"
+          "ref": "materials/example_material.md",
+          "kind": "material",
+          "line": 30
         }
       ]
     }
@@ -545,23 +441,23 @@
       "low": "#FFF7E0",
       "high": "#1F4E79",
       "note_zh": "材料未给出数值时使用类型默认色（见实体样式区）",
-      "note_en": "type default color is used when no data value is available",
-      "data_mapping": {
-        "field": "表达量",
-        "label_zh": "实体填充色=表达量（低 #FFF7E0 → 高 #1F4E79），数值来自示例材料 表1；边宽=证据强度（strong 2.8 / moderate 2.2 / weak 1.6，weak 或 uncertain 用虚线）。",
-        "low": "#FFF7E0",
-        "high": "#1F4E79"
-      }
+      "note_en": "type default color is used when no data value is available"
     },
     "direction_note": {
       "zh": "信号流向：自上方区室向下（受体位于膜区）；反馈环在右侧绕行",
       "en": "flow from upper to lower compartments; feedback loops routed on the right"
     },
-    "version_note": "conventions: see references/DIAGRAM_SPEC.md"
+    "version_note": "conventions: see references/legend-encoding.md"
   },
-  "layout": {},
+  "layout": {
+    "constraints": {
+      "flow": "extracellular→membrane→cytoplasm→nucleus",
+      "feedback_routing": "right side"
+    }
+  },
   "extraction": {
-    "method": "auto-draft",
-    "verified_by_agent": false
+    "method": "manual",
+    "verified_by_agent": true,
+    "note": "人工依据 materials/example_material.md 逐条核对；草稿提取器输出与人工版差异已在 change_records 说明"
   }
 }

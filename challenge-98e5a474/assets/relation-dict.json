@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "_note": "Connection-rule dictionary (连接规则字典): canonical relation kind -> how the edge is drawn (arrow marker, line style, dash, colour, z-order). Consumed by spec_lint.py (CP1 grammar conformance), layout.py edge styling and the legend. Numbers in the figure are facts from the sources; this dict only controls LINE/ARROW GRAMMAR.",
+  "relations": {
+    "activation": {
+      "arrow": "activation",
+      "line": "solid",
+      "dash": "",
+      "color": "#1F77B4",
+      "width": 2.0,
+      "label": "激活 / activation(promotes, induces, stimulates)",
+      "draw_as_group": false
+    },
+    "inhibition": {
+      "arrow": "inhibition",
+      "line": "solid",
+      "dash": "",
+      "color": "#D62728",
+      "width": 2.0,
+      "label": "抑制 / inhibition(represses, blocks, suppresses)",
+      "draw_as_group": false
+    },
+    "recruitment": {
+      "arrow": "open",
+      "line": "solid",
+      "dash": "",
+      "color": "#2CA02C",
+      "width": 2.0,
+      "label": "招募 / recruitment(binds, interacts-with)",
+      "draw_as_group": false
+    },
+    "process": {
+      "arrow": "open",
+      "line": "solid",
+      "dash": "",
+      "color": "#9467BD",
+      "width": 2.0,
+      "label": "过程 / process(produces, converts, cleaves)",
+      "draw_as_group": false
+    },
+    "transcriptional": {
+      "arrow": "open",
+      "line": "dashed",
+      "dash": "6,4",
+      "color": "#E377C2",
+      "width": 2.0,
+      "label": "转录上调 / transcriptional(gene-level, dashed)",
+      "draw_as_group": false
+    },
+    "causal": {
+      "arrow": "open",
+      "line": "solid",
+      "dash": "",
+      "color": "#8C564B",
+      "width": 2.0,
+      "label": "因果 / causal(causes, leads to)",
+      "draw_as_group": false
+    },
+    "containment": {
+      "arrow": "none",
+      "line": "none",
+      "dash": "",
+      "color": "#7F7F7F",
+      "width": 0.0,
+      "label": "包含 / containment(part-of, composed-of) — group box, never an arrow",
+      "draw_as_group": true
+    }
+  },
+  "group_grammar": {
+    "_note": "Nesting rule: containment MUST be expressed as groups (members), not arrows; arrow kinds must not cross group boxes unless the edge is between whole groups.",
+    "containment_must_be_group": true,
+    "arrow_must_not_cross_group_boundary_unless_between_groups": true,
+    "dash_line_only_for_gene_level_transcriptional": true
+  },
+  "legend_rules": {
+    "_note": "Legend <-> drawing two-way conformance (spec_lint / checks).",
+    "every_drawn_kind_must_have_legend_entry": true,
+    "no_orphan_legend_entries": true,
+    "every_legend_entry_requires_source": true
+  },
+  "data_mapping_rules": {
+    "_note": "Colour mapping must cover category count; unit on axis; values from table only.",
+    "palette_size_must_ge_unique_category_count": true,
+    "unit_required_on_axis": true,
+    "colour_mapping_listed_per_category": true
+  },
+  "canonical_vocabulary": [
+    "activation", "inhibition", "recruitment", "process",
+    "transcriptional", "causal", "containment"
+  ],
+  "color_blind_safe_palette": [
+    "#0072B2", "#E69F00", "#009E73", "#D55E00", "#56B4E9",
+    "#CC79A7", "#F0E442", "#000000", "#999999", "#661100"
+  ]
+}

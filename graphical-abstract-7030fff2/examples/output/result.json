@@ -2,10 +2,29 @@
   "schema_version": "1.0",
   "skill": {
     "name": "graphical-abstract",
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "case_id": "example-micelle-001",
   "status": "success",
+  "plan": {
+    "source": "examples/plan.example.json",
+    "hash": "8af280bed034f42a",
+    "lint": {
+      "valid": true,
+      "problems": [],
+      "plan_hash": "8af280bed034f42a"
+    }
+  },
+  "spec_lint": {
+    "valid": true,
+    "problems": [],
+    "spec_sha16": "bfbbe4f67df468b0",
+    "counts": {
+      "elements": 113,
+      "legend_entries": 7,
+      "encoding_items": 7
+    }
+  },
   "summary": "已生成 113 个图形元素（实体 6、关系 14、数据 7）的图形摘要；SVG 可编辑源 + PNG 预览已导出。",
   "task": "纳米载体能否在血液循环中稳定、并在肿瘤微环境中响应性释放化疗药物，是肿瘤靶向递送的核心挑战。",
   "deliverables": [
@@ -80,12 +99,12 @@
   "provenance": {
     "source_files": [
       {
-        "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\graphical-abstract-7030fff2\\examples\\task.md",
+        "path": "examples/task.md",
         "sha256": "820241cb102cf892e39a31b586e5e4e4b7961f48338d9e05ecc07d43cfa34919",
         "role": "task"
       },
       {
-        "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\graphical-abstract-7030fff2\\examples\\material.md",
+        "path": "examples/material.md",
         "sha256": "9cde8c17a78e49ce7cb229f5ac736eb45e6123c2e063134bc69acae95eaca856",
         "role": "material"
       }
@@ -94,11 +113,11 @@
   },
   "sources": [
     {
-      "ref": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\graphical-abstract-7030fff2\\examples\\task.md",
+      "ref": "examples/task.md",
       "role": "task"
     },
     {
-      "ref": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\graphical-abstract-7030fff2\\examples\\material.md",
+      "ref": "examples/material.md",
       "role": "material"
     }
   ],
@@ -106,8 +125,8 @@
   "warnings": [],
   "change_records": [
     {
-      "ts": "2026-11-20T22:07:48+0800",
-      "what": "skill run (graphical-abstract v1.0.0)"
+      "ts": "2026-11-22T15:05:29+0800",
+      "what": "skill run (graphical-abstract v2.0.0)"
     },
     {
       "ts": "-",
@@ -115,11 +134,11 @@
     },
     {
       "ts": "-",
-      "what": "read source: D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\graphical-abstract-7030fff2\\examples\\task.md (sha256 820241cb102c)"
+      "what": "examples/task.md (sha256 820241cb102c)"
     },
     {
       "ts": "-",
-      "what": "read source: D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\graphical-abstract-7030fff2\\examples\\material.md (sha256 9cde8c17a78e)"
+      "what": "examples/material.md (sha256 9cde8c17a78e)"
     }
   ],
   "audit": {
@@ -194,12 +213,58 @@
     },
     "missing_values": [],
     "layout_log": [],
+    "four_element_coverage": {
+      "expected": [
+        "question",
+        "method",
+        "results",
+        "conclusion"
+      ],
+      "on_canvas": [
+        "conclusion",
+        "method",
+        "question",
+        "results"
+      ],
+      "missing": [],
+      "content_panels": {
+        "question": 0,
+        "method": 0,
+        "results": 0,
+        "conclusion": 0
+      }
+    },
+    "layer_naming": {
+      "expected": [
+        "background",
+        "panels",
+        "entities",
+        "relations",
+        "data",
+        "legend",
+        "annotations"
+      ],
+      "found": [
+        "annotations",
+        "background",
+        "data",
+        "entities",
+        "legend",
+        "panels",
+        "relations"
+      ],
+      "bad": [],
+      "missing": [],
+      "elements_without_src": 0,
+      "missing_src_roles": [],
+      "note": "layers must match references/layer-naming.md; entity/relation/datum/icon elements must carry src"
+    },
     "determinism_probe": {
-      "spec_sha16": "9bcb54b29fe658d4",
+      "spec_sha16": "b863154605758e84",
       "note": "same content+constraints => identical spec (layout is deterministic)"
     }
   },
-  "generated_utc": "2026-11-20T14:07:48Z",
+  "generated_utc": "2026-11-22T07:05:29Z",
   "target_format": [
     "svg",
     "png",

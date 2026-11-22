@@ -8,13 +8,13 @@
     "slide_count": 8,
     "template": {
       "kind": "file",
-      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-c7b80f0d\\examples\\template-example.pptx",
+      "path": "examples/template-example.pptx",
       "basename": "template-example.pptx",
       "layout_count": 11,
       "guard": "placeholder-fill-only; master/footer/colors untouched",
       "starter_slides": 1,
       "starter_slides_removed": 1,
-      "note": "template_mode=replace: starter slides removed, layouts/master kept"
+      "note": "template_mode=replace: starter slides removed, layouts/master kept (template generated at runtime by scripts/make_template.py)"
     },
     "layouts_used": {
       "Title Slide": 1,
@@ -33,6 +33,16 @@
       "outline": false,
       "evidence": false
     },
+    "theme_fonts": {
+      "applied": true,
+      "note": "majorFont/minorFont latin=Calibri ea=Microsoft YaHei (2 nodes)",
+      "part": "/ppt/theme/theme1.xml",
+      "bytes": 7684
+    },
+    "export": {
+      "ooxml": null,
+      "naming": null
+    },
     "page_budget": 8,
     "page_budget_met": true
   },
@@ -40,6 +50,16 @@
     "file": "evidence_mapping.md",
     "entries": 6,
     "gaps": []
+  },
+  "evidence_map_json": "evidence_map.json",
+  "spec_lint": {
+    "valid": true,
+    "problems": [],
+    "counts": {
+      "slides": 6,
+      "evidence_gaps": 0,
+      "unmapped": 0
+    }
   },
   "previews": [
     {
@@ -83,7 +103,7 @@
       "slide": 4,
       "ref": "Fig. 1（重建）",
       "chart": {
-        "file": "D:/BuildTemp/smoke-ppt-c7b80f0d\\chart-Fig_1.png",
+        "file": "chart-Fig_1.png",
         "png": true,
         "svg": "chart-Fig_1.svg",
         "note": "reconstructed_from_table; numbers are those declared in spec and must match the paper table",
@@ -94,7 +114,7 @@
   "sources": [
     {
       "type": "paper_material",
-      "path": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-c7b80f0d\\examples\\materials\\paper-mini.txt",
+      "path": "examples/materials/paper-mini.txt",
       "tool": "direct-read",
       "text_chars": 2983,
       "pages_parsed": 0,
@@ -104,14 +124,14 @@
   "uncertainty": [],
   "change_records": [
     {
-      "time": "2026-11-20T22:27:58+0800",
-      "what": "start run",
+      "time": "2026-11-22T15:28:02+0800",
+      "what": "start run (paper-to-academic-ppt v2.1.0)",
       "why": "case case.json"
     },
     {
-      "time": "2026-11-20T22:28:00+0800",
+      "time": "2026-11-22T15:28:03+0800",
       "what": "run finished",
-      "why": "status=completed, deck=True"
+      "why": "status=completed, deck=True, lint=True"
     }
   ],
   "run_meta": {
@@ -127,16 +147,32 @@
     },
     "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
     "preview_fidelity": "approximate — PIL re-composition, not PowerPoint rendering",
-    "preview_font": "C:\\Windows\\Fonts\\msyh.ttc",
-    "timestamp": "2026-11-20T22:27:59+0800",
-    "case_file": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-c7b80f0d\\examples\\case.json",
-    "spec_source": "D:\\Work\\科学挑战赛\\work\\efficiency-3\\build\\ppt-c7b80f0d\\examples\\deck-spec.json",
-    "duration_seconds": 1.81,
-    "skill_version": "1.0.0",
+    "preview_font": "C:/Windows/Fonts/msyh.ttc",
+    "timestamp": "2026-11-22T15:28:02+0800",
+    "case_file": "examples/case.json",
+    "spec_source": "examples/deck-spec.json",
+    "duration_seconds": 1.06,
+    "skill_version": "2.1.0",
+    "checkpoints": {
+      "cp1_spec_lint": true,
+      "cp2_build": true,
+      "cp3_export_check": true
+    },
     "self_check": {
       "ok": true,
       "problems": []
-    }
+    },
+    "example_note": "sanitized example record: machine-specific root paths were replaced by package-relative ones; all other values come from a real run of scripts/main.py on examples/case.json"
+  },
+  "output_contract": {
+    "title": "deck 标题（一行的字符串）",
+    "main_claim": "全文一句话结论（字符串）",
+    "slides": [
+      "每页 {page,title,claim}（列表）"
+    ],
+    "evidence_mapping": "页级证据映射描述（字符串或对象）",
+    "render_state": "渲染与版本记录（字符串或对象）",
+    "notes_separated": true
   },
   "title": "ExampleNet: 检索增强的代码评审（演示示例）",
   "main_claim": "检索增强无需微调即可提升代码评审评语质量（ROUGE-L F1 +8.3 点）。",

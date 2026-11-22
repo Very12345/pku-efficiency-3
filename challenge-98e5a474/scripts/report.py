@@ -27,7 +27,7 @@ if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
 TOOL_VERSIONS = {
-    "scientific_schematic_editor": "1.0.0",
+    "scientific_schematic_editor": "2.0.0",
     "python": platform.python_version(),
 }
 
@@ -109,12 +109,15 @@ def apply_output_contract(case, result):
 
 
 def build_result(case, manifest, checks_summary, artifacts, render_info,
-                 sources, uncertainty, change_records, header=None):
+                 sources, uncertainty, change_records, header=None,
+                 spec_lint=None, determinism=None):
     """Assemble the complete result.json dict.
 
     :param artifacts: dict of {role: {"path": abs, "rel": rel-path,
                       "format": ext, "checks": [single-issue dicts],
                       "extra": {..}}}
+    :param spec_lint: optional CP1 verdict dict from scripts/spec_lint.py
+    :param determinism: optional {"spec_sha16": ..., "note": ...} probe
     :param reliability is expressed through checks_summary + uncertainty.
     """
     case_id = (case or {}).get("case_id") or (case or {}).get("id") or ""
@@ -178,7 +181,9 @@ def build_result(case, manifest, checks_summary, artifacts, render_info,
             "checks": checks_summary,
             "render": render_info if isinstance(render_info, dict) else {},
             "traceability": (manifest or {}).get("_traceability") or {},
+            "spec_lint": spec_lint or {},
         },
+        "determinism": determinism or {},
         "sources": [{"path": p} for p in sources],
         "uncertainty": uncertainty,
         "change_records": change_records,

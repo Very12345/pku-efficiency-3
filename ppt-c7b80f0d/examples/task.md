@@ -1,7 +1,8 @@
 # 任务说明（示例，非正式案例）
 
 材料：`materials/paper-mini.txt`（合成论文 ExampleNet）。
-模板：`template-example.pptx`（示例组织方模板）。
+模板：`template-example.pptx`（示例组织方模板；**运行期生成**——
+`python "$SKILL_DIR/scripts/make_template.py" --out examples`；未生成时自动回退内置版式）。
 受众：研究组组会；时长约 15 分钟；页数上限 8 页。
 
 要求：

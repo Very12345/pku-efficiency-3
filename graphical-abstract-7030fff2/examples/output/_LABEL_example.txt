@@ -1,2 +1,15 @@
-本目录为 Skill 的最小调用示例产物（合成数据）。
-示例，非正式案例 — 不用于提交，也不代表任何真实论文结果。
+# 示例输出（非正式案例）
+
+本目录是 `examples/case.json`（`case_id = example-micelle-001`）在本包流水线上**实际运行**
+产生的**文本**产物副本：`result.json`、`spec.json`、`content.json`、`audit.json`、`render_log.json`。
+
+- **非正式案例结果**：正式案例由平台在 `/input/` 挂载、产物写 `/app/output/result.json`；
+  本目录内容不得冒充正式案例结果，也不得作为预制答案使用。
+- **不含渲染件**：`*_graphical_abstract.svg/.png/.pdf` **故意不随包** —— 本包不携带任何
+  二进制或 `.svg` 资源，渲染件一律由 `scripts/svgbuilder.py` + `scripts/preview.py`
+  运行时生成。期望清单与契约字段见 `../EXPECTED-OUTPUT.md`。
+- **路径已归一化**：为可移植阅读，这些副本里的绝对路径已改写为相对技能根的相对路径
+  （如 `examples/task.md`）与 `<out>/` 占位；实跑时 `content.json` 的
+  `provenance.source_files` 会显示当次运行的实际路径——这是预期差异，不是错误。
+- **复现**：`python "$SKILL_DIR/scripts/main.py" --case "$SKILL_DIR/examples/case.json" --plan "$SKILL_DIR/examples/plan.example.json" --out <out>`
+  （应 exit 0、`status=success`）；`result.json` 反映的是带 `--plan` 的方案先行流程。
