@@ -1,0 +1,336 @@
+{
+  "harness": "gain_ab.py",
+  "case": {
+    "path": "case.json",
+    "case_id": "example-synthalign-talk-01",
+    "slide_count": 12,
+    "duration_min": 20,
+    "materials": [
+      {
+        "file": "paper_extract.md",
+        "role": "论文主体（摘要/引言/方法/结果/局限）",
+        "text_read": true
+      },
+      {
+        "file": "figures.md",
+        "role": "图表清单与引用定位",
+        "text_read": true
+      },
+      {
+        "file": "dataset_card.pdf",
+        "role": "数据卡片（演示 PDF 文本解析路径，pypdf）",
+        "text_read": true
+      }
+    ]
+  },
+  "arms": {
+    "A": {
+      "kind": "baseline_emulator",
+      "out_dir": "arm-A",
+      "wall_seconds": 0.26,
+      "wall_seconds_first_pass_only": null,
+      "rerun_rounds_to_frozen": 2,
+      "pages_before_rework": 3,
+      "pages_final": 12,
+      "deck": {
+        "available": true,
+        "slides": 12,
+        "notes_coverage": 0.0,
+        "max_body_paragraphs": 2,
+        "mean_body_paragraphs": 2.0,
+        "mean_body_chars": 195.6,
+        "mean_paragraph_chars": 97.8,
+        "verbatim_grounded_ratio": 0.75,
+        "numbers_in_source_ratio": 1.0,
+        "numbers_total": 77,
+        "numbers_not_in_source_sample": [],
+        "embedded_pictures": 0,
+        "slides_detail": [
+          {
+            "index": 1,
+            "title": "",
+            "paras": 2,
+            "chars": 72,
+            "notes": false,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 2,
+            "title": "",
+            "paras": 2,
+            "chars": 131,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 3,
+            "title": "",
+            "paras": 2,
+            "chars": 271,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 4,
+            "title": "",
+            "paras": 2,
+            "chars": 224,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 5,
+            "title": "",
+            "paras": 2,
+            "chars": 261,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 6,
+            "title": "",
+            "paras": 2,
+            "chars": 319,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 7,
+            "title": "",
+            "paras": 2,
+            "chars": 189,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 8,
+            "title": "",
+            "paras": 2,
+            "chars": 96,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 9,
+            "title": "",
+            "paras": 2,
+            "chars": 320,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 10,
+            "title": "",
+            "paras": 2,
+            "chars": 320,
+            "notes": false,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 11,
+            "title": "",
+            "paras": 2,
+            "chars": 72,
+            "notes": false,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 12,
+            "title": "",
+            "paras": 2,
+            "chars": 72,
+            "notes": false,
+            "verbatim_grounded": false
+          }
+        ]
+      },
+      "contract": {
+        "available": false,
+        "result_json": false
+      }
+    },
+    "B": {
+      "kind": "skill",
+      "out_dir": "arm-B",
+      "run": {
+        "exit_code": 0,
+        "seconds": 1.67,
+        "stdout_tail": [
+          "status=completed pages=12 deck=True validate_valid=True contract_valid=True"
+        ]
+      },
+      "wall_seconds": 1.67,
+      "rerun_rounds_to_frozen": 1,
+      "deck": {
+        "available": true,
+        "slides": 12,
+        "notes_coverage": 1.0,
+        "max_body_paragraphs": 12,
+        "mean_body_paragraphs": 9.833,
+        "mean_body_chars": 284.4,
+        "mean_paragraph_chars": 28.9,
+        "verbatim_grounded_ratio": 0.3333,
+        "numbers_in_source_ratio": 0.8679,
+        "numbers_total": 159,
+        "numbers_not_in_source_sample": [
+          "20.0",
+          "100.0",
+          "19",
+          "01",
+          "16",
+          "01",
+          "17",
+          "01",
+          "01",
+          "36",
+          "01",
+          "32",
+          "01",
+          "33",
+          "01",
+          "34",
+          "01",
+          "35",
+          "01",
+          "41"
+        ],
+        "embedded_pictures": 1,
+        "slides_detail": [
+          {
+            "index": 1,
+            "title": "",
+            "paras": 4,
+            "chars": 172,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 2,
+            "title": "",
+            "paras": 11,
+            "chars": 291,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 3,
+            "title": "",
+            "paras": 11,
+            "chars": 298,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 4,
+            "title": "",
+            "paras": 11,
+            "chars": 274,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 5,
+            "title": "",
+            "paras": 11,
+            "chars": 264,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 6,
+            "title": "",
+            "paras": 12,
+            "chars": 346,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 7,
+            "title": "",
+            "paras": 12,
+            "chars": 378,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 8,
+            "title": "",
+            "paras": 11,
+            "chars": 379,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 9,
+            "title": "",
+            "paras": 10,
+            "chars": 325,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 10,
+            "title": "",
+            "paras": 11,
+            "chars": 339,
+            "notes": true,
+            "verbatim_grounded": true
+          },
+          {
+            "index": 11,
+            "title": "",
+            "paras": 11,
+            "chars": 290,
+            "notes": true,
+            "verbatim_grounded": false
+          },
+          {
+            "index": 12,
+            "title": "",
+            "paras": 3,
+            "chars": 57,
+            "notes": true,
+            "verbatim_grounded": false
+          }
+        ]
+      },
+      "contract": {
+        "available": true,
+        "result_json": true,
+        "status": "completed",
+        "top_level_keys": 20,
+        "pages": 12,
+        "locator_coverage": 1.0,
+        "content_pages": 10,
+        "evidence_rows": 11,
+        "qa_items": 4,
+        "uncertainty_entries": 3,
+        "change_records": 16,
+        "plan_gates_valid": true,
+        "evidence_valid": true,
+        "deck_valid": true,
+        "preview_pngs_valid": 12,
+        "slide_count_field": 12,
+        "page_count_delta_vs_frozen": 0
+      }
+    }
+  },
+  "notes": [
+    "A 臂 = 本脚本内置的确定性基线模拟器（代理臂），不是平台真实基础 Agent。",
+    "缺项记 0/null 并标 available=false，不跳过。",
+    "指标定义见 references/GAIN-PROTOCOL.md §4。"
+  ],
+  "deltas_B_minus_A": {
+    "slides": 0,
+    "notes_coverage": 1.0,
+    "max_body_paragraphs": 10,
+    "mean_body_chars": 88.8,
+    "verbatim_grounded_ratio": -0.4167,
+    "numbers_in_source_ratio": -0.1321,
+    "embedded_pictures": 1,
+    "result_json_top_level_keys": 20,
+    "evidence_rows": 11,
+    "qa_items": 4
+  },
+  "generated_at": "2026-11-22T18:14:33+0800"
+}

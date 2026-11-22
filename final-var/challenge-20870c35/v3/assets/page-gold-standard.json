@@ -1,0 +1,58 @@
+{
+  "asset": "page-gold-standard",
+  "asset_version": "1.0",
+  "purpose": "页级金标准（结构版）：给出每类汇报应具备的页块顺序、每页必须齐备的字段、以及可机器判定的判定命令。它规定的是'页面结构'，不是'页面内容'——内容必须来自各案例自己的材料。",
+  "how_to_use": [
+    "对照本文件检查一份 talk_plan.json 的块顺序与字段齐备性；",
+    "机器判定优先用 scripts/validate_plan.py（P1–P8 由 assets/plan.schema.json 驱动）；",
+    "人工复核时按每页 required_page_fields 逐项核对，任何缺失都要在 uncertainty 里如实登记。"
+  ],
+  "required_page_fields": [
+    "page_no", "block", "block_label", "title", "claim", "one_liner",
+    "evidence", "figure_ref", "figure_file", "notes", "strength", "qa", "derived"
+  ],
+  "evidence_required_for_blocks": [
+    "motivation", "background", "method", "results", "conclusion",
+    "conclusion_risk", "innovation_limits"
+  ],
+  "exempt_blocks": ["title", "cover", "agenda", "toc", "qa", "backup", "thanks"],
+  "strength_levels": {
+    "strong": "页面主张所在处含数值/统计量/图表引用（P7 词法门判定）",
+    "medium": "含结果性动词但无量化证据",
+    "weak": "间接概括，或整页由章节文本概括而成（derived=true）"
+  },
+  "notes_shape": "每页备注按【本页主张】【证据】【讲解】【备答】四段组织；qa 备用页的备注写追问与回答要点。",
+  "gold_standard_by_report_type": [
+    {
+      "report_type": "group_meeting",
+      "block_order": ["title", "agenda", "motivation", "background", "method", "results",
+                      "conclusion_risk", "qa"],
+      "background_ratio": 0.18,
+      "frozen_page_rule": "页数以 case.json 的 slide_count 为准（P3），时长只用于排块权重",
+      "checks": ["每页一个 claim", "局限/风险页存在", "qa 备用页存在"]
+    },
+    {
+      "report_type": "defense",
+      "block_order": ["title", "agenda", "motivation", "method", "results",
+                      "innovation_limits", "conclusion", "qa"],
+      "background_ratio": 0.1,
+      "frozen_page_rule": "同左；创新点与边界后置",
+      "checks": ["创新点/边界各有一页", "结论强度与证据强度一致", "qa 覆盖机制/数据/对照三类追问"]
+    },
+    {
+      "report_type": "review",
+      "block_order": ["title", "conclusion", "method", "results",
+                      "conclusion_risk", "qa"],
+      "background_ratio": 0.1,
+      "frozen_page_rule": "同左；结论先行",
+      "checks": ["首页结论给出证据强度", "适用范围/不适用情形明确", "qa 备用页存在"]
+    }
+  ],
+  "machine_checks": [
+    {"check": "计划契约门", "command": "python \"$SKILL_DIR/scripts/validate_plan.py\" <out>/talk_plan.json --materials-dir <材料目录>", "expect": "P1–P8 全过，退出码 0"},
+    {"check": "冻结页数", "command": "读 <out>/plan_gates.json 的 gates[P3]", "expect": "pages == target"},
+    {"check": "证据齐备", "command": "读 <out>/evidence_audit.json 的 summary", "expect": "errors == 0，content_pages == ok_pages"},
+    {"check": "deck 结构", "command": "python \"$SKILL_DIR/scripts/verify_deck.py\" <out>/editable_deck.pptx --expect-pages <N> --plan <out>/talk_plan.json", "expect": "退出码 0，每页 notes_nonempty"}
+  ],
+  "disclaimer": "本文件是结构金标准，不含任何案例的内容答案；不得用其中示例文字冒充正式案例的页面内容。"
+}

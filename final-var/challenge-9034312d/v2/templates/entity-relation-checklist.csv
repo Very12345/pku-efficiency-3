@@ -1,0 +1,14 @@
+id,字段,示例,说明,核对项
+entity_id,实体ID,E1,实体唯一标识（图面 entity-<id>）,A1/C4
+name,实体名,慢病毒包装与转导,图面标签（可用 label 覆盖）,C4
+kind,图元类别,step,∈ step/phase/device/material/product/data/decision/milestone/waste/container,A1
+stage,阶段/列,文库构建,route/flow 按阶段分列,A2
+source,材料出处,task.md §2.2,可追溯到输入材料（缺失计入 uncertainty）,C4
+step_no,步骤编号,2,route/flow 图按列序-行序连续编号,C2
+relation_id,关系ID,R3,关系唯一标识（图面 arrow-<id>）,B
+from,起点实体,E2,两端实体必须存在（无断头箭头）,C1
+to,终点实体,E4,与正文方向一致，禁止反向/凭空补齐,B
+kind,关系类别,flow,∈ flow/connect/depend/recycle/sequence/causation,A2
+label,关系标签,流向,可空；回流(recycle)必须人工复核,B5
+source,关系出处,task.md §3.1,可追溯到输入材料,C4
+figure_type,图类,route,∈ route/apparatus/flow/hybrid（决定布局模板）,
