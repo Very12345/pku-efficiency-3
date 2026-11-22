@@ -1,0 +1,80 @@
+{
+  "source": "result.json deck.slides (same source as evidence_map.md)",
+  "case_id": "ppt-6ad93034-example-001",
+  "status": "partial",
+  "rows": [
+    {
+      "page": 1,
+      "role": "cover",
+      "role_label": "封面",
+      "title": "基于注意力机制改进的蛋白质二级结构预测（虚构示例材料）",
+      "evidence": [],
+      "figure_ref": "",
+      "figure_kind": "none",
+      "status": "gap"
+    },
+    {
+      "page": 2,
+      "role": "overview",
+      "role_label": "主线与贡献",
+      "title": "汇报主线",
+      "evidence": [
+        "摘要/引言",
+        "摘要/结论"
+      ],
+      "figure_ref": "",
+      "figure_kind": "none",
+      "status": "mapped"
+    },
+    {
+      "page": 3,
+      "role": "question",
+      "role_label": "研究问题",
+      "title": "研究问题",
+      "evidence": [
+        "引言"
+      ],
+      "figure_ref": "",
+      "figure_kind": "none",
+      "status": "mapped"
+    },
+    {
+      "page": 4,
+      "role": "method",
+      "role_label": "方法",
+      "title": "方法",
+      "evidence": [
+        "§方法"
+      ],
+      "figure_ref": "",
+      "figure_kind": "none",
+      "status": "mapped"
+    },
+    {
+      "page": 5,
+      "role": "result",
+      "role_label": "结果",
+      "title": "结果",
+      "evidence": [
+        "表(results)",
+        "列=Q3 (%)"
+      ],
+      "figure_ref": "表(results)",
+      "figure_kind": "chart_image",
+      "status": "mapped"
+    },
+    {
+      "page": 6,
+      "role": "takeaway",
+      "role_label": "结论与展望",
+      "title": "结论与下一步",
+      "evidence": [
+        "§结论"
+      ],
+      "figure_ref": "",
+      "figure_kind": "none",
+      "status": "mapped"
+    }
+  ],
+  "unverified_claims": []
+}
