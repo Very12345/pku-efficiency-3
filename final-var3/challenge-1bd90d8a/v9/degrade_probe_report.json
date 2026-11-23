@@ -1,0 +1,2404 @@
+{
+  "tool": "degrade_probe.py",
+  "axis": "v9 / 缺依赖降级链实测",
+  "version": 1,
+  "src": "<SKILL_DIR>",
+  "pkg_copy": "<WORKDIR>\\pkg-copy",
+  "case": "<CASEDIR>\\case.json",
+  "platform": "Windows-11 / os.name=nt",
+  "python": "3.13.9",
+  "interception": "PYTHONPATH 里的 sitecustomize.py → sys.meta_path finder 抛 ImportError；每次拦截记录 (module, frame)",
+  "probes": [
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\NONE",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "9a9670526d141bf3da6288c4c6600724620ca79e6935dc43b6ac552c4b0fd263",
+          "bytes": 8416
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "2ee8ed3f0f178e9f0e22522bbec161ae0f420d29f7238bd88f300ec0dd090cec",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "10986da94db091e1ea6ed64cd73698029924e0ad898bd89d81fb18cbff32fa76",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "0381c7e76fc3fa2ba59a43b18ef8bb277f93dc4c65c3c917fe6ed76ba1cdca53",
+          "bytes": 27604
+        },
+        "result.json": {
+          "sha256": "c44c9f4133a2cad9096228d0b668baab72536a71d57321c5e95683e8d57c96d0",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "NONE",
+      "blocked": [],
+      "exit": 0,
+      "seconds": 1.42,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "基线：什么都不拦（对照用）",
+      "degradation": "对照组（无拦截）",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "mapcheck_report.json",
+          "result.json",
+          "validation.json"
+        ],
+        "changed": [],
+        "changed_volatile": [],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      }
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\PIL",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "eba95d7e6542dcfea55b8df9b87e785dc10337b2a0eee76b083941d1f17b0e6f",
+          "bytes": 706
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "6ee4f3455494490d33afad3c4e46e8ba10029a3ebc61cd2bb59080ed9815647c",
+          "bytes": 194
+        },
+        "result.json": {
+          "sha256": "9ba541069eb7ddcc7d5f74d4d7a5b5673736caf7f58293e6eeb86decb812dc89",
+          "bytes": 967
+        },
+        "validation.json": {
+          "sha256": "81bcefe63146028afa73d84259837a33927a3d5a57eeed01c8b6967fe0c5617f",
+          "bytes": 122
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 6,
+      "status": "failed",
+      "gates_all_pass": false,
+      "uncertainty": [
+        "运行异常，产物不完整。",
+        "traceback: Traceback (most recent call last):\n  File \"<WORKDIR>\\pkg-copy\\scripts\\main.py\", line 596, in main\n    fig_report = fig_mod.figcheck(out_dir, case_path)\n  File \"<WORKDIR>\\pkg-copy\\scripts\\figcheck.py\", line 157, in figcheck\n    from PIL import Image\n  File \"<WORKDIR>\\blocker\\sitecustomize.py\", line 43, in find_spec\n    raise ImportError(\n        \"degrade_probe: top-level '%s' 被受控拦截（模拟该包未安装）\" % top)\nImportError: degrade_probe: top-level 'PIL' 被受控拦截（模拟该包未安装）\n"
+      ],
+      "error": "ImportError: degrade_probe: top-level 'PIL' 被受控拦截（模拟该包未安装）",
+      "cp_markers": [],
+      "result_core": {
+        "status": "failed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": false,
+        "n_outputs": 0,
+        "outputs": [],
+        "editable_sources": [],
+        "renders": {},
+        "n_uncertainty": 2,
+        "n_sources": 0,
+        "output_contract_applied": null
+      },
+      "id": "PIL",
+      "blocked": [
+        "PIL"
+      ],
+      "exit": 1,
+      "seconds": 0.377,
+      "stderr_tail": "[main] FATAL ImportError: degrade_probe: top-level 'PIL' ���ܿ����أ�ģ��ð�δ��װ��",
+      "blocked_import_evidence": [
+        {
+          "module": "PIL",
+          "frame": "chartkit.py:41"
+        },
+        {
+          "module": "PIL",
+          "frame": "cjkfont.py:114"
+        },
+        {
+          "module": "PIL",
+          "frame": "chartkit.py:1851"
+        },
+        {
+          "module": "PIL",
+          "frame": "figcheck.py:157"
+        }
+      ],
+      "desc": "Pillow —— 唯一被 chartkit 真正用到的第三方包",
+      "artifacts_vs_baseline": {
+        "same": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "changed": [
+          "data_manifest.json",
+          "mapcheck_report.json",
+          "result.json",
+          "validation.json"
+        ],
+        "changed_volatile": [
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [
+          "data_manifest.json",
+          "validation.json"
+        ],
+        "missing": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png"
+        ],
+        "extra": [],
+        "stable_identical": false,
+        "binary_delta": {
+          "data_manifest.json": {
+            "bytes": [
+              28979,
+              706
+            ],
+            "differing_bytes": 28438,
+            "first_diff_offset": 534
+          },
+          "validation.json": {
+            "bytes": [
+              2526,
+              122
+            ],
+            "differing_bytes": 2463,
+            "first_diff_offset": 57
+          }
+        },
+        "core_same": false
+      },
+      "degradation": "丢失 figcheck_report.json,figure-fig-01.pdf,figure-fig-01.png,figure-fig-02.pdf,figure-fig-02.png；内容变化 data_manifest.json,validation.json；result.json 语义变化：status=completed->failed，键 29->6"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\pptx",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "f5ab65148f3a9f079cc1874667b986d75057bed2e3d0c5d7d7138385a05bdd3f",
+          "bytes": 8416
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "3567f4891f85db0235c7a628f5e0db8fc06aabc88617fee9cac18939668f9d66",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "aee8a3129ac7519ea37841d241cc1f080fe3392268b6ae13b2eba13b7944d932",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "5ad9799144c6f9964b28e70609269eb270aefea340ba356a606058dafe49a4bf",
+          "bytes": 27604
+        },
+        "result.json": {
+          "sha256": "c47c660207dbe19cd3d24d50a427cabfc3f6e3b80ac6ad25f1628a0120484a49",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "pptx",
+      "blocked": [
+        "pptx"
+      ],
+      "exit": 0,
+      "seconds": 1.281,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "python-pptx —— 演示文稿导出（本题不用，但常被误列为依赖）",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\matplotlib",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "b53763e58941ec08fa714de9ee5a0b6535280ef7c60fe43b4fbc8e171a258548",
+          "bytes": 8422
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "4024e505a547d255e90394200cf8e74b8dad8f87f8dac268c6acec73b58d8df3",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "00a0801037e77ac429238473fe07abf75bc3d31b005df2099153c8833cddf189",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "f814d8990ceb44e22c6251e73de603c8ce9273f6f149d916777096683e9ba49b",
+          "bytes": 27610
+        },
+        "result.json": {
+          "sha256": "df5d6ca6ddb13dc3b5521cb15942da2936a2e824c68eeb8d276cef327f0ff67d",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "matplotlib",
+      "blocked": [
+        "matplotlib"
+      ],
+      "exit": 0,
+      "seconds": 1.317,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "matplotlib —— 常见绘图库，本包声明不使用",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\numpy",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "1c0014fe25c837a470b2ec128212910594af3649ba7b25fe994bb8e2bb86ff99",
+          "bytes": 8417
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "ce591b6fb4562b3dad7055bcb8a949fdf043577e3783a207e13b950817e2a626",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "fefb8e3f8165bc44fc8ab017466da76a06998d292f3729fd2117e6ddb18d5f9f",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "7a587309054a568f43fb7ba94e96fae9272db71cfe46c52e08a04477782a9d7d",
+          "bytes": 27605
+        },
+        "result.json": {
+          "sha256": "80fe87b40d4b0e105223a2e5f4d79569e087642f446e58345d3aefb08e15f903",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "numpy",
+      "blocked": [
+        "numpy"
+      ],
+      "exit": 0,
+      "seconds": 1.506,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "numpy —— 数值栈，本包声明不使用",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\yaml",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "9c45c25de95dc96d9e4fef8cf2c9e2aecec2cfea22fe26ed17fdd333475cdb4e",
+          "bytes": 8416
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "9cd881eaeb8098d37bc0fa2a38a9629703792a961dcae39f1fb0d96530ae4181",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "67d0f810be983e5876b6e7aca2c8a0547e806208fabf7b8e72d46fb63d4c8609",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "68fe454a4a008153305e802e3977848cd7be4336e0f9c1bca1e3fdbe9f8f46a1",
+          "bytes": 27604
+        },
+        "result.json": {
+          "sha256": "87eb9f0cd0edf1ff0f9f8b238e717ab594408a00c3e3026f8488cd8069679402",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "yaml",
+      "blocked": [
+        "yaml"
+      ],
+      "exit": 0,
+      "seconds": 1.364,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "PyYAML —— 题面提到 environment/resources.yaml",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\lxml",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "8285ef96141c83447434f7b95c2d51d6959e0727c7d13ad564029c191de7f58b",
+          "bytes": 8416
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "b80d5aaface3356c357be2735f4007704c103f4022d3c04e1c5bee490852491f",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "15d0fbd5a1b6413f0e7302b8da700d3ec2cec028c3243be54acd835f31d65f4f",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "598fc44d623c142b35e6d2839038bed58373a4ea75923ce6f0a856e585d716e6",
+          "bytes": 27604
+        },
+        "result.json": {
+          "sha256": "fad3e5346cb10fcc3acbfaacd7e8dc3b008638349beffb13ac3c94c99fdc68ca",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "lxml",
+      "blocked": [
+        "lxml"
+      ],
+      "exit": 0,
+      "seconds": 1.265,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "lxml —— XML 解析（本包手写 SVG）",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\pypdf",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "3a637fc64e2153f44a2a45f622127caa034a5563da45a02e56e92516b7cc25ef",
+          "bytes": 8417
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "d37bceb96d0c5bd1bc9405cb5b4cb3b801a0adb49e41dd189eea9caa4a9c2ae8",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "49c051cf0613d13e4d19e4f99b4ef60995f1aff859656f49ed1c3ef84932a8df",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "8736c12089a86a61a1fa4a41e375adc9d2e512896cc5f9f6ee7174c62463b107",
+          "bytes": 27605
+        },
+        "result.json": {
+          "sha256": "941d6a4fefd637722a81d75e2939a32b4a3a9410ca9ba954c9d1c7b1c7ce70a8",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "pypdf",
+      "blocked": [
+        "pypdf"
+      ],
+      "exit": 0,
+      "seconds": 1.286,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "pypdf —— PDF 读取（本包只写不读）",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\cairosvg",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "11cba12deb357ed14e6a868390093186e04f35d67e667b7cc067d9815eff969f",
+          "bytes": 8420
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "d700c5378a01baa946a2bc0e3978ef6081e2bbab84d0f53736af8e543c6f4020",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "1ca7670b8ab933a2a1b3cb7fd82b861c1753c6cb0ace289f3ff1e6c729a0bdb2",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "dd72bb6989ce6ce7862b3aeb6ffaf1a856741b22d927a7ce142f94b1f2d3b5b4",
+          "bytes": 27608
+        },
+        "result.json": {
+          "sha256": "84bc9bc61b97fb6a35c2732ab51190e20275546424b2ffdec62239274b05115c",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "cairosvg",
+      "blocked": [
+        "cairosvg"
+      ],
+      "exit": 0,
+      "seconds": 1.328,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "cairosvg —— SVG 转位图",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\svgwrite",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "09bcb3277bd466440c7c52f8e74bd520b41df60cb5e44c3b5e8833b84f1a990a",
+          "bytes": 8420
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "61519be71789dc679e60bac184f8c563de74aae453855052a22c59d958118fa6",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "0bdf50361c049184704564590c52efbf7b82b803a4a624a95f6afd4960c0e109",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "ba9e53627d6da09662cbca0400f7b26eb00fedb9d95a64bc21a4aed2a6385340",
+          "bytes": 27608
+        },
+        "result.json": {
+          "sha256": "e9c2e2de8e45ae46b4f0ed2007f3f1d09a3e805e43f4ad160a5d285740f369c7",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "svgwrite",
+      "blocked": [
+        "svgwrite"
+      ],
+      "exit": 0,
+      "seconds": 1.262,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "svgwrite —— SVG 生成库",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\reportlab",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "0b29bb36fd08ba6dd085a62155b5b48c5a24f5054c15f306b28eaa62e4e3ae18",
+          "bytes": 8421
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "446b3da0968e387ac53c38219817f09d9605c8f17dd01d84aa47da8da81428c1",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "af25d6d63fa819d2bd2085cbd168233de097c425beb9dceeead18d4bcf3ad869",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "9b10b2d6de7b2c2bfc852605f3d95cacd1920a5622d9df5c68b361c0706c8e33",
+          "bytes": 27609
+        },
+        "result.json": {
+          "sha256": "3fa08bdd9dcfd4c6e5dd130d7b33c1be45f366618d848f2a29f09c868748df65",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "reportlab",
+      "blocked": [
+        "reportlab"
+      ],
+      "exit": 0,
+      "seconds": 1.347,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "reportlab —— PDF 生成库",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\pandas",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "6b4777e2d997ec0c96c46d64bb56037c0b1aa93c1dc6e0e00f0e0edc67032280",
+          "bytes": 8418
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "bb137d38b5b5dc485a52e90fa89cecc25e3fb23ba500e0de25cc13b8f5902dcc",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "c65aebc8aedce898995f14e141ab48c9967b40ad7d5df5872921b5207f0fe0b9",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "a0796e6889786f6c901cba98c22d1c9591e99f6e7d2533511dbb40ec81c6f5f8",
+          "bytes": 27606
+        },
+        "result.json": {
+          "sha256": "2432a92b102406110697a47f98b201cfdb2484a50bef142497177980c7d866fb",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "pandas",
+      "blocked": [
+        "pandas"
+      ],
+      "exit": 0,
+      "seconds": 1.592,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "pandas —— 表格栈",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\scipy",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "96aa06fe3dde6b973f43e4bec7aefcc7f2eee9b7074fc1c07a73ed479e0beeef",
+          "bytes": 8417
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "5ff65cf6db3772f9001f26f6dd79c55ea727ca5cbab370f2820613c18d44fb1a",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "64041be9f472db544d621489c02cd086eec06a5f69c45386c4b7b96797d4aad0",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "64225fc7a5c2f024ea1a37391bd6a5a88f9edc9fe5c7d68d7851cb1da140b6ff",
+          "bytes": 27605
+        },
+        "result.json": {
+          "sha256": "57b84401f4abb816306c8aa3d80e29a5de2bc099ba2cc48ffa992eb053d3afde",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "scipy",
+      "blocked": [
+        "scipy"
+      ],
+      "exit": 0,
+      "seconds": 1.556,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "scipy —— 统计栈",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\fontTools",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "0ae28543c36f302c0c11acedd322c879ce66bd8fba99987ccc2ef5ec72949870",
+          "bytes": 8421
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "45218edb010ad22d9f835d3128c34ac0b94da5f69055bdb4a794b24af737a407",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "18f3c5c5fe934392dfde97ea12ae5942218e3799233b5f692d3be2643c5feedb",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "3669ffa25a0946e68b63c06154ec8e00f52b65fdd5fd67a8706c2ac8985085fb",
+          "bytes": 27609
+        },
+        "result.json": {
+          "sha256": "00da455b29aada9e37ca7ea6aa154fda3957aefe747cabf0a711e26c9b57fdd5",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "fontTools",
+      "blocked": [
+        "fontTools"
+      ],
+      "exit": 0,
+      "seconds": 1.392,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "fontTools —— 字体处理",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\ALL_OPTIONAL",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "eba95d7e6542dcfea55b8df9b87e785dc10337b2a0eee76b083941d1f17b0e6f",
+          "bytes": 706
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "bdf7aa8115041071e3e578fd4bb6e6e4b24e32e8d0c0eb18a126b10035ee7d15",
+          "bytes": 203
+        },
+        "result.json": {
+          "sha256": "9ba541069eb7ddcc7d5f74d4d7a5b5673736caf7f58293e6eeb86decb812dc89",
+          "bytes": 967
+        },
+        "validation.json": {
+          "sha256": "81bcefe63146028afa73d84259837a33927a3d5a57eeed01c8b6967fe0c5617f",
+          "bytes": 122
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 6,
+      "status": "failed",
+      "gates_all_pass": false,
+      "uncertainty": [
+        "运行异常，产物不完整。",
+        "traceback: Traceback (most recent call last):\n  File \"<WORKDIR>\\pkg-copy\\scripts\\main.py\", line 596, in main\n    fig_report = fig_mod.figcheck(out_dir, case_path)\n  File \"<WORKDIR>\\pkg-copy\\scripts\\figcheck.py\", line 157, in figcheck\n    from PIL import Image\n  File \"<WORKDIR>\\blocker\\sitecustomize.py\", line 43, in find_spec\n    raise ImportError(\n        \"degrade_probe: top-level '%s' 被受控拦截（模拟该包未安装）\" % top)\nImportError: degrade_probe: top-level 'PIL' 被受控拦截（模拟该包未安装）\n"
+      ],
+      "error": "ImportError: degrade_probe: top-level 'PIL' 被受控拦截（模拟该包未安装）",
+      "cp_markers": [],
+      "result_core": {
+        "status": "failed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": false,
+        "n_outputs": 0,
+        "outputs": [],
+        "editable_sources": [],
+        "renders": {},
+        "n_uncertainty": 2,
+        "n_sources": 0,
+        "output_contract_applied": null
+      },
+      "id": "ALL_OPTIONAL",
+      "blocked": [
+        "PIL",
+        "cairosvg",
+        "fontTools",
+        "lxml",
+        "matplotlib",
+        "numpy",
+        "pandas",
+        "pptx",
+        "pypdf",
+        "reportlab",
+        "scipy",
+        "svgwrite",
+        "yaml"
+      ],
+      "exit": 1,
+      "seconds": 0.388,
+      "stderr_tail": "[main] FATAL ImportError: degrade_probe: top-level 'PIL' ���ܿ����أ�ģ��ð�δ��װ��",
+      "blocked_import_evidence": [
+        {
+          "module": "PIL",
+          "frame": "chartkit.py:41"
+        },
+        {
+          "module": "PIL",
+          "frame": "cjkfont.py:114"
+        },
+        {
+          "module": "PIL",
+          "frame": "chartkit.py:1851"
+        },
+        {
+          "module": "PIL",
+          "frame": "figcheck.py:157"
+        }
+      ],
+      "desc": "★ 把所有第三方依赖一次性拦掉（= 最小可用环境的最低档）",
+      "artifacts_vs_baseline": {
+        "same": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "changed": [
+          "data_manifest.json",
+          "mapcheck_report.json",
+          "result.json",
+          "validation.json"
+        ],
+        "changed_volatile": [
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [
+          "data_manifest.json",
+          "validation.json"
+        ],
+        "missing": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png"
+        ],
+        "extra": [],
+        "stable_identical": false,
+        "binary_delta": {
+          "data_manifest.json": {
+            "bytes": [
+              28979,
+              706
+            ],
+            "differing_bytes": 28438,
+            "first_diff_offset": 534
+          },
+          "validation.json": {
+            "bytes": [
+              2526,
+              122
+            ],
+            "differing_bytes": 2463,
+            "first_diff_offset": 57
+          }
+        },
+        "core_same": false
+      },
+      "degradation": "丢失 figcheck_report.json,figure-fig-01.pdf,figure-fig-01.png,figure-fig-02.pdf,figure-fig-02.png；内容变化 data_manifest.json,validation.json；result.json 语义变化：status=completed->failed，键 29->6"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\CLI_PATH_MIN",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "094c0d5f57ea4a0c86cd709ba7b1fdf11ff4a3c01a9c31c3f74e29ea081a1cb2",
+          "bytes": 8424
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "55a817618df2587356448b2300c5bb9849d0a62f9b2db6a7c66a67236f3fc9f0",
+          "bytes": 343000
+        },
+        "figure-fig-01.png": {
+          "sha256": "d16a6189a876c766f24973b3d2787f6875df0ed3f0f27568287af7265df2d559",
+          "bytes": 281625
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "c3e0c146603638b02716d43205b10886d46fa8a0dadb71872b3462a753ff098c",
+          "bytes": 72563
+        },
+        "figure-fig-02.png": {
+          "sha256": "69d99e8888a718c96e0eb5b28a39deaf24887d3a1138ccc06036d98bcdda2211",
+          "bytes": 122527
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "736ebcb22887c798f414e3b5a7e2f0b9265ff89546ed844dc400fd931d56098d",
+          "bytes": 27612
+        },
+        "result.json": {
+          "sha256": "cd259209b602691fe1aad3d0d94e414084e3af6bfea6af2e7b94bf60d159823b",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "CLI_PATH_MIN",
+      "blocked": [],
+      "exit": 0,
+      "seconds": 1.274,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "（a）PATH 收窄到解释器目录（+System32）",
+      "path_value": "<PYTHON_DIR>;<SYSTEMROOT>\\System32",
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.svg",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [
+          "figure-fig-01.png",
+          "figure-fig-02.png"
+        ],
+        "missing": [],
+        "extra": [],
+        "stable_identical": false,
+        "binary_delta": {
+          "figure-fig-01.png": {
+            "bytes": [
+              281926,
+              281625
+            ],
+            "differing_bytes": 231233,
+            "first_diff_offset": 3881
+          },
+          "figure-fig-02.png": {
+            "bytes": [
+              122579,
+              122527
+            ],
+            "differing_bytes": 110193,
+            "first_diff_offset": 7080
+          }
+        },
+        "core_same": true
+      },
+      "degradation": "稳定产物与基线不一致：figure-fig-01.png, figure-fig-02.png"
+    },
+    {
+      "auto_out_dir": "<WORKDIR>\\out\\CLI_SHIM_TRAP",
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "03ab7334d5622db93d2947fbbd1c7ff4a63ef4dfaaface36461bcf6a06ceec68",
+          "bytes": 8425
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "b87f80fc340268404cf4e384a86ac0be9257bb6f5a386550e9ccd6bba3d007be",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "2f82a66db93869ad8ac11c073544ac1860939f9c21d3b9c41362d437c6a1d4cc",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "ffa19f3f05fa72d6de75ea324375d3b9d3789eb1731d969598d6220a988a3228",
+          "bytes": 27613
+        },
+        "result.json": {
+          "sha256": "3c4241d2953b6c6f6c0fba91793e527ffbbd81f940e89e01b51f3856e70678fb",
+          "bytes": 9758
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "result_json": true,
+      "result_json_keys": 29,
+      "status": "completed",
+      "gates_all_pass": true,
+      "uncertainty": [],
+      "error": null,
+      "cp_markers": [
+        "cp1_material_survey",
+        "cp2_extract",
+        "cp3_spec_lint",
+        "cp4_export",
+        "cp5_figcheck",
+        "cp5_mapcheck",
+        "cp6_contract"
+      ],
+      "result_core": {
+        "status": "completed",
+        "case_id": "example-science-figure-01",
+        "gates_all_pass": true,
+        "n_outputs": 6,
+        "outputs": [
+          "figure-fig-01.pdf",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.pdf",
+          "figure-fig-02.png",
+          "figure-fig-02.svg"
+        ],
+        "editable_sources": [
+          "figure-fig-01.svg",
+          "figure-fig-02.svg"
+        ],
+        "renders": {
+          "png": 2,
+          "pdf": 2
+        },
+        "n_uncertainty": 0,
+        "n_sources": 2,
+        "output_contract_applied": true
+      },
+      "id": "CLI_SHIM_TRAP",
+      "blocked": [],
+      "exit": 0,
+      "seconds": 1.277,
+      "stderr_tail": "",
+      "blocked_import_evidence": [],
+      "desc": "（b）PATH 前置 10 个会写日志的假 CLI",
+      "cli_log_after_run": [],
+      "artifacts_vs_baseline": {
+        "same": [
+          "data_manifest.json",
+          "figure-fig-01.png",
+          "figure-fig-01.svg",
+          "figure-fig-02.png",
+          "figure-fig-02.svg",
+          "validation.json"
+        ],
+        "changed": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_volatile": [
+          "figcheck_report.json",
+          "figure-fig-01.pdf",
+          "figure-fig-02.pdf",
+          "mapcheck_report.json",
+          "result.json"
+        ],
+        "changed_stable": [],
+        "missing": [],
+        "extra": [],
+        "stable_identical": true,
+        "binary_delta": {},
+        "core_same": true
+      },
+      "degradation": "稳定产物与基线逐字节一致"
+    }
+  ],
+  "minimal_environment": {
+    "tier0_stdlib_only": {
+      "exit": 1,
+      "status": "failed",
+      "result_json": true,
+      "result_json_keys": 6,
+      "files": 6,
+      "missing_vs_baseline": [
+        "figcheck_report.json",
+        "figure-fig-01.pdf",
+        "figure-fig-01.png",
+        "figure-fig-02.pdf",
+        "figure-fig-02.png"
+      ],
+      "changed_stable_vs_baseline": [
+        "data_manifest.json",
+        "validation.json"
+      ],
+      "stable_identical": false,
+      "core_same": false,
+      "outputs_in_result_json": [],
+      "degradation": "丢失 figcheck_report.json,figure-fig-01.pdf,figure-fig-01.png,figure-fig-02.pdf,figure-fig-02.png；内容变化 data_manifest.json,validation.json；result.json 语义变化：status=completed->failed，键 29->6"
+    },
+    "tier1_stdlib_plus_pillow": {
+      "exit": 0,
+      "status": "completed",
+      "result_json": true,
+      "result_json_keys": 29,
+      "files": 11,
+      "missing_vs_baseline": [],
+      "changed_stable_vs_baseline": [],
+      "stable_identical": true,
+      "core_same": true,
+      "outputs_in_result_json": [
+        "figure-fig-01.pdf",
+        "figure-fig-01.png",
+        "figure-fig-01.svg",
+        "figure-fig-02.pdf",
+        "figure-fig-02.png",
+        "figure-fig-02.svg"
+      ],
+      "degradation": "对照组（无拦截）"
+    },
+    "verdict_note": "tier0 = 标准库 only（ALL_OPTIONAL 拦截）；tier1 = 标准库 + Pillow（基线）。逐条数字见上面两个 tier 的字段。"
+  },
+  "uncovered": [
+    "字体目录不可用（FONT_PATHS 收窄）—— 已由 v4 的 FAULT-MATRIX D3 行覆盖，本轴不重复测",
+    "磁盘写满 / 只读输出目录 / 权限不足",
+    "Python 版本低于 3.8（本包用 from __future__ import annotations，未在旧解释器上实测）",
+    "外部 CLI 在 **Windows** 上：CreateProcess 的 PATH 搜索只补 .exe，无扩展名假 CLI 与 .cmd 都不会被 `[\"soffice\"]` 这种调用命中（阳性对照用显式 .cmd 路径完成）",
+    "被拦截模块内部的部分依赖（例如只放行 PIL 但拦掉其编码器）"
+  ],
+  "findings": [
+    "基线（无拦截）：exit=0 status=completed 产物 11 个，result.json 29 键。",
+    "PIL: exit=1 status=failed result.json=有 | 丢失 figcheck_report.json,figure-fig-01.pdf,figure-fig-01.png,figure-fig-02.pdf,figure-fig-02.png；内容变化 data_manifest.json,validation.json；result.json 语义变化：status=completed->failed，键 29->6",
+    "pptx: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "matplotlib: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "numpy: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "yaml: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "lxml: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "pypdf: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "cairosvg: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "svgwrite: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "reportlab: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "pandas: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "scipy: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "fontTools: exit=0 status=completed result.json=有 | 无实质变化（该依赖对本包**非必需**：只有时间戳/路径类产物不同）",
+    "ALL_OPTIONAL: exit=1 status=failed result.json=有 | 丢失 figcheck_report.json,figure-fig-01.pdf,figure-fig-01.png,figure-fig-02.pdf,figure-fig-02.png；内容变化 data_manifest.json,validation.json；result.json 语义变化：status=completed->failed，键 29->6",
+    "CLI_PATH_MIN: exit=0 status=completed result.json=有 | 稳定产物与基线不一致：figure-fig-01.png, figure-fig-02.png",
+    "CLI_SHIM_TRAP: exit=0 status=completed result.json=有 | 稳定产物与基线逐字节一致",
+    "外部 CLI：外部 CLI 不依赖，证据来自两层：(b) 10 个假 CLI 全程 0 次调用（阳性对照已验证陷阱能触发）＋ (c) 脚本里 0 处 subprocess/os.system 调用点。(a) PATH 收窄那一层**不作为**该结论的证据 —— 它另有发现，见 path_min_finding。",
+    "PATH 层发现：PATH 收窄后 SVG/JSON 等稳定产物与基线逐字节一致，但 figure-fig-01.png, figure-fig-02.png 变了：Windows 的 DLL 搜索顺序包含 PATH，收窄后同一个字体文件由**另一个 FreeType** 光栅化（本机 full PATH 里有带 freetype.dll 的目录，收窄后没有了）⇒ 文本字形像素变化。这不影响「是否依赖外部 CLI」的结论，但它是 PNG 字节级复现的一个真实环境依赖，必须点名。",
+    "产出 result.json 的探针：17/17"
+  ],
+  "installed_now": {
+    "PIL": "12.3.0",
+    "cairosvg": "ABSENT(ModuleNotFoundError)",
+    "fontTools": "4.60.1",
+    "lxml": "6.1.1",
+    "matplotlib": "3.10.6",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "pptx": "1.0.2",
+    "pypdf": "6.14.2",
+    "reportlab": "5.0.0",
+    "scipy": "1.16.3",
+    "svgwrite": "ABSENT(ModuleNotFoundError)",
+    "yaml": "6.0.3"
+  },
+  "static_imports": {
+    "cjkfont": [
+      "chartkit.py:37",
+      "cjkfont.py:17"
+    ],
+    "svgtext": [
+      "chartkit.py:38",
+      "figcheck.py:36"
+    ],
+    "PIL": [
+      "chartkit.py:41",
+      "chartkit.py:1651",
+      "chartkit.py:1747",
+      "chartkit.py:1762",
+      "chartkit.py:1851",
+      "cjkfont.py:114",
+      "cjkfont.py:149",
+      "figcheck.py:157",
+      "main.py:263"
+    ],
+    "chartkit": [
+      "extract.py:36",
+      "figcheck.py:34",
+      "main.py:41",
+      "mapcheck.py:26",
+      "spec_lint.py:38",
+      "verify_rerun.py:27"
+    ],
+    "mapcheck": [
+      "figcheck.py:35",
+      "main.py:44"
+    ],
+    "extract": [
+      "main.py:42"
+    ],
+    "figcheck": [
+      "main.py:43"
+    ],
+    "spec_lint": [
+      "main.py:45"
+    ],
+    "verify_rerun": [
+      "main.py:46"
+    ],
+    "main": [
+      "verify_rerun.py:92"
+    ]
+  },
+  "external_process_calls": [],
+  "baseline_present": true,
+  "cli_evidence": {
+    "shim_dir": "<WORKDIR>\\cli-shims",
+    "shim_count": 20,
+    "log": "<WORKDIR>\\cli-invocations.log",
+    "positive_control_cmd": "soffice.cmd",
+    "positive_control_exit": 1,
+    "positive_control_logged": true,
+    "static_calls_in_scripts": [],
+    "invocations": [],
+    "invocations_n": 0,
+    "layers_run": [
+      "CLI_PATH_MIN",
+      "CLI_SHIM_TRAP"
+    ],
+    "path_min_vs_baseline_identical": false,
+    "path_min_changed_stable": [
+      "figure-fig-01.png",
+      "figure-fig-02.png"
+    ],
+    "path_min_binary_delta": {
+      "figure-fig-01.png": {
+        "bytes": [
+          281926,
+          281625
+        ],
+        "differing_bytes": 231233,
+        "first_diff_offset": 3881
+      },
+      "figure-fig-02.png": {
+        "bytes": [
+          122579,
+          122527
+        ],
+        "differing_bytes": 110193,
+        "first_diff_offset": 7080
+      }
+    },
+    "shim_trap_never_invoked": true,
+    "path_min_finding": "PATH 收窄后 SVG/JSON 等稳定产物与基线逐字节一致，但 figure-fig-01.png, figure-fig-02.png 变了：Windows 的 DLL 搜索顺序包含 PATH，收窄后同一个字体文件由**另一个 FreeType** 光栅化（本机 full PATH 里有带 freetype.dll 的目录，收窄后没有了）⇒ 文本字形像素变化。这不影响「是否依赖外部 CLI」的结论，但它是 PNG 字节级复现的一个真实环境依赖，必须点名。",
+    "no_external_cli": true,
+    "conclusion": "外部 CLI 不依赖，证据来自两层：(b) 10 个假 CLI 全程 0 次调用（阳性对照已验证陷阱能触发）＋ (c) 脚本里 0 处 subprocess/os.system 调用点。(a) PATH 收窄那一层**不作为**该结论的证据 —— 它另有发现，见 path_min_finding。"
+  },
+  "elapsed_seconds": 21.683,
+  "probes_total": 17
+}

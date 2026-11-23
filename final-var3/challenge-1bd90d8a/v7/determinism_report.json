@@ -1,0 +1,745 @@
+{
+  "tool": "determinism.py",
+  "axis": "v7 / 确定性与字节级可复现",
+  "version": 1,
+  "case": "<CASEDIR>\\case.json",
+  "case_dir": "<CASEDIR>",
+  "main": "<SKILL_DIR>\\scripts\\main.py",
+  "mode": "isolated",
+  "runs_requested": 5,
+  "seeds": [
+    "0",
+    "1",
+    "12345",
+    "7",
+    "99"
+  ],
+  "cwd_roles": [
+    "run-dir",
+    "system-temp",
+    "case-dir",
+    "skill-root"
+  ],
+  "workroot": "<WORKSPACE>",
+  "normalization_rules": {
+    "N1": "JSON 键 `ts` 的值 → \"<TS>\"（chartkit.now_ts() 本地时间戳）",
+    "N2": "JSON/SVG/TXT 里的本次运行根路径 → \"<RUNROOT>\"",
+    "N3": "JSON `artifacts_sha256.<file>` → 该文件归一化后的 sha256（自引用哈希闭合）",
+    "N4": "PDF `/CreationDate|/ModDate (...)` → `(D:0)`（Pillow 内嵌当前时间）"
+  },
+  "runs": [
+    {
+      "i": 0,
+      "cwd_role": "run-dir",
+      "cwd": "<WORKSPACE>/run-0",
+      "pythonhashseed": 0,
+      "argv": [
+        "<PYTHON>",
+        "<SKILL_DIR>/scripts/main.py",
+        "--case",
+        "<SKILL_DIR>/examples/case.json",
+        "--out",
+        "<WORKSPACE>/run-0/out",
+        "--work",
+        "<WORKSPACE>/run-0/work"
+      ],
+      "exit": 0,
+      "seconds": 1.428,
+      "stdout_sha256": "3bec9981ca7855b8dbce3a9034e3aa8780a7ccc8e1a4f0cf9cc9ea66e9afc9c7",
+      "stdout_tail": "  - figure-fig-02.png (png_preview)\n  - figure-fig-02.pdf (pdf_preview)\n[main] gates: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK all_pass=OK\n[main] �м���� -> <WORKSPACE>\\run-0\\work",
+      "stderr_tail": "",
+      "errors": [],
+      "result_json_present": true,
+      "status": "completed",
+      "result_json_keys": 29,
+      "gates_all_pass": true,
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "17bc60959a1fe77cd2a1cb7fb42ce35207501f6b7ee3a5a5faac7e97fb8f7200",
+          "bytes": 8429
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "71c359ab50cdac0e9392b3faebc7695cb356ac8cf9847a1a3690997109eecea4",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "7d551f3bb4ea6443cb1c73cb80fc2de36f2aeb69272f258b5e4ae362a3b604f0",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "89acedc984e9c64a0dbaac73febce1cb2c44a0d6f1d7c5a2b8f7a90ebae2e2a5",
+          "bytes": 27617
+        },
+        "result.json": {
+          "sha256": "587bf036da771964f577166078335e9d932049b014ba59bb6ba9cafa26ebc55b",
+          "bytes": 9780
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "n_artifacts": 11,
+      "out_dir": "<WORKSPACE>\\run-0\\out",
+      "run_root": "<WORKSPACE>\\run-0",
+      "compare_dir": "<WORKSPACE>\\run-0\\out"
+    },
+    {
+      "i": 1,
+      "cwd_role": "system-temp",
+      "cwd": "<TMP>",
+      "pythonhashseed": 1,
+      "argv": [
+        "<PYTHON>",
+        "<SKILL_DIR>/scripts/main.py",
+        "--case",
+        "<SKILL_DIR>/examples/case.json",
+        "--out",
+        "<WORKSPACE>/run-1/out",
+        "--work",
+        "<WORKSPACE>/run-1/work"
+      ],
+      "exit": 0,
+      "seconds": 1.45,
+      "stdout_sha256": "44089b8e12b4584d24371eb61b0ab85c5f3a8e8bcc5f1c0c25800db37e6510af",
+      "stdout_tail": "  - figure-fig-02.png (png_preview)\n  - figure-fig-02.pdf (pdf_preview)\n[main] gates: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK all_pass=OK\n[main] �м���� -> <WORKSPACE>\\run-1\\work",
+      "stderr_tail": "",
+      "errors": [],
+      "result_json_present": true,
+      "status": "completed",
+      "result_json_keys": 29,
+      "gates_all_pass": true,
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "7c6bf5efb38fca955957bc3a4c07e89f9b4bc177ba0b683e74c9ab8c6358786d",
+          "bytes": 8429
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "c246e2a8911bec9a1d0b75aeb97b27a81cf6bc6315698ad88fe46fa66e8b1d85",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "b31937192aa8b1134077ee0d6268c96c1312a5969330ef30e943f657eb7c7d2f",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "e450ef6b5c6f4d0bb029e6425071ce8e894b5c28d03b6dcfeb095b53d8398eb6",
+          "bytes": 27617
+        },
+        "result.json": {
+          "sha256": "7af51a324a45971df1393fda4581e0747b77cbe8d2844447ec094a852259abc9",
+          "bytes": 9780
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "n_artifacts": 11,
+      "out_dir": "<WORKSPACE>\\run-1\\out",
+      "run_root": "<WORKSPACE>\\run-1",
+      "compare_dir": "<WORKSPACE>\\run-1\\out"
+    },
+    {
+      "i": 2,
+      "cwd_role": "case-dir",
+      "cwd": "<SKILL_DIR>/examples",
+      "pythonhashseed": 12345,
+      "argv": [
+        "<PYTHON>",
+        "<SKILL_DIR>/scripts/main.py",
+        "--case",
+        "<SKILL_DIR>/examples/case.json",
+        "--out",
+        "<WORKSPACE>/run-2/out",
+        "--work",
+        "<WORKSPACE>/run-2/work"
+      ],
+      "exit": 0,
+      "seconds": 1.259,
+      "stdout_sha256": "dda9f525c27b8171249cebca5b425b9f2cd2aff1f9d2bf9f152f122840abfd27",
+      "stdout_tail": "  - figure-fig-02.png (png_preview)\n  - figure-fig-02.pdf (pdf_preview)\n[main] gates: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK all_pass=OK\n[main] �м���� -> <WORKSPACE>\\run-2\\work",
+      "stderr_tail": "",
+      "errors": [],
+      "result_json_present": true,
+      "status": "completed",
+      "result_json_keys": 29,
+      "gates_all_pass": true,
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "806b5d5e7541ead869268dc1e751f7b057f15103f5006833f4f880f185d0bb01",
+          "bytes": 8429
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "299bc85cb08e9f91ca326cb0e5996a8178814338320483f716542635f03cf2aa",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "c15c712a4657f398c4659e79fdc23d31f86e51cc4c3368d7e57ad8637a9ee6be",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "d453565025b69fe043e223620d177435ecde27d9caf91d934dfcc6d275a574e2",
+          "bytes": 27617
+        },
+        "result.json": {
+          "sha256": "d8fa93110a9be1b251563b3cda6b844aafb8b5820c7318bdc5485e68ae70280b",
+          "bytes": 9780
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "n_artifacts": 11,
+      "out_dir": "<WORKSPACE>\\run-2\\out",
+      "run_root": "<WORKSPACE>\\run-2",
+      "compare_dir": "<WORKSPACE>\\run-2\\out"
+    },
+    {
+      "i": 3,
+      "cwd_role": "skill-root",
+      "cwd": "<SKILL_DIR>",
+      "pythonhashseed": 7,
+      "argv": [
+        "<PYTHON>",
+        "<SKILL_DIR>/scripts/main.py",
+        "--case",
+        "<SKILL_DIR>/examples/case.json",
+        "--out",
+        "<WORKSPACE>/run-3/out",
+        "--work",
+        "<WORKSPACE>/run-3/work"
+      ],
+      "exit": 0,
+      "seconds": 1.265,
+      "stdout_sha256": "21c495195a0591fddba32eca3461c692149c012d708f83e479da7e959199d50c",
+      "stdout_tail": "  - figure-fig-02.png (png_preview)\n  - figure-fig-02.pdf (pdf_preview)\n[main] gates: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK all_pass=OK\n[main] �м���� -> <WORKSPACE>\\run-3\\work",
+      "stderr_tail": "",
+      "errors": [],
+      "result_json_present": true,
+      "status": "completed",
+      "result_json_keys": 29,
+      "gates_all_pass": true,
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "760caf53c57de64d318e6ac68a5ff40eed23499f6ead235f870655a166854a17",
+          "bytes": 8429
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "dfa9e52ac4cf9408768b9e199947a96681fa422093d39397c7be92f5af4e6b63",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "3ab12589a6ad340909b62b17de00f48fb6e0c0acf11541154cb880406db28689",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "6c855fd11970fbb7d3227bc05a727a0ae3c0119f2c9ae6f6f1becbfc47120d1e",
+          "bytes": 27617
+        },
+        "result.json": {
+          "sha256": "79ff6b50fc5f07d846d09fedf48e8dbfc4d8234c4ef02e8af67ca39843cf5e08",
+          "bytes": 9780
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "n_artifacts": 11,
+      "out_dir": "<WORKSPACE>\\run-3\\out",
+      "run_root": "<WORKSPACE>\\run-3",
+      "compare_dir": "<WORKSPACE>\\run-3\\out"
+    },
+    {
+      "i": 4,
+      "cwd_role": "run-dir",
+      "cwd": "<WORKSPACE>/run-4",
+      "pythonhashseed": 99,
+      "argv": [
+        "<PYTHON>",
+        "<SKILL_DIR>/scripts/main.py",
+        "--case",
+        "<SKILL_DIR>/examples/case.json",
+        "--out",
+        "<WORKSPACE>/run-4/out",
+        "--work",
+        "<WORKSPACE>/run-4/work"
+      ],
+      "exit": 0,
+      "seconds": 1.294,
+      "stdout_sha256": "a7c2374a878ffaff5ccffceaea61bff33661a16733c2b8e017b611a21de26593",
+      "stdout_tail": "  - figure-fig-02.png (png_preview)\n  - figure-fig-02.pdf (pdf_preview)\n[main] gates: G1=OK G2=OK G3=OK G4=OK G5=OK G6=OK G7=OK G8=OK all_pass=OK\n[main] �м���� -> <WORKSPACE>\\run-4\\work",
+      "stderr_tail": "",
+      "errors": [],
+      "result_json_present": true,
+      "status": "completed",
+      "result_json_keys": 29,
+      "gates_all_pass": true,
+      "artifacts": {
+        "data_manifest.json": {
+          "sha256": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+          "bytes": 28979
+        },
+        "figcheck_report.json": {
+          "sha256": "189ffa9bb0b02e1cabfc7ec69de9a8d79ace41643e28f47ed333283d9f9d1f74",
+          "bytes": 8429
+        },
+        "figure-fig-01.pdf": {
+          "sha256": "a2bb264dbd4f8eabb6ef51e51b20375c242fe948d00e0036e1e5d2acdd806f5a",
+          "bytes": 343392
+        },
+        "figure-fig-01.png": {
+          "sha256": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+          "bytes": 281926
+        },
+        "figure-fig-01.svg": {
+          "sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+          "bytes": 21303
+        },
+        "figure-fig-02.pdf": {
+          "sha256": "adc289114b9bb3733cba1f85117de020bb226fc3f308ff18667b4d995933e33b",
+          "bytes": 72656
+        },
+        "figure-fig-02.png": {
+          "sha256": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+          "bytes": 122579
+        },
+        "figure-fig-02.svg": {
+          "sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+          "bytes": 11931
+        },
+        "mapcheck_report.json": {
+          "sha256": "b91f7a54fd1ac317f62287e60a5d434fe4cb807a174e2df4c9e424ad03e86948",
+          "bytes": 27617
+        },
+        "result.json": {
+          "sha256": "38f9c62eeb997a06fbae714f4a5d4c9d9a2d798b0f913305f6e2ea80c883b61f",
+          "bytes": 9780
+        },
+        "validation.json": {
+          "sha256": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+          "bytes": 2526
+        }
+      },
+      "n_artifacts": 11,
+      "out_dir": "<WORKSPACE>\\run-4\\out",
+      "run_root": "<WORKSPACE>\\run-4",
+      "compare_dir": "<WORKSPACE>\\run-4\\out"
+    }
+  ],
+  "per_file_sha256": {
+    "data_manifest.json": {
+      "present_in_runs": 5,
+      "byte_identical": true,
+      "normalized_identical": true,
+      "run-0": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+      "run-0_bytes": 28979,
+      "run-1": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+      "run-1_bytes": 28979,
+      "run-2": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+      "run-2_bytes": 28979,
+      "run-3": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+      "run-3_bytes": 28979,
+      "run-4": "a40ab7d3231b573e5d9cf86e6f9f1039eb0184ddd17a612149cd4b42e066ffd3",
+      "run-4_bytes": 28979,
+      "normalized_sha256": "d91b39257be4a04e03798274e98c0796f44d849a77eea4779e5d2a02b82923ed"
+    },
+    "figcheck_report.json": {
+      "present_in_runs": 5,
+      "byte_identical": false,
+      "normalized_identical": true,
+      "run-0": "17bc60959a1fe77cd2a1cb7fb42ce35207501f6b7ee3a5a5faac7e97fb8f7200",
+      "run-0_bytes": 8429,
+      "run-1": "7c6bf5efb38fca955957bc3a4c07e89f9b4bc177ba0b683e74c9ab8c6358786d",
+      "run-1_bytes": 8429,
+      "run-2": "806b5d5e7541ead869268dc1e751f7b057f15103f5006833f4f880f185d0bb01",
+      "run-2_bytes": 8429,
+      "run-3": "760caf53c57de64d318e6ac68a5ff40eed23499f6ead235f870655a166854a17",
+      "run-3_bytes": 8429,
+      "run-4": "189ffa9bb0b02e1cabfc7ec69de9a8d79ace41643e28f47ed333283d9f9d1f74",
+      "run-4_bytes": 8429,
+      "normalized_sha256": "9a606956c19ef875ef02eb2a88b326eed573982ec7ddf5b63d13773bbec1a5a8"
+    },
+    "figure-fig-01.pdf": {
+      "present_in_runs": 5,
+      "byte_identical": false,
+      "normalized_identical": true,
+      "run-0": "71c359ab50cdac0e9392b3faebc7695cb356ac8cf9847a1a3690997109eecea4",
+      "run-0_bytes": 343392,
+      "run-1": "c246e2a8911bec9a1d0b75aeb97b27a81cf6bc6315698ad88fe46fa66e8b1d85",
+      "run-1_bytes": 343392,
+      "run-2": "299bc85cb08e9f91ca326cb0e5996a8178814338320483f716542635f03cf2aa",
+      "run-2_bytes": 343392,
+      "run-3": "dfa9e52ac4cf9408768b9e199947a96681fa422093d39397c7be92f5af4e6b63",
+      "run-3_bytes": 343392,
+      "run-4": "a2bb264dbd4f8eabb6ef51e51b20375c242fe948d00e0036e1e5d2acdd806f5a",
+      "run-4_bytes": 343392,
+      "normalized_sha256": "4e34f583d86a9d5964b7b987fef71fc9a0392a78164af66356bce77745482d30"
+    },
+    "figure-fig-01.png": {
+      "present_in_runs": 5,
+      "byte_identical": true,
+      "normalized_identical": true,
+      "run-0": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+      "run-0_bytes": 281926,
+      "run-1": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+      "run-1_bytes": 281926,
+      "run-2": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+      "run-2_bytes": 281926,
+      "run-3": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+      "run-3_bytes": 281926,
+      "run-4": "29ba17ff6530bc7ca675524c9c034934d1a69491295330c076970dc2b01d0920",
+      "run-4_bytes": 281926,
+      "normalized_sha256": "ad05e0464f46c4ef383ad54552ea297ced76aa217c7340daa00ac16737a98880"
+    },
+    "figure-fig-01.svg": {
+      "present_in_runs": 5,
+      "byte_identical": true,
+      "normalized_identical": true,
+      "run-0": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+      "run-0_bytes": 21303,
+      "run-1": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+      "run-1_bytes": 21303,
+      "run-2": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+      "run-2_bytes": 21303,
+      "run-3": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+      "run-3_bytes": 21303,
+      "run-4": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd",
+      "run-4_bytes": 21303,
+      "normalized_sha256": "78c0b6491d73ab9e19cda1f38aa89df1def8f599e878285977e587d9f0dc4cbd"
+    },
+    "figure-fig-02.pdf": {
+      "present_in_runs": 5,
+      "byte_identical": false,
+      "normalized_identical": true,
+      "run-0": "7d551f3bb4ea6443cb1c73cb80fc2de36f2aeb69272f258b5e4ae362a3b604f0",
+      "run-0_bytes": 72656,
+      "run-1": "b31937192aa8b1134077ee0d6268c96c1312a5969330ef30e943f657eb7c7d2f",
+      "run-1_bytes": 72656,
+      "run-2": "c15c712a4657f398c4659e79fdc23d31f86e51cc4c3368d7e57ad8637a9ee6be",
+      "run-2_bytes": 72656,
+      "run-3": "3ab12589a6ad340909b62b17de00f48fb6e0c0acf11541154cb880406db28689",
+      "run-3_bytes": 72656,
+      "run-4": "adc289114b9bb3733cba1f85117de020bb226fc3f308ff18667b4d995933e33b",
+      "run-4_bytes": 72656,
+      "normalized_sha256": "d3006fa515dfd63cef31521ff4360ae5cc932985ced2b46316af0937a9f9904d"
+    },
+    "figure-fig-02.png": {
+      "present_in_runs": 5,
+      "byte_identical": true,
+      "normalized_identical": true,
+      "run-0": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+      "run-0_bytes": 122579,
+      "run-1": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+      "run-1_bytes": 122579,
+      "run-2": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+      "run-2_bytes": 122579,
+      "run-3": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+      "run-3_bytes": 122579,
+      "run-4": "46f274f9b99a96831320bf5da13d4f7e7a5c785abfc970b00ba17ed018145956",
+      "run-4_bytes": 122579,
+      "normalized_sha256": "197602c4d37ff935fd057a81d9898ff8905ecfb9bea94d35751f7434f3eb4c2f"
+    },
+    "figure-fig-02.svg": {
+      "present_in_runs": 5,
+      "byte_identical": true,
+      "normalized_identical": true,
+      "run-0": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+      "run-0_bytes": 11931,
+      "run-1": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+      "run-1_bytes": 11931,
+      "run-2": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+      "run-2_bytes": 11931,
+      "run-3": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+      "run-3_bytes": 11931,
+      "run-4": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f",
+      "run-4_bytes": 11931,
+      "normalized_sha256": "b8f76f6d1e21f26bb9c2e5960574412eec6f47398afa04fe22d2cda8dfffc31f"
+    },
+    "mapcheck_report.json": {
+      "present_in_runs": 5,
+      "byte_identical": false,
+      "normalized_identical": true,
+      "run-0": "89acedc984e9c64a0dbaac73febce1cb2c44a0d6f1d7c5a2b8f7a90ebae2e2a5",
+      "run-0_bytes": 27617,
+      "run-1": "e450ef6b5c6f4d0bb029e6425071ce8e894b5c28d03b6dcfeb095b53d8398eb6",
+      "run-1_bytes": 27617,
+      "run-2": "d453565025b69fe043e223620d177435ecde27d9caf91d934dfcc6d275a574e2",
+      "run-2_bytes": 27617,
+      "run-3": "6c855fd11970fbb7d3227bc05a727a0ae3c0119f2c9ae6f6f1becbfc47120d1e",
+      "run-3_bytes": 27617,
+      "run-4": "b91f7a54fd1ac317f62287e60a5d434fe4cb807a174e2df4c9e424ad03e86948",
+      "run-4_bytes": 27617,
+      "normalized_sha256": "07b964044aeb3d2c60d04c4140efd3346e4b377c9ba833d0f03dc97d23ee3521"
+    },
+    "result.json": {
+      "present_in_runs": 5,
+      "byte_identical": false,
+      "normalized_identical": true,
+      "run-0": "587bf036da771964f577166078335e9d932049b014ba59bb6ba9cafa26ebc55b",
+      "run-0_bytes": 9780,
+      "run-1": "7af51a324a45971df1393fda4581e0747b77cbe8d2844447ec094a852259abc9",
+      "run-1_bytes": 9780,
+      "run-2": "d8fa93110a9be1b251563b3cda6b844aafb8b5820c7318bdc5485e68ae70280b",
+      "run-2_bytes": 9780,
+      "run-3": "79ff6b50fc5f07d846d09fedf48e8dbfc4d8234c4ef02e8af67ca39843cf5e08",
+      "run-3_bytes": 9780,
+      "run-4": "38f9c62eeb997a06fbae714f4a5d4c9d9a2d798b0f913305f6e2ea80c883b61f",
+      "run-4_bytes": 9780,
+      "normalized_sha256": "307002bcbef98a581e7d4a0d407d34ffb5aee0f3583541622f22acf3f02af006"
+    },
+    "validation.json": {
+      "present_in_runs": 5,
+      "byte_identical": true,
+      "normalized_identical": true,
+      "run-0": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+      "run-0_bytes": 2526,
+      "run-1": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+      "run-1_bytes": 2526,
+      "run-2": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+      "run-2_bytes": 2526,
+      "run-3": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+      "run-3_bytes": 2526,
+      "run-4": "09fe23ca671fe23a6d8b8f35bae4c4a82eef5491ac61077fa5995a31bd3d2087",
+      "run-4_bytes": 2526,
+      "normalized_sha256": "14cd5a43b523e9798bb51d8948a1751baaea5af0c59fac178691fa2a71c2d14e"
+    }
+  },
+  "identical": false,
+  "normalized_identical": true,
+  "volatile_fields": [
+    {
+      "file": "figcheck_report.json",
+      "path": ".dir",
+      "n": 4,
+      "example_left": "<RUNROOT>\\out",
+      "example_right": "<RUNROOT>\\out",
+      "class": "run_root_path"
+    },
+    {
+      "file": "mapcheck_report.json",
+      "path": ".dir",
+      "n": 4,
+      "example_left": "<RUNROOT>\\out",
+      "example_right": "<RUNROOT>\\out",
+      "class": "run_root_path"
+    },
+    {
+      "file": "result.json",
+      "path": ".artifacts_sha256.figure-fig-01.pdf",
+      "n": 4,
+      "example_left": "71c359ab50cdac0e9392b3faebc7695cb356ac8cf9847a1a3690997109eecea4",
+      "example_right": "c246e2a8911bec9a1d0b75aeb97b27a81cf6bc6315698ad88fe46fa66e8b1d85",
+      "class": "self_reference_hash"
+    },
+    {
+      "file": "result.json",
+      "path": ".artifacts_sha256.figure-fig-02.pdf",
+      "n": 4,
+      "example_left": "7d551f3bb4ea6443cb1c73cb80fc2de36f2aeb69272f258b5e4ae362a3b604f0",
+      "example_right": "b31937192aa8b1134077ee0d6268c96c1312a5969330ef30e943f657eb7c7d2f",
+      "class": "self_reference_hash"
+    },
+    {
+      "file": "result.json",
+      "path": ".change_records[*].ts",
+      "n": 24,
+      "example_left": "2026-11-23T19:49:35+08:00",
+      "example_right": "2026-11-23T19:49:36+08:00",
+      "class": "timestamp"
+    },
+    {
+      "file": "result.json",
+      "path": ".steps[*].ts",
+      "n": 28,
+      "example_left": "2026-11-23T19:49:35+08:00",
+      "example_right": "2026-11-23T19:49:36+08:00",
+      "class": "timestamp"
+    }
+  ],
+  "volatile_classes": {
+    "run_root_path": 2,
+    "self_reference_hash": 2,
+    "timestamp": 2
+  },
+  "binary_notes": {
+    "figure-fig-01.pdf": {
+      "file": "figure-fig-01.pdf",
+      "bytes": [
+        343392,
+        343392
+      ],
+      "first_diff_offset": 343132,
+      "date_only_diff": true,
+      "embedded_dates": [
+        "/CreationDate (D:20261123114936Z)",
+        "/ModDate (D:20261123114936Z)"
+      ]
+    },
+    "figure-fig-02.pdf": {
+      "file": "figure-fig-02.pdf",
+      "bytes": [
+        72656,
+        72656
+      ],
+      "first_diff_offset": 72397,
+      "date_only_diff": true,
+      "embedded_dates": [
+        "/CreationDate (D:20261123114936Z)",
+        "/ModDate (D:20261123114936Z)"
+      ]
+    }
+  },
+  "file_set_identical": true,
+  "abs_path_leaks": [
+    {
+      "file": "figcheck_report.json",
+      "path": ".dir",
+      "sample": "<WORKSPACE>\\run-0\\out"
+    },
+    {
+      "file": "mapcheck_report.json",
+      "path": ".dir",
+      "sample": "<WORKSPACE>\\run-0\\out"
+    },
+    {
+      "file": "result.json",
+      "path": ".steps[*].action",
+      "sample": "<CASEDIR>\\task.md"
+    },
+    {
+      "file": "result.json",
+      "path": ".change_records[*].action",
+      "sample": "<CASEDIR>\\task.md"
+    }
+  ],
+  "verified_by_command": "python.exe scripts/determinism.py --case <case> --runs 5 --mode isolated",
+  "findings": [
+    "重复 5 次（独立进程 + cwd 轮转 + PYTHONHASHSEED 轮转，mode=isolated），每次产出 11 个产物文件。",
+    "字节级全同：False；归一化后全同：True。",
+    "字节不同的文件：figcheck_report.json, figure-fig-01.pdf, figure-fig-02.pdf, mapcheck_report.json, result.json",
+    "不稳定字段：figcheck_report.json.dir×4[run_root_path]; mapcheck_report.json.dir×4[run_root_path]; result.json.artifacts_sha256.figure-fig-01.pdf×4[self_reference_hash]; result.json.artifacts_sha256.figure-fig-02.pdf×4[self_reference_hash]; result.json.change_records[*].ts×24[timestamp]; result.json.steps[*].ts×28[timestamp]",
+    "产物文本中另有 4 处绝对路径（同机重跑不影响，换目录/换机器会破坏字节一致性）：figcheck_report.json.dir; mapcheck_report.json.dir; result.json.change_records[*].action; result.json.steps[*].action"
+  ],
+  "ladder": 2,
+  "runs_with_result_json": 5,
+  "files": [
+    "data_manifest.json",
+    "figcheck_report.json",
+    "figure-fig-01.pdf",
+    "figure-fig-01.png",
+    "figure-fig-01.svg",
+    "figure-fig-02.pdf",
+    "figure-fig-02.png",
+    "figure-fig-02.svg",
+    "mapcheck_report.json",
+    "result.json",
+    "validation.json"
+  ],
+  "normalization_rules_applied": [
+    "N1",
+    "N2",
+    "N3",
+    "N4"
+  ],
+  "identical_files": [
+    "data_manifest.json",
+    "figure-fig-01.png",
+    "figure-fig-01.svg",
+    "figure-fig-02.png",
+    "figure-fig-02.svg",
+    "validation.json"
+  ],
+  "differing_files": [
+    "figcheck_report.json",
+    "figure-fig-01.pdf",
+    "figure-fig-02.pdf",
+    "mapcheck_report.json",
+    "result.json"
+  ],
+  "exit_meaning": "字节级不同但归一化后相同 => 差异已被 N1–N4 完全解释",
+  "ladder_note": "阶梯 0 需要运行环境在整轮内时钟不前进：本包**故意**保留 change_records/steps 的 ts（审计线索）与 Pillow 写入 PDF 的 /CreationDate（预览件元数据），所以在本机实测落在阶梯 2 —— 差异被 N1–N4 逐字段解释完，并非随机。要拿到 0，需在启动前冻结时钟（如 libfaketime）或改写这两处写入点；本包选择「诚实留痕 + 归一化可判定」，而不是删掉时间戳来伪造字节稳定。",
+  "elapsed_seconds": 6.974
+}

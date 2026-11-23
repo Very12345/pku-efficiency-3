@@ -1,0 +1,123 @@
+{
+  "checks": {
+    "svg_well_formed": {
+      "ok": true,
+      "size_bytes": 32455,
+      "layers": 7
+    },
+    "png": {
+      "ok": true,
+      "size_bytes": 397555,
+      "px": [
+        2400,
+        1600
+      ]
+    },
+    "pdf": {
+      "present": true,
+      "size_bytes": 148129,
+      "header_ok": true
+    }
+  },
+  "entity_coverage": {
+    "total": 6,
+    "on_canvas": 6,
+    "missing": []
+  },
+  "encoding_consistency": {
+    "total": 7,
+    "missing_from_canvas": []
+  },
+  "bounds": {
+    "outside_count": 0,
+    "outside": []
+  },
+  "grayscale_check": {
+    "default_colorblind_palette": true,
+    "min_pairwise_luminance_gap": 0.009,
+    "weak_pairs": [
+      [
+        0.104,
+        "#0072B2",
+        "#009E73"
+      ],
+      [
+        0.069,
+        "#0072B2",
+        "#D55E00"
+      ],
+      [
+        0.141,
+        "#0072B2",
+        "#CC79A7"
+      ],
+      [
+        0.06,
+        "#0072B2",
+        "#7F7F7F"
+      ],
+      [
+        0.035,
+        "#009E73",
+        "#D55E00"
+      ],
+      [
+        0.036,
+        "#009E73",
+        "#CC79A7"
+      ]
+    ]
+  },
+  "missing_values": [],
+  "layout_log": [],
+  "four_element_coverage": {
+    "expected": [
+      "question",
+      "method",
+      "results",
+      "conclusion"
+    ],
+    "on_canvas": [
+      "conclusion",
+      "method",
+      "question",
+      "results"
+    ],
+    "missing": [],
+    "content_panels": {
+      "question": 0,
+      "method": 0,
+      "results": 0,
+      "conclusion": 0
+    }
+  },
+  "layer_naming": {
+    "expected": [
+      "background",
+      "panels",
+      "entities",
+      "relations",
+      "data",
+      "legend",
+      "annotations"
+    ],
+    "found": [
+      "annotations",
+      "background",
+      "data",
+      "entities",
+      "legend",
+      "panels",
+      "relations"
+    ],
+    "bad": [],
+    "missing": [],
+    "elements_without_src": 0,
+    "missing_src_roles": [],
+    "note": "layers must match references/layer-naming.md; entity/relation/datum/icon elements must carry src"
+  },
+  "determinism_probe": {
+    "spec_sha16": "b863154605758e84",
+    "note": "same content+constraints => identical spec (layout is deterministic)"
+  }
+}

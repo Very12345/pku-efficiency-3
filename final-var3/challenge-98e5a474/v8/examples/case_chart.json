@@ -1,0 +1,34 @@
+{
+  "case_id": "example-chart-002",
+  "workorder": "editable_relationship_schematic",
+  "title": "Compound response bar chart (demo)",
+  "summary": "EXAMPLE input (示例输入，非正式案例). Draw an editable chart from sources/data-table.csv with the legend generated directly from the table categories, unit on the axis, then export SVG (editable) + PNG/PDF and write result.json.",
+  "figure_type": "chart",
+  "sources": [
+    "sources/data-table.csv"
+  ],
+  "manifest": {
+    "schema_version": "1.0",
+    "figure_type": "chart",
+    "title": "Response by compound (Figure, demo — EXAMPLE 示例，非正式案例)",
+    "subtitle": "Data-driven chart: legend is generated from the table",
+    "data": {
+      "chart_type": "bar",
+      "table": {
+        "columns": ["compound", "response", "fraction"],
+        "rows": [
+          ["ctrl", 1.00, 0.10],
+          ["inhibitor-A", 1.40, 0.15],
+          ["inhibitor-B", 0.45, 0.30],
+          ["inhibitor-C", 2.10, 0.22]
+        ]
+      },
+      "category_col": "compound",
+      "value_col": "response",
+      "unit": "fold change vs ctrl",
+      "x_label": "compound",
+      "y_label": "response"
+    },
+    "acknowledged_issues": []
+  }
+}

@@ -1,0 +1,552 @@
+{
+  "schema": "determinism-report/1",
+  "generated_utc": "2026-11-23T11:40:31Z",
+  "skill": "graphical-abstract",
+  "python": "3.13.9",
+  "platform": "win32",
+  "case": {
+    "file": "case.json",
+    "case_id": "example-micelle-001",
+    "sha256": "8396f5599ac85d65ad6aa0b3082fbb155ffbbd3d9004f525954ad92f1ae26d44"
+  },
+  "invocation": {
+    "runs": 5,
+    "hashseeds": [
+      "0",
+      "1",
+      "42",
+      "12345",
+      "-"
+    ],
+    "cwds": [
+      "skill",
+      "tmp",
+      "case"
+    ],
+    "isolated_processes": true,
+    "argv": "python -B <sandbox>/scripts/main.py --case <case> --out <run-dir> "
+  },
+  "runs": [
+    {
+      "i": 0,
+      "run_dir": "run0",
+      "cwd_kind": "skill",
+      "cwd": "<skill-root>",
+      "pythonhashseed": "0",
+      "argv": [
+        "python",
+        "-B",
+        "<skill-sandbox>/scripts/main.py",
+        "--case",
+        "<case>",
+        "--out",
+        "run0"
+      ],
+      "exit": 0,
+      "seconds": 2.29,
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\",",
+        "  \"case_id\": \"example-micelle-001\","
+      ],
+      "stderr_head": [],
+      "file_hashes": {
+        "audit.json": "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "content.json": "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "example-micelle-001_graphical_abstract.pdf": "50efac5cc8368a03f5cea0976b173aceeb5dbc570cd2088c8da999900ef7bdfc",
+        "example-micelle-001_graphical_abstract.png": "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "example-micelle-001_graphical_abstract.svg": "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "render_log.json": "9a94df51915c6e61450fb4301d2885c7de9bb627b84a01e2bbb5ce5be8696da1",
+        "result.json": "2959001ec24b46838f2aae16a33d3e358079845f3388453f3cf743a8b65f9796",
+        "spec.json": "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      }
+    },
+    {
+      "i": 1,
+      "run_dir": "run1",
+      "cwd_kind": "tmp",
+      "cwd": "cwd1",
+      "pythonhashseed": "1",
+      "argv": [
+        "python",
+        "-B",
+        "<skill-sandbox>/scripts/main.py",
+        "--case",
+        "<case>",
+        "--out",
+        "run1"
+      ],
+      "exit": 0,
+      "seconds": 2.04,
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\",",
+        "  \"case_id\": \"example-micelle-001\","
+      ],
+      "stderr_head": [],
+      "file_hashes": {
+        "audit.json": "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "content.json": "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "example-micelle-001_graphical_abstract.pdf": "2c99f690d928d7a2be4e606741be0734f687898d722bc0ccb85aaf03cc5956e3",
+        "example-micelle-001_graphical_abstract.png": "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "example-micelle-001_graphical_abstract.svg": "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "render_log.json": "f957cb889af8dc35c9a04cc78dd553849b50c4b5565f0bc3ceb54fbfb93bad8b",
+        "result.json": "f03733bb203689ea55fe80d5081d2f25c13411446b50454cd821bd258c1f96e5",
+        "spec.json": "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      }
+    },
+    {
+      "i": 2,
+      "run_dir": "run2",
+      "cwd_kind": "case",
+      "cwd": "<case-dir>",
+      "pythonhashseed": "42",
+      "argv": [
+        "python",
+        "-B",
+        "<skill-sandbox>/scripts/main.py",
+        "--case",
+        "<case>",
+        "--out",
+        "run2"
+      ],
+      "exit": 0,
+      "seconds": 2.33,
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\",",
+        "  \"case_id\": \"example-micelle-001\","
+      ],
+      "stderr_head": [],
+      "file_hashes": {
+        "audit.json": "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "content.json": "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "example-micelle-001_graphical_abstract.pdf": "524c463cd222050be830a01a490f2f435008c2b0e5e93322436926d526dd3d4f",
+        "example-micelle-001_graphical_abstract.png": "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "example-micelle-001_graphical_abstract.svg": "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "render_log.json": "f231432175da9d9344e03d1abb0ec8f8bb83758f4d842364ef6165f7ed3e61de",
+        "result.json": "dc0d3fba8e850828b45d3b8744a2dabffa890be495dbfc66991a7aaba07aec8b",
+        "spec.json": "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      }
+    },
+    {
+      "i": 3,
+      "run_dir": "run3",
+      "cwd_kind": "skill",
+      "cwd": "<skill-root>",
+      "pythonhashseed": "12345",
+      "argv": [
+        "python",
+        "-B",
+        "<skill-sandbox>/scripts/main.py",
+        "--case",
+        "<case>",
+        "--out",
+        "run3"
+      ],
+      "exit": 0,
+      "seconds": 2.36,
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\",",
+        "  \"case_id\": \"example-micelle-001\","
+      ],
+      "stderr_head": [],
+      "file_hashes": {
+        "audit.json": "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "content.json": "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "example-micelle-001_graphical_abstract.pdf": "670d15c2bd9abc0485c3cf10f4fce0f6ea9590880a5de96973c8fe3b6fd69aca",
+        "example-micelle-001_graphical_abstract.png": "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "example-micelle-001_graphical_abstract.svg": "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "render_log.json": "cda388ac3aecd2a8edf48f02d9118262e58b811bbbac27b6a95fc92042819f56",
+        "result.json": "d3617c6d36c0272ce1b94864e86810e3384f5a7aa03ae0dabf5ade59b1f135c6",
+        "spec.json": "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      }
+    },
+    {
+      "i": 4,
+      "run_dir": "run4",
+      "cwd_kind": "tmp",
+      "cwd": "cwd4",
+      "pythonhashseed": "-",
+      "argv": [
+        "python",
+        "-B",
+        "<skill-sandbox>/scripts/main.py",
+        "--case",
+        "<case>",
+        "--out",
+        "run4"
+      ],
+      "exit": 0,
+      "seconds": 2.56,
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\",",
+        "  \"case_id\": \"example-micelle-001\","
+      ],
+      "stderr_head": [],
+      "file_hashes": {
+        "audit.json": "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "content.json": "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "example-micelle-001_graphical_abstract.pdf": "d11c6dc65d2759bbd2c19d678d262affc8719ddb123b57418f0e1f3e53ceda13",
+        "example-micelle-001_graphical_abstract.png": "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "example-micelle-001_graphical_abstract.svg": "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "render_log.json": "82dcdc7ef465191f4fa8100742a620a33127d2f22d26e03797e86815feee2f4a",
+        "result.json": "e7c9afb8e339524dbe2bb84c24d29e33697f980aaad19d71b222c183dfcdaea1",
+        "spec.json": "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      }
+    }
+  ],
+  "per_file_sha256": {
+    "audit.json": [
+      "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+      "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+      "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+      "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+      "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20"
+    ],
+    "content.json": [
+      "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+      "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+      "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+      "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+      "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53"
+    ],
+    "example-micelle-001_graphical_abstract.pdf": [
+      "50efac5cc8368a03f5cea0976b173aceeb5dbc570cd2088c8da999900ef7bdfc",
+      "2c99f690d928d7a2be4e606741be0734f687898d722bc0ccb85aaf03cc5956e3",
+      "524c463cd222050be830a01a490f2f435008c2b0e5e93322436926d526dd3d4f",
+      "670d15c2bd9abc0485c3cf10f4fce0f6ea9590880a5de96973c8fe3b6fd69aca",
+      "d11c6dc65d2759bbd2c19d678d262affc8719ddb123b57418f0e1f3e53ceda13"
+    ],
+    "example-micelle-001_graphical_abstract.png": [
+      "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+      "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+      "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+      "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+      "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d"
+    ],
+    "example-micelle-001_graphical_abstract.svg": [
+      "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+      "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+      "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+      "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+      "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948"
+    ],
+    "render_log.json": [
+      "9a94df51915c6e61450fb4301d2885c7de9bb627b84a01e2bbb5ce5be8696da1",
+      "f957cb889af8dc35c9a04cc78dd553849b50c4b5565f0bc3ceb54fbfb93bad8b",
+      "f231432175da9d9344e03d1abb0ec8f8bb83758f4d842364ef6165f7ed3e61de",
+      "cda388ac3aecd2a8edf48f02d9118262e58b811bbbac27b6a95fc92042819f56",
+      "82dcdc7ef465191f4fa8100742a620a33127d2f22d26e03797e86815feee2f4a"
+    ],
+    "result.json": [
+      "2959001ec24b46838f2aae16a33d3e358079845f3388453f3cf743a8b65f9796",
+      "f03733bb203689ea55fe80d5081d2f25c13411446b50454cd821bd258c1f96e5",
+      "dc0d3fba8e850828b45d3b8744a2dabffa890be495dbfc66991a7aaba07aec8b",
+      "d3617c6d36c0272ce1b94864e86810e3384f5a7aa03ae0dabf5ade59b1f135c6",
+      "e7c9afb8e339524dbe2bb84c24d29e33697f980aaad19d71b222c183dfcdaea1"
+    ],
+    "spec.json": [
+      "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+      "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+      "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+      "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+      "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+    ]
+  },
+  "per_file": {
+    "audit.json": {
+      "present_in_all_runs": true,
+      "kind": "text",
+      "bytes": 2169,
+      "sha256_per_run": [
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20"
+      ],
+      "normalized_sha256_per_run": [
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20",
+        "653e22cc6160208295e6dd6cd6b4a5b7eb32b97afa1ace93c9abaa722c7d0e20"
+      ],
+      "raw_identical": true,
+      "normalized_identical": true
+    },
+    "content.json": {
+      "present_in_all_runs": true,
+      "kind": "text",
+      "bytes": 6979,
+      "sha256_per_run": [
+        "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53",
+        "d6825571d33eaa41f8c14c113fac4bbfeeb1d10cd209a133c8bf114640c30e53"
+      ],
+      "normalized_sha256_per_run": [
+        "9f5f01609457455755130bfe8ed256d3a627c347b575bb8764691a26aa0050b1",
+        "9f5f01609457455755130bfe8ed256d3a627c347b575bb8764691a26aa0050b1",
+        "9f5f01609457455755130bfe8ed256d3a627c347b575bb8764691a26aa0050b1",
+        "9f5f01609457455755130bfe8ed256d3a627c347b575bb8764691a26aa0050b1",
+        "9f5f01609457455755130bfe8ed256d3a627c347b575bb8764691a26aa0050b1"
+      ],
+      "raw_identical": true,
+      "normalized_identical": true
+    },
+    "example-micelle-001_graphical_abstract.pdf": {
+      "present_in_all_runs": true,
+      "kind": "pdf",
+      "bytes": 148129,
+      "sha256_per_run": [
+        "50efac5cc8368a03f5cea0976b173aceeb5dbc570cd2088c8da999900ef7bdfc",
+        "2c99f690d928d7a2be4e606741be0734f687898d722bc0ccb85aaf03cc5956e3",
+        "524c463cd222050be830a01a490f2f435008c2b0e5e93322436926d526dd3d4f",
+        "670d15c2bd9abc0485c3cf10f4fce0f6ea9590880a5de96973c8fe3b6fd69aca",
+        "d11c6dc65d2759bbd2c19d678d262affc8719ddb123b57418f0e1f3e53ceda13"
+      ],
+      "normalized_sha256_per_run": [
+        "fa589a8e819b2ddc5974aac4e2da4051abc5de5f174b6f88328e5f013e05503a",
+        "fa589a8e819b2ddc5974aac4e2da4051abc5de5f174b6f88328e5f013e05503a",
+        "fa589a8e819b2ddc5974aac4e2da4051abc5de5f174b6f88328e5f013e05503a",
+        "fa589a8e819b2ddc5974aac4e2da4051abc5de5f174b6f88328e5f013e05503a",
+        "fa589a8e819b2ddc5974aac4e2da4051abc5de5f174b6f88328e5f013e05503a"
+      ],
+      "raw_identical": false,
+      "normalized_identical": true
+    },
+    "example-micelle-001_graphical_abstract.png": {
+      "present_in_all_runs": true,
+      "kind": "binary",
+      "bytes": 397555,
+      "sha256_per_run": [
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d"
+      ],
+      "normalized_sha256_per_run": [
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d",
+        "23e992772bdaf9342bcf1e67efa94a6ec81e52c5d770eb42253db798c5f5d83d"
+      ],
+      "raw_identical": true,
+      "normalized_identical": true
+    },
+    "example-micelle-001_graphical_abstract.svg": {
+      "present_in_all_runs": true,
+      "kind": "text",
+      "bytes": 32455,
+      "sha256_per_run": [
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948"
+      ],
+      "normalized_sha256_per_run": [
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948",
+        "370a037e2bafb9eec761440de0bec02c332d676a7efd0e23f50bce5cbea29948"
+      ],
+      "raw_identical": true,
+      "normalized_identical": true
+    },
+    "render_log.json": {
+      "present_in_all_runs": true,
+      "kind": "text",
+      "bytes": 645,
+      "sha256_per_run": [
+        "9a94df51915c6e61450fb4301d2885c7de9bb627b84a01e2bbb5ce5be8696da1",
+        "f957cb889af8dc35c9a04cc78dd553849b50c4b5565f0bc3ceb54fbfb93bad8b",
+        "f231432175da9d9344e03d1abb0ec8f8bb83758f4d842364ef6165f7ed3e61de",
+        "cda388ac3aecd2a8edf48f02d9118262e58b811bbbac27b6a95fc92042819f56",
+        "82dcdc7ef465191f4fa8100742a620a33127d2f22d26e03797e86815feee2f4a"
+      ],
+      "normalized_sha256_per_run": [
+        "e18a3955818d9e9151a14a01e0a2d0201d2175449f8e65d4f3849bdfac19eaee",
+        "e18a3955818d9e9151a14a01e0a2d0201d2175449f8e65d4f3849bdfac19eaee",
+        "e18a3955818d9e9151a14a01e0a2d0201d2175449f8e65d4f3849bdfac19eaee",
+        "e18a3955818d9e9151a14a01e0a2d0201d2175449f8e65d4f3849bdfac19eaee",
+        "e18a3955818d9e9151a14a01e0a2d0201d2175449f8e65d4f3849bdfac19eaee"
+      ],
+      "raw_identical": false,
+      "normalized_identical": true
+    },
+    "result.json": {
+      "present_in_all_runs": true,
+      "kind": "text",
+      "bytes": 6709,
+      "sha256_per_run": [
+        "2959001ec24b46838f2aae16a33d3e358079845f3388453f3cf743a8b65f9796",
+        "f03733bb203689ea55fe80d5081d2f25c13411446b50454cd821bd258c1f96e5",
+        "dc0d3fba8e850828b45d3b8744a2dabffa890be495dbfc66991a7aaba07aec8b",
+        "d3617c6d36c0272ce1b94864e86810e3384f5a7aa03ae0dabf5ade59b1f135c6",
+        "e7c9afb8e339524dbe2bb84c24d29e33697f980aaad19d71b222c183dfcdaea1"
+      ],
+      "normalized_sha256_per_run": [
+        "c64b65357d3b5d198d35dc909d71393fbe17222ccb76d59659fc5f92b025c173",
+        "c64b65357d3b5d198d35dc909d71393fbe17222ccb76d59659fc5f92b025c173",
+        "c64b65357d3b5d198d35dc909d71393fbe17222ccb76d59659fc5f92b025c173",
+        "c64b65357d3b5d198d35dc909d71393fbe17222ccb76d59659fc5f92b025c173",
+        "c64b65357d3b5d198d35dc909d71393fbe17222ccb76d59659fc5f92b025c173"
+      ],
+      "raw_identical": false,
+      "normalized_identical": true
+    },
+    "spec.json": {
+      "present_in_all_runs": true,
+      "kind": "text",
+      "bytes": 42986,
+      "sha256_per_run": [
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      ],
+      "normalized_sha256_per_run": [
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021",
+        "722c493b27c6b9be2c0e349ea5952b66ca51805f4575f2886fcb520580af2021"
+      ],
+      "raw_identical": true,
+      "normalized_identical": true
+    }
+  },
+  "identical": {
+    "raw": false,
+    "normalized": true,
+    "per_file_raw": {
+      "audit.json": true,
+      "content.json": true,
+      "example-micelle-001_graphical_abstract.pdf": false,
+      "example-micelle-001_graphical_abstract.png": true,
+      "example-micelle-001_graphical_abstract.svg": true,
+      "render_log.json": false,
+      "result.json": false,
+      "spec.json": true
+    },
+    "per_file_normalized": {
+      "audit.json": true,
+      "content.json": true,
+      "example-micelle-001_graphical_abstract.pdf": true,
+      "example-micelle-001_graphical_abstract.png": true,
+      "example-micelle-001_graphical_abstract.svg": true,
+      "render_log.json": true,
+      "result.json": true,
+      "spec.json": true
+    },
+    "files_only_in_some_runs": []
+  },
+  "volatile_fields": [
+    {
+      "json_path": "result.json:change_records[0].ts",
+      "values_per_run": [
+        "2026-11-23T19:40:22+0800",
+        "2026-11-23T19:40:24+0800",
+        "2026-11-23T19:40:26+0800",
+        "2026-11-23T19:40:28+0800",
+        "2026-11-23T19:40:31+0800"
+      ],
+      "class": "V2",
+      "why": "变更记录的时间戳，逐次不同是正确行为",
+      "stabilized_by": "掩码 ISO-8601 → <TS>"
+    },
+    {
+      "json_path": "result.json:generated_utc",
+      "values_per_run": [
+        "2026-11-23T11:40:22Z",
+        "2026-11-23T11:40:24Z",
+        "2026-11-23T11:40:26Z",
+        "2026-11-23T11:40:28Z",
+        "2026-11-23T11:40:31Z"
+      ],
+      "class": "V1",
+      "why": "每次运行的真实 UTC 时间，契约要求它存在",
+      "stabilized_by": "掩码 ISO-8601 → <TS>（L1/L2 比较时）"
+    }
+  ],
+  "volatile_rules": [
+    {
+      "id": "V1",
+      "where": "result.json: generated_utc",
+      "kind": "timestamp",
+      "why": "每次运行的真实 UTC 时间，契约要求它存在",
+      "stabilized_by": "掩码 ISO-8601 → <TS>（L1/L2 比较时）"
+    },
+    {
+      "id": "V2",
+      "where": "result.json: change_records[*].ts",
+      "kind": "timestamp",
+      "why": "变更记录的时间戳，逐次不同是正确行为",
+      "stabilized_by": "掩码 ISO-8601 → <TS>"
+    },
+    {
+      "id": "V3",
+      "where": "*.pdf: /CreationDate, /ModDate",
+      "kind": "pdf-metadata",
+      "why": "PDF 头里的生成时间由渲染库写入",
+      "stabilized_by": "掩码 D:YYYYMMDDhhmmss → D:<TS>；要彻底消除可设 SOURCE_DATE_EPOCH"
+    },
+    {
+      "id": "V4",
+      "where": "任意文本产物: 运行目录绝对路径",
+      "kind": "path",
+      "why": "每次运行的 --out 目录不同（这正是被测变量）",
+      "stabilized_by": "掩码 <run 目录> → <RUN>（路径本身不该出现在交付物里，见 G8-路径门）"
+    }
+  ],
+  "unexplained_differences": [],
+  "structure_probe": {
+    "spec_sha16_per_run": [
+      "9bcb54b29fe658d4",
+      "9bcb54b29fe658d4",
+      "9bcb54b29fe658d4",
+      "9bcb54b29fe658d4",
+      "9bcb54b29fe658d4"
+    ],
+    "all_equal": true
+  },
+  "normalization": {
+    "rules": [
+      "ISO-8601 时间戳 → <TS>",
+      "运行目录 / 技能目录 / 案例目录（含 JSON 转义写法）→ <RUN>/<SKILL>/<CASE>",
+      "PDF /CreationDate|/ModDate → D:<TS>，/ID → [<X> <X>]"
+    ],
+    "applied_to": "all produced files (text masking) + PDF byte masking"
+  },
+  "verdict": "canonical-stable",
+  "fail_on": "normalized",
+  "checks": {
+    "files_compared": 8,
+    "raw_identical_files": 5,
+    "normalized_identical_files": 8,
+    "raw_diff_files": [
+      "example-micelle-001_graphical_abstract.pdf",
+      "render_log.json",
+      "result.json"
+    ],
+    "normalized_diff_files": [],
+    "declared_volatile_fields": 2,
+    "unexplained_differences": 0,
+    "seconds_total": 11.67
+  },
+  "notes": [
+    "本报告只声明实测到的东西：raw 层不一致的文件一定是时间戳/路径类字段造成的，逐条列在 volatile_fields 里；normalized 层若不一致即为真实不确定性（verdict=unstable）。",
+    "运行目录在比对时被掩码，但交付物本身**不应**含任何本机绝对路径 —— 这一条由 validate_pkg.py 与 SKILL.md 的自查清单独立把关。"
+  ],
+  "_label": "示例：在随包合成案例 examples/case.json 上，用 scripts/determinism.py 连跑 5 次（5 种 PYTHONHASHSEED、3 种 cwd、独立子进程）所得的真实报告；非平台正式案例结果。"
+}

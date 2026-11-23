@@ -1,0 +1,12 @@
+{
+  "case_id": "example-egfr-mapk",
+  "title": "EGF/EGFR → RAS → RAF → MEK → ERK → MYC 通路机制图（教学简化版）",
+  "example": true,
+  "task": "依据材料绘制通路机制图：区分实体与区室，箭头表达调控语义（激活/抑制/结合/修饰/转运），图例与实际配色线宽自洽，数据映射（表达量→节点填充色）可追溯，输出可编辑 SVG 源文件与 PNG/PDF 预览，并逐条标注来源。",
+  "materials": ["materials/example_material.md"],
+  "render": {"width": 1200, "height": 900},
+  "output_contract": {
+    "custom_demo_field": "示例自定义字段：output_contract 声明字段必须回显到 result.json 顶层",
+    "custom_list_field": ["示例", "列表"]
+  }
+}

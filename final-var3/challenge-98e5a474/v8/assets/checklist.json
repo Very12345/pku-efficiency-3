@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "skill": "scientific-schematic-editor",
+  "_note": "Machine-readable self-check checklist (SKILL.md 自查清单 + CP checkpoints). Every item corresponds to a SKILL.md checkpoint or a scripts/check. Levels: gate(hard, must pass before proceeding) / check(run and record) / review(agent judgement, no script).",
+  "checkpoints": [
+    {"id": "CP1", "name": "spec_lint", "level": "gate",
+     "script": "scripts/spec_lint.py",
+     "items": [
+       "entities non-empty (schematic) with unique ids and names",
+       "relation from/to target existing entity ids",
+       "every relation kind maps onto canonical vocabulary",
+       "containment drawn as groups, never as arrows",
+       "legend covers every drawn kind, no orphan entries",
+       "chart palette size >= unique category count; unit declared",
+       "entity/relation carry source(+evidence) where possible"
+     ]},
+    {"id": "CP2", "name": "export_checks", "level": "check",
+     "script": "scripts/checks.py (via main.py)",
+     "items": [
+       "svg.editable_text: real <text>, no text-flattened paths",
+       "svg.layers: semantic layer groups present",
+       "svg.manifest_embedded + manifest_matches",
+       "bitmap.dpi_print >= 300 (print) / 150 (screen)",
+       "bitmap.colourspace RGB-family",
+       "pdf.header / pdf.pages / pdf.fonts_embedded (best effort)",
+       "legend.missing_kinds / legend.orphan_items two-way",
+       "traceability entities/relations pixels with source+evidence"
+     ]},
+    {"id": "CP3", "name": "contract", "level": "gate",
+     "script": "scripts/validate_result.py",
+     "items": [
+       "result.json contains every REQUIRED top-level key",
+       "case_id present and matches the case",
+       "output_contract keys echoed at top level (four forms, no null)",
+       "artifacts listed exist on disk",
+       "status in {success, partial, failed} and coherent with checks",
+       "sources / uncertainty / change_records well-typed and honest"
+     ]},
+    {"id": "CP4", "name": "post_edit_recheck", "level": "check",
+     "script": "scripts/main.py --edit-svg + scripts/checks.py",
+     "items": [
+       "edit change_records complete (before -> after, reason)",
+       "unchanged elements byte-identical in SVG source",
+       "all checks re-run after the edit and recorded",
+       "no stale label/direction left from the pre-edit figure"
+     ]},
+    {"id": "CP5", "name": "determinism", "level": "review",
+     "script": null,
+     "items": [
+       "same manifest + options -> byte-identical SVG (two runs)",
+       "result.json identical except generated_at/tool_versions",
+       "differences (if any) recorded honestly in TEST.md"
+     ]}
+  ],
+  "self_check_list": [
+    "实体名逐字出自材料，无材料外基因/浓度/时间点/单位",
+    "关系方向与材料一致(激活≠抑制、上下游不颠倒、包含用分组)",
+    "图例项 == 图面实际箭头类型(无缺项无孤儿项)",
+    "数值/坐标/单位与数据表逐项一致，改数据可重绘",
+    "figure.svg 文字可选中(<text>)、图层可拆(layer-*)、带 id 与 data-* 溯源、内嵌 ER 清单",
+    "导出件: PDF 可打开；PNG 有效 DPI 达标；色彩 RGB/sRGB",
+    "result.json 含全部契约字段 + case_id，status/sources/uncertainty/change_records 诚实",
+    "validate_result.py 输出 VALID；失败分支都在 result.json 有记录"
+  ]
+}

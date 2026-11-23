@@ -1,0 +1,51 @@
+{
+  "case_id": "synth-expression-heatmap-102",
+  "workorder": "editable_relationship_schematic",
+  "title": "Marker-gene expression matrix across three conditions (synthetic case)",
+  "summary": "SYNTHETIC case 2/2 (合成案例，非正式案例). Different genre from the schematic: a data-driven heatmap. Values come from the material table verbatim (no unit conversion, no invented time points); the colour legend must match the number of samples exactly and the scale bar must carry the unit.",
+  "figure_type": "chart",
+  "output_contract": {
+    "case_id": "string",
+    "status": "string",
+    "figure_type": "string",
+    "data_matrix": "array",
+    "deliverables": "array"
+  },
+  "sources": ["sources/expression-table.csv"],
+  "manifest": {
+    "schema_version": "1.0",
+    "figure_type": "chart",
+    "title": "Marker-gene expression across conditions (synthetic case)",
+    "subtitle": "SYNTHETIC 合成案例 — 非正式案例",
+    "data": {
+      "chart_type": "heatmap",
+      "table": {
+        "columns": ["condition", "expression"],
+        "rows": [
+          ["ctrl", 1.00], ["ctrl", 1.05], ["ctrl", 0.98],
+          ["treated-6h", 2.40], ["treated-6h", 2.55], ["treated-6h", 2.31],
+          ["treated-24h", 0.62], ["treated-24h", 0.58], ["treated-24h", 0.70]
+        ]
+      },
+      "category_col": "condition",
+      "value_col": "expression",
+      "matrix": [
+        [1.00, 1.05, 0.98],
+        [2.40, 2.55, 2.31],
+        [0.62, 0.58, 0.70]
+      ],
+      "row_labels": ["ctrl", "treated-6h", "treated-24h"],
+      "col_labels": ["rep1", "rep2", "rep3"],
+      "unit": "log2 fold change vs ctrl",
+      "x_label": "replicate",
+      "y_label": "condition",
+      "x_label_note": "replicates as declared in sources/expression-table.csv"
+    },
+    "legend": [
+      {"id": "L1", "key": "ctrl", "label": "ctrl", "source": "sources/expression-table.csv L2-L4"},
+      {"id": "L2", "key": "treated-6h", "label": "treated-6h", "source": "sources/expression-table.csv L5-L7"},
+      {"id": "L3", "key": "treated-24h", "label": "treated-24h", "source": "sources/expression-table.csv L8-L10"}
+    ],
+    "style": {"font_size": 15, "canvas": {"width": 1400, "height": 900}}
+  }
+}

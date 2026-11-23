@@ -1,0 +1,4569 @@
+{
+  "probe": "contract-matrix",
+  "tool": "scripts/contract_matrix.py",
+  "tool_version": "1.0",
+  "what_this_measures": [
+    "OUTPUT_CONTRACT.md §3 四形态（①②③④ + 类型化声明）逐个注入并跑真实主流程",
+    "边界值：空串/空数组/0/false/超长/非法类型名/缺字段/显式 null/键名重名/契约容器非法",
+    "三层判定：主流程退出码+status+g2 / check_contract.py / result.json 实际回显"
+  ],
+  "config": {
+    "case": "<WORK>/base/case.json",
+    "model_file": "<WORK>/base/model.example.json",
+    "formats": "svg,png,pdf",
+    "dpi": 150,
+    "python": "3.13.9",
+    "platform": "win32",
+    "skill_version_note": "被测 = 本包 scripts/main.py + scripts/check_contract.py"
+  },
+  "classification_rules": {
+    "ok": "声明键全出现 + 回显类型与声明形态一致（或无声明键）",
+    "fill_documented": "只有「空对象契约/文档允许的空填充」类问题，无形态违规",
+    "silent_gap": "存在形态违规（键丢失 / 类型不符 / 契约容器非映射 / 无 result.json）而主流程(exit 0 + status success + g2 pass)与 check_contract 全 pass",
+    "flagged": "同样的形态违规被某一层抓到（g2 fail 或 check_contract 非零或 status 降级）",
+    "documented_but_untraced": "声明值被丢弃/压平（文档允许），但 uncertainty 与 change_records 里没有任何与契约/字段相关的留痕"
+  },
+  "rows": [
+    {
+      "id": "control-base",
+      "form": "控制组：原样 case.json（不注入）",
+      "kind": "oc-keep",
+      "note": "每一行的判定都要与这一行对比，否则无法区分'契约注入造成'与'本来就如此'",
+      "injected_contract": {
+        "custom_demo_field": "示例自定义字段：output_contract 声明字段必须回显到 result.json 顶层",
+        "custom_list_field": [
+          "示例",
+          "列表"
+        ]
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//control-base//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/control-base/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 2,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "custom_demo_field": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "custom_list_field": {
+          "present": true,
+          "value": "[]",
+          "json_type": "array",
+          "expected_types": [
+            "array"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form1-str-literal",
+      "form": "①标量 str：非空字面量",
+      "kind": "oc-set",
+      "note": "文档 §3：真实值优先，无真实值则 ''",
+      "injected_contract": {
+        "c_str": "hello"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form1-str-literal//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form1-str-literal/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_str": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form1-str-empty",
+      "form": "①标量 str：空串（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_str_empty": ""
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form1-str-empty//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form1-str-empty/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_str_empty": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": true
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form1-str-long",
+      "form": "①标量 str：超长 4096 字符（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_str_long": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form1-str-long//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form1-str-long/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_str_long": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form1-str-cjk",
+      "form": "①标量 str：非 ASCII 中文",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_str_cjk": "机制图—通路 ✓"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form1-str-cjk//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form1-str-cjk/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_str_cjk": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form1-str-key-long",
+      "form": "①标量 str：200 字符键名（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk": "v"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form1-str-key-long//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form1-str-key-long/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form1-str-key-dot",
+      "form": "①标量 str：键名含 '.' 与 '[0]'（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "a.b": "v",
+        "x[0]": "w"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form1-str-key-dot//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form1-str-key-dot/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 2,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "a.b": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "x[0]": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form2-list",
+      "form": "②容器 list：非空",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_list": [
+          "a",
+          "b"
+        ]
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form2-list//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form2-list/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_list": {
+          "present": true,
+          "value": "[]",
+          "json_type": "array",
+          "expected_types": [
+            "array"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form2-list-empty",
+      "form": "②容器 list：空数组（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_list_empty": []
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form2-list-empty//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form2-list-empty/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_list_empty": {
+          "present": true,
+          "value": "[]",
+          "json_type": "array",
+          "expected_types": [
+            "array"
+          ],
+          "form_ok": true,
+          "value_preserved": true
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form2-list-200",
+      "form": "②容器 list：200 项（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_list_big": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199
+        ]
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form2-list-200//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form2-list-200/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_list_big": {
+          "present": true,
+          "value": "[]",
+          "json_type": "array",
+          "expected_types": [
+            "array"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form3-bool-true",
+      "form": "③布尔 true",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_bool": true
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form3-bool-true//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form3-bool-true/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_bool": {
+          "present": true,
+          "value": "false",
+          "json_type": "bool",
+          "expected_types": [
+            "bool"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form3-bool-typed",
+      "form": "③布尔（typed 声明 {type:bool}）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_bool_typed": {
+          "type": "bool"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form3-bool-typed//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form3-bool-typed/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_bool_typed": {
+          "present": true,
+          "value": "false",
+          "json_type": "bool",
+          "expected_types": [
+            "bool"
+          ],
+          "form_ok": true,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-num-int",
+      "form": "④数值 int",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_num": 150
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-num-int//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-num-int/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_num": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-num-zero",
+      "form": "④数值 0（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_num_zero": 0
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-num-zero//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-num-zero/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_num_zero": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": true
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-num-float",
+      "form": "④数值 浮点 1.5（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_num_float": 1.5
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-num-float//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-num-float/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_num_float": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-num-typed",
+      "form": "④数值（typed {type:number}）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_num_typed": {
+          "type": "number"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-num-typed//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-num-typed/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_num_typed": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-dict-literal",
+      "form": "④字典：非空字面量",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_obj": {
+          "a": 1
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-dict-literal//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-dict-literal/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_obj": {
+          "present": true,
+          "value": "{}",
+          "json_type": "object",
+          "expected_types": [
+            "object"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-dict-empty",
+      "form": "④字典：空对象（边界）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_obj_empty": {}
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-dict-empty//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-dict-empty/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_obj_empty": {
+          "present": true,
+          "value": "{}",
+          "json_type": "object",
+          "expected_types": [
+            "object"
+          ],
+          "form_ok": true,
+          "value_preserved": true
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "form4-dict-typed",
+      "form": "④字典（typed {type:dict}）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_obj_typed": {
+          "type": "dict"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//form4-dict-typed//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/form4-dict-typed/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_obj_typed": {
+          "present": true,
+          "value": "{}",
+          "json_type": "object",
+          "expected_types": [
+            "object"
+          ],
+          "form_ok": true,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "typed-str",
+      "form": "typed str 声明",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_t_str": {
+          "type": "str"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//typed-str//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/typed-str/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_t_str": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "typed-list",
+      "form": "typed list 声明",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_t_list": {
+          "type": "list"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//typed-list//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/typed-list/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_t_list": {
+          "present": true,
+          "value": "[]",
+          "json_type": "array",
+          "expected_types": [
+            "array"
+          ],
+          "form_ok": true,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "typed-list-annotated",
+      "form": "typed list + 额外注释键",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_t_note": {
+          "type": "list",
+          "note": "x"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//typed-list-annotated//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/typed-list-annotated/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_t_note": {
+          "present": true,
+          "value": "[]",
+          "json_type": "array",
+          "expected_types": [
+            "array"
+          ],
+          "form_ok": true,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-null",
+      "form": "边界：声明值为显式 null",
+      "kind": "oc-set",
+      "note": "文档 §3 禁止 result.json 顶层 null；声明 null 时填空属文档行为",
+      "injected_contract": {
+        "c_null": null
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-null//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-null/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_null": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "<declared-null>"
+          ],
+          "form_ok": false,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "declared_type_violated:c_null(declared=<declared-null>,echoed=str)"
+      ],
+      "shape_gap_problems": [
+        "declared_type_violated:c_null(declared=<declared-null>,echoed=str)"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-nested",
+      "form": "边界：嵌套声明 {a:{b:1}}",
+      "kind": "oc-set",
+      "note": "文档只描述顶层键→容器；嵌套结构被压平",
+      "injected_contract": {
+        "c_nested": {
+          "a": {
+            "b": 1
+          }
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-nested//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-nested/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_nested": {
+          "present": true,
+          "value": "{}",
+          "json_type": "object",
+          "expected_types": [
+            "object"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-typed-invalid",
+      "form": "边界：非法类型名 {type:'tuple'}",
+      "kind": "oc-set",
+      "note": "文档只列 5 个已知类型名",
+      "injected_contract": {
+        "c_t_bad": {
+          "type": "tuple"
+        }
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-typed-invalid//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-typed-invalid/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_t_bad": {
+          "present": true,
+          "value": "",
+          "json_type": "str",
+          "expected_types": [
+            "<unknown-type-name:tuple>"
+          ],
+          "form_ok": false,
+          "value_preserved": null
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "declared_type_violated:c_t_bad(declared=<unknown-type-name:tuple>,echoed=str)"
+      ],
+      "shape_gap_problems": [
+        "declared_type_violated:c_t_bad(declared=<unknown-type-name:tuple>,echoed=str)"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-typed-empty-obj",
+      "form": "边界：typed 空对象 {}",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_t_empty": {}
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-typed-empty-obj//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-typed-empty-obj/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_t_empty": {
+          "present": true,
+          "value": "{}",
+          "json_type": "object",
+          "expected_types": [
+            "object"
+          ],
+          "form_ok": true,
+          "value_preserved": true
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-collide-envelope",
+      "form": "边界：键与信封字段同名 status",
+      "kind": "oc-set",
+      "note": "文档 §3：真实值优先",
+      "injected_contract": {
+        "status": "CASE_WANTS_THIS"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-collide-envelope//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-collide-envelope/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "status": {
+          "present": true,
+          "value": "success",
+          "json_type": "str",
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-collide-caseid-typed",
+      "form": "边界：case_id 声明为数值 12345",
+      "kind": "oc-set",
+      "note": "信封真实值是字符串 → 与声明类型冲突",
+      "injected_contract": {
+        "case_id": 12345
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-collide-caseid-typed//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-collide-caseid-typed/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "case_id": {
+          "present": true,
+          "value": "example-egfr-mapk",
+          "json_type": "str",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": false,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "declared_type_violated:case_id(declared=number,echoed=str)"
+      ],
+      "shape_gap_problems": [
+        "declared_type_violated:case_id(declared=number,echoed=str)"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-collide-internal",
+      "form": "边界：键与流水线内部临时键同名 _echo_missing",
+      "kind": "oc-set",
+      "note": "内部临时键在 g2 判定后被删除",
+      "injected_contract": {
+        "_echo_missing": "declared"
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-collide-internal//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-collide-internal/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 1,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "_echo_missing": {
+          "present": false,
+          "value": null,
+          "json_type": null,
+          "expected_types": [
+            "str"
+          ],
+          "form_ok": false,
+          "note": "声明字段未出现在 result.json"
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 1,
+        "failed_checks": [
+          "C05"
+        ],
+        "stdout_tail": "        detail: 缺回显: _echo_missing\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|fail|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "flagged",
+      "problems": [
+        "declared_key_missing:_echo_missing"
+      ],
+      "shape_gap_problems": [
+        "declared_key_missing:_echo_missing"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 1,
+        "check_contract_ok": false
+      }
+    },
+    {
+      "id": "edge-many-fields",
+      "form": "边界：60 个字段",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {
+        "c_00": 0,
+        "c_01": 1,
+        "c_02": 2,
+        "c_03": 3,
+        "c_04": 4,
+        "c_05": 5,
+        "c_06": 6,
+        "c_07": 7,
+        "c_08": 8,
+        "c_09": 9,
+        "c_10": 10,
+        "c_11": 11,
+        "c_12": 12,
+        "c_13": 13,
+        "c_14": 14,
+        "c_15": 15,
+        "c_16": 16,
+        "c_17": 17,
+        "c_18": 18,
+        "c_19": 19,
+        "c_20": 20,
+        "c_21": 21,
+        "c_22": 22,
+        "c_23": 23,
+        "c_24": 24,
+        "c_25": 25,
+        "c_26": 26,
+        "c_27": 27,
+        "c_28": 28,
+        "c_29": 29,
+        "c_30": 30,
+        "c_31": 31,
+        "c_32": 32,
+        "c_33": 33,
+        "c_34": 34,
+        "c_35": 35,
+        "c_36": 36,
+        "c_37": 37,
+        "c_38": 38,
+        "c_39": 39,
+        "c_40": 40,
+        "c_41": 41,
+        "c_42": 42,
+        "c_43": 43,
+        "c_44": 44,
+        "c_45": 45,
+        "c_46": 46,
+        "c_47": 47,
+        "c_48": 48,
+        "c_49": 49,
+        "c_50": 50,
+        "c_51": 51,
+        "c_52": 52,
+        "c_53": 53,
+        "c_54": 54,
+        "c_55": 55,
+        "c_56": 56,
+        "c_57": 57,
+        "c_58": 58,
+        "c_59": 59
+      },
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-many-fields//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-many-fields/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 60,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {
+        "c_00": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": true
+        },
+        "c_01": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_02": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_03": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_04": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_05": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_06": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_07": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_08": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_09": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_10": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_11": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_12": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_13": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_14": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_15": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_16": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_17": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_18": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_19": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_20": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_21": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_22": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_23": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_24": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_25": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_26": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_27": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_28": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_29": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_30": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_31": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_32": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_33": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_34": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_35": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_36": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_37": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_38": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_39": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_40": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_41": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_42": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_43": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_44": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_45": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_46": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_47": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_48": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_49": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_50": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_51": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_52": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_53": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_54": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_55": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_56": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_57": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_58": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        },
+        "c_59": {
+          "present": true,
+          "value": "0",
+          "json_type": "number",
+          "expected_types": [
+            "number"
+          ],
+          "form_ok": true,
+          "value_preserved": false
+        }
+      },
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": true,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "edge-empty-contract",
+      "form": "边界：output_contract = {} （空对象）",
+      "kind": "oc-set",
+      "note": "",
+      "injected_contract": {},
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//edge-empty-contract//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/edge-empty-contract/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": true,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "fill_documented",
+      "problems": [
+        "contract_empty_mapping"
+      ],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-oc-list",
+      "form": "结构非法：output_contract = 数组",
+      "kind": "oc-raw",
+      "note": "",
+      "injected_contract": [
+        "a",
+        "b"
+      ],
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//struct-oc-list//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/struct-oc-list/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "contract_container_not_mapping"
+      ],
+      "shape_gap_problems": [
+        "contract_container_not_mapping"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-oc-str",
+      "form": "结构非法：output_contract = 字符串",
+      "kind": "oc-raw",
+      "note": "",
+      "injected_contract": "abc",
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//struct-oc-str//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/struct-oc-str/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "contract_container_not_mapping"
+      ],
+      "shape_gap_problems": [
+        "contract_container_not_mapping"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-oc-num",
+      "form": "结构非法：output_contract = 数值 0",
+      "kind": "oc-raw",
+      "note": "",
+      "injected_contract": 0,
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//struct-oc-num//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/struct-oc-num/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "contract_container_not_mapping"
+      ],
+      "shape_gap_problems": [
+        "contract_container_not_mapping"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-oc-bool",
+      "form": "结构非法：output_contract = 布尔 true",
+      "kind": "oc-raw",
+      "note": "",
+      "injected_contract": true,
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//struct-oc-bool//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/struct-oc-bool/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "contract_container_not_mapping"
+      ],
+      "shape_gap_problems": [
+        "contract_container_not_mapping"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-oc-null",
+      "form": "结构非法：output_contract = null",
+      "kind": "oc-raw",
+      "note": "",
+      "injected_contract": null,
+      "contract_key_present": true,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//struct-oc-null//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/struct-oc-null/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": true,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "silent_gap",
+      "problems": [
+        "contract_container_not_mapping"
+      ],
+      "shape_gap_problems": [
+        "contract_container_not_mapping"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-oc-missing",
+      "form": "结构：case.json 没有 output_contract 键",
+      "kind": "oc-drop",
+      "note": "",
+      "injected_contract": null,
+      "contract_key_present": false,
+      "main": {
+        "exit_code": 0,
+        "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//struct-oc-missing//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+        "stderr_tail": "",
+        "summary": {
+          "status": "success",
+          "case_id": "example-egfr-mapk",
+          "out_dir": "<WORK>/rows/struct-oc-missing/out",
+          "files": [
+            "diagram.svg",
+            "diagram.png",
+            "diagram.pdf",
+            "result.json",
+            "model.json",
+            "topology.json",
+            "legend_audit.json"
+          ],
+          "self_check_passed": true,
+          "failures": 0,
+          "warnings": 0,
+          "gates": "8/8",
+          "extraction": {
+            "method": "manual",
+            "verified_by_agent": true
+          }
+        }
+      },
+      "result_json": true,
+      "deliverables": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": false,
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "status": "success",
+      "uncertainty_n": 0,
+      "change_records_n": 3,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": 0,
+        "failed_checks": [],
+        "stdout_tail": "pass   C05                            output_contract 全部回显\npass   C06                            deliverables 路径存在\npass   C07                            硬性门 G1–G8 全过\ncontract|ok|case=example-egfr-mapk|status=success|checks=7"
+      },
+      "verdict": "ok",
+      "problems": [],
+      "shape_gap_problems": [],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": true,
+        "exit_code": 0,
+        "status": "success",
+        "g2_contract_echo_pass": true,
+        "check_contract_exit": 0,
+        "check_contract_ok": true
+      }
+    },
+    {
+      "id": "struct-case-missing",
+      "form": "结构非法：--case 指向不存在的文件",
+      "kind": "case-missing",
+      "note": "",
+      "main": {
+        "exit_code": 1,
+        "stdout_tail": "",
+        "stderr_tail": "未找到 case.json：请用 --case 指定，或提供 /input/case.json，或使用技能内置示例 examples/case.json"
+      },
+      "result_json": false,
+      "deliverables": [],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_key_present": false,
+      "contract_present": false,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": null,
+        "failed_checks": [],
+        "stdout_tail": "无 result.json，跳过"
+      },
+      "verdict": "flagged",
+      "problems": [
+        "no_result_json"
+      ],
+      "shape_gap_problems": [
+        "no_result_json"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": false,
+        "exit_code": 1,
+        "status": null,
+        "g2_contract_echo_pass": null,
+        "check_contract_exit": null,
+        "check_contract_ok": false
+      }
+    },
+    {
+      "id": "struct-case-notjson",
+      "form": "结构非法：case.json 不是合法 JSON",
+      "kind": "case-notjson",
+      "note": "",
+      "main": {
+        "exit_code": 1,
+        "stdout_tail": "",
+        "stderr_tail": "    obj, end = self.scan_once(s, idx)\n               ~~~~~~~~~~~~~~^^^^^^^^\njson.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)"
+      },
+      "result_json": false,
+      "deliverables": [],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_key_present": false,
+      "contract_present": false,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": null,
+        "failed_checks": [],
+        "stdout_tail": "无 result.json，跳过"
+      },
+      "verdict": "flagged",
+      "problems": [
+        "no_result_json"
+      ],
+      "shape_gap_problems": [
+        "no_result_json"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": false,
+        "exit_code": 1,
+        "status": null,
+        "g2_contract_echo_pass": null,
+        "check_contract_exit": null,
+        "check_contract_ok": false
+      }
+    },
+    {
+      "id": "struct-case-notobject",
+      "form": "结构非法：case.json 是数组（不是对象）",
+      "kind": "case-notobject",
+      "note": "",
+      "injected_contract": null,
+      "contract_key_present": false,
+      "main": {
+        "exit_code": 1,
+        "stdout_tail": "",
+        "stderr_tail": "    case_id = str(case_json.get(\"case_id\") or\n                  ^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'get'"
+      },
+      "result_json": false,
+      "deliverables": [],
+      "n_declared_keys": 0,
+      "contract_is_mapping": false,
+      "contract_present": false,
+      "echo": {},
+      "null_top_level": [],
+      "trace_mentions_contract": [],
+      "check_contract": {
+        "exit_code": null,
+        "failed_checks": [],
+        "stdout_tail": "无 result.json，跳过"
+      },
+      "verdict": "flagged",
+      "problems": [
+        "no_result_json"
+      ],
+      "shape_gap_problems": [
+        "no_result_json"
+      ],
+      "documented_but_untraced": false,
+      "three_layer": {
+        "pipeline_clean": false,
+        "exit_code": 1,
+        "status": null,
+        "g2_contract_echo_pass": null,
+        "check_contract_exit": null,
+        "check_contract_ok": false
+      }
+    }
+  ],
+  "summary": {
+    "rows": 40,
+    "control": {
+      "exit_code": 0,
+      "status": "success",
+      "g2": true,
+      "check_contract_exit": 0
+    },
+    "by_verdict": {
+      "ok": [
+        "control-base",
+        "edge-collide-envelope",
+        "edge-many-fields",
+        "edge-nested",
+        "edge-typed-empty-obj",
+        "form1-str-cjk",
+        "form1-str-empty",
+        "form1-str-key-dot",
+        "form1-str-key-long",
+        "form1-str-literal",
+        "form1-str-long",
+        "form2-list",
+        "form2-list-200",
+        "form2-list-empty",
+        "form3-bool-true",
+        "form3-bool-typed",
+        "form4-dict-empty",
+        "form4-dict-literal",
+        "form4-dict-typed",
+        "form4-num-float",
+        "form4-num-int",
+        "form4-num-typed",
+        "form4-num-zero",
+        "struct-oc-missing",
+        "typed-list",
+        "typed-list-annotated",
+        "typed-str"
+      ],
+      "fill_documented": [
+        "edge-empty-contract"
+      ],
+      "silent_gap": [
+        "edge-collide-caseid-typed",
+        "edge-null",
+        "edge-typed-invalid",
+        "struct-oc-bool",
+        "struct-oc-list",
+        "struct-oc-null",
+        "struct-oc-num",
+        "struct-oc-str"
+      ],
+      "flagged": [
+        "edge-collide-internal",
+        "struct-case-missing",
+        "struct-case-notjson",
+        "struct-case-notobject"
+      ]
+    },
+    "documented_but_untraced": [
+      "control-base",
+      "edge-collide-envelope",
+      "edge-many-fields",
+      "edge-nested",
+      "form1-str-cjk",
+      "form1-str-key-dot",
+      "form1-str-key-long",
+      "form1-str-literal",
+      "form1-str-long",
+      "form2-list",
+      "form2-list-200",
+      "form3-bool-true",
+      "form4-dict-literal",
+      "form4-num-float",
+      "form4-num-int"
+    ],
+    "null_at_top_level_rows": [],
+    "undocumented_exit_codes": [
+      1
+    ]
+  },
+  "not_covered": [
+    "非 UTF-8 编码的 case.json（load_json 固定 utf-8，非 UTF-8 等价于「非法 JSON」行，未单列）",
+    "JSON 重复键（解析器保留最后一个；本矩阵不构造重复键）",
+    "平台固定正式案例的真实 output_contract（不可见，不猜测）",
+    "CLI 参数轴的边界（--materials-dir 传 list 等）：属 CLI 轴，本矩阵只用 --case/--model-file/--out/--formats",
+    "result.json 落盘后的下游消费者（评分器）如何解释这些字段：本矩阵只测本包的三层检查",
+    "并发写同一输出目录、磁盘写满、只读目录：属故障注入轴（v4 FAULT-MATRIX），不在契约轴内"
+  ]
+}

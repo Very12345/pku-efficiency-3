@@ -1,0 +1,152 @@
+{
+  "_doc": "题集期望结构表（references/CASE-SET.md 的机器可读版本）。case_set_run.py 读本文件逐案比对：status/实体/关系/verify.ok/允许的告警/禁止的 error/导出件非空。实体与关系用区间而不是定值：合法改动（例如补一条真实连接）不应被判 FAIL，但结构性丢失必须被判 FAIL。本表覆盖随包的 4 个合成案例（2 个本版新增 + 2 个基线自带示例）；平台固定案例不在此表内，也不可用本表预测其表现。",
+  "case_set_version": "1.0",
+  "cases": {
+    "mbr-wastewater-flow-01": {
+      "concept": "环境工程 · 市政污水 MBR 工段的物质流向（分流/合流/回流/两路出水/两条废料支路）",
+      "figure_type": "flow",
+      "difficulty": "中",
+      "difficulty_rationale": "14 实体 / 14 关系，含 1 条回流与 4 个终点（2 废料 + 2 产品）——考的是'支路不能丢、方向不能反'，不考嵌套结构。",
+      "status": "success",
+      "entities": {
+        "min": 14,
+        "max": 18
+      },
+      "relations": {
+        "min": 14,
+        "max": 20
+      },
+      "verify_ok": true,
+      "expect_no_errors": true,
+      "allowed_warnings": [
+        "recycle-review"
+      ],
+      "forbidden_errors": [
+        "no-self-loop",
+        "sequence-step-only",
+        "connect-structural",
+        "apparatus-flow-into-material"
+      ],
+      "exit": 0,
+      "png_nonzero": true,
+      "pdf_nonzero": true,
+      "invariants": [
+        "两条废料支路（栅渣 W1、剩余污泥 W2）必须在图面上存在且为终点（无出边）",
+        "污泥回流 R8 的 kind 必须是 recycle（虚线），方向 D5→D4",
+        "出水分两路：D8→P1 与 D8→P2 都要画出来",
+        "14 个实体全部带 source（locator 指向 task.md 小节号），否则 verify.ok 会因 entity_source_coverage 变 false"
+      ],
+      "case_path": "examples/cases/mbr-wastewater-flow-01"
+    },
+    "dtms-stage-route-01": {
+      "concept": "分子生物学 · CRISPRi 全基因组筛选的四阶段技术路线（里程碑出口/依赖方向/返工回流/数据与清单终点）",
+      "figure_type": "route",
+      "difficulty": "高",
+      "difficulty_rationale": "18 实体 / 18 关系、4 个阶段、2 个里程碑、1 条返工回流；步骤编号必须 1..N 连续且与正文顺序一致，任一环节错位都会被 G8 或规则审计抓到。",
+      "status": "success",
+      "entities": {
+        "min": 18,
+        "max": 24
+      },
+      "relations": {
+        "min": 18,
+        "max": 26
+      },
+      "verify_ok": true,
+      "expect_no_errors": true,
+      "allowed_warnings": [
+        "recycle-review"
+      ],
+      "forbidden_errors": [
+        "no-self-loop",
+        "sequence-step-only",
+        "connect-structural"
+      ],
+      "exit": 0,
+      "png_nonzero": true,
+      "pdf_nonzero": true,
+      "invariants": [
+        "sequence 关系只能出现在 step/phase/milestone 之间（里程碑 M1/M2 属允许端点）",
+        "里程碑 → 下一阶段首步必须是 depend，不能写成 sequence",
+        "编号 1..N 连续：G8 会在 route/flow 图上自动检查",
+        "回收 R18（S3→S2）必须是 recycle，且只能指向真正要重做的那一步",
+        "product（候选基因清单）与 data（计数矩阵）都必须无出边，否则 product-terminal 会告警"
+      ],
+      "case_path": "examples/cases/dtms-stage-route-01"
+    },
+    "demo-biotech-route-01": {
+      "case_path": "examples/case.json",
+      "concept": "分子生物学 · CRISPR 文库药物筛选三阶段技术路线（基线自带示例，作为低难度锚点）",
+      "figure_type": "route",
+      "difficulty": "低",
+      "difficulty_rationale": "10 实体 / 9 关系、3 阶段、单一线性主链；无回流、无分支，用来确认'最简形态'的基准行为。",
+      "status": "success",
+      "entities": {
+        "min": 10,
+        "max": 12
+      },
+      "relations": {
+        "min": 9,
+        "max": 12
+      },
+      "verify_ok": true,
+      "expect_no_errors": true,
+      "allowed_warnings": [],
+      "forbidden_errors": [
+        "no-self-loop",
+        "sequence-step-only",
+        "connect-structural"
+      ],
+      "exit": 0,
+      "png_nonzero": true,
+      "pdf_nonzero": true,
+      "invariants": [
+        "三个阶段（文库构建/筛选/鉴定）分列，阶段内为线性主链",
+        "编号 1..N 连续（route 图，G8 自动检查）",
+        "material 实体（文库质粒、药物化合物）只作为流入端，不成为流向终点"
+      ]
+    },
+    "apparatus-spec-01": {
+      "case_path": "examples/apparatus_spec.example.json",
+      "concept": "实验装置 · 冷冻干燥机装配图（基线自带示例，apparatus 三桶布局锚点）",
+      "figure_type": "apparatus",
+      "difficulty": "低",
+      "difficulty_rationale": "6 实体 / 5 关系、单层装配；有 material/device/product/waste 四类，用来确认三桶布局与装置图特有限制（物料不作流向终点、产物为终点）。",
+      "status": "success",
+      "entities": {
+        "min": 6,
+        "max": 8
+      },
+      "relations": {
+        "min": 5,
+        "max": 8
+      },
+      "verify_ok": true,
+      "expect_no_errors": true,
+      "allowed_warnings": [],
+      "forbidden_errors": [
+        "no-self-loop",
+        "connect-structural",
+        "apparatus-flow-into-material"
+      ],
+      "exit": 0,
+      "png_nonzero": true,
+      "pdf_nonzero": true,
+      "invariants": [
+        "apparatus 图类必须满足 apparatus-flow-into-material：除 recycle 外，物料不得作为流向终点",
+        "product/waste 位于最右列且为终点（有非 recycle 出边会触发 product-terminal 告警）",
+        "实体全带 source，否则 verify.ok 会因 entity_source_coverage 变 false"
+      ]
+    }
+  },
+  "_boundary": {
+    "doc": "本表不覆盖、也不预测的情形（如实列出）：",
+    "items": [
+      "平台固定 3 个案例：材料与白板由组织方提供，参赛者不可见，本表与它们无关",
+      "实体数 > 24 或阶段数 > 5：布局会变拥挤，未实测",
+      "多级嵌套装配 / 局部放大视图：本包不内置",
+      "只有 text 字段的输入：走文本解构，见 CASE-SET.md §5 的实测损失率",
+      "非 UTF-8 材料、超长材料、并发运行：未纳入本轮"
+    ]
+  }
+}
