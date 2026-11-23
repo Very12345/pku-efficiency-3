@@ -1,0 +1,740 @@
+{
+  "schema": "degrade-matrix/1",
+  "generated_utc": "2026-11-23T11:42:13Z",
+  "skill": "graphical-abstract",
+  "python": "3.13.9",
+  "platform": "win32",
+  "base_case": {
+    "file": "case.json",
+    "case_id": "example-micelle-001"
+  },
+  "method": {
+    "import_interception": "PYTHONPATH 前置 <out>/_shim/modules/<mod>/__init__.py：写一行命中日志后 raise ImportError",
+    "libreoffice_interception": "PATH 前置 <out>/_shim/bin/{soffice,libreoffice}[.cmd]：写一行命中日志后 exit 127",
+    "isolation": "每个场景一个独立子进程 + 独立工作目录；本机 site-packages 未被修改"
+  },
+  "import_sites": {
+    "pipeline": {
+      "matplotlib": 5,
+      "PIL": 1,
+      "numpy": 0,
+      "pypdf": 1,
+      "yaml": 0,
+      "pptx": 0,
+      "LibreOffice": 0
+    },
+    "tools": {
+      "matplotlib": 3,
+      "PIL": 0,
+      "numpy": 0,
+      "pypdf": 0,
+      "yaml": 0,
+      "pptx": 0,
+      "LibreOffice": 7
+    },
+    "where": {
+      "matplotlib": [
+        "preview.py:45",
+        "preview.py:68",
+        "preview.py:70",
+        "preview.py:71",
+        "preview.py:72"
+      ],
+      "PIL": [
+        "preview.py:161"
+      ],
+      "numpy": [],
+      "pypdf": [
+        "extract.py:390"
+      ],
+      "yaml": [],
+      "pptx": [],
+      "LibreOffice": []
+    },
+    "excluded_tool_files": [
+      "contract_matrix.py",
+      "degrade_probe.py",
+      "determinism.py",
+      "fault_inject.py",
+      "gain_harness.py"
+    ]
+  },
+  "summary": {
+    "scenarios_run": 12,
+    "ok": 12,
+    "mismatch": 0,
+    "silent_capability_loss": 0,
+    "crash": 0,
+    "result_json_written": 12,
+    "exit_zero": 12,
+    "seconds_total": 39.56,
+    "zero_impact_scenarios": [
+      "P00",
+      "P01",
+      "P05",
+      "P06",
+      "P10",
+      "P11"
+    ]
+  },
+  "silent_loss_list": [],
+  "minimal_environment": {
+    "claim": "最小可用环境 = 纯标准库（Python 3.9+，无任何第三方包）",
+    "evidence_scenario": "P09",
+    "measured": {
+      "exit": 0,
+      "status": "partial",
+      "svg": true,
+      "png": true,
+      "png_backend": "pure-python-png",
+      "pdf": false,
+      "result_json": true,
+      "result_top_keys": 26
+    },
+    "third_party_adds": {
+      "matplotlib": "抗锯齿位图 + 矢量 PDF 预览；缺它时 PNG 回退（见 P03/P04）",
+      "PIL": "位图文字（有系统字体时）；缺它且无 matplotlib 时文字退化为占位框（P08/P09）",
+      "numpy": "matplotlib 的传递依赖，单独缺失的影响见 P04",
+      "pypdf": "PDF 材料的文本层；缺它时 PDF 材料只记录『不可读』（P07）"
+    },
+    "not_used_by_this_skill": [
+      "pptx",
+      "yaml",
+      "LibreOffice"
+    ],
+    "static_import_sites": {
+      "matplotlib": 5,
+      "PIL": 1,
+      "numpy": 0,
+      "pypdf": 1,
+      "yaml": 0,
+      "pptx": 0,
+      "LibreOffice": 0
+    }
+  },
+  "reference_run": "P00",
+  "scenarios": [
+    {
+      "id": "P00",
+      "title": "阳性对照：不拦截任何库",
+      "blocked_modules": [],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "对照组：完整环境下必须是 success；后续场景的能力增量都相对它计算",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 0,
+      "uncertainty_sample": [],
+      "warnings_n": 0,
+      "warnings_sample": [],
+      "shim_hits": [],
+      "capability_lost": [],
+      "degradation_form": "无（与完整环境一致）",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.93
+    },
+    {
+      "id": "P01",
+      "title": "拦截 python-pptx（pptx）",
+      "blocked_modules": [
+        "pptx"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "本 Skill 不生成 pptx：命中日志必须为空，行为与对照一致",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 0,
+      "uncertainty_sample": [],
+      "warnings_n": 0,
+      "warnings_sample": [],
+      "shim_hits": [],
+      "capability_lost": [],
+      "degradation_form": "无（与完整环境一致）",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "零影响：行为与对照组一致，且没有任何导入/调用尝试",
+        "拦截目录已前置到 PYTHONPATH，但本次运行没有触发该导入",
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.09
+    },
+    {
+      "id": "P02",
+      "title": "拦截 Pillow（PIL）",
+      "blocked_modules": [
+        "PIL"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "matplotlib 自身 import PIL：实测它会不会连带失效；降级必须留痕",
+      "measured_exit": 0,
+      "measured_status": "partial",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": false,
+        "pdf_reason": "renderer backend 'pure-python-png' provides no vector PDF preview"
+      },
+      "png_backend": "pure-python-png",
+      "font": null,
+      "render_warnings": [
+        "text drawn as placeholder boxes: no imaging library"
+      ],
+      "uncertainty_n": 1,
+      "uncertainty_sample": [
+        "matplotlib 渲染不可用，已回退到备用渲染器：ImportError: degrade-probe: PIL is blocked on purpose"
+      ],
+      "warnings_n": 1,
+      "warnings_sample": [
+        "text drawn as placeholder boxes: no imaging library"
+      ],
+      "shim_hits": [
+        "import-attempt: PIL",
+        "import-attempt: PIL"
+      ],
+      "capability_lost": [
+        "PNG 后端降级为 pure-python-png",
+        "PDF 预览未产出"
+      ],
+      "degradation_form": "PNG 后端降级为 pure-python-png；PDF 预览未产出",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "命中日志：import-attempt: PIL, import-attempt: PIL",
+        "PDF 缺席原因：renderer backend 'pure-python-png' provides no vector PDF preview"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"partial\","
+      ],
+      "stderr_head": [],
+      "seconds": 7.63
+    },
+    {
+      "id": "P03",
+      "title": "拦截 matplotlib",
+      "blocked_modules": [
+        "matplotlib"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "D11：渲染后端回退；PDF 条目必须 present:false + reason，并留 uncertainty",
+      "measured_exit": 0,
+      "measured_status": "partial",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": false,
+        "pdf_reason": "renderer backend 'Pillow' provides no vector PDF preview"
+      },
+      "png_backend": "Pillow",
+      "font": "Microsoft YaHei",
+      "render_warnings": [
+        "element canvas skipped: unknown color specifier: 'none'",
+        "element panel_rail:question skipped: unknown color specifier: 'none'",
+        "element panel_rail:method skipped: unknown color specifier: 'none'",
+        "element panel_rail:results skipped: unknown color specifier: 'none'",
+        "element panel_rail:conclusion skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'"
+      ],
+      "uncertainty_n": 1,
+      "uncertainty_sample": [
+        "matplotlib 渲染不可用，已回退到备用渲染器：ImportError: degrade-probe: matplotlib is blocked on purpose"
+      ],
+      "warnings_n": 11,
+      "warnings_sample": [
+        "element canvas skipped: unknown color specifier: 'none'",
+        "element panel_rail:question skipped: unknown color specifier: 'none'"
+      ],
+      "shim_hits": [
+        "import-attempt: matplotlib"
+      ],
+      "capability_lost": [
+        "PNG 后端降级为 Pillow",
+        "PDF 预览未产出"
+      ],
+      "degradation_form": "PNG 后端降级为 Pillow；PDF 预览未产出",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "命中日志：import-attempt: matplotlib",
+        "PDF 缺席原因：renderer backend 'Pillow' provides no vector PDF preview",
+        "字体：Microsoft YaHei"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"partial\","
+      ],
+      "stderr_head": [],
+      "seconds": 0.39
+    },
+    {
+      "id": "P04",
+      "title": "拦截 numpy",
+      "blocked_modules": [
+        "numpy"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "numpy 是 matplotlib 的传递依赖：实测回退到哪一级，降级必须留痕",
+      "measured_exit": 0,
+      "measured_status": "partial",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": false,
+        "pdf_reason": "renderer backend 'Pillow' provides no vector PDF preview"
+      },
+      "png_backend": "Pillow",
+      "font": "Microsoft YaHei",
+      "render_warnings": [
+        "element canvas skipped: unknown color specifier: 'none'",
+        "element panel_rail:question skipped: unknown color specifier: 'none'",
+        "element panel_rail:method skipped: unknown color specifier: 'none'",
+        "element panel_rail:results skipped: unknown color specifier: 'none'",
+        "element panel_rail:conclusion skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'",
+        "element icon skipped: unknown color specifier: 'none'"
+      ],
+      "uncertainty_n": 1,
+      "uncertainty_sample": [
+        "matplotlib 渲染不可用，已回退到备用渲染器：ImportError: degrade-probe: numpy is blocked on purpose"
+      ],
+      "warnings_n": 11,
+      "warnings_sample": [
+        "element canvas skipped: unknown color specifier: 'none'",
+        "element panel_rail:question skipped: unknown color specifier: 'none'"
+      ],
+      "shim_hits": [
+        "import-attempt: numpy"
+      ],
+      "capability_lost": [
+        "PNG 后端降级为 Pillow",
+        "PDF 预览未产出"
+      ],
+      "degradation_form": "PNG 后端降级为 Pillow；PDF 预览未产出",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "命中日志：import-attempt: numpy",
+        "PDF 缺席原因：renderer backend 'Pillow' provides no vector PDF preview",
+        "字体：Microsoft YaHei"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"partial\","
+      ],
+      "stderr_head": [],
+      "seconds": 0.49
+    },
+    {
+      "id": "P05",
+      "title": "拦截 PyYAML（yaml）",
+      "blocked_modules": [
+        "yaml"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "主链只读写 JSON：命中日志必须为空，行为与对照一致",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 0,
+      "uncertainty_sample": [],
+      "warnings_n": 0,
+      "warnings_sample": [],
+      "shim_hits": [],
+      "capability_lost": [],
+      "degradation_form": "无（与完整环境一致）",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "零影响：行为与对照组一致，且没有任何导入/调用尝试",
+        "拦截目录已前置到 PYTHONPATH，但本次运行没有触发该导入",
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.8
+    },
+    {
+      "id": "P06",
+      "title": "拦截 pypdf（材料是 .md，不触发该路径）",
+      "blocked_modules": [
+        "pypdf"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "非 PDF 材料根本不会 import pypdf：命中日志为空即为证据",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 0,
+      "uncertainty_sample": [],
+      "warnings_n": 0,
+      "warnings_sample": [],
+      "shim_hits": [],
+      "capability_lost": [],
+      "degradation_form": "无（与完整环境一致）",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "零影响：行为与对照组一致，且没有任何导入/调用尝试",
+        "拦截目录已前置到 PYTHONPATH，但本次运行没有触发该导入",
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.87
+    },
+    {
+      "id": "P07",
+      "title": "拦截 pypdf + 材料改成真实 PDF",
+      "blocked_modules": [
+        "pypdf"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": true,
+      "pdf_fixture": "PDF 指纹件由 matplotlib 生成",
+      "expected": "D9：PDF 文本层取不到时必须如实记录，不得把字节流当 UTF-8 解出乱码实体",
+      "measured_exit": 0,
+      "measured_status": "partial",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 2,
+      "uncertainty_sample": [
+        "以下材料文件不是合法 UTF-8，已按替换字符读取（内容可能失真）：material.pdf",
+        "以下材料是二进制文件（未按文本解析）：material.pdf；未取得可用文本层，相关数值一律不上画布"
+      ],
+      "warnings_n": 1,
+      "warnings_sample": [
+        "未读到任何材料文本（材料为空、路径不可用或仅含非文本文件）；实体/关系/数据仅来自 case.json 字段。"
+      ],
+      "shim_hits": [
+        "import-attempt: pypdf"
+      ],
+      "capability_lost": [
+        "PDF 材料的文本层不可读"
+      ],
+      "degradation_form": "PDF 材料的文本层不可读",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "命中日志：import-attempt: pypdf",
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"partial\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.89
+    },
+    {
+      "id": "P08",
+      "title": "拦截 Pillow + matplotlib（两级绘图后端都不可用）",
+      "blocked_modules": [
+        "PIL",
+        "matplotlib"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "第三级纯 Python PNG 保底：文字变占位框，但几何、SVG 与 PNG 仍在",
+      "measured_exit": 0,
+      "measured_status": "partial",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": false,
+        "pdf_reason": "renderer backend 'pure-python-png' provides no vector PDF preview"
+      },
+      "png_backend": "pure-python-png",
+      "font": null,
+      "render_warnings": [
+        "text drawn as placeholder boxes: no imaging library"
+      ],
+      "uncertainty_n": 1,
+      "uncertainty_sample": [
+        "matplotlib 渲染不可用，已回退到备用渲染器：ImportError: degrade-probe: matplotlib is blocked on purpose"
+      ],
+      "warnings_n": 1,
+      "warnings_sample": [
+        "text drawn as placeholder boxes: no imaging library"
+      ],
+      "shim_hits": [
+        "import-attempt: matplotlib",
+        "import-attempt: PIL"
+      ],
+      "capability_lost": [
+        "PNG 后端降级为 pure-python-png",
+        "PDF 预览未产出"
+      ],
+      "degradation_form": "PNG 后端降级为 pure-python-png；PDF 预览未产出",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "命中日志：import-attempt: matplotlib, import-attempt: PIL",
+        "PDF 缺席原因：renderer backend 'pure-python-png' provides no vector PDF preview"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"partial\","
+      ],
+      "stderr_head": [],
+      "seconds": 7.28
+    },
+    {
+      "id": "P09",
+      "title": "只留标准库：matplotlib + PIL + numpy + pypdf 全拦",
+      "blocked_modules": [
+        "matplotlib",
+        "PIL",
+        "numpy",
+        "pypdf"
+      ],
+      "libreoffice_shimmed": false,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "最小可用环境：stdlib-only 仍须产出可编辑 SVG + PNG + result.json",
+      "measured_exit": 0,
+      "measured_status": "partial",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": false,
+        "pdf_reason": "renderer backend 'pure-python-png' provides no vector PDF preview"
+      },
+      "png_backend": "pure-python-png",
+      "font": null,
+      "render_warnings": [
+        "text drawn as placeholder boxes: no imaging library"
+      ],
+      "uncertainty_n": 1,
+      "uncertainty_sample": [
+        "matplotlib 渲染不可用，已回退到备用渲染器：ImportError: degrade-probe: matplotlib is blocked on purpose"
+      ],
+      "warnings_n": 1,
+      "warnings_sample": [
+        "text drawn as placeholder boxes: no imaging library"
+      ],
+      "shim_hits": [
+        "import-attempt: matplotlib",
+        "import-attempt: PIL"
+      ],
+      "capability_lost": [
+        "PNG 后端降级为 pure-python-png",
+        "PDF 预览未产出"
+      ],
+      "degradation_form": "PNG 后端降级为 pure-python-png；PDF 预览未产出",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "命中日志：import-attempt: matplotlib, import-attempt: PIL",
+        "PDF 缺席原因：renderer backend 'pure-python-png' provides no vector PDF preview"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"partial\","
+      ],
+      "stderr_head": [],
+      "seconds": 7.14
+    },
+    {
+      "id": "P10",
+      "title": "LibreOffice CLI 不存在（假 soffice 落日志 + exit 127）",
+      "blocked_modules": [],
+      "libreoffice_shimmed": true,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "本 Skill 不调用外部办公套件：命中日志必须为空（本机也确实没装）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 0,
+      "uncertainty_sample": [],
+      "warnings_n": 0,
+      "warnings_sample": [],
+      "shim_hits": [],
+      "capability_lost": [],
+      "degradation_form": "无（与完整环境一致）",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "零影响：行为与对照组一致，且没有任何导入/调用尝试",
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.11
+    },
+    {
+      "id": "P11",
+      "title": "拦截 python-pptx + yaml + LibreOffice（三重无关依赖）",
+      "blocked_modules": [
+        "pptx",
+        "yaml"
+      ],
+      "libreoffice_shimmed": true,
+      "pdf_material": false,
+      "pdf_fixture": null,
+      "expected": "三个别人会依赖、本 Skill 不依赖的东西一起拦，验证零影响",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 26,
+      "deliverables": {
+        "svg": true,
+        "png": true,
+        "pdf": true,
+        "pdf_reason": null
+      },
+      "png_backend": "matplotlib",
+      "font": "Microsoft YaHei,SimHei,Arial,Segoe UI",
+      "render_warnings": [],
+      "uncertainty_n": 0,
+      "uncertainty_sample": [],
+      "warnings_n": 0,
+      "warnings_sample": [],
+      "shim_hits": [],
+      "capability_lost": [],
+      "degradation_form": "无（与完整环境一致）",
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "零影响：行为与对照组一致，且没有任何导入/调用尝试",
+        "拦截目录已前置到 PYTHONPATH，但本次运行没有触发该导入",
+        "字体：Microsoft YaHei,SimHei,Arial,Segoe UI"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.06
+    }
+  ],
+  "uncovered": [
+    "字体文件缺失：本机系统字体真实存在，无法用导入拦截模拟；相关行为只在P08/P09（无绘图库 ⇒ 文字占位框）与 render_log.font 里间接体现",
+    "平台侧依赖缺失（容器里没有 python 解释器、磁盘满、挂载只读）不在本矩阵范围",
+    "第三方包**版本不兼容**（装了但导入即抛别的异常）不在本矩阵范围；拦截只模拟 ImportError",
+    "本机没有 LibreOffice，因此 P10 的『不存在』就是本机真实状态（实测而非模拟）"
+  ],
+  "notes": [
+    "判级口径：silent = 实测到能力丢失（后端降级 / PDF 不可用 / PDF 材料不可读），而 status 仍为 success 且 uncertainty 与 warnings 都为空。",
+    "静态导入点统计（import_sites）与运行时命中日志（shim_hits）是两个独立证据：前者说明代码里有没有依赖边，后者说明这条边在这次运行里有没有被走到。"
+  ],
+  "_label": "示例：用 scripts/degrade_probe.py 逐个拦截可选依赖后真跑所得的真实降级矩阵；非平台正式案例结果。"
+}

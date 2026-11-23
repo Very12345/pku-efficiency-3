@@ -1,0 +1,676 @@
+{
+  "schema": "determinism-report/1",
+  "tool": "scripts/determinism.py",
+  "entry": "<SKILL_DIR>\\scripts\\main.py",
+  "case": "<SKILL_DIR>\\examples\\case.json",
+  "spec": "<SKILL_DIR>\\examples\\deck-spec.json",
+  "task": "<SKILL_DIR>\\examples\\task.md",
+  "python": "<PYTHON>",
+  "runs_requested": 5,
+  "out_mode": "per-run",
+  "svg_hashsalt": null,
+  "conditions": {
+    "separate_processes": true,
+    "cwd_per_run": [
+      "<PROBE_DIR>\\run-0",
+      "<PROBE_DIR>\\cwd-alt-1",
+      "<PROBE_DIR>\\run-2",
+      "<PROBE_DIR>\\cwd-alt-3",
+      "<PROBE_DIR>\\run-4"
+    ],
+    "pyhashseed_per_run": [
+      "0",
+      "1",
+      "2",
+      "0",
+      "1"
+    ],
+    "child_env": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SKILL_SVG_HASHSALT": null
+    }
+  },
+  "runs": [
+    {
+      "index": 0,
+      "run_dir": "<PROBE_DIR>\\run-0",
+      "cwd": "<PROBE_DIR>\\run-0",
+      "pyhashseed": "0",
+      "svg_hashsalt": null,
+      "argv": [
+        "--case",
+        "<SKILL_DIR>\\examples\\case.json",
+        "--out",
+        "<PROBE_DIR>\\run-0",
+        "--task",
+        "<SKILL_DIR>\\examples\\task.md",
+        "--spec",
+        "<SKILL_DIR>\\examples\\deck-spec.json"
+      ],
+      "exit_code": 0,
+      "result_status": "completed",
+      "files": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ]
+    },
+    {
+      "index": 1,
+      "run_dir": "<PROBE_DIR>\\run-1",
+      "cwd": "<PROBE_DIR>\\cwd-alt-1",
+      "pyhashseed": "1",
+      "svg_hashsalt": null,
+      "argv": [
+        "--case",
+        "<SKILL_DIR>\\examples\\case.json",
+        "--out",
+        "<PROBE_DIR>\\run-1",
+        "--task",
+        "<SKILL_DIR>\\examples\\task.md",
+        "--spec",
+        "<SKILL_DIR>\\examples\\deck-spec.json"
+      ],
+      "exit_code": 0,
+      "result_status": "completed",
+      "files": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ]
+    },
+    {
+      "index": 2,
+      "run_dir": "<PROBE_DIR>\\run-2",
+      "cwd": "<PROBE_DIR>\\run-2",
+      "pyhashseed": "2",
+      "svg_hashsalt": null,
+      "argv": [
+        "--case",
+        "<SKILL_DIR>\\examples\\case.json",
+        "--out",
+        "<PROBE_DIR>\\run-2",
+        "--task",
+        "<SKILL_DIR>\\examples\\task.md",
+        "--spec",
+        "<SKILL_DIR>\\examples\\deck-spec.json"
+      ],
+      "exit_code": 0,
+      "result_status": "completed",
+      "files": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ]
+    },
+    {
+      "index": 3,
+      "run_dir": "<PROBE_DIR>\\run-3",
+      "cwd": "<PROBE_DIR>\\cwd-alt-3",
+      "pyhashseed": "0",
+      "svg_hashsalt": null,
+      "argv": [
+        "--case",
+        "<SKILL_DIR>\\examples\\case.json",
+        "--out",
+        "<PROBE_DIR>\\run-3",
+        "--task",
+        "<SKILL_DIR>\\examples\\task.md",
+        "--spec",
+        "<SKILL_DIR>\\examples\\deck-spec.json"
+      ],
+      "exit_code": 0,
+      "result_status": "completed",
+      "files": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ]
+    },
+    {
+      "index": 4,
+      "run_dir": "<PROBE_DIR>\\run-4",
+      "cwd": "<PROBE_DIR>\\run-4",
+      "pyhashseed": "1",
+      "svg_hashsalt": null,
+      "argv": [
+        "--case",
+        "<SKILL_DIR>\\examples\\case.json",
+        "--out",
+        "<PROBE_DIR>\\run-4",
+        "--task",
+        "<SKILL_DIR>\\examples\\task.md",
+        "--spec",
+        "<SKILL_DIR>\\examples\\deck-spec.json"
+      ],
+      "exit_code": 0,
+      "result_status": "completed",
+      "files": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ]
+    }
+  ],
+  "per_file_sha256": {
+    "academic_deck.pptx": [
+      "e6204a27803823b0e3fdf84ce43f883616bcb16efd650364e36d0c814f8a2424",
+      "471800e2bd95df9f09e82909e9c543df9a33415d61212eb4215eccca856cf909",
+      "2c78f02046ba1a9e145008205eda595dc8703f707266ce90b1772fa1f83e0b5b",
+      "2c78f02046ba1a9e145008205eda595dc8703f707266ce90b1772fa1f83e0b5b",
+      "f529fa021cdca58e60fef72e413a4095ba1494245f9e85bbd836f72bf44ff499"
+    ],
+    "chart-Fig_1.png": [
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c"
+    ],
+    "chart-Fig_1.svg": [
+      "68de7f4923e5b4d86ba02bb7e92e646f7e24dfdf5994df66648bf6f09a194dd1",
+      "145c3eec5e3645ddad7a5dfefe14911ef5aaf8b3135b98a0c66bfe091b66a4b7",
+      "29048253d8d9ff4edc313144a8c3a144af10ff40be69943f3030a2754bdff122",
+      "c3b0cc9f82e256c22f75e4688b6b58cb939882f9327bee92c4a7117038739e3e",
+      "b285ca4181c6eef303351e6ca075aac86d6845fdc48a9f91fc1d3eda03b6127f"
+    ],
+    "evidence_map.json": [
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776"
+    ],
+    "evidence_mapping.md": [
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5"
+    ],
+    "preview-approx-001.png": [
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db"
+    ],
+    "preview-approx-002.png": [
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e"
+    ],
+    "preview-approx-003.png": [
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2"
+    ],
+    "preview-approx-004.png": [
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7"
+    ],
+    "preview-approx-005.png": [
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951"
+    ],
+    "preview-approx-006.png": [
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c"
+    ],
+    "preview-approx-cover.png": [
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105"
+    ],
+    "result.json": [
+      "a1c717c8d48bccf069a7cb3889024d4c1824c5dd3bdfdb3a7cd00c5b8ff00b78",
+      "efca18ec0828481e63a0c9eb5d3487304b5b328629ac5c7e108f02ca63d2a460",
+      "6060f284e9b922b2f1e31d4dbb204fc645889a4538e19840cf9e99c49469d3de",
+      "a77a94272db3af4af1df112b91a152393fa8430a74d303a9f321ff8065b42c0e",
+      "c2f370bcfad2f6079ac516a6aec9cf797fc2e07c25ad97f670a52f7b2d0a4e6c"
+    ]
+  },
+  "per_file_canonical_sha256": {
+    "academic_deck.pptx": [
+      "de826118c9d69dbcc3f699dbbebadf749311805809efbc1fad11bfe373ee390b",
+      "de826118c9d69dbcc3f699dbbebadf749311805809efbc1fad11bfe373ee390b",
+      "de826118c9d69dbcc3f699dbbebadf749311805809efbc1fad11bfe373ee390b",
+      "de826118c9d69dbcc3f699dbbebadf749311805809efbc1fad11bfe373ee390b",
+      "de826118c9d69dbcc3f699dbbebadf749311805809efbc1fad11bfe373ee390b"
+    ],
+    "chart-Fig_1.png": [
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+      "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c"
+    ],
+    "chart-Fig_1.svg": [
+      "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+      "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+      "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+      "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+      "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf"
+    ],
+    "evidence_map.json": [
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+      "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776"
+    ],
+    "evidence_mapping.md": [
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+      "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5"
+    ],
+    "preview-approx-001.png": [
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+      "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db"
+    ],
+    "preview-approx-002.png": [
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+      "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e"
+    ],
+    "preview-approx-003.png": [
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+      "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2"
+    ],
+    "preview-approx-004.png": [
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+      "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7"
+    ],
+    "preview-approx-005.png": [
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+      "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951"
+    ],
+    "preview-approx-006.png": [
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+      "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c"
+    ],
+    "preview-approx-cover.png": [
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+      "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105"
+    ],
+    "result.json": [
+      "89c473c30ecddb44f64496fdbbbf0eaf4971e435fc439d932843309d8ef3d730",
+      "89c473c30ecddb44f64496fdbbbf0eaf4971e435fc439d932843309d8ef3d730",
+      "89c473c30ecddb44f64496fdbbbf0eaf4971e435fc439d932843309d8ef3d730",
+      "89c473c30ecddb44f64496fdbbbf0eaf4971e435fc439d932843309d8ef3d730",
+      "89c473c30ecddb44f64496fdbbbf0eaf4971e435fc439d932843309d8ef3d730"
+    ]
+  },
+  "byte_identical_per_file": {
+    "academic_deck.pptx": false,
+    "chart-Fig_1.png": true,
+    "chart-Fig_1.svg": false,
+    "evidence_map.json": true,
+    "evidence_mapping.md": true,
+    "preview-approx-001.png": true,
+    "preview-approx-002.png": true,
+    "preview-approx-003.png": true,
+    "preview-approx-004.png": true,
+    "preview-approx-005.png": true,
+    "preview-approx-006.png": true,
+    "preview-approx-cover.png": true,
+    "result.json": false
+  },
+  "canonical_identical_per_file": {
+    "academic_deck.pptx": true,
+    "chart-Fig_1.png": true,
+    "chart-Fig_1.svg": true,
+    "evidence_map.json": true,
+    "evidence_mapping.md": true,
+    "preview-approx-001.png": true,
+    "preview-approx-002.png": true,
+    "preview-approx-003.png": true,
+    "preview-approx-004.png": true,
+    "preview-approx-005.png": true,
+    "preview-approx-006.png": true,
+    "preview-approx-cover.png": true,
+    "result.json": true
+  },
+  "identical": false,
+  "identical_canonical": true,
+  "identical_stabilized": true,
+  "svg_id_sequences_stable": false,
+  "stabilized": {
+    "dir": "<PROBE_DIR>\\stabilized",
+    "files_written": 65,
+    "per_file_sha256": {
+      "academic_deck.pptx": [
+        "cd555ca8c51ebf6eab66934f1d3c1802321a8e71ef62d74522c5552a0a53de0d",
+        "cd555ca8c51ebf6eab66934f1d3c1802321a8e71ef62d74522c5552a0a53de0d",
+        "cd555ca8c51ebf6eab66934f1d3c1802321a8e71ef62d74522c5552a0a53de0d",
+        "cd555ca8c51ebf6eab66934f1d3c1802321a8e71ef62d74522c5552a0a53de0d",
+        "cd555ca8c51ebf6eab66934f1d3c1802321a8e71ef62d74522c5552a0a53de0d"
+      ],
+      "chart-Fig_1.png": [
+        "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+        "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+        "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+        "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c",
+        "72c20513bf31b5a95e449d74acecc79385f51547d01892145439ddd2ef888c7c"
+      ],
+      "chart-Fig_1.svg": [
+        "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+        "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+        "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+        "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf",
+        "a5a339932eb8c713661a3f5746e7cebe6f78b879e283a669109483d2a8938bdf"
+      ],
+      "evidence_map.json": [
+        "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+        "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+        "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+        "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776",
+        "efdd02c699505db1b5c51f67a759655067984a78f4eee918b43978fba7caf776"
+      ],
+      "evidence_mapping.md": [
+        "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+        "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+        "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+        "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5",
+        "eaac700815553fad738e85187ff4b9b15c7ad5c42cf04cd776b46e6c37da13f5"
+      ],
+      "preview-approx-001.png": [
+        "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+        "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+        "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+        "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db",
+        "d6e3caaeeb0cda1e11061c5b4471d18bf997c8e9c229972f3575319565ba21db"
+      ],
+      "preview-approx-002.png": [
+        "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+        "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+        "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+        "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e",
+        "e149b73d70e823472744daa61364f1e20f10a8244dddfe3d8d425eaffbf0a03e"
+      ],
+      "preview-approx-003.png": [
+        "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+        "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+        "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+        "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2",
+        "3569ea6c88193e4b6fa6eda9cfeb502fbca326c572224f0b8409fa008d9420c2"
+      ],
+      "preview-approx-004.png": [
+        "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+        "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+        "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+        "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7",
+        "ee90396d1e57dfe55050dc5a199edf9ebc18997c78f5035156d4a30c889e57d7"
+      ],
+      "preview-approx-005.png": [
+        "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+        "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+        "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+        "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951",
+        "501d709a9a88e5e02b5d802e47a93367acc5a9c598beb371c372eac06e339951"
+      ],
+      "preview-approx-006.png": [
+        "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+        "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+        "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+        "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c",
+        "4b6484c3a7ffb5e3bdc7696bcd3cdd099c930816bbaa0fb6f92df6790f62ff1c"
+      ],
+      "preview-approx-cover.png": [
+        "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+        "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+        "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+        "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105",
+        "879c06bf8b2267a0dc8439dc2d6b64ff0ca73009ff4efe1dea2aa48e68312105"
+      ],
+      "result.json": [
+        "151453b1639477965b633a76009ea5c699bb4afe69c599a67d9def1d10bcc140",
+        "151453b1639477965b633a76009ea5c699bb4afe69c599a67d9def1d10bcc140",
+        "151453b1639477965b633a76009ea5c699bb4afe69c599a67d9def1d10bcc140",
+        "151453b1639477965b633a76009ea5c699bb4afe69c599a67d9def1d10bcc140",
+        "151453b1639477965b633a76009ea5c699bb4afe69c599a67d9def1d10bcc140"
+      ]
+    },
+    "identical_per_file": {
+      "academic_deck.pptx": true,
+      "chart-Fig_1.png": true,
+      "chart-Fig_1.svg": true,
+      "evidence_map.json": true,
+      "evidence_mapping.md": true,
+      "preview-approx-001.png": true,
+      "preview-approx-002.png": true,
+      "preview-approx-003.png": true,
+      "preview-approx-004.png": true,
+      "preview-approx-005.png": true,
+      "preview-approx-006.png": true,
+      "preview-approx-cover.png": true,
+      "result.json": true
+    },
+    "identical": true
+  },
+  "volatile_fields": [
+    {
+      "pointer": "/change_records/0/time",
+      "kind": "timestamp",
+      "reason": "wall-clock written by time.strftime in main.run()",
+      "observed": [
+        "2026-11-23T19:08:22+0800",
+        "2026-11-23T19:08:23+0800",
+        "2026-11-23T19:08:25+0800",
+        "2026-11-23T19:08:26+0800",
+        "2026-11-23T19:08:28+0800"
+      ],
+      "stabilization": "replaced by '<volatile:timestamp>'"
+    },
+    {
+      "pointer": "/change_records/1/time",
+      "kind": "timestamp",
+      "reason": "wall-clock written by time.strftime in main.run()",
+      "observed": [
+        "2026-11-23T19:08:23+0800",
+        "2026-11-23T19:08:24+0800",
+        "2026-11-23T19:08:26+0800",
+        "2026-11-23T19:08:27+0800",
+        "2026-11-23T19:08:29+0800"
+      ],
+      "stabilization": "replaced by '<volatile:timestamp>'"
+    },
+    {
+      "pointer": "/charts/0/chart/file",
+      "kind": "out-dir-identity",
+      "reason": "value is this run's own output location (verified: equal after rewriting the --out prefix)",
+      "observed": [
+        "<PROBE_DIR>\\run-0\\chart-Fig_1.png",
+        "<PROBE_DIR>\\run-1\\chart-Fig_1.png",
+        "<PROBE_DIR>\\run-2\\chart-Fig_1.png",
+        "<PROBE_DIR>\\run-3\\chart-Fig_1.png",
+        "<PROBE_DIR>\\run-4\\chart-Fig_1.png"
+      ],
+      "stabilization": "output-directory prefix rewritten to <OUT>"
+    },
+    {
+      "pointer": "/run_meta/duration_seconds",
+      "kind": "duration",
+      "reason": "wall-clock duration of the run",
+      "observed": [
+        1.13,
+        1.15,
+        1.07,
+        1.07,
+        1.31
+      ],
+      "stabilization": "replaced by '<volatile:duration>'"
+    },
+    {
+      "pointer": "/run_meta/timestamp",
+      "kind": "timestamp",
+      "reason": "wall-clock written by main._run_meta()",
+      "observed": [
+        "2026-11-23T19:08:22+0800",
+        "2026-11-23T19:08:24+0800",
+        "2026-11-23T19:08:25+0800",
+        "2026-11-23T19:08:27+0800",
+        "2026-11-23T19:08:28+0800"
+      ],
+      "stabilization": "replaced by '<volatile:timestamp>'"
+    }
+  ],
+  "volatile_files": [
+    {
+      "path": "academic_deck.pptx",
+      "kind": "zip-member-mtime",
+      "reason": "zipfile.ZipFile.writestr(<str name>) stamps every member with the current local time",
+      "observed_date_time": [
+        "2026-11-23T19:08:22",
+        "2026-11-23T19:08:24",
+        "2026-11-23T19:08:26",
+        "2026-11-23T19:08:28"
+      ],
+      "member_payloads_identical": true,
+      "stabilization": "rewrite the container with date_time fixed to (1980, 1, 1, 0, 0, 0)"
+    },
+    {
+      "path": "chart-Fig_1.svg",
+      "kind": "svg-dc-date+svg-generated-id",
+      "reason": "matplotlib writes the render time into <dc:date> and derives element ids from rcParams['svg.hashsalt'], which defaults to str(uuid.uuid4()) per renderer",
+      "observed_date_time": [
+        "2026-11-23T19:08:23.088896",
+        "2026-11-23T19:08:24.669113",
+        "2026-11-23T19:08:26.142744",
+        "2026-11-23T19:08:27.645421",
+        "2026-11-23T19:08:29.290179"
+      ],
+      "ids_per_run": [
+        83,
+        83,
+        83,
+        83,
+        83
+      ],
+      "id_positions_differing": 12,
+      "identical_id_sequences": false,
+      "unstable_id_samples": [
+        "meb74f37114",
+        "m4c8498f542",
+        "p175d3d3f77"
+      ],
+      "stabilization": "drop <dc:date> content; rename ids in document order (--svg-hashsalt pins the root cause instead, then only <dc:date> is left)"
+    },
+    {
+      "path": "result.json",
+      "kind": "json-explained-pointers",
+      "reason": "result.json carries the explained pointers listed in volatile_fields (and nothing else)",
+      "observed_date_time": [],
+      "pointers": [
+        "/change_records/0/time",
+        "/change_records/1/time",
+        "/charts/0/chart/file",
+        "/run_meta/duration_seconds",
+        "/run_meta/timestamp"
+      ],
+      "stabilization": "canonical JSON with the explained pointers replaced"
+    }
+  ],
+  "unexplained_diffs": [],
+  "failures": [],
+  "verdict": "deterministic (canonical)",
+  "generated_at": "2026-11-23T19:08:30+0800",
+  "_redaction": {
+    "applied": true,
+    "replaced": [
+      "<PROBE_DIR>",
+      "<SKILL_DIR>",
+      "<CASE_DIR>",
+      "<PYTHON>",
+      "<ABS> (any remaining drive-letter path)"
+    ],
+    "note": "only path strings were replaced; every hash, count, boolean and observed value is the measured one"
+  }
+}

@@ -1,0 +1,596 @@
+{
+  "_doc": "本文件是 demo-apparatus-001 这一合成示例案例的三份文本类运行产物的合并版：evidence（证据链）/ layout（布局模型）/ verify_report（校验与规则审计）。同目录的 result.json 保持独立文件，因为它是契约的唯一回显产物。三部分内容逐字保留，仅改为按 key 嵌套；figure.svg/png/pdf 不随包发布，由 scripts/main.py 运行时现场生成。",
+  "evidence": {
+    "source": "gain_evidence",
+    "extraction": "structured",
+    "entities": [
+      {
+        "id": "C1",
+        "name": "样品溶液",
+        "kind": "material",
+        "stage": null,
+        "source": "case.json[text]",
+        "label": null,
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "C2",
+        "name": "冻干机主机",
+        "kind": "device",
+        "stage": null,
+        "source": "case.json[text]",
+        "label": null,
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "C3",
+        "name": "冷阱",
+        "kind": "device",
+        "stage": null,
+        "source": "case.json[text]",
+        "label": null,
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "C4",
+        "name": "真空泵",
+        "kind": "device",
+        "stage": null,
+        "source": "case.json[text]",
+        "label": null,
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "C5",
+        "name": "冻干粉（产物）",
+        "kind": "product",
+        "stage": null,
+        "source": "case.json[text]",
+        "label": null,
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "C6",
+        "name": "冷凝水（废料）",
+        "kind": "waste",
+        "stage": null,
+        "source": "case.json[text]",
+        "label": null,
+        "locator": "case.json[text]",
+        "quote": ""
+      }
+    ],
+    "relations": [
+      {
+        "id": "S1",
+        "from": "C1",
+        "to": "C2",
+        "kind": "flow",
+        "label": "进样",
+        "source": "case.json[text]",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "S2",
+        "from": "C2",
+        "to": "C3",
+        "kind": "connect",
+        "label": "管路",
+        "source": "case.json[text]",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "S3",
+        "from": "C3",
+        "to": "C4",
+        "kind": "connect",
+        "label": "管路",
+        "source": "case.json[text]",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "S4",
+        "from": "C2",
+        "to": "C5",
+        "kind": "flow",
+        "label": "干燥产物",
+        "source": "case.json[text]",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "S5",
+        "from": "C3",
+        "to": "C6",
+        "kind": "flow",
+        "label": "凝华",
+        "source": "case.json[text]",
+        "locator": "case.json[text]",
+        "quote": ""
+      }
+    ],
+    "evidence": [
+      {
+        "id": "EV1",
+        "type": "entity",
+        "ref": "C1",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV2",
+        "type": "entity",
+        "ref": "C2",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV3",
+        "type": "entity",
+        "ref": "C3",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV4",
+        "type": "entity",
+        "ref": "C4",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV5",
+        "type": "entity",
+        "ref": "C5",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV6",
+        "type": "entity",
+        "ref": "C6",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV7",
+        "type": "relation",
+        "ref": "S1",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV8",
+        "type": "relation",
+        "ref": "S2",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV9",
+        "type": "relation",
+        "ref": "S3",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV10",
+        "type": "relation",
+        "ref": "S4",
+        "locator": "case.json[text]",
+        "quote": ""
+      },
+      {
+        "id": "EV11",
+        "type": "relation",
+        "ref": "S5",
+        "locator": "case.json[text]",
+        "quote": ""
+      }
+    ],
+    "sources": [
+      {
+        "id": "input-case",
+        "file": "apparatus_spec.example.json",
+        "path": "examples/apparatus_spec.example.json",
+        "sha256": "06472db4917e2bf69b18933c9202466401fe725d259f946011bc79f6645afdad",
+        "size": 2002,
+        "role": "case"
+      }
+    ],
+    "notes": []
+  },
+  "layout": {
+    "canvas": {
+      "width_mm": 188.29,
+      "height_mm": 138.0
+    },
+    "requested_canvas": {
+      "width_mm": 300,
+      "height_mm": 180
+    },
+    "font": {
+      "family": "'Noto Sans CJK SC','Microsoft YaHei','PingFang SC','SimHei','DejaVu Sans',sans-serif",
+      "size_pt": 11.0,
+      "title_pt": 16.0
+    },
+    "title": "示例：冷冻干燥机实验装置（示例用，非正式案例）",
+    "case_id": "demo-apparatus-001",
+    "entities": [
+      {
+        "id": "C1",
+        "label": "样品溶液",
+        "display_label": "样品溶液",
+        "lines": [
+          "样品溶液"
+        ],
+        "kind": "material",
+        "x": 14.0,
+        "y": 40.0,
+        "w": 26.0,
+        "h": 16.0,
+        "source": "case.json[text]",
+        "step_no": null,
+        "color": {
+          "fill": "#E8F6E4",
+          "stroke": "#4C8A3A",
+          "text": "#28521B",
+          "shape": "rounded"
+        },
+        "shape": "rounded",
+        "stage": null
+      },
+      {
+        "id": "C2",
+        "label": "冻干机主机",
+        "display_label": "冻干机主机",
+        "lines": [
+          "冻干机主机"
+        ],
+        "kind": "device",
+        "x": 74.0,
+        "y": 40.0,
+        "w": 28.95,
+        "h": 16.0,
+        "source": "case.json[text]",
+        "step_no": null,
+        "color": {
+          "fill": "#FDF3E3",
+          "stroke": "#C07A1B",
+          "text": "#6E4408",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": null
+      },
+      {
+        "id": "C3",
+        "label": "冷阱",
+        "display_label": "冷阱",
+        "lines": [
+          "冷阱"
+        ],
+        "kind": "device",
+        "x": 74.0,
+        "y": 68.0,
+        "w": 26.0,
+        "h": 16.0,
+        "source": "case.json[text]",
+        "step_no": null,
+        "color": {
+          "fill": "#FDF3E3",
+          "stroke": "#C07A1B",
+          "text": "#6E4408",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": null
+      },
+      {
+        "id": "C4",
+        "label": "真空泵",
+        "display_label": "真空泵",
+        "lines": [
+          "真空泵"
+        ],
+        "kind": "device",
+        "x": 74.0,
+        "y": 96.0,
+        "w": 26.0,
+        "h": 16.0,
+        "source": "case.json[text]",
+        "step_no": null,
+        "color": {
+          "fill": "#FDF3E3",
+          "stroke": "#C07A1B",
+          "text": "#6E4408",
+          "shape": "rect"
+        },
+        "shape": "rect",
+        "stage": null
+      },
+      {
+        "id": "C5",
+        "label": "冻干粉（产物）",
+        "display_label": "冻干粉（产物）",
+        "lines": [
+          "冻干粉（产物）"
+        ],
+        "kind": "product",
+        "x": 136.95,
+        "y": 40.0,
+        "w": 37.34,
+        "h": 16.0,
+        "source": "case.json[text]",
+        "step_no": null,
+        "color": {
+          "fill": "#E4F0FB",
+          "stroke": "#3E77B8",
+          "text": "#1E3D66",
+          "shape": "rounded"
+        },
+        "shape": "rounded",
+        "stage": null
+      },
+      {
+        "id": "C6",
+        "label": "冷凝水（废料）",
+        "display_label": "冷凝水（废料）",
+        "lines": [
+          "冷凝水（废料）"
+        ],
+        "kind": "waste",
+        "x": 136.95,
+        "y": 68.0,
+        "w": 37.34,
+        "h": 16.0,
+        "source": "case.json[text]",
+        "step_no": null,
+        "color": {
+          "fill": "#F1F1F1",
+          "stroke": "#777777",
+          "text": "#444444",
+          "shape": "rounded"
+        },
+        "shape": "rounded",
+        "stage": null
+      }
+    ],
+    "relations": [
+      {
+        "id": "S1",
+        "kind": "flow",
+        "from": "C1",
+        "to": "C2",
+        "label": "进样",
+        "source": "case.json[text]",
+        "points": [
+          [
+            40.0,
+            48.0
+          ],
+          [
+            57.0,
+            48.0
+          ],
+          [
+            57.0,
+            48.0
+          ],
+          [
+            74.0,
+            48.0
+          ]
+        ],
+        "arrow": [
+          69.0,
+          50.75,
+          69.0,
+          45.25,
+          74.0,
+          48.0,
+          0
+        ],
+        "y_mid": 48.0
+      },
+      {
+        "id": "S2",
+        "kind": "connect",
+        "from": "C2",
+        "to": "C3",
+        "label": "管路",
+        "source": "case.json[text]",
+        "points": [
+          [
+            88.47,
+            56.0
+          ],
+          [
+            87.0,
+            68.0
+          ]
+        ],
+        "arrow": [
+          84.88,
+          62.7,
+          90.34,
+          63.37,
+          87.0,
+          68.0,
+          97
+        ],
+        "y_mid": 62.0
+      },
+      {
+        "id": "S3",
+        "kind": "connect",
+        "from": "C3",
+        "to": "C4",
+        "label": "管路",
+        "source": "case.json[text]",
+        "points": [
+          [
+            87.0,
+            84.0
+          ],
+          [
+            87.0,
+            96.0
+          ]
+        ],
+        "arrow": [
+          84.25,
+          91.0,
+          89.75,
+          91.0,
+          87.0,
+          96.0,
+          90
+        ],
+        "y_mid": 90.0
+      },
+      {
+        "id": "S4",
+        "kind": "flow",
+        "from": "C2",
+        "to": "C5",
+        "label": "干燥产物",
+        "source": "case.json[text]",
+        "points": [
+          [
+            102.95,
+            48.0
+          ],
+          [
+            119.95,
+            48.0
+          ],
+          [
+            119.95,
+            48.0
+          ],
+          [
+            136.95,
+            48.0
+          ]
+        ],
+        "arrow": [
+          131.95,
+          50.75,
+          131.95,
+          45.25,
+          136.95,
+          48.0,
+          0
+        ],
+        "y_mid": 48.0
+      },
+      {
+        "id": "S5",
+        "kind": "flow",
+        "from": "C3",
+        "to": "C6",
+        "label": "凝华",
+        "source": "case.json[text]",
+        "points": [
+          [
+            100.0,
+            76.0
+          ],
+          [
+            118.47,
+            76.0
+          ],
+          [
+            118.47,
+            76.0
+          ],
+          [
+            136.95,
+            76.0
+          ]
+        ],
+        "arrow": [
+          131.95,
+          78.75,
+          131.95,
+          73.25,
+          136.95,
+          76.0,
+          0
+        ],
+        "y_mid": 76.0
+      }
+    ],
+    "legend": [
+      {
+        "kind": "device",
+        "label": "装置/仪器",
+        "fill": "#FDF3E3",
+        "stroke": "#C07A1B"
+      },
+      {
+        "kind": "material",
+        "label": "物料/样本",
+        "fill": "#E8F6E4",
+        "stroke": "#4C8A3A"
+      },
+      {
+        "kind": "product",
+        "label": "产物/输出",
+        "fill": "#E4F0FB",
+        "stroke": "#3E77B8"
+      },
+      {
+        "kind": "waste",
+        "label": "废料/终点",
+        "fill": "#F1F1F1",
+        "stroke": "#777777"
+      }
+    ],
+    "extraction": "structured",
+    "figure_type": "apparatus"
+  },
+  "verify_report": {
+    "ok": true,
+    "checks": {
+      "layers": true,
+      "editable_text": true,
+      "entity_groups": true,
+      "entity_source_coverage": true,
+      "arrows": true,
+      "no_dangling": true,
+      "numbering_continuous": true,
+      "legend_kinds": true,
+      "kind_vocabulary": true,
+      "relation_kind_vocabulary": true,
+      "connection_rules": true,
+      "all": true
+    },
+    "issues": [],
+    "rule_violations": [],
+    "errors": [],
+    "warnings": [],
+    "determinism": {
+      "spec_sha16": "4603787adcb287d7"
+    },
+    "summary": {
+      "status": "pass",
+      "figure_type": "apparatus",
+      "entities": 6,
+      "relations": 5,
+      "errors": 0,
+      "warnings": 0,
+      "issues": 0,
+      "spec_sha16": "4603787adcb287d7"
+    }
+  }
+}

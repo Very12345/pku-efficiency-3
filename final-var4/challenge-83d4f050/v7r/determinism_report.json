@@ -1,0 +1,594 @@
+{
+  "probe": "determinism",
+  "tool": "scripts/determinism.py",
+  "tool_version": "1.0",
+  "what_this_measures": [
+    "同输入、跨进程、跨 cwd、跨 PYTHONHASHSEED 重跑主流程",
+    "逐产物 sha256 比对（原始字节）",
+    "易变字段/字节的定位与稳定化验证"
+  ],
+  "config": {
+    "runs": 5,
+    "case": "<WORK>/case/case.json",
+    "model_file": "<WORK>/case/model.example.json",
+    "formats": "svg,png,pdf",
+    "dpi": 150,
+    "cwd_cycle": [
+      "pkg",
+      "pkg/scripts",
+      "case",
+      "pkg/examples",
+      "."
+    ],
+    "pythonhashseed_cycle": [
+      "0",
+      "1",
+      "12345",
+      "random",
+      "<unset>"
+    ],
+    "python": "3.13.9",
+    "platform": "win32",
+    "matplotlib": "3.10.6",
+    "pillow": "12.3.0",
+    "expected_main_exit": 0
+  },
+  "runs": [
+    {
+      "run": 1,
+      "cwd": "<WORK>/pkg",
+      "pythonhashseed": "0",
+      "python": "python.exe",
+      "exit_code": 0,
+      "status": "success",
+      "seconds": 1.559,
+      "stdout_tail": "  produced  diagram.pdf  sha256=5f3f65b233e65264  108045 bytes\n  produced  result.json  sha256=7f485848d45afb03  29056 bytes\n  produced  model.json  sha256=f93a20a283492f73  11418 bytes\n  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//pkg//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "artifacts": {
+        "diagram.pdf": {
+          "sha256": "5f3f65b233e65264415b9f050d32e0aa0f6093a4ad32443d7fdb558f074b7a76",
+          "bytes": 108045
+        },
+        "diagram.png": {
+          "sha256": "9137715961238f3f733f05abfa3c17eb7d4f80d59784df32d6d326f126c9a393",
+          "bytes": 203655
+        },
+        "diagram.svg": {
+          "sha256": "27f344a0dfb2e90f39a9eaf5aae6629130a75a22ef30bd14fdea151e57cb8eee",
+          "bytes": 17771
+        },
+        "legend_audit.json": {
+          "sha256": "efdb1805c839d64858ad84aaae4e0f5aab4209085226eef274fc7862e22c899a",
+          "bytes": 1807
+        },
+        "model.json": {
+          "sha256": "f93a20a283492f7312b0e3ff597be92783b69cd1403d4eed3b37845bc9099935",
+          "bytes": 11418
+        },
+        "result.json": {
+          "sha256": "7f485848d45afb03d7e57bd9848f94d834a44c544f30eb36bc9c7b455747fbcb",
+          "bytes": 29056
+        },
+        "topology.json": {
+          "sha256": "eb826fc5557fccfcb32e173bbe09212bfe9bc662c00e2e03b890b34c345eacad",
+          "bytes": 1434
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cwd": "<WORK>/pkg/scripts",
+      "pythonhashseed": "1",
+      "python": "python.exe",
+      "exit_code": 0,
+      "status": "success",
+      "seconds": 1.558,
+      "stdout_tail": "  produced  diagram.pdf  sha256=f77a71bc9ff72116  108045 bytes\n  produced  result.json  sha256=0bd4cb9885b08438  29056 bytes\n  produced  model.json  sha256=f93a20a283492f73  11418 bytes\n  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//pkg//scripts//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "artifacts": {
+        "diagram.pdf": {
+          "sha256": "f77a71bc9ff72116cd4628a02994c2f8c0458321eb7e61b747f82c75de05e43a",
+          "bytes": 108045
+        },
+        "diagram.png": {
+          "sha256": "9137715961238f3f733f05abfa3c17eb7d4f80d59784df32d6d326f126c9a393",
+          "bytes": 203655
+        },
+        "diagram.svg": {
+          "sha256": "27f344a0dfb2e90f39a9eaf5aae6629130a75a22ef30bd14fdea151e57cb8eee",
+          "bytes": 17771
+        },
+        "legend_audit.json": {
+          "sha256": "efdb1805c839d64858ad84aaae4e0f5aab4209085226eef274fc7862e22c899a",
+          "bytes": 1807
+        },
+        "model.json": {
+          "sha256": "f93a20a283492f7312b0e3ff597be92783b69cd1403d4eed3b37845bc9099935",
+          "bytes": 11418
+        },
+        "result.json": {
+          "sha256": "0bd4cb9885b08438650a6b8045175f280826ec343fe62d39ad4e304aa74b8645",
+          "bytes": 29056
+        },
+        "topology.json": {
+          "sha256": "eb826fc5557fccfcb32e173bbe09212bfe9bc662c00e2e03b890b34c345eacad",
+          "bytes": 1434
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cwd": "<WORK>/case",
+      "pythonhashseed": "12345",
+      "python": "python.exe",
+      "exit_code": 0,
+      "status": "success",
+      "seconds": 1.409,
+      "stdout_tail": "  produced  diagram.pdf  sha256=8afa3ea331433d34  108045 bytes\n  produced  result.json  sha256=199888a2ea29df79  28888 bytes\n  produced  model.json  sha256=f93a20a283492f73  11418 bytes\n  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//case//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "artifacts": {
+        "diagram.pdf": {
+          "sha256": "8afa3ea331433d345631220125eee57e4ac5f31367acb6506b0f0aea1a9579cf",
+          "bytes": 108045
+        },
+        "diagram.png": {
+          "sha256": "9137715961238f3f733f05abfa3c17eb7d4f80d59784df32d6d326f126c9a393",
+          "bytes": 203655
+        },
+        "diagram.svg": {
+          "sha256": "27f344a0dfb2e90f39a9eaf5aae6629130a75a22ef30bd14fdea151e57cb8eee",
+          "bytes": 17771
+        },
+        "legend_audit.json": {
+          "sha256": "efdb1805c839d64858ad84aaae4e0f5aab4209085226eef274fc7862e22c899a",
+          "bytes": 1807
+        },
+        "model.json": {
+          "sha256": "f93a20a283492f7312b0e3ff597be92783b69cd1403d4eed3b37845bc9099935",
+          "bytes": 11418
+        },
+        "result.json": {
+          "sha256": "199888a2ea29df7980788134f5d592c88d75a9e383303b89bd0b48bd13870a75",
+          "bytes": 28888
+        },
+        "topology.json": {
+          "sha256": "eb826fc5557fccfcb32e173bbe09212bfe9bc662c00e2e03b890b34c345eacad",
+          "bytes": 1434
+        }
+      }
+    },
+    {
+      "run": 4,
+      "cwd": "<WORK>/pkg/examples",
+      "pythonhashseed": "random",
+      "python": "python.exe",
+      "exit_code": 0,
+      "status": "success",
+      "seconds": 1.537,
+      "stdout_tail": "  produced  diagram.pdf  sha256=cead161099286360  108045 bytes\n  produced  result.json  sha256=d4cd4454275570ee  29056 bytes\n  produced  model.json  sha256=f93a20a283492f73  11418 bytes\n  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//pkg//examples//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "artifacts": {
+        "diagram.pdf": {
+          "sha256": "cead16109928636094c6e1b92dd3ddb318f2bfd15823f697022c80d4fea8a35c",
+          "bytes": 108045
+        },
+        "diagram.png": {
+          "sha256": "9137715961238f3f733f05abfa3c17eb7d4f80d59784df32d6d326f126c9a393",
+          "bytes": 203655
+        },
+        "diagram.svg": {
+          "sha256": "27f344a0dfb2e90f39a9eaf5aae6629130a75a22ef30bd14fdea151e57cb8eee",
+          "bytes": 17771
+        },
+        "legend_audit.json": {
+          "sha256": "efdb1805c839d64858ad84aaae4e0f5aab4209085226eef274fc7862e22c899a",
+          "bytes": 1807
+        },
+        "model.json": {
+          "sha256": "f93a20a283492f7312b0e3ff597be92783b69cd1403d4eed3b37845bc9099935",
+          "bytes": 11418
+        },
+        "result.json": {
+          "sha256": "d4cd4454275570ee517c0e02a6c730698d9de6bb37ca204fd709aa38278a5c00",
+          "bytes": 29056
+        },
+        "topology.json": {
+          "sha256": "eb826fc5557fccfcb32e173bbe09212bfe9bc662c00e2e03b890b34c345eacad",
+          "bytes": 1434
+        }
+      }
+    },
+    {
+      "run": 5,
+      "cwd": "<WORK>",
+      "pythonhashseed": "<unset>",
+      "python": "python.exe",
+      "exit_code": 0,
+      "status": "success",
+      "seconds": 1.395,
+      "stdout_tail": "  produced  diagram.pdf  sha256=04a4d06975e7ebf8  108045 bytes\n  produced  result.json  sha256=81e1d4f422a6685e  28903 bytes\n  produced  model.json  sha256=f93a20a283492f73  11418 bytes\n  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "artifacts": {
+        "diagram.pdf": {
+          "sha256": "04a4d06975e7ebf89b9ebaf6d1aac19aaa0570bc1f0706fb89371d1ca7f4f281",
+          "bytes": 108045
+        },
+        "diagram.png": {
+          "sha256": "9137715961238f3f733f05abfa3c17eb7d4f80d59784df32d6d326f126c9a393",
+          "bytes": 203655
+        },
+        "diagram.svg": {
+          "sha256": "27f344a0dfb2e90f39a9eaf5aae6629130a75a22ef30bd14fdea151e57cb8eee",
+          "bytes": 17771
+        },
+        "legend_audit.json": {
+          "sha256": "efdb1805c839d64858ad84aaae4e0f5aab4209085226eef274fc7862e22c899a",
+          "bytes": 1807
+        },
+        "model.json": {
+          "sha256": "f93a20a283492f7312b0e3ff597be92783b69cd1403d4eed3b37845bc9099935",
+          "bytes": 11418
+        },
+        "result.json": {
+          "sha256": "81e1d4f422a6685ed013f08cf562eac2330e9846b875b2fc1dcac3a1a0dbc120",
+          "bytes": 28903
+        },
+        "topology.json": {
+          "sha256": "eb826fc5557fccfcb32e173bbe09212bfe9bc662c00e2e03b890b34c345eacad",
+          "bytes": 1434
+        }
+      }
+    }
+  ],
+  "per_file_sha256": {
+    "diagram.pdf": {
+      "sha256": "5f3f65b233e65264415b9f050d32e0aa0f6093a4ad32443d7fdb558f074b7a76",
+      "bytes": 108045,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 5,
+      "identical": false
+    },
+    "diagram.png": {
+      "sha256": "9137715961238f3f733f05abfa3c17eb7d4f80d59784df32d6d326f126c9a393",
+      "bytes": 203655,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 1,
+      "identical": true
+    },
+    "diagram.svg": {
+      "sha256": "27f344a0dfb2e90f39a9eaf5aae6629130a75a22ef30bd14fdea151e57cb8eee",
+      "bytes": 17771,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 1,
+      "identical": true
+    },
+    "legend_audit.json": {
+      "sha256": "efdb1805c839d64858ad84aaae4e0f5aab4209085226eef274fc7862e22c899a",
+      "bytes": 1807,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 1,
+      "identical": true
+    },
+    "model.json": {
+      "sha256": "f93a20a283492f7312b0e3ff597be92783b69cd1403d4eed3b37845bc9099935",
+      "bytes": 11418,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 1,
+      "identical": true
+    },
+    "result.json": {
+      "sha256": "7f485848d45afb03d7e57bd9848f94d834a44c544f30eb36bc9c7b455747fbcb",
+      "bytes": 29056,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 5,
+      "identical": false
+    },
+    "topology.json": {
+      "sha256": "eb826fc5557fccfcb32e173bbe09212bfe9bc662c00e2e03b890b34c345eacad",
+      "bytes": 1434,
+      "runs_with_file": 5,
+      "runs_total": 5,
+      "distinct_sha256": 1,
+      "identical": true
+    }
+  },
+  "identical": false,
+  "stable_artifacts": [
+    "diagram.png",
+    "diagram.svg",
+    "legend_audit.json",
+    "model.json",
+    "topology.json"
+  ],
+  "volatile_artifacts": [
+    "diagram.pdf",
+    "result.json"
+  ],
+  "volatile_fields": [
+    {
+      "artifact": "result.json",
+      "json_path": "$.change_records[0].ts",
+      "values_seen": [
+        "2026-11-23T19:54:47+0800",
+        "2026-11-23T19:54:49+0800",
+        "2026-11-23T19:54:50+0800"
+      ],
+      "kind": "timestamp",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.change_records[0].why",
+      "values_seen": [
+        "case=<WORK>/case/case.json, materials=materials/exam",
+        "case=case.json, materials=materials/example_material.md, task文字长度=110",
+        "case=case/case.json, materials=materials/example_material.md, task文字长度=110"
+      ],
+      "kind": "value",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.change_records[1].ts",
+      "values_seen": [
+        "2026-11-23T19:54:47+0800",
+        "2026-11-23T19:54:49+0800",
+        "2026-11-23T19:54:50+0800"
+      ],
+      "kind": "timestamp",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.change_records[1].why",
+      "values_seen": [
+        "<WORK>/case/model.example.json",
+        "case/model.example.json",
+        "model.example.json"
+      ],
+      "kind": "value",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.change_records[2].ts",
+      "values_seen": [
+        "2026-11-23T19:54:47+0800",
+        "2026-11-23T19:54:49+0800",
+        "2026-11-23T19:54:50+0800"
+      ],
+      "kind": "timestamp",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.provenance.case_file",
+      "values_seen": [
+        "<WORK>/case/case.json",
+        "case.json",
+        "case/case.json"
+      ],
+      "kind": "value",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.provenance.ts",
+      "values_seen": [
+        "2026-11-23T19:54:47+0800",
+        "2026-11-23T19:54:49+0800",
+        "2026-11-23T19:54:50+0800"
+      ],
+      "kind": "timestamp",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    },
+    {
+      "artifact": "result.json",
+      "json_path": "$.self_check.checks[30].detail",
+      "values_seen": [
+        "result.json (28309 bytes)",
+        "result.json (28324 bytes)",
+        "result.json (28477 bytes)"
+      ],
+      "kind": "value",
+      "masked_as": "<VOLATILE>",
+      "stabilize": "投影时按路径掩码（见 stabilization.json_projection.rule）"
+    }
+  ],
+  "byte_diff": {
+    "diagram.pdf": {
+      "a_run": 1,
+      "b_run": 5,
+      "bytes_a": 108045,
+      "bytes_b": 108045,
+      "regions": [
+        {
+          "offset": 104020,
+          "length": 2,
+          "a": "d v3.10.6)./CreationDate (D:20261123195448+08'00') >>.endobj.xref.0 196.0000000000",
+          "b": "d v3.10.6)./CreationDate (D:20261123195454+08'00') >>.endobj.xref.0 196.0000000000"
+        },
+        {
+          "offset": null,
+          "length": 2,
+          "a": "<2 differing byte(s) total>",
+          "b": ""
+        }
+      ],
+      "pdf_volatile_tokens": [
+        "/CreationDate (D:20261123195"
+      ],
+      "pdf_has_id": false
+    }
+  },
+  "png_metadata_probe": {
+    "is_png": true,
+    "chunks": [
+      {
+        "type": "IHDR",
+        "length": 13
+      },
+      {
+        "type": "tEXt",
+        "length": 58
+      },
+      {
+        "type": "pHYs",
+        "length": 9
+      },
+      {
+        "type": "IDAT",
+        "length": 65536
+      },
+      {
+        "type": "IDAT",
+        "length": 65536
+      },
+      {
+        "type": "IDAT",
+        "length": 65536
+      },
+      {
+        "type": "IDAT",
+        "length": 6863
+      },
+      {
+        "type": "IEND",
+        "length": 0
+      }
+    ],
+    "has_time_chunk": false,
+    "text_chunks": [
+      "tEXt"
+    ]
+  },
+  "stabilization": {
+    "json_projection": {
+      "rule": "递归掩码：键名匹配 (^|_)(ts|time|timestamp|datetime|date|created|created_at|modified|mtime|modtime|elapsed|duration|runtime|host|hostname|user|username|pid|cwd|abspath|abs_path)($|_) 的字段 / 值为绝对路径的位置类键 / 观测到的易变路径 → '<VOLATILE>'；再以 sort_keys 规范化 JSON 序列化后取 sha256",
+      "per_file": {
+        "legend_audit.json": {
+          "distinct_sha256": 1,
+          "runs": 5,
+          "identical": true,
+          "masked_paths": []
+        },
+        "model.json": {
+          "distinct_sha256": 1,
+          "runs": 5,
+          "identical": true,
+          "masked_paths": []
+        },
+        "result.json": {
+          "distinct_sha256": 1,
+          "runs": 5,
+          "identical": true,
+          "masked_paths": [
+            "$.change_records[0].ts",
+            "$.change_records[0].why",
+            "$.change_records[1].ts",
+            "$.change_records[1].why",
+            "$.change_records[2].ts",
+            "$.provenance.case_file",
+            "$.provenance.command",
+            "$.provenance.ts",
+            "$.self_check.checks[30].detail"
+          ]
+        },
+        "topology.json": {
+          "distinct_sha256": 1,
+          "runs": 5,
+          "identical": true,
+          "masked_paths": []
+        }
+      },
+      "identical": true
+    },
+    "pdf_normalization": {
+      "rule": "/CreationDate|/ModDate|/ID → 固定占位",
+      "hits": [
+        "/CreationDate|/ModDate"
+      ],
+      "runs": 5,
+      "distinct_sha256": 1,
+      "identical": true
+    },
+    "env_recipe": {
+      "SOURCE_DATE_EPOCH": "1577836800",
+      "runs": 2,
+      "identical": false,
+      "cwd": "<WORK>/envrun",
+      "identical_except_result_json": true,
+      "pdf_identical": true,
+      "result_json_diff_paths": [
+        "$.change_records[0].ts",
+        "$.change_records[1].ts",
+        "$.change_records[2].ts",
+        "$.provenance.ts"
+      ],
+      "result_json_projected_identical": true,
+      "per_file": {
+        "diagram.pdf": {
+          "distinct_sha256": 1,
+          "identical": true
+        },
+        "diagram.png": {
+          "distinct_sha256": 1,
+          "identical": true
+        },
+        "diagram.svg": {
+          "distinct_sha256": 1,
+          "identical": true
+        },
+        "legend_audit.json": {
+          "distinct_sha256": 1,
+          "identical": true
+        },
+        "model.json": {
+          "distinct_sha256": 1,
+          "identical": true
+        },
+        "result.json": {
+          "distinct_sha256": 2,
+          "identical": false
+        },
+        "topology.json": {
+          "distinct_sha256": 1,
+          "identical": true
+        }
+      }
+    },
+    "env_recipe_per_file_identical": {
+      "diagram.pdf": true,
+      "diagram.png": true,
+      "diagram.svg": true,
+      "legend_audit.json": true,
+      "model.json": true,
+      "result.json": false,
+      "topology.json": true
+    }
+  },
+  "verdict": {
+    "byte_identical_raw": false,
+    "byte_identical_after_documented_stabilization": true,
+    "main_pipeline_exit_codes": [
+      0
+    ],
+    "main_pipeline_status": [
+      "success"
+    ],
+    "notes": [
+      "原始字节不一致的产物 = diagram.pdf, result.json（原因见 volatile_fields / byte_diff）",
+      "result.json 的政策是**故意**保留时间戳（change_records/provenance），因此原始字节必然不同；稳定化投影后必须一致",
+      "固定 cwd + SOURCE_DATE_EPOCH 后残余的 result.json 差异路径 = $.change_records[0].ts, $.change_records[1].ts, $.change_records[2].ts, $.provenance.ts；这些路径的投影一致性 = True",
+      "稳定化不改变交付语义：投影/规范化只用于比对，不覆盖产物本身"
+    ]
+  }
+}

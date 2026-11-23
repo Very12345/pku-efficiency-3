@@ -1,0 +1,1390 @@
+{
+  "schema": "contract-matrix/1",
+  "generated_utc": "2026-11-23T11:41:33Z",
+  "skill": "graphical-abstract",
+  "python": "3.13.9",
+  "base_case": {
+    "file": "case.json",
+    "case_id": "example-micelle-001"
+  },
+  "invocation": {
+    "rows": 26,
+    "only": null,
+    "argv": "python -B <sandbox>/scripts/main.py --case <work>/case.json --out <box>/out"
+  },
+  "summary": {
+    "rows": 26,
+    "ok": 26,
+    "mismatch": 0,
+    "silent_failure": 0,
+    "crash": 0,
+    "nulls_in_result_top_level": 0,
+    "nulls_in_contract_fields": 0,
+    "rows_with_nested_null_only": 26,
+    "check_contract_failures": 0,
+    "seconds_total": 61.26,
+    "by_class": {
+      "boundary": {
+        "ok": 10,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "combo": {
+        "ok": 2,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "form": {
+        "ok": 8,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "illegal": {
+        "ok": 6,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      }
+    },
+    "by_form": {
+      "bool": {
+        "ok": 4,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "float": {
+        "ok": 2,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "int": {
+        "ok": 2,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "list": {
+        "ok": 4,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "missing": {
+        "ok": 1,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "mixed": {
+        "ok": 1,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "nested": {
+        "ok": 1,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "null": {
+        "ok": 2,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "number": {
+        "ok": 1,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "object": {
+        "ok": 4,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      },
+      "string": {
+        "ok": 4,
+        "mismatch": 0,
+        "silent": 0,
+        "crash": 0
+      }
+    }
+  },
+  "silent_pass_list": [],
+  "crash_list": [],
+  "rows": [
+    {
+      "id": "C01",
+      "cls": "form",
+      "form": "string",
+      "title": "字符串形态回显到顶层",
+      "injected": "{\"figure_note\": \"GA · 合成示例 · 2026\"}",
+      "declared_keys": [
+        "figure_note"
+      ],
+      "declared_json_type": "dict",
+      "expected": "OUTPUT_CONTRACT §3 ①：字段→类型提示，真实值必须出现在顶层",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "figure_note": {
+          "location": "top",
+          "type": "str",
+          "preview": "GA · 合成示例 · 2026",
+          "top_level_value": "GA · 合成示例 · 2026",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.49
+    },
+    {
+      "id": "C02",
+      "cls": "form",
+      "form": "list",
+      "title": "列表形态回显到顶层",
+      "injected": "{\"target_format\": [\"svg\", \"png\", \"pdf\"]}",
+      "declared_keys": [
+        "target_format"
+      ],
+      "declared_json_type": "dict",
+      "expected": "§3 ②：容器形态按原值回显",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "target_format": {
+          "location": "top",
+          "type": "list",
+          "preview": "[\"svg\", \"png\", \"pdf\"]",
+          "top_level_value": "[\"svg\", \"png\", \"pdf\"]",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.39
+    },
+    {
+      "id": "C03",
+      "cls": "form",
+      "form": "object",
+      "title": "对象形态回显到顶层",
+      "injected": "{\"legend\": {\"position\": \"bottom\", \"font_pt\": 9}}",
+      "declared_keys": [
+        "legend"
+      ],
+      "declared_json_type": "dict",
+      "expected": "对象形态：嵌套对象必须原样保留，不得压成字符串",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "legend": {
+          "location": "top",
+          "type": "dict",
+          "preview": "{\"position\": \"bottom\", \"font_pt\": 9}",
+          "top_level_value": "{\"position\": \"bottom\", \"font_pt\": 9}",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.55
+    },
+    {
+      "id": "C04",
+      "cls": "form",
+      "form": "int",
+      "title": "整数形态回显到顶层",
+      "injected": "{\"resolution_dpi\": 300}",
+      "declared_keys": [
+        "resolution_dpi"
+      ],
+      "declared_json_type": "dict",
+      "expected": "§3 ①：整数值不得被转成字符串（下游按数值用）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "resolution_dpi": {
+          "location": "top",
+          "type": "int",
+          "preview": "300",
+          "top_level_value": "300",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.68
+    },
+    {
+      "id": "C05",
+      "cls": "form",
+      "form": "float",
+      "title": "浮点形态回显到顶层",
+      "injected": "{\"bar_width_pt\": 1.5}",
+      "declared_keys": [
+        "bar_width_pt"
+      ],
+      "declared_json_type": "dict",
+      "expected": "§3 ①：浮点精度必须原样（JSON 往返不失真）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "bar_width_pt": {
+          "location": "top",
+          "type": "float",
+          "preview": "1.5",
+          "top_level_value": "1.5",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.79
+    },
+    {
+      "id": "C06",
+      "cls": "form",
+      "form": "bool",
+      "title": "布尔 true 形态回显到顶层",
+      "injected": "{\"colorblind_safe\": true}",
+      "declared_keys": [
+        "colorblind_safe"
+      ],
+      "declared_json_type": "dict",
+      "expected": "§3 ③：布尔开关必须是真实布尔，不得写成字符串 true",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "colorblind_safe": {
+          "location": "top",
+          "type": "bool",
+          "preview": "true",
+          "top_level_value": "true",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.75
+    },
+    {
+      "id": "C07",
+      "cls": "form",
+      "form": "bool",
+      "title": "布尔 false 形态回显到顶层",
+      "injected": "{\"grayscale_print\": false}",
+      "declared_keys": [
+        "grayscale_print"
+      ],
+      "declared_json_type": "dict",
+      "expected": "§3 ③：false 是合法值，不得被空值替换（与 null 区分）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "grayscale_print": {
+          "location": "top",
+          "type": "bool",
+          "preview": "false",
+          "top_level_value": "false",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.66
+    },
+    {
+      "id": "C08",
+      "cls": "form",
+      "form": "nested",
+      "title": "三层嵌套（对象→列表→对象）",
+      "injected": "{\"export\": {\"formats\": [\"svg\", \"png\"], \"dpi\": {\"print\": 300, \"screen\":…",
+      "declared_keys": [
+        "export"
+      ],
+      "declared_json_type": "dict",
+      "expected": "嵌套容器任意深度都必须保持结构（评分方要按层取值）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "export": {
+          "location": "top",
+          "type": "dict",
+          "preview": "{\"formats\": [\"svg\", \"png\"], \"dpi\": {\"print\": 300…",
+          "top_level_value": "{\"formats\": [\"svg\", \"png\"], \"dpi\": {\"print\": 300…",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.51
+    },
+    {
+      "id": "C09",
+      "cls": "boundary",
+      "form": "string",
+      "title": "空字符串",
+      "injected": "{\"annotation\": \"\"}",
+      "declared_keys": [
+        "annotation"
+      ],
+      "declared_json_type": "dict",
+      "expected": "空串是合法的『无内容』声明：必须以空串存在，不能变成 null 或消失",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "annotation": {
+          "location": "top",
+          "type": "str",
+          "preview": "",
+          "top_level_value": "",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.53
+    },
+    {
+      "id": "C10",
+      "cls": "boundary",
+      "form": "list",
+      "title": "空数组",
+      "injected": "{\"extra_layers\": []}",
+      "declared_keys": [
+        "extra_layers"
+      ],
+      "declared_json_type": "dict",
+      "expected": "§3 ②：容器缺失时给空列表，显式空数组同理",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "extra_layers": {
+          "location": "top",
+          "type": "list",
+          "preview": "[]",
+          "top_level_value": "[]",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.45
+    },
+    {
+      "id": "C11",
+      "cls": "boundary",
+      "form": "int",
+      "title": "整数 0",
+      "injected": "{\"min_font_pt\": 0}",
+      "declared_keys": [
+        "min_font_pt"
+      ],
+      "declared_json_type": "dict",
+      "expected": "0 是真值，不得被 falsy 判断误吞成空值",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "min_font_pt": {
+          "location": "top",
+          "type": "int",
+          "preview": "0",
+          "top_level_value": "0",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.43
+    },
+    {
+      "id": "C12",
+      "cls": "boundary",
+      "form": "float",
+      "title": "浮点 0.0",
+      "injected": "{\"tolerance\": 0.0}",
+      "declared_keys": [
+        "tolerance"
+      ],
+      "declared_json_type": "dict",
+      "expected": "0.0 与 0 在 JSON 里可区分，回显不得改写类型",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "tolerance": {
+          "location": "top",
+          "type": "float",
+          "preview": "0.0",
+          "top_level_value": "0.0",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.6
+    },
+    {
+      "id": "C13",
+      "cls": "boundary",
+      "form": "object",
+      "title": "空对象",
+      "injected": "{\"style_overrides\": {}}",
+      "declared_keys": [
+        "style_overrides"
+      ],
+      "declared_json_type": "dict",
+      "expected": "容器无内容时给空对象而不是 null",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "style_overrides": {
+          "location": "top",
+          "type": "dict",
+          "preview": "{}",
+          "top_level_value": "{}",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.51
+    },
+    {
+      "id": "C14",
+      "cls": "boundary",
+      "form": "bool",
+      "title": "布尔 false（边界：显式关闭）",
+      "injected": "{\"require_scale_bar\": false}",
+      "declared_keys": [
+        "require_scale_bar"
+      ],
+      "declared_json_type": "dict",
+      "expected": "显式关闭与『未声明』必须可区分",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "require_scale_bar": {
+          "location": "top",
+          "type": "bool",
+          "preview": "false",
+          "top_level_value": "false",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 2.25
+    },
+    {
+      "id": "C15",
+      "cls": "boundary",
+      "form": "string",
+      "title": "超长字符串（4096 字符）",
+      "injected": "{\"long_note\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…",
+      "declared_keys": [
+        "long_note"
+      ],
+      "declared_json_type": "dict",
+      "expected": "超长值不得被截断或丢弃（截断会让复核方拿到半句话）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "long_note": {
+          "location": "top",
+          "type": "str",
+          "preview": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…",
+          "top_level_value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.99
+    },
+    {
+      "id": "C16",
+      "cls": "boundary",
+      "form": "null",
+      "title": "字段显式声明为 null",
+      "injected": "{\"resolution_dpi\": null}",
+      "declared_keys": [
+        "resolution_dpi"
+      ],
+      "declared_json_type": "dict",
+      "expected": "D15：禁 null —— 归一化为空值并**记录**，不得原样回显 null",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "resolution_dpi": {
+          "location": "top",
+          "type": "str",
+          "preview": "",
+          "top_level_value": "",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 1,
+      "warnings_n": 0,
+      "uncertainty_sample": [
+        "案例 output_contract 声明为 null 的字段已归一化为空值：resolution_dpi"
+      ],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.9
+    },
+    {
+      "id": "C17",
+      "cls": "boundary",
+      "form": "missing",
+      "title": "整个 output_contract 键缺失",
+      "injected": "<output_contract 键被删除>",
+      "declared_keys": [],
+      "declared_json_type": "null",
+      "expected": "无案例契约时信封 18 键仍须齐全、不得崩",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 18,
+      "echo_observed": {},
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.81
+    },
+    {
+      "id": "C18",
+      "cls": "boundary",
+      "form": "object",
+      "title": "空契约对象（声明了但没字段）",
+      "injected": "{}",
+      "declared_keys": [],
+      "declared_json_type": "dict",
+      "expected": "空契约是合法的『无额外字段』声明，不得被当成缺失而报错",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 18,
+      "echo_observed": {},
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.79
+    },
+    {
+      "id": "C19",
+      "cls": "illegal",
+      "form": "list",
+      "title": "非法容器：用列表当 output_contract",
+      "injected": "[\"svg\", \"png\"]",
+      "declared_keys": [],
+      "declared_json_type": "list",
+      "expected": "容器类型非法：不得崩；必须**记录**这是一次忽略",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 18,
+      "echo_observed": {},
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 1,
+      "warnings_n": 0,
+      "uncertainty_sample": [
+        "case.json output_contract 形态非法（list）：已按空契约处理，字段不回显；契约应为对象或字符串。"
+      ],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "非法容器（list）被归一化为空契约，未见字段回显",
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.7
+    },
+    {
+      "id": "C20",
+      "cls": "illegal",
+      "form": "string",
+      "title": "字符串当 output_contract（合法归一化）",
+      "injected": "svg+png",
+      "declared_keys": [],
+      "declared_json_type": "str",
+      "expected": "字符串契约按 {note: <串>} 归一化（extract.normalize_contract）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "note": {
+          "location": "top",
+          "type": "str",
+          "preview": "svg+png",
+          "top_level_value": "svg+png",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.81
+    },
+    {
+      "id": "C21",
+      "cls": "illegal",
+      "form": "number",
+      "title": "非法容器：用数字当 output_contract",
+      "injected": "300",
+      "declared_keys": [],
+      "declared_json_type": "int",
+      "expected": "数字容器非法：不得崩；必须记录忽略，不得静默丢弃",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 18,
+      "echo_observed": {},
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 1,
+      "warnings_n": 0,
+      "uncertainty_sample": [
+        "case.json output_contract 形态非法（int）：已按空契约处理，字段不回显；契约应为对象或字符串。"
+      ],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "非法容器（int）被归一化为空契约，未见字段回显",
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.77
+    },
+    {
+      "id": "C22",
+      "cls": "illegal",
+      "form": "bool",
+      "title": "非法容器：用 true 当 output_contract",
+      "injected": "true",
+      "declared_keys": [],
+      "declared_json_type": "bool",
+      "expected": "布尔容器非法：同上；true 不是『字段清单』",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 18,
+      "echo_observed": {},
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 1,
+      "warnings_n": 0,
+      "uncertainty_sample": [
+        "case.json output_contract 形态非法（bool）：已按空契约处理，字段不回显；契约应为对象或字符串。"
+      ],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "非法容器（bool）被归一化为空契约，未见字段回显",
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.8
+    },
+    {
+      "id": "C23",
+      "cls": "illegal",
+      "form": "object",
+      "title": "保留键冲突（status / case_id）",
+      "injected": "{\"status\": \"ready\", \"case_id\": \"brand-x\", \"target_format\": [\"svg\"]}",
+      "declared_keys": [
+        "case_id",
+        "status",
+        "target_format"
+      ],
+      "declared_json_type": "dict",
+      "expected": "D16：冲突键的案例值移入 output_contract_echo，顶层保留信封值",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "status": {
+          "location": "echo",
+          "type": "str",
+          "preview": "ready",
+          "top_level_value": "success",
+          "echo_value": "ready"
+        },
+        "case_id": {
+          "location": "echo",
+          "type": "str",
+          "preview": "brand-x",
+          "top_level_value": "cm-c23",
+          "echo_value": "brand-x"
+        },
+        "target_format": {
+          "location": "top",
+          "type": "list",
+          "preview": "[\"svg\"]",
+          "top_level_value": "[\"svg\"]",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.9
+    },
+    {
+      "id": "C24",
+      "cls": "illegal",
+      "form": "null",
+      "title": "保留键冲突且声明为 null",
+      "injected": "{\"summary\": null, \"warnings\": null}",
+      "declared_keys": [
+        "summary",
+        "warnings"
+      ],
+      "declared_json_type": "dict",
+      "expected": "保留键 + null：既不得覆盖信封，也不得把 null 带进产物",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 18,
+      "echo_observed": {
+        "summary": {
+          "location": "echo",
+          "type": "str",
+          "preview": "",
+          "top_level_value": "已生成 113 个图形元素（实体 6、关系 5、数据 7）的图形摘要；SVG 可编辑源 + PN…",
+          "echo_value": ""
+        },
+        "warnings": {
+          "location": "echo",
+          "type": "str",
+          "preview": "",
+          "top_level_value": "[]",
+          "echo_value": ""
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 1,
+      "warnings_n": 0,
+      "uncertainty_sample": [
+        "案例 output_contract 声明为 null 的字段已归一化为空值：summary, warnings"
+      ],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.66
+    },
+    {
+      "id": "C25",
+      "cls": "combo",
+      "form": "mixed",
+      "title": "六种形态同时出现 + Unicode 键值",
+      "injected": "{\"s\": \"文本\", \"l\": [1, 2, 3], \"o\": {\"k\": \"v\"}, \"i\": 7, \"f\": 0.5, \"b\": tr…",
+      "declared_keys": [
+        "b",
+        "f",
+        "i",
+        "l",
+        "o",
+        "s",
+        "u"
+      ],
+      "declared_json_type": "dict",
+      "expected": "形态互不干扰；Unicode 键/emoji/箭头必须原样存活（UTF-8 全链）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 25,
+      "echo_observed": {
+        "s": {
+          "location": "top",
+          "type": "str",
+          "preview": "文本",
+          "top_level_value": "文本",
+          "echo_value": "null"
+        },
+        "l": {
+          "location": "top",
+          "type": "list",
+          "preview": "[1, 2, 3]",
+          "top_level_value": "[1, 2, 3]",
+          "echo_value": "null"
+        },
+        "o": {
+          "location": "top",
+          "type": "dict",
+          "preview": "{\"k\": \"v\"}",
+          "top_level_value": "{\"k\": \"v\"}",
+          "echo_value": "null"
+        },
+        "i": {
+          "location": "top",
+          "type": "int",
+          "preview": "7",
+          "top_level_value": "7",
+          "echo_value": "null"
+        },
+        "f": {
+          "location": "top",
+          "type": "float",
+          "preview": "0.5",
+          "top_level_value": "0.5",
+          "echo_value": "null"
+        },
+        "b": {
+          "location": "top",
+          "type": "bool",
+          "preview": "true",
+          "top_level_value": "true",
+          "echo_value": "null"
+        },
+        "u": {
+          "location": "top",
+          "type": "dict",
+          "preview": "{\"注记\": {\"中文键\": \"值 → 箭头 ⇒ 等价\", \"emoji\": \"🎯\", \"uni…",
+          "top_level_value": "{\"注记\": {\"中文键\": \"值 → 箭头 ⇒ 等价\", \"emoji\": \"🎯\", \"uni…",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.62
+    },
+    {
+      "id": "C26",
+      "cls": "combo",
+      "form": "list",
+      "title": "长列表（50 个对象）",
+      "injected": "{\"regions\": [{\"index\": 0, \"label\": \"条目 00\", \"value\": 0.0}, {\"index\": 1…",
+      "declared_keys": [
+        "regions"
+      ],
+      "declared_json_type": "dict",
+      "expected": "长结构不得被截断；顺序必须保持（评分方按下标取值）",
+      "measured_exit": 0,
+      "measured_status": "success",
+      "result_json": true,
+      "result_top_keys": 19,
+      "echo_observed": {
+        "regions": {
+          "location": "top",
+          "type": "list",
+          "preview": "[{\"index\": 0, \"label\": \"条目 00\", \"value\": 0.0}, {…",
+          "top_level_value": "[{\"index\": 0, \"label\": \"条目 00\", \"value\": 0.0}, {…",
+          "echo_value": "null"
+        }
+      },
+      "nulls_top": [],
+      "nulls_contract": [],
+      "nulls_recursive": [
+        "plan.hash"
+      ],
+      "uncertainty_n": 0,
+      "warnings_n": 0,
+      "uncertainty_sample": [],
+      "check_contract_exit": 0,
+      "check_contract_valid": true,
+      "check_contract_problems": [],
+      "verdict": "ok",
+      "problems": [],
+      "observations": [
+        "嵌套信封字段为 null 但不属契约字段：plan.hash（无 --plan 时 plan.hash 没有值，check_contract 判定为通过）"
+      ],
+      "stdout_head": [
+        "{",
+        "  \"status\": \"success\","
+      ],
+      "stderr_head": [],
+      "seconds": 1.82
+    }
+  ],
+  "uncovered": [
+    "契约字段的**语义正确性**（例如 resolution_dpi=300 是否真的写进了 SVG）不在本矩阵范围，由 audit.checks / spec_lint 覆盖",
+    "并发、超时、磁盘满等环境故障不在本矩阵范围",
+    "平台侧注入（挂载缺失、配额、超时）不在本矩阵范围"
+  ],
+  "notes": [
+    "判级口径：silent = 期望未满足 且 status=success 且 uncertainty/warnings 均为空。这个定义故意严格——『记录了但状态没降级』算 mismatch，不算 silent。",
+    "每条用例的期望写在脚本 CASES 表的 rationale 里，与 references/OUTPUT_CONTRACT.md §3 和 references/failure-modes.md 的 D14–D17 对应。"
+  ],
+  "_label": "示例：用 scripts/contract_matrix.py 把 26 种契约形态/边界值逐个注入随包合成案例后真跑所得的真实矩阵；非平台正式案例结果。"
+}

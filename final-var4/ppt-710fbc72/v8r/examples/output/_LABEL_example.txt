@@ -1,0 +1,1 @@
+本目录全部产物均为「示例」输出（非正式案例结果）：由 examples/case.json + examples/task.md 在本机真实运行 scripts/main.py 生成，用于演示 Skill 接口与交付形态。平台正式案例由组织方提供，不以本示例内容作为答案。

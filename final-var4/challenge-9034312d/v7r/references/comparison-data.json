@@ -1,0 +1,288 @@
+{
+  "_doc": "对照实验的机器可读原始数据（v2 与 v3 两版字段的并集）：cases.<case>.arms.<C0|C1|C2> 下同时保留两版观测项（Q1–Q6、E 指标、sha16、耗时、字节数、check 退出码与失败门）。包内不含任何本机绝对路径：path 字段只留文件名。",
+  "protocol_version": "GAIN-PROTOCOL v1",
+  "generated_at": "2026-11-22T18:13:05+0800",
+  "python": "3.13.9",
+  "conditions": {
+    "C0": {
+      "how": "scripts/bare_baseline.py：读 case.json → 网格排版 → 写 SVG 与两个 0 字节占位文件",
+      "what_it_represents": "不加载 Skill、也不额外努力时的产物形态"
+    },
+    "C1": {
+      "how": "scripts/main.py 完整流水线（含证据抽取、连接规则审计、契约门）",
+      "what_it_represents": "本包交付路径"
+    },
+    "C2": {
+      "how": "scripts/main.py --rules <空对象 json>（同一份代码，只把规则资产置空）",
+      "what_it_represents": "分离『算法本身』与『门禁带来的增益』"
+    }
+  },
+  "fixed_factors": [
+    "同一份 case.json（记录 sha256）",
+    "同一台机同一个 Python",
+    "同一批依赖（Pillow 12.3.0 / reportlab 5.0.0）",
+    "每条件单轮、不重试、wall-clock 计时"
+  ],
+  "cases": {
+    "clean": {
+      "case_sha256": "c7af792527dda9d6fe16be5afa7575c81e41a72b0b8ae00f7f868511da66f94b",
+      "case_entities": 8,
+      "case_relations": 7,
+      "arms": {
+        "C0": {
+          "label": "C0 裸做法下界",
+          "status": null,
+          "entities_out": 8,
+          "relations_out": 7,
+          "entities_in": 8,
+          "relations_in": 7,
+          "Q1_source_bound": 0.0,
+          "Q1_evidence_items": 0,
+          "Q2_dangling_exposed": 0,
+          "Q2_dropped_relations": 0,
+          "Q3_violations_exposed": 0,
+          "Q3_errors": [],
+          "Q3_warnings": [],
+          "Q4_editable_text": 0,
+          "Q4_entity_groups": false,
+          "Q4_entity_source_coverage": null,
+          "Q5_png_bytes": 0,
+          "Q5_pdf_bytes": 0,
+          "Q5_png_sha16": null,
+          "Q6_status_honest": false,
+          "E2_out_bytes": 2491,
+          "svg_sha16": "7bb7aa5aec1b0166",
+          "layout_sha16": null,
+          "verify_sha16": null,
+          "uncertainty_scopes": [],
+          "exit": 0,
+          "E1_sec": 0.112,
+          "check_exit": null,
+          "gates_false": null
+        },
+        "C1": {
+          "label": "C1 本 Skill",
+          "status": "success",
+          "entities_out": 8,
+          "relations_out": 7,
+          "entities_in": 8,
+          "relations_in": 7,
+          "Q1_source_bound": 1.0,
+          "Q1_evidence_items": 15,
+          "Q2_dangling_exposed": 0,
+          "Q2_dropped_relations": 0,
+          "Q3_violations_exposed": 0,
+          "Q3_errors": [],
+          "Q3_warnings": [],
+          "Q4_editable_text": true,
+          "Q4_entity_groups": true,
+          "Q4_entity_source_coverage": true,
+          "Q5_png_bytes": 39136,
+          "Q5_pdf_bytes": 4028,
+          "Q5_png_sha16": "b0e78f69a9dcffd0",
+          "Q6_status_honest": true,
+          "E2_out_bytes": 78509,
+          "svg_sha16": "04b3d6723f5929bb",
+          "layout_sha16": "53217a37a044b2f9",
+          "verify_sha16": "bb49fe0e22fc201f",
+          "uncertainty_scopes": [],
+          "exit": 0,
+          "E1_sec": 0.5925,
+          "check_exit": 0,
+          "check_ok": true,
+          "gates_false": []
+        },
+        "C2": {
+          "label": "C2 同代码关掉门禁",
+          "status": "success",
+          "entities_out": 8,
+          "relations_out": 7,
+          "entities_in": 8,
+          "relations_in": 7,
+          "Q1_source_bound": 1.0,
+          "Q1_evidence_items": 15,
+          "Q2_dangling_exposed": 0,
+          "Q2_dropped_relations": 0,
+          "Q3_violations_exposed": 0,
+          "Q3_errors": [],
+          "Q3_warnings": [],
+          "Q4_editable_text": true,
+          "Q4_entity_groups": true,
+          "Q4_entity_source_coverage": true,
+          "Q5_png_bytes": 39136,
+          "Q5_pdf_bytes": 4028,
+          "Q5_png_sha16": "b0e78f69a9dcffd0",
+          "Q6_status_honest": true,
+          "E2_out_bytes": 78371,
+          "svg_sha16": "04b3d6723f5929bb",
+          "layout_sha16": "53217a37a044b2f9",
+          "verify_sha16": "cd64bc5cb114802f",
+          "uncertainty_scopes": [],
+          "exit": 0,
+          "E1_sec": 0.4847,
+          "check_exit": 0,
+          "check_ok": true,
+          "gates_false": []
+        }
+      },
+      "determinism_C1_two_runs": {
+        "figure.svg": true,
+        "layout.json": true,
+        "evidence.json": true,
+        "verify_report.json": true
+      },
+      "deltas": {
+        "Q1_C1_minus_C0": 1.0,
+        "Q2_C0_minus_C1": 0,
+        "Q3_C1_minus_C2": 0,
+        "Q3_C1_minus_C0": 0,
+        "Q5_C1_minus_C0_png_bytes": 39136,
+        "E1_C1_minus_C0_sec": 0.481,
+        "E2_C1_over_C0_bytes_ratio": 31.5
+      }
+    },
+    "defective": {
+      "case_sha256": "5afbea68e9c8ee84838026ea79f34342e1c27ff15fb0283127c7bd1f1222d7f6",
+      "case_entities": 12,
+      "case_relations": 13,
+      "arms": {
+        "C0": {
+          "label": "C0 裸做法下界",
+          "status": null,
+          "entities_out": 12,
+          "relations_out": 13,
+          "entities_in": 12,
+          "relations_in": 13,
+          "Q1_source_bound": 0.0,
+          "Q1_evidence_items": 0,
+          "Q2_dangling_exposed": 1,
+          "Q2_dropped_relations": 0,
+          "Q3_violations_exposed": 0,
+          "Q3_errors": [],
+          "Q3_warnings": [],
+          "Q4_editable_text": 0,
+          "Q4_entity_groups": false,
+          "Q4_entity_source_coverage": null,
+          "Q5_png_bytes": 0,
+          "Q5_pdf_bytes": 0,
+          "Q5_png_sha16": null,
+          "Q6_status_honest": false,
+          "E2_out_bytes": 3814,
+          "svg_sha16": "b5e603db8f30cdd8",
+          "layout_sha16": null,
+          "verify_sha16": null,
+          "uncertainty_scopes": [],
+          "exit": 0,
+          "E1_sec": 0.1002,
+          "check_exit": null,
+          "gates_false": null
+        },
+        "C1": {
+          "label": "C1 本 Skill",
+          "status": "partial",
+          "entities_out": 12,
+          "relations_out": 12,
+          "entities_in": 12,
+          "relations_in": 13,
+          "Q1_source_bound": 1.0,
+          "Q1_evidence_items": 24,
+          "Q2_dangling_exposed": 0,
+          "Q2_dropped_relations": 1,
+          "Q3_violations_exposed": 3,
+          "Q3_errors": [
+            "no-self-loop",
+            "sequence-step-only"
+          ],
+          "Q3_warnings": [
+            "recycle-review"
+          ],
+          "Q4_editable_text": true,
+          "Q4_entity_groups": true,
+          "Q4_entity_source_coverage": false,
+          "Q5_png_bytes": 47080,
+          "Q5_pdf_bytes": 4522,
+          "Q5_png_sha16": "82677bff6f35250a",
+          "Q6_status_honest": true,
+          "E2_out_bytes": 105444,
+          "svg_sha16": "46dcf42a9749a89c",
+          "layout_sha16": "e661e8c3b770ecae",
+          "verify_sha16": "6ab174447ee34a4a",
+          "uncertainty_scopes": [
+            "orphan_entities",
+            "sources",
+            "rule_violation"
+          ],
+          "exit": 3,
+          "E1_sec": 0.497,
+          "check_exit": 1,
+          "check_ok": false,
+          "gates_false": [
+            "G9"
+          ]
+        },
+        "C2": {
+          "label": "C2 同代码关掉门禁",
+          "status": "partial",
+          "entities_out": 12,
+          "relations_out": 12,
+          "entities_in": 12,
+          "relations_in": 13,
+          "Q1_source_bound": 1.0,
+          "Q1_evidence_items": 24,
+          "Q2_dangling_exposed": 0,
+          "Q2_dropped_relations": 1,
+          "Q3_violations_exposed": 0,
+          "Q3_errors": [],
+          "Q3_warnings": [],
+          "Q4_editable_text": true,
+          "Q4_entity_groups": true,
+          "Q4_entity_source_coverage": false,
+          "Q5_png_bytes": 47080,
+          "Q5_pdf_bytes": 4522,
+          "Q5_png_sha16": "82677bff6f35250a",
+          "Q6_status_honest": true,
+          "E2_out_bytes": 103283,
+          "svg_sha16": "46dcf42a9749a89c",
+          "layout_sha16": "e661e8c3b770ecae",
+          "verify_sha16": "1c04d7a51ba92920",
+          "uncertainty_scopes": [
+            "orphan_entities",
+            "sources",
+            "rule_violation"
+          ],
+          "exit": 3,
+          "E1_sec": 0.4886,
+          "check_exit": 1,
+          "check_ok": false,
+          "gates_false": [
+            "G9"
+          ]
+        }
+      },
+      "determinism_C1_two_runs": {
+        "figure.svg": true,
+        "layout.json": true,
+        "evidence.json": true,
+        "verify_report.json": true
+      },
+      "deltas": {
+        "Q1_C1_minus_C0": 1.0,
+        "Q2_C0_minus_C1": 1,
+        "Q3_C1_minus_C2": 3,
+        "Q3_C1_minus_C0": 3,
+        "Q5_C1_minus_C0_png_bytes": 47080,
+        "E1_C1_minus_C0_sec": 0.397,
+        "E2_C1_over_C0_bytes_ratio": 27.6
+      }
+    }
+  },
+  "mechanism_map": {
+    "M1_evidence_layer": "由 C1 的 Q1_source_bound / Q1_evidence_items / evidence_items 体现；C0 为 0 或缺失",
+    "M2_deterministic_layout": "由 C1 的 svg_sha16 / layout_sha16 / determinism_C1_two_runs 体现；C0 无 layout.json、无可对拍指纹",
+    "M3_rule_audit": "由 C1 与 C2 的 Q3_violations_exposed 之差体现；两臂 svg_sha16/layout_sha16 相同，只有 verify_sha16 与违规条数不同"
+  },
+  "_merged_from": [
+    "COMPARISON-RECORD-20261122.md（v2 版数据）",
+    "COMPARISON-SUMMARY.md（v3 版数据）"
+  ]
+}

@@ -1,0 +1,1553 @@
+{
+  "probe": "degrade-probe",
+  "tool": "scripts/degrade_probe.py",
+  "tool_version": "1.0",
+  "what_this_measures": [
+    "受控导入拦截（sys.meta_path）逐个屏蔽 matplotlib/numpy/PIL/yaml/pptx/lxml/pypdf 后跑真实主流程",
+    "PATH 处理模拟 LibreOffice CLI 缺失（命令不存在）与失败（退出 127）",
+    "每行记录：退出码 / status / 剩余产物 / 是否写 result.json / 失败检查项 / 留痕",
+    "拦截器自证：被拦模块在子进程内确实 import 失败（防'拦了但没生效'的假结论）"
+  ],
+  "config": {
+    "case": "<WORK>/base/case.json",
+    "model_file": "<WORK>/base/model.example.json",
+    "formats": "svg,png,pdf",
+    "dpi": 150,
+    "timeout_s": 900,
+    "python": "3.13.9",
+    "platform": "win32",
+    "host_has_libreoffice": false
+  },
+  "rows": [
+    {
+      "id": "s00-baseline",
+      "what": "全依赖可用（对照行）",
+      "blocked": [],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": null,
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s00-baseline/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s00-baseline//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s01-no-matplotlib",
+      "what": "缺 matplotlib（PNG/PDF 渲染器）",
+      "blocked": [
+        "matplotlib"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 2,
+      "import_interception": {
+        "blocked": [
+          "matplotlib"
+        ],
+        "import_checks": [
+          {
+            "module": "matplotlib",
+            "importable": false,
+            "detail": "degrade_probe: import of 'matplotlib' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "partial",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s01-no-matplotlib/out",
+        "files": [
+          "diagram.svg",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": false,
+        "failures": 2,
+        "warnings": 0,
+        "gates": "7/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"partial\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s01-no-matplotlib//out\", \"files\": [\"diagram.svg\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": false, \"failures\": 2, \"warnings\": 0, \"gates\": \"7/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "partial",
+      "self_check_passed": false,
+      "failed_checks": [
+        "F01_png",
+        "F01_pdf"
+      ],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": false,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 0,
+        "exports": 0,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 1,
+      "uncertainty_dependency_items": [
+        {
+          "item": "PNG/PDF 预览未生成或未请求",
+          "reason": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'matplotlib' is blocked in this environment"
+        }
+      ],
+      "export_check_warnings": [
+        {
+          "file": "preview",
+          "check": "preview warning",
+          "result": "warn",
+          "detail": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'matplotlib' is blocked in this environment"
+        }
+      ],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": false,
+        "pdf_export": false,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=2 status=partial | SVG · 无 PNG · 无 PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": false,
+      "same_exit_code_as_baseline": false
+    },
+    {
+      "id": "s02-no-numpy",
+      "what": "缺 numpy（matplotlib 的硬依赖）",
+      "blocked": [
+        "numpy"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 2,
+      "import_interception": {
+        "blocked": [
+          "numpy"
+        ],
+        "import_checks": [
+          {
+            "module": "numpy",
+            "importable": false,
+            "detail": "degrade_probe: import of 'numpy' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "partial",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s02-no-numpy/out",
+        "files": [
+          "diagram.svg",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": false,
+        "failures": 2,
+        "warnings": 0,
+        "gates": "7/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"partial\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s02-no-numpy//out\", \"files\": [\"diagram.svg\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": false, \"failures\": 2, \"warnings\": 0, \"gates\": \"7/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "partial",
+      "self_check_passed": false,
+      "failed_checks": [
+        "F01_png",
+        "F01_pdf"
+      ],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": false,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 0,
+        "exports": 0,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 1,
+      "uncertainty_dependency_items": [
+        {
+          "item": "PNG/PDF 预览未生成或未请求",
+          "reason": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'numpy' is blocked in this environment"
+        }
+      ],
+      "export_check_warnings": [
+        {
+          "file": "preview",
+          "check": "preview warning",
+          "result": "warn",
+          "detail": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'numpy' is blocked in this environment"
+        }
+      ],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": false,
+        "pdf_export": false,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=2 status=partial | SVG · 无 PNG · 无 PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": false,
+      "same_exit_code_as_baseline": false
+    },
+    {
+      "id": "s03-no-pil",
+      "what": "缺 PIL/Pillow（只被 PNG 尺寸检查 F02 用到）",
+      "blocked": [
+        "PIL"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 2,
+      "import_interception": {
+        "blocked": [
+          "PIL"
+        ],
+        "import_checks": [
+          {
+            "module": "PIL",
+            "importable": false,
+            "detail": "degrade_probe: import of 'PIL' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "partial",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s03-no-pil/out",
+        "files": [
+          "diagram.svg",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": false,
+        "failures": 2,
+        "warnings": 0,
+        "gates": "7/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"partial\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s03-no-pil//out\", \"files\": [\"diagram.svg\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": false, \"failures\": 2, \"warnings\": 0, \"gates\": \"7/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "partial",
+      "self_check_passed": false,
+      "failed_checks": [
+        "F01_png",
+        "F01_pdf"
+      ],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": false,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 0,
+        "exports": 0,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 1,
+      "uncertainty_dependency_items": [
+        {
+          "item": "PNG/PDF 预览未生成或未请求",
+          "reason": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'PIL' is blocked in this environment"
+        }
+      ],
+      "export_check_warnings": [
+        {
+          "file": "preview",
+          "check": "preview warning",
+          "result": "warn",
+          "detail": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'PIL' is blocked in this environment"
+        }
+      ],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": false,
+        "pdf_export": false,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=2 status=partial | SVG · 无 PNG · 无 PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": false,
+      "same_exit_code_as_baseline": false
+    },
+    {
+      "id": "s04-no-yaml",
+      "what": "缺 PyYAML（本包未 import）",
+      "blocked": [
+        "yaml"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": {
+        "blocked": [
+          "yaml"
+        ],
+        "import_checks": [
+          {
+            "module": "yaml",
+            "importable": false,
+            "detail": "degrade_probe: import of 'yaml' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s04-no-yaml/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s04-no-yaml//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s05-no-pptx",
+      "what": "缺 python-pptx（本包未 import）",
+      "blocked": [
+        "pptx"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": {
+        "blocked": [
+          "pptx"
+        ],
+        "import_checks": [
+          {
+            "module": "pptx",
+            "importable": false,
+            "detail": "degrade_probe: import of 'pptx' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s05-no-pptx/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s05-no-pptx//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s06-no-lxml",
+      "what": "缺 lxml（本包用标准库 xml.etree）",
+      "blocked": [
+        "lxml"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": {
+        "blocked": [
+          "lxml"
+        ],
+        "import_checks": [
+          {
+            "module": "lxml",
+            "importable": false,
+            "detail": "degrade_probe: import of 'lxml' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s06-no-lxml/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s06-no-lxml//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s07-no-pypdf",
+      "what": "缺 pypdf（本包不解析 PDF）",
+      "blocked": [
+        "pypdf"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": {
+        "blocked": [
+          "pypdf"
+        ],
+        "import_checks": [
+          {
+            "module": "pypdf",
+            "importable": false,
+            "detail": "degrade_probe: import of 'pypdf' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s07-no-pypdf/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s07-no-pypdf//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s08-no-mpl-no-pil",
+      "what": "同时缺 matplotlib+numpy+PIL（最坏情况）",
+      "blocked": [
+        "matplotlib",
+        "numpy",
+        "PIL"
+      ],
+      "formats": "svg,png,pdf",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 2,
+      "import_interception": {
+        "blocked": [
+          "PIL",
+          "matplotlib",
+          "numpy"
+        ],
+        "import_checks": [
+          {
+            "module": "PIL",
+            "importable": false,
+            "detail": "degrade_probe: import of 'PIL' is blocked in this environment"
+          },
+          {
+            "module": "matplotlib",
+            "importable": false,
+            "detail": "degrade_probe: import of 'matplotlib' is blocked in this environment"
+          },
+          {
+            "module": "numpy",
+            "importable": false,
+            "detail": "degrade_probe: import of 'numpy' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "partial",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s08-no-mpl-no-pil/out",
+        "files": [
+          "diagram.svg",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": false,
+        "failures": 2,
+        "warnings": 0,
+        "gates": "7/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"partial\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s08-no-mpl-no-pil//out\", \"files\": [\"diagram.svg\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": false, \"failures\": 2, \"warnings\": 0, \"gates\": \"7/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "partial",
+      "self_check_passed": false,
+      "failed_checks": [
+        "F01_png",
+        "F01_pdf"
+      ],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": false,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 0,
+        "exports": 0,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 1,
+      "uncertainty_dependency_items": [
+        {
+          "item": "PNG/PDF 预览未生成或未请求",
+          "reason": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'matplotlib' is blocked in this environment"
+        }
+      ],
+      "export_check_warnings": [
+        {
+          "file": "preview",
+          "check": "preview warning",
+          "result": "warn",
+          "detail": "预览渲染失败（SVG 可编辑源仍有效）: ImportError: degrade_probe: import of 'matplotlib' is blocked in this environment"
+        }
+      ],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": false,
+        "pdf_export": false,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=2 status=partial | SVG · 无 PNG · 无 PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": false,
+      "same_exit_code_as_baseline": false
+    },
+    {
+      "id": "s09-svg-only",
+      "what": "依赖齐全，但用户主动只请求 SVG（有意的降级）",
+      "blocked": [],
+      "formats": "svg",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 2,
+      "import_interception": null,
+      "summary": {
+        "status": "partial",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s09-svg-only/out",
+        "files": [
+          "diagram.svg",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": false,
+        "failures": 2,
+        "warnings": 0,
+        "gates": "7/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"partial\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s09-svg-only//out\", \"files\": [\"diagram.svg\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": false, \"failures\": 2, \"warnings\": 0, \"gates\": \"7/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "partial",
+      "self_check_passed": false,
+      "failed_checks": [
+        "F01_png",
+        "F01_pdf"
+      ],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": false,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 0,
+        "exports": 0,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 1,
+      "uncertainty_dependency_items": [
+        {
+          "item": "PNG/PDF 预览未生成或未请求",
+          "reason": "本次未请求 PNG/PDF 预览（--formats svg）：只交付可编辑 SVG 源；需要预览时加 --formats svg,png,pdf 重跑"
+        }
+      ],
+      "export_check_warnings": [
+        {
+          "file": "preview",
+          "check": "preview warning",
+          "result": "warn",
+          "detail": "本次未请求 PNG/PDF 预览（--formats svg）：只交付可编辑 SVG 源；需要预览时加 --formats svg,png,pdf 重跑"
+        }
+      ],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": false,
+        "pdf_export": false,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=2 status=partial | SVG · 无 PNG · 无 PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": false,
+      "same_exit_code_as_baseline": false
+    },
+    {
+      "id": "s10-libreoffice-missing",
+      "what": "PATH 里没有 soffice/libreoffice（命令不存在）",
+      "blocked": [],
+      "formats": "svg,png,pdf",
+      "path_mode": "empty",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": null,
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s10-libreoffice-missing/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s10-libreoffice-missing//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s11-libreoffice-failing",
+      "what": "soffice/libreoffice 存在但立即失败（退出 127）",
+      "blocked": [],
+      "formats": "svg,png,pdf",
+      "path_mode": "failing-stub",
+      "path_stub_dir": "<WORK>/stubbin",
+      "which_soffice": "<WORK>/stubbin/soffice.BAT",
+      "which_libreoffice": "<WORK>/stubbin/libreoffice.BAT",
+      "timeout": false,
+      "exit_code": 0,
+      "import_interception": null,
+      "summary": {
+        "status": "success",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s11-libreoffice-failing/out",
+        "files": [
+          "diagram.svg",
+          "diagram.png",
+          "diagram.pdf",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": true,
+        "failures": 0,
+        "warnings": 0,
+        "gates": "8/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"success\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s11-libreoffice-failing//out\", \"files\": [\"diagram.svg\", \"diagram.png\", \"diagram.pdf\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": true, \"failures\": 0, \"warnings\": 0, \"gates\": \"8/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "pdf_export": true,
+        "png_preview": true,
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.pdf",
+        "diagram.png",
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "success",
+      "self_check_passed": true,
+      "failed_checks": [],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": true,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 1,
+        "exports": 1,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 0,
+      "uncertainty_dependency_items": [],
+      "export_check_warnings": [],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": true,
+        "pdf_export": true,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "availability": "exit=0 status=success | SVG · PNG · PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": true,
+      "same_exit_code_as_baseline": true
+    },
+    {
+      "id": "s12-pil-png-microtrace",
+      "what": "micro-trace: matplotlib Agg PNG save with PIL blocked",
+      "blocked": [
+        "PIL"
+      ],
+      "formats": "svg",
+      "path_mode": "inherit",
+      "path_stub_dir": null,
+      "which_soffice": null,
+      "which_libreoffice": null,
+      "timeout": false,
+      "exit_code": 2,
+      "import_interception": {
+        "blocked": [
+          "PIL"
+        ],
+        "import_checks": [
+          {
+            "module": "PIL",
+            "importable": false,
+            "detail": "degrade_probe: import of 'PIL' is blocked in this environment"
+          }
+        ],
+        "which": {
+          "soffice": null,
+          "libreoffice": null
+        }
+      },
+      "summary": {
+        "status": "partial",
+        "case_id": "example-egfr-mapk",
+        "out_dir": "<WORK>/rows/s12-pil-png-microtrace/out",
+        "files": [
+          "diagram.svg",
+          "result.json",
+          "model.json",
+          "topology.json",
+          "legend_audit.json"
+        ],
+        "self_check_passed": false,
+        "failures": 2,
+        "warnings": 0,
+        "gates": "7/8",
+        "extraction": {
+          "method": "manual",
+          "verified_by_agent": true
+        }
+      },
+      "stdout_tail": "  produced  topology.json  sha256=eb826fc5557fccfc  1434 bytes\n  produced  legend_audit.json  sha256=efdb1805c839d648  1807 bytes\nSUMMARY {\"status\": \"partial\", \"case_id\": \"example-egfr-mapk\", \"out_dir\": \"<WORK>//rows//s12-pil-png-microtrace//out\", \"files\": [\"diagram.svg\", \"result.json\", \"model.json\", \"topology.json\", \"legend_audit.json\"], \"self_check_passed\": false, \"failures\": 2, \"warnings\": 0, \"gates\": \"7/8\", \"extraction\": {\"method\": \"manual\", \"verified_by_agent\": true}}",
+      "stderr_tail": "",
+      "artifacts": {
+        "editable_svg": true,
+        "legend_audit": true,
+        "model": true,
+        "result_json": true,
+        "topology_audit": true
+      },
+      "artifacts_present": [
+        "diagram.svg",
+        "legend_audit.json",
+        "model.json",
+        "result.json",
+        "topology.json"
+      ],
+      "result_json_written": true,
+      "status": "partial",
+      "self_check_passed": false,
+      "failed_checks": [
+        "F01_png",
+        "F01_pdf"
+      ],
+      "gates": {
+        "g1_case_id": true,
+        "g2_contract_echo": true,
+        "g3_status": true,
+        "g4_svg_layers": true,
+        "g5_png": false,
+        "g6_legend_cover": true,
+        "g7_sources": true,
+        "g8_audits": true
+      },
+      "deliverables": {
+        "editable_sources": 1,
+        "previews": 0,
+        "exports": 0,
+        "audits": [
+          "topology.json",
+          "legend_audit.json"
+        ]
+      },
+      "uncertainty_n": 1,
+      "uncertainty_dependency_items": [
+        {
+          "item": "PNG/PDF 预览未生成或未请求",
+          "reason": "本次未请求 PNG/PDF 预览（--formats svg）：只交付可编辑 SVG 源；需要预览时加 --formats svg,png,pdf 重跑"
+        }
+      ],
+      "export_check_warnings": [
+        {
+          "file": "preview",
+          "check": "preview warning",
+          "result": "warn",
+          "detail": "本次未请求 PNG/PDF 预览（--formats svg）：只交付可编辑 SVG 源；需要预览时加 --formats svg,png,pdf 重跑"
+        }
+      ],
+      "usable": {
+        "editable_source_svg": true,
+        "png_preview": false,
+        "pdf_export": false,
+        "contract_result_json": true,
+        "audits": true
+      },
+      "stub_invoked": false,
+      "microtrace": {
+        "what": "blocked=PIL: direct matplotlib Agg PNG save result",
+        "exit_code": 1,
+        "stdout_tail": "PROBE {\"blocked\": [\"PIL\"], \"import_checks\": [{\"module\": \"PIL\", \"importable\": false, \"detail\": \"degrade_probe: import of 'PIL' is blocked in this environment\"}], \"which\": {\"soffice\": null, \"libreoffice\": null}}",
+        "traceback_tail": "    from matplotlib.colors import Colormap, is_color_like\n  File \"<ABS>\", line 52, in <module>\n    from PIL import Image\n  File \"<WORK>/shim_blocked.py\", line 18, in find_spec\n    raise ImportError(\n        \"degrade_probe: import of %r is blocked in this environment\" % fullname)\nImportError: degrade_probe: import of 'PIL' is blocked in this environment",
+        "traceback_omitted_host_path_lines": 0,
+        "png_written": false,
+        "main_pipeline_ran_instead": false
+      },
+      "availability": "exit=2 status=partial | SVG · 无 PNG · 无 PDF · result.json · 审计 JSON 齐全",
+      "same_artifact_set_as_baseline": false,
+      "same_exit_code_as_baseline": false
+    }
+  ],
+  "dependency_surface": {
+    "matplotlib": {
+      "scenarios": [
+        "s01-no-matplotlib",
+        "s08-no-mpl-no-pil"
+      ],
+      "impact": "changes-deliverables-or-status"
+    },
+    "numpy": {
+      "scenarios": [
+        "s02-no-numpy",
+        "s08-no-mpl-no-pil"
+      ],
+      "impact": "changes-deliverables-or-status"
+    },
+    "PIL": {
+      "scenarios": [
+        "s03-no-pil",
+        "s08-no-mpl-no-pil",
+        "s12-pil-png-microtrace"
+      ],
+      "impact": "changes-deliverables-or-status"
+    },
+    "yaml": {
+      "scenarios": [
+        "s04-no-yaml"
+      ],
+      "impact": "none-or-minor"
+    },
+    "pptx": {
+      "scenarios": [
+        "s05-no-pptx"
+      ],
+      "impact": "none-or-minor"
+    },
+    "lxml": {
+      "scenarios": [
+        "s06-no-lxml"
+      ],
+      "impact": "none-or-minor"
+    },
+    "pypdf": {
+      "scenarios": [
+        "s07-no-pypdf"
+      ],
+      "impact": "none-or-minor"
+    },
+    "LibreOffice CLI (PATH 无该命令)": {
+      "scenarios": [
+        "s10-libreoffice-missing"
+      ],
+      "impact": "none-or-minor"
+    },
+    "LibreOffice CLI (存在但退出 127)": {
+      "scenarios": [
+        "s11-libreoffice-failing"
+      ],
+      "impact": "none-or-minor"
+    }
+  },
+  "minimal_environment": {
+    "required": [
+      "Python 3（仅标准库：json/os/re/math/xml.etree/hashlib/subprocess/argparse）"
+    ],
+    "required_for_full_deliverables_measured": [
+      "PIL",
+      "matplotlib",
+      "numpy"
+    ],
+    "no_effect_measured": [
+      "LibreOffice CLI (PATH clean, command absent)",
+      "LibreOffice CLI (present, exits 127)",
+      "lxml",
+      "pptx",
+      "pypdf",
+      "yaml"
+    ],
+    "per_dependency_effect": {
+      "matplotlib": "removing-it-changes-deliverables-or-status",
+      "numpy": "removing-it-changes-deliverables-or-status",
+      "PIL": "removing-it-changes-deliverables-or-status",
+      "yaml": "no-effect-measured",
+      "pptx": "no-effect-measured",
+      "lxml": "no-effect-measured",
+      "pypdf": "no-effect-measured",
+      "LibreOffice CLI (PATH clean, command absent)": "no-effect-measured",
+      "LibreOffice CLI (present, exits 127)": "no-effect-measured"
+    },
+    "pil_mechanism_note": [
+      "缺 PIL 时 PNG **与** PDF 都拿不到（实测 s03：exit 2 / partial / 无 PNG 无 PDF）",
+      "机制见 s12 微追溯：matplotlib.colors 自己就 `from PIL import Image`，",
+      "因此 PIL 不是「只被 F02 尺寸检查用到」，而是 matplotlib 的硬依赖；",
+      "且 mpl_backend 先存 PNG 再存 PDF，PNG 保存抛错会连带丢掉 PDF"
+    ],
+    "how_derived": "见 rows[*].blocked / path_mode 与 dependency_surface 的实测影响（本段自动生成）"
+  },
+  "not_covered": [
+    "字体真的缺失（无中文字体）时的渲染：属环境探测，本探针只记录 matplotlib 自身的字体告警，不卸载系统字体",
+    "部分损坏的安装（如 matplotlib 能 import 但 Agg 后端缺 C 扩展）：只覆盖'整模块不可导入'",
+    "README 声明的依赖之外的第三方库：本包 scripts/ 的 import 并集已逐个覆盖",
+    "平台真实评测容器的依赖集（不可见）：结论只对本机实测的解释器/版本组合有效",
+    "若本机基线本来就没有 LibreOffice（config.host_has_libreoffice=false），则 s10 只证明「PATH 被清空后行为不变」；s11 用桩命令补上「命令存在但失败」这一格",
+    "s11 的桩命令会写调用标记文件：标记未生成即证明主流程**从未** shell out 到 LibreOffice"
+  ]
+}

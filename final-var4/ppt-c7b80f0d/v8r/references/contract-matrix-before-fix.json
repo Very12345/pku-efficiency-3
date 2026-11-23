@@ -1,0 +1,3499 @@
+{
+  "schema": "contract-matrix/1",
+  "tool": "scripts/contract_matrix.py",
+  "base_case": "<SKILL_DIR>\\examples\\case.json",
+  "spec": "<SKILL_DIR>\\examples\\deck-spec.json",
+  "entry": "<SKILL_DIR>\\scripts\\main.py",
+  "python": "<PYTHON>",
+  "cells": [
+    {
+      "cell_id": "A01",
+      "form": "① 字段→类型提示",
+      "boundary": "普通字符串提示",
+      "declaration": {
+        "cell_title_hint": "字符串"
+      },
+      "note": "无真实值 → 按容器给空串",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_title_hint": "字符串"
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6181,
+      "declared_fields": [
+        {
+          "name": "cell_title_hint",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A02",
+      "form": "① 字段→类型提示",
+      "boundary": "列表提示",
+      "declaration": {
+        "cell_list_hint": [
+          "每页 {page,title,claim}（列表）"
+        ]
+      },
+      "note": "声明值是 list → 回显 []",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_list_hint": [
+          "每页 {page,title,claim}（列表）"
+        ]
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6221,
+      "declared_fields": [
+        {
+          "name": "cell_list_hint",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A03",
+      "form": "① 字段→类型提示",
+      "boundary": "对象（嵌套）提示",
+      "declaration": {
+        "cell_obj_hint": {
+          "a": "b"
+        }
+      },
+      "note": "声明值是 dict → 回显 {}（嵌套结构本身不回显）",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_obj_hint": {
+          "a": "b"
+        }
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6188,
+      "declared_fields": [
+        {
+          "name": "cell_obj_hint",
+          "present": true,
+          "type": "obj",
+          "is_null": false,
+          "value": {}
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A04",
+      "form": "① 字段→类型提示",
+      "boundary": "**数值 0**",
+      "declaration": {
+        "cell_num_hint": 0
+      },
+      "note": "数值型声明的类型忠实性（0 是边界）",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_num_hint": 0
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6166,
+      "declared_fields": [
+        {
+          "name": "cell_num_hint",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [
+        "cell_num_hint 期望 number=0，实测 str=''"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "silent-pass",
+      "silent_pass": true
+    },
+    {
+      "cell_id": "A05",
+      "form": "① 字段→类型提示",
+      "boundary": "空串",
+      "declaration": {
+        "cell_empty_str": ""
+      },
+      "note": "空串边界",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_empty_str": ""
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6169,
+      "declared_fields": [
+        {
+          "name": "cell_empty_str",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A06",
+      "form": "① 字段→类型提示",
+      "boundary": "空数组",
+      "declaration": {
+        "cell_empty_list": []
+      },
+      "note": "空数组边界",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_empty_list": []
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6172,
+      "declared_fields": [
+        {
+          "name": "cell_empty_list",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A07",
+      "form": "① 字段→类型提示",
+      "boundary": "**非法类型 null**",
+      "declaration": {
+        "cell_null": null
+      },
+      "note": "声明的值本身是 null：禁止把 null 回显出去",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_null": null
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6162,
+      "declared_fields": [
+        {
+          "name": "cell_null",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A08",
+      "form": "① 字段→类型提示",
+      "boundary": "超长字符串（8000 字）",
+      "declaration": {
+        "cell_long": "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长"
+      },
+      "note": "超长声明：只取容器类型，不把声明原文抄进 result",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_long": "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长"
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 30160,
+      "declared_fields": [
+        {
+          "name": "cell_long",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A09",
+      "form": "① 字段→类型提示",
+      "boundary": "与真实键同名（status/deck）",
+      "declaration": {
+        "status": "字符串",
+        "deck": "字符串"
+      },
+      "note": "真实值优先，声明不得覆盖运行结果",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "status": "字符串",
+        "deck": "字符串"
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 6172,
+      "declared_fields": [
+        {
+          "name": "status",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": "completed"
+        },
+        {
+          "name": "deck",
+          "present": true,
+          "type": "obj",
+          "is_null": false,
+          "value": "<large>"
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": true,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A10",
+      "form": "① 字段→类型提示",
+      "boundary": "语义字段（title/main_claim/slides/render_state）",
+      "declaration": {
+        "title": "字符串",
+        "main_claim": "字符串",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "render_state": "说明"
+      },
+      "note": "语义字段必须取本次运行的真实值",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "字符串",
+        "main_claim": "字符串",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "说明",
+        "notes_separated": true
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 6028,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": "ExampleNet: 检索增强的代码评审（演示示例）"
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": "检索增强无需微调即可提升代码评审评语质量（ROUGE-L F1 +8.3 点）。"
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": "<large>"
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "obj",
+          "is_null": false,
+          "value": {
+            "previews": 7,
+            "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+            "deck_file": "academic_deck.pptx",
+            "evidence_mapping_file": "evidence_mapping.md"
+          }
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A11",
+      "form": "① 字段→类型提示",
+      "boundary": "布尔 true（未知字段名）",
+      "declaration": {
+        "cell_bool_true": true
+      },
+      "note": "未知布尔字段：如实回显声明值",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_bool_true": true
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6175,
+      "declared_fields": [
+        {
+          "name": "cell_bool_true",
+          "present": true,
+          "type": "bool",
+          "is_null": false,
+          "value": false
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [
+        "cell_bool_true 期望 bool=True，实测 bool=False"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "silent-pass",
+      "silent_pass": true
+    },
+    {
+      "cell_id": "A12",
+      "form": "① 字段→类型提示",
+      "boundary": "布尔 false（未知字段名）",
+      "declaration": {
+        "cell_bool_false": false
+      },
+      "note": "未知布尔字段的 false 分支",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_bool_false": false
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6175,
+      "declared_fields": [
+        {
+          "name": "cell_bool_false",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [
+        "cell_bool_false 期望 bool=False，实测 str=''"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "silent-pass",
+      "silent_pass": true
+    },
+    {
+      "cell_id": "A13",
+      "form": "① 字段→类型提示",
+      "boundary": "布尔 true（语义字段 notes_separated）",
+      "declaration": {
+        "notes_separated": true
+      },
+      "note": "语义布尔：回显 deck 的真实状态",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 6120,
+      "declared_fields": [
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "bool",
+          "is_null": false,
+          "value": true
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "A14",
+      "form": "① 字段→类型提示",
+      "boundary": "布尔 false（语义字段 notes_separated）",
+      "declaration": {
+        "notes_separated": false
+      },
+      "note": "真实状态为 true 时，声明 false 不得把结果改成 false",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": false
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 6121,
+      "declared_fields": [
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "bool",
+          "is_null": false,
+          "value": true
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "B01",
+      "form": "② 字段→说明",
+      "boundary": "普通说明文本",
+      "declaration": {
+        "cell_desc": "渲染与版本记录（字符串或对象）"
+      },
+      "note": "说明形态无真实值 → 空串",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_desc": "渲染与版本记录（字符串或对象）"
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6205,
+      "declared_fields": [
+        {
+          "name": "cell_desc",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "B02",
+      "form": "② 字段→说明",
+      "boundary": "非法类型（说明位写了数字）",
+      "declaration": {
+        "cell_desc_num": 123
+      },
+      "note": "说明位出现数字：类型忠实 vs 一律空串，用实测判定",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true,
+        "cell_desc_num": 123
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 6169,
+      "declared_fields": [
+        {
+          "name": "cell_desc_num",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [
+        "cell_desc_num 期望 number=123，实测 str=''"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "silent-pass",
+      "silent_pass": true
+    },
+    {
+      "cell_id": "C01",
+      "form": "③ 布尔开关",
+      "boundary": "仅布尔字段",
+      "declaration": {
+        "notes_separated": true
+      },
+      "note": "③ 形态与 ① 形态在同一字段上的行为应一致",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "title": "deck 标题（一行的字符串）",
+        "main_claim": "全文一句话结论（字符串）",
+        "slides": [
+          "每页 {page,title,claim}（列表）"
+        ],
+        "evidence_mapping": "页级证据映射描述（字符串或对象）",
+        "render_state": "渲染与版本记录（字符串或对象）",
+        "notes_separated": true
+      },
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 6120,
+      "declared_fields": [
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "bool",
+          "is_null": false,
+          "value": true
+        }
+      ],
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "D01",
+      "form": "④ 字段清单",
+      "boundary": "两个名称",
+      "declaration": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "cell_a",
+        "cell_b"
+      ],
+      "note": "每个名称按容器给空值",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "cell_a",
+        "cell_b"
+      ],
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 21,
+      "result_bytes": 4598,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_a",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_b",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "semantic_echo_in_list_form": {
+        "title": "list",
+        "main_claim": "list",
+        "slides": "list",
+        "render_state": "list",
+        "notes_separated": "list"
+      },
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "D02",
+      "form": "④ 字段清单",
+      "boundary": "空清单（只列语义字段）",
+      "declaration": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "note": "空清单：不添加任何字段，顶层 19 字段仍须齐全",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 4538,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "semantic_echo_in_list_form": {
+        "title": "list",
+        "main_claim": "list",
+        "slides": "list",
+        "render_state": "list",
+        "notes_separated": "list"
+      },
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "D03",
+      "form": "④ 字段清单",
+      "boundary": "**非法元素（数字/null 混入）**",
+      "declaration": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "cell_c",
+        7,
+        null
+      ],
+      "note": "非法元素：不得静默丢弃（要么回显要么记录）",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "cell_c",
+        7,
+        null
+      ],
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 4585,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_c",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "semantic_echo_in_list_form": {
+        "title": "list",
+        "main_claim": "list",
+        "slides": "list",
+        "render_state": "list",
+        "notes_separated": "list"
+      },
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "malformed_recorded": false,
+      "problems_in_cell": [
+        "清单中的非法元素（7/None）被静默丢弃"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "silent-pass",
+      "silent_pass": true
+    },
+    {
+      "cell_id": "D04",
+      "form": "④ 字段清单",
+      "boundary": "与真实键同名",
+      "declaration": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "status",
+        "case_id"
+      ],
+      "note": "真实值优先",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "status",
+        "case_id"
+      ],
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 19,
+      "result_bytes": 4567,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "status",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": "completed"
+        },
+        {
+          "name": "case_id",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": "example-ppt-c7b80f0d"
+        }
+      ],
+      "semantic_echo_in_list_form": {
+        "title": "list",
+        "main_claim": "list",
+        "slides": "list",
+        "render_state": "list",
+        "notes_separated": "list"
+      },
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "D05",
+      "form": "④ 字段清单",
+      "boundary": "重复名称",
+      "declaration": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "dup_name",
+        "dup_name"
+      ],
+      "note": "重复名称只应产生一个字段",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "dup_name",
+        "dup_name"
+      ],
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 20,
+      "result_bytes": 4588,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "dup_name",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "dup_name",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "semantic_echo_in_list_form": {
+        "title": "list",
+        "main_claim": "list",
+        "slides": "list",
+        "render_state": "list",
+        "notes_separated": "list"
+      },
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "D06",
+      "form": "④ 字段清单",
+      "boundary": "超长清单（200 个名称）",
+      "declaration": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "cell_bulk_000",
+        "cell_bulk_001",
+        "cell_bulk_002",
+        "cell_bulk_003",
+        "cell_bulk_004",
+        "cell_bulk_005",
+        "cell_bulk_006",
+        "cell_bulk_007",
+        "cell_bulk_008",
+        "cell_bulk_009",
+        "cell_bulk_010",
+        "cell_bulk_011",
+        "cell_bulk_012",
+        "cell_bulk_013",
+        "cell_bulk_014",
+        "cell_bulk_015",
+        "cell_bulk_016",
+        "cell_bulk_017",
+        "cell_bulk_018",
+        "cell_bulk_019",
+        "cell_bulk_020",
+        "cell_bulk_021",
+        "cell_bulk_022",
+        "cell_bulk_023",
+        "cell_bulk_024",
+        "cell_bulk_025",
+        "cell_bulk_026",
+        "cell_bulk_027",
+        "cell_bulk_028",
+        "cell_bulk_029",
+        "cell_bulk_030",
+        "cell_bulk_031",
+        "cell_bulk_032",
+        "cell_bulk_033",
+        "cell_bulk_034",
+        "cell_bulk_035",
+        "cell_bulk_036",
+        "cell_bulk_037",
+        "cell_bulk_038",
+        "cell_bulk_039",
+        "cell_bulk_040",
+        "cell_bulk_041",
+        "cell_bulk_042",
+        "cell_bulk_043",
+        "cell_bulk_044",
+        "cell_bulk_045",
+        "cell_bulk_046",
+        "cell_bulk_047",
+        "cell_bulk_048",
+        "cell_bulk_049",
+        "cell_bulk_050",
+        "cell_bulk_051",
+        "cell_bulk_052",
+        "cell_bulk_053",
+        "cell_bulk_054",
+        "cell_bulk_055",
+        "cell_bulk_056",
+        "cell_bulk_057",
+        "cell_bulk_058",
+        "cell_bulk_059",
+        "cell_bulk_060",
+        "cell_bulk_061",
+        "cell_bulk_062",
+        "cell_bulk_063",
+        "cell_bulk_064",
+        "cell_bulk_065",
+        "cell_bulk_066",
+        "cell_bulk_067",
+        "cell_bulk_068",
+        "cell_bulk_069",
+        "cell_bulk_070",
+        "cell_bulk_071",
+        "cell_bulk_072",
+        "cell_bulk_073",
+        "cell_bulk_074",
+        "cell_bulk_075",
+        "cell_bulk_076",
+        "cell_bulk_077",
+        "cell_bulk_078",
+        "cell_bulk_079",
+        "cell_bulk_080",
+        "cell_bulk_081",
+        "cell_bulk_082",
+        "cell_bulk_083",
+        "cell_bulk_084",
+        "cell_bulk_085",
+        "cell_bulk_086",
+        "cell_bulk_087",
+        "cell_bulk_088",
+        "cell_bulk_089",
+        "cell_bulk_090",
+        "cell_bulk_091",
+        "cell_bulk_092",
+        "cell_bulk_093",
+        "cell_bulk_094",
+        "cell_bulk_095",
+        "cell_bulk_096",
+        "cell_bulk_097",
+        "cell_bulk_098",
+        "cell_bulk_099",
+        "cell_bulk_100",
+        "cell_bulk_101",
+        "cell_bulk_102",
+        "cell_bulk_103",
+        "cell_bulk_104",
+        "cell_bulk_105",
+        "cell_bulk_106",
+        "cell_bulk_107",
+        "cell_bulk_108",
+        "cell_bulk_109",
+        "cell_bulk_110",
+        "cell_bulk_111",
+        "cell_bulk_112",
+        "cell_bulk_113",
+        "cell_bulk_114",
+        "cell_bulk_115",
+        "cell_bulk_116",
+        "cell_bulk_117",
+        "cell_bulk_118",
+        "cell_bulk_119",
+        "cell_bulk_120",
+        "cell_bulk_121",
+        "cell_bulk_122",
+        "cell_bulk_123",
+        "cell_bulk_124",
+        "cell_bulk_125",
+        "cell_bulk_126",
+        "cell_bulk_127",
+        "cell_bulk_128",
+        "cell_bulk_129",
+        "cell_bulk_130",
+        "cell_bulk_131",
+        "cell_bulk_132",
+        "cell_bulk_133",
+        "cell_bulk_134",
+        "cell_bulk_135",
+        "cell_bulk_136",
+        "cell_bulk_137",
+        "cell_bulk_138",
+        "cell_bulk_139",
+        "cell_bulk_140",
+        "cell_bulk_141",
+        "cell_bulk_142",
+        "cell_bulk_143",
+        "cell_bulk_144",
+        "cell_bulk_145",
+        "cell_bulk_146",
+        "cell_bulk_147",
+        "cell_bulk_148",
+        "cell_bulk_149",
+        "cell_bulk_150",
+        "cell_bulk_151",
+        "cell_bulk_152",
+        "cell_bulk_153",
+        "cell_bulk_154",
+        "cell_bulk_155",
+        "cell_bulk_156",
+        "cell_bulk_157",
+        "cell_bulk_158",
+        "cell_bulk_159",
+        "cell_bulk_160",
+        "cell_bulk_161",
+        "cell_bulk_162",
+        "cell_bulk_163",
+        "cell_bulk_164",
+        "cell_bulk_165",
+        "cell_bulk_166",
+        "cell_bulk_167",
+        "cell_bulk_168",
+        "cell_bulk_169",
+        "cell_bulk_170",
+        "cell_bulk_171",
+        "cell_bulk_172",
+        "cell_bulk_173",
+        "cell_bulk_174",
+        "cell_bulk_175",
+        "cell_bulk_176",
+        "cell_bulk_177",
+        "cell_bulk_178",
+        "cell_bulk_179",
+        "cell_bulk_180",
+        "cell_bulk_181",
+        "cell_bulk_182",
+        "cell_bulk_183",
+        "cell_bulk_184",
+        "cell_bulk_185",
+        "cell_bulk_186",
+        "cell_bulk_187",
+        "cell_bulk_188",
+        "cell_bulk_189",
+        "cell_bulk_190",
+        "cell_bulk_191",
+        "cell_bulk_192",
+        "cell_bulk_193",
+        "cell_bulk_194",
+        "cell_bulk_195",
+        "cell_bulk_196",
+        "cell_bulk_197",
+        "cell_bulk_198",
+        "cell_bulk_199"
+      ],
+      "note": "体量边界：200 个声明字段全部回显",
+      "exit_code": 0,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated",
+        "cell_bulk_000",
+        "cell_bulk_001",
+        "cell_bulk_002",
+        "cell_bulk_003",
+        "cell_bulk_004",
+        "cell_bulk_005",
+        "cell_bulk_006",
+        "cell_bulk_007",
+        "cell_bulk_008",
+        "cell_bulk_009",
+        "cell_bulk_010",
+        "cell_bulk_011",
+        "cell_bulk_012",
+        "cell_bulk_013",
+        "cell_bulk_014",
+        "cell_bulk_015",
+        "cell_bulk_016",
+        "cell_bulk_017",
+        "cell_bulk_018",
+        "cell_bulk_019",
+        "cell_bulk_020",
+        "cell_bulk_021",
+        "cell_bulk_022",
+        "cell_bulk_023",
+        "cell_bulk_024",
+        "cell_bulk_025",
+        "cell_bulk_026",
+        "cell_bulk_027",
+        "cell_bulk_028",
+        "cell_bulk_029",
+        "cell_bulk_030",
+        "cell_bulk_031",
+        "cell_bulk_032",
+        "cell_bulk_033",
+        "cell_bulk_034",
+        "cell_bulk_035",
+        "cell_bulk_036",
+        "cell_bulk_037",
+        "cell_bulk_038",
+        "cell_bulk_039",
+        "cell_bulk_040",
+        "cell_bulk_041",
+        "cell_bulk_042",
+        "cell_bulk_043",
+        "cell_bulk_044",
+        "cell_bulk_045",
+        "cell_bulk_046",
+        "cell_bulk_047",
+        "cell_bulk_048",
+        "cell_bulk_049",
+        "cell_bulk_050",
+        "cell_bulk_051",
+        "cell_bulk_052",
+        "cell_bulk_053",
+        "cell_bulk_054",
+        "cell_bulk_055",
+        "cell_bulk_056",
+        "cell_bulk_057",
+        "cell_bulk_058",
+        "cell_bulk_059",
+        "cell_bulk_060",
+        "cell_bulk_061",
+        "cell_bulk_062",
+        "cell_bulk_063",
+        "cell_bulk_064",
+        "cell_bulk_065",
+        "cell_bulk_066",
+        "cell_bulk_067",
+        "cell_bulk_068",
+        "cell_bulk_069",
+        "cell_bulk_070",
+        "cell_bulk_071",
+        "cell_bulk_072",
+        "cell_bulk_073",
+        "cell_bulk_074",
+        "cell_bulk_075",
+        "cell_bulk_076",
+        "cell_bulk_077",
+        "cell_bulk_078",
+        "cell_bulk_079",
+        "cell_bulk_080",
+        "cell_bulk_081",
+        "cell_bulk_082",
+        "cell_bulk_083",
+        "cell_bulk_084",
+        "cell_bulk_085",
+        "cell_bulk_086",
+        "cell_bulk_087",
+        "cell_bulk_088",
+        "cell_bulk_089",
+        "cell_bulk_090",
+        "cell_bulk_091",
+        "cell_bulk_092",
+        "cell_bulk_093",
+        "cell_bulk_094",
+        "cell_bulk_095",
+        "cell_bulk_096",
+        "cell_bulk_097",
+        "cell_bulk_098",
+        "cell_bulk_099",
+        "cell_bulk_100",
+        "cell_bulk_101",
+        "cell_bulk_102",
+        "cell_bulk_103",
+        "cell_bulk_104",
+        "cell_bulk_105",
+        "cell_bulk_106",
+        "cell_bulk_107",
+        "cell_bulk_108",
+        "cell_bulk_109",
+        "cell_bulk_110",
+        "cell_bulk_111",
+        "cell_bulk_112",
+        "cell_bulk_113",
+        "cell_bulk_114",
+        "cell_bulk_115",
+        "cell_bulk_116",
+        "cell_bulk_117",
+        "cell_bulk_118",
+        "cell_bulk_119",
+        "cell_bulk_120",
+        "cell_bulk_121",
+        "cell_bulk_122",
+        "cell_bulk_123",
+        "cell_bulk_124",
+        "cell_bulk_125",
+        "cell_bulk_126",
+        "cell_bulk_127",
+        "cell_bulk_128",
+        "cell_bulk_129",
+        "cell_bulk_130",
+        "cell_bulk_131",
+        "cell_bulk_132",
+        "cell_bulk_133",
+        "cell_bulk_134",
+        "cell_bulk_135",
+        "cell_bulk_136",
+        "cell_bulk_137",
+        "cell_bulk_138",
+        "cell_bulk_139",
+        "cell_bulk_140",
+        "cell_bulk_141",
+        "cell_bulk_142",
+        "cell_bulk_143",
+        "cell_bulk_144",
+        "cell_bulk_145",
+        "cell_bulk_146",
+        "cell_bulk_147",
+        "cell_bulk_148",
+        "cell_bulk_149",
+        "cell_bulk_150",
+        "cell_bulk_151",
+        "cell_bulk_152",
+        "cell_bulk_153",
+        "cell_bulk_154",
+        "cell_bulk_155",
+        "cell_bulk_156",
+        "cell_bulk_157",
+        "cell_bulk_158",
+        "cell_bulk_159",
+        "cell_bulk_160",
+        "cell_bulk_161",
+        "cell_bulk_162",
+        "cell_bulk_163",
+        "cell_bulk_164",
+        "cell_bulk_165",
+        "cell_bulk_166",
+        "cell_bulk_167",
+        "cell_bulk_168",
+        "cell_bulk_169",
+        "cell_bulk_170",
+        "cell_bulk_171",
+        "cell_bulk_172",
+        "cell_bulk_173",
+        "cell_bulk_174",
+        "cell_bulk_175",
+        "cell_bulk_176",
+        "cell_bulk_177",
+        "cell_bulk_178",
+        "cell_bulk_179",
+        "cell_bulk_180",
+        "cell_bulk_181",
+        "cell_bulk_182",
+        "cell_bulk_183",
+        "cell_bulk_184",
+        "cell_bulk_185",
+        "cell_bulk_186",
+        "cell_bulk_187",
+        "cell_bulk_188",
+        "cell_bulk_189",
+        "cell_bulk_190",
+        "cell_bulk_191",
+        "cell_bulk_192",
+        "cell_bulk_193",
+        "cell_bulk_194",
+        "cell_bulk_195",
+        "cell_bulk_196",
+        "cell_bulk_197",
+        "cell_bulk_198",
+        "cell_bulk_199"
+      ],
+      "self_check_ok": true,
+      "self_check_problems": [],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 219,
+      "result_bytes": 13338,
+      "declared_fields": [
+        {
+          "name": "title",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "main_claim",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "slides",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "render_state",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "notes_separated",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_000",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_001",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_002",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_003",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_004",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_005",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_006",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_007",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_008",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_009",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_010",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_011",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_012",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_013",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_014",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_015",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_016",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_017",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_018",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_019",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_020",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_021",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_022",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_023",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_024",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_025",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_026",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_027",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_028",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_029",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_030",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_031",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_032",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_033",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_034",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_035",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_036",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_037",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_038",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_039",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_040",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_041",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_042",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_043",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_044",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_045",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_046",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_047",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_048",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_049",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_050",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_051",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_052",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_053",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_054",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_055",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_056",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_057",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_058",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_059",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_060",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_061",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_062",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_063",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_064",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_065",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_066",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_067",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_068",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_069",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_070",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_071",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_072",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_073",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_074",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_075",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_076",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_077",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_078",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_079",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_080",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_081",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_082",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_083",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_084",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_085",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_086",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_087",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_088",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_089",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_090",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_091",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_092",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_093",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_094",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_095",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_096",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_097",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_098",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_099",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_100",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_101",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_102",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_103",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_104",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_105",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_106",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_107",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_108",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_109",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_110",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_111",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_112",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_113",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_114",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_115",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_116",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_117",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_118",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_119",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_120",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_121",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_122",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_123",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_124",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_125",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_126",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_127",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_128",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_129",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_130",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_131",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_132",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_133",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_134",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_135",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_136",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_137",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_138",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_139",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_140",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_141",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_142",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_143",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_144",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_145",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_146",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_147",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_148",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_149",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_150",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_151",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_152",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_153",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_154",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_155",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_156",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_157",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_158",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_159",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_160",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_161",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_162",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_163",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_164",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_165",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_166",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_167",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_168",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_169",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_170",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_171",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_172",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_173",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_174",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_175",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_176",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_177",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_178",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_179",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_180",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_181",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_182",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_183",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_184",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_185",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_186",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_187",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_188",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_189",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_190",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_191",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_192",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_193",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_194",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_195",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_196",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_197",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_198",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        },
+        {
+          "name": "cell_bulk_199",
+          "present": true,
+          "type": "list",
+          "is_null": false,
+          "value": []
+        }
+      ],
+      "semantic_echo_in_list_form": {
+        "title": "list",
+        "main_claim": "list",
+        "slides": "list",
+        "render_state": "list",
+        "notes_separated": "list"
+      },
+      "contract_fields_missing": [],
+      "contract_fields_null": [],
+      "contract_surface_complete": true,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": false,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "E01",
+      "form": "契约容器",
+      "boundary": "**缺字段（无 output_contract 键）**",
+      "declaration": null,
+      "note": "缺字段边界：容器给 {}，19 个顶层契约字段仍须齐全",
+      "exit_code": 1,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {},
+      "self_check_ok": false,
+      "self_check_problems": [
+        "output contract fields missing: title, main_claim, slides, render_state, notes_separated"
+      ],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 14,
+      "result_bytes": 4458,
+      "declared_fields": [],
+      "contract_fields_missing": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "contract_fields_null": [],
+      "contract_surface_complete": false,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": true,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "E02",
+      "form": "契约容器",
+      "boundary": "**非法容器（字符串）**",
+      "declaration": "这是一段说明",
+      "note": "非法容器：不得静默当成空契约",
+      "exit_code": 1,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {},
+      "self_check_ok": false,
+      "self_check_problems": [
+        "output contract fields missing: title, main_claim, slides, render_state, notes_separated"
+      ],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 14,
+      "result_bytes": 4458,
+      "declared_fields": [],
+      "contract_fields_missing": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "contract_fields_null": [],
+      "contract_surface_complete": false,
+      "malformed_recorded": false,
+      "problems_in_cell": [
+        "非法契约容器被静默当成空契约"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": true,
+      "verdict": "mismatch-recorded",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "E03",
+      "form": "契约容器",
+      "boundary": "非法容器（null）",
+      "declaration": null,
+      "note": "null 容器：同上",
+      "exit_code": 1,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {},
+      "self_check_ok": false,
+      "self_check_problems": [
+        "output contract fields missing: title, main_claim, slides, render_state, notes_separated"
+      ],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 14,
+      "result_bytes": 4457,
+      "declared_fields": [],
+      "contract_fields_missing": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "contract_fields_null": [],
+      "contract_surface_complete": false,
+      "malformed_recorded": false,
+      "problems_in_cell": [
+        "非法契约容器被静默当成空契约"
+      ],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": true,
+      "verdict": "mismatch-recorded",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "E04",
+      "form": "契约容器",
+      "boundary": "空容器（{}）",
+      "declaration": {},
+      "note": "空契约：合法，等价于没有声明字段",
+      "exit_code": 1,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {},
+      "self_check_ok": false,
+      "self_check_problems": [
+        "output contract fields missing: title, main_claim, slides, render_state, notes_separated"
+      ],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 14,
+      "result_bytes": 4458,
+      "declared_fields": [],
+      "contract_fields_missing": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "contract_fields_null": [],
+      "contract_surface_complete": false,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": true,
+      "verdict": "match",
+      "silent_pass": false
+    },
+    {
+      "cell_id": "E05",
+      "form": "契约容器",
+      "boundary": "**声明不全（只声明 1 个未知字段）**",
+      "declaration": {
+        "cell_only_one": "字符串"
+      },
+      "note": "顶层 19 字段的完整性是否依赖案例的声明：只声明 1 个字段时是否仍写全 19 个",
+      "exit_code": 1,
+      "result_written": true,
+      "status": "completed",
+      "output_contract_echo": {
+        "cell_only_one": "字符串"
+      },
+      "self_check_ok": false,
+      "self_check_problems": [
+        "output contract fields missing: title, main_claim, slides, render_state, notes_separated"
+      ],
+      "uncertainty_count": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "top_level_keys": 15,
+      "result_bytes": 4517,
+      "declared_fields": [
+        {
+          "name": "cell_only_one",
+          "present": true,
+          "type": "str",
+          "is_null": false,
+          "value": ""
+        }
+      ],
+      "contract_fields_missing": [
+        "title",
+        "main_claim",
+        "slides",
+        "render_state",
+        "notes_separated"
+      ],
+      "contract_fields_null": [],
+      "contract_surface_complete": false,
+      "problems_in_cell": [],
+      "uncertainty_mentions_declared": false,
+      "caught_by_gate": true,
+      "verdict": "match",
+      "silent_pass": false
+    }
+  ],
+  "summary": {
+    "cells": 28,
+    "exit_zero": 23,
+    "result_written": 28,
+    "self_check_ok": 23,
+    "match": 21,
+    "mismatch_recorded": 2,
+    "caught_by_gate": 5,
+    "contract_surface_incomplete": 5,
+    "crash": 0,
+    "silent_pass": 5
+  },
+  "before_fix_silent": [],
+  "uncovered": [
+    "**只覆盖 `output_contract` 一个契约面**：题面要求的页级结构、模板、字体、页数上限等约束不在本矩阵内（它们由 `spec_lint` / `export_check` 覆盖）。",
+    "**只测回显与门的状态，不测“语义是否合理”**：例如声明 200 个字段会全部回显，但“该不该声明这么多”不是矩阵能判的。",
+    "**平台 3 个正式案例未在本地跑**：本矩阵用自带示例案例作基座（`examples/case.json`），正式案例的 `output_contract` 声明形态可能超出这 4 种（若出现，按同样方式加一行单元即可复测）。",
+    "**未覆盖并发/中断**：单元按顺序单进程执行，不测运行期被中断时的契约回显。",
+    "**未覆盖 `--demo` 分支与材料不可读分支的契约回显差异**（那两条分支由 `references/failure-modes.md` 的状态一致性条目覆盖）。",
+    "**未做多次重复**：每个单元运行一次；重复运行的字节稳定性由本包另一条轴（`scripts/determinism.py`，见 v7 版说明）负责，两者互补。"
+  ],
+  "fixes": [
+    {
+      "id": "F1",
+      "where": "scripts/main.py: apply_output_contract()",
+      "what": "未知字段名 + 布尔声明：由 `v is True -> semantic.get(k, False)` 改为 `isinstance(v, bool) -> 如实回显声明值`",
+      "why": "实测 A11 声明 true 却回显 false、A12 声明 false 却回显 \"\"，两者都不忠实",
+      "risk": "语义字段（notes_separated 等）仍优先取本次运行真实值：A13/A14 行为不变"
+    },
+    {
+      "id": "F2",
+      "where": "scripts/main.py: apply_output_contract()",
+      "what": "新增数值型声明的忠实回显分支（int/float，且明确排除 bool）",
+      "why": "实测 A04 声明 0 回显 \"\"、B02 声明 123 回显 \"\"，类型不符",
+      "risk": "只在“声明值本身是数字”时生效；str/list/dict/None 分支逻辑未改"
+    },
+    {
+      "id": "F3",
+      "where": "scripts/main.py: apply_output_contract()",
+      "what": "④ 清单形态中的非法元素与非法容器不再静默：写入 result['uncertainty']",
+      "why": "实测 D03 的数字/null 元素、E02/E03 的非法容器此前完全无痕（静默通过）",
+      "risk": "只在输入确实非法时追加一条 uncertainty，正常案例不触发"
+    }
+  ],
+  "_redaction": {
+    "applied": true,
+    "replaced": [
+      "<PROBE_DIR>",
+      "<SKILL_DIR>",
+      "<CASE_DIR>",
+      "<PYTHON>",
+      "<ABS> (remaining drive-letter path)"
+    ],
+    "note": "only path strings; verdicts and values are measured"
+  }
+}

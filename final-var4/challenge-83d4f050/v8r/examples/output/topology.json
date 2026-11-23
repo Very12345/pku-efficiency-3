@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "id": "P01",
+      "check": "实体 id 唯一",
+      "result": "pass",
+      "detail": "9 个实体 id 唯一"
+    },
+    {
+      "id": "P02",
+      "check": "边端点存在",
+      "result": "pass",
+      "detail": "9 条边端点都存在"
+    },
+    {
+      "id": "P03",
+      "check": "通路方向(非反馈边上游→下游)",
+      "result": "pass",
+      "detail": "全部非反馈边符合区室上→下流向"
+    },
+    {
+      "id": "P04",
+      "check": "同名基因/蛋白消歧",
+      "result": "pass",
+      "detail": "无同名基因/蛋白混用"
+    },
+    {
+      "id": "P04b",
+      "check": "同名实体须备注去向",
+      "result": "pass",
+      "detail": "同名实体均有 note 说明"
+    },
+    {
+      "id": "P05",
+      "check": "重复边检测",
+      "result": "pass",
+      "detail": "无重复边"
+    },
+    {
+      "id": "P06",
+      "check": "自环检测",
+      "result": "pass",
+      "detail": "无非反馈自环"
+    },
+    {
+      "id": "P07",
+      "check": "疑似反馈环未标注",
+      "result": "pass",
+      "detail": "无未标注的逆流回流边"
+    },
+    {
+      "id": "P08",
+      "check": "区室词表",
+      "result": "pass",
+      "detail": "区室均在词表内"
+    }
+  ],
+  "counts": {
+    "entities": 9,
+    "edges": 9
+  },
+  "failures": [],
+  "warnings": []
+}

@@ -1,0 +1,928 @@
+{
+  "schema": "degrade-matrix/1",
+  "tool": "scripts/degrade_probe.py",
+  "entry": "<SKILL_DIR>\\scripts\\main.py",
+  "case": "<SKILL_DIR>\\examples\\case.json",
+  "spec": "<SKILL_DIR>\\examples\\deck-spec.json",
+  "python": "<PYTHON>",
+  "blocking": "sys.meta_path finder raising ModuleNotFoundError (child process, per scenario)",
+  "scenarios": [
+    {
+      "scenario": "S0-baseline",
+      "label": "对照：什么都不屏蔽",
+      "blocks": [],
+      "kind": "control",
+      "exit_code": 0,
+      "soffice_on_path": false,
+      "result_written": true,
+      "artifacts_left": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ],
+      "artifact_count": 13,
+      "chart_files_on_disk": 2,
+      "preview_files_on_disk": 7,
+      "failing_import": null,
+      "stdout_tail": [
+        "evidence_map : evidence_mapping.md (entries=6, gaps=0)",
+        "spec_lint    : OK",
+        "sources      : 1  uncertainty: 1  changes: 2",
+        "self_check   : OK",
+        "artifacts    : <PROBE_DIR>\\scenarios\\S0-baseline\\out",
+        "================================================================"
+      ],
+      "status": "completed",
+      "deck_file": "academic_deck.pptx",
+      "deck_present_on_disk": true,
+      "previews": 7,
+      "chart_records": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+      "self_check_ok": true,
+      "uncertainty_count": 1,
+      "verdict": "full success",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": true,
+          "detail": ""
+        },
+        "ooxml_kit": {
+          "ok": true,
+          "detail": ""
+        },
+        "preview": {
+          "ok": true,
+          "detail": ""
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": true,
+          "detail": ""
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": true,
+          "detail": ""
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 12,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S1-no-pptx",
+      "label": "缺 python-pptx",
+      "blocks": [
+        "pptx"
+      ],
+      "kind": "dependency",
+      "exit_code": 1,
+      "soffice_on_path": false,
+      "result_written": false,
+      "artifacts_left": [],
+      "artifact_count": 0,
+      "chart_files_on_disk": 0,
+      "preview_files_on_disk": 0,
+      "failing_import": "ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)",
+      "stdout_tail": [
+        "    from pptx import Presentation",
+        "  File \"<string>\", line 9, in find_spec",
+        "    raise ModuleNotFoundError(",
+        "        \"No module named '%s' (blocked by degrade_probe)\" % fullname,",
+        "        name=fullname)",
+        "ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+      ],
+      "status": null,
+      "deck_file": null,
+      "deck_present_on_disk": false,
+      "previews": 0,
+      "chart_records": 0,
+      "uncertainty": [],
+      "rendered_with": null,
+      "self_check_ok": null,
+      "uncertainty_count": 0,
+      "verdict": "crash (no result.json)",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "ooxml_kit": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "preview": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 7,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S2-no-PIL",
+      "label": "缺 Pillow(PIL)",
+      "blocks": [
+        "PIL"
+      ],
+      "kind": "dependency",
+      "exit_code": 1,
+      "soffice_on_path": false,
+      "result_written": false,
+      "artifacts_left": [],
+      "artifact_count": 0,
+      "chart_files_on_disk": 0,
+      "preview_files_on_disk": 0,
+      "failing_import": "ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)",
+      "stdout_tail": [
+        "    from PIL import Image as PIL_Image",
+        "  File \"<string>\", line 9, in find_spec",
+        "    raise ModuleNotFoundError(",
+        "        \"No module named '%s' (blocked by degrade_probe)\" % fullname,",
+        "        name=fullname)",
+        "ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+      ],
+      "status": null,
+      "deck_file": null,
+      "deck_present_on_disk": false,
+      "previews": 0,
+      "chart_records": 0,
+      "uncertainty": [],
+      "rendered_with": null,
+      "self_check_ok": null,
+      "uncertainty_count": 0,
+      "verdict": "crash (no result.json)",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+        },
+        "ooxml_kit": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+        },
+        "preview": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 7,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S3-no-matplotlib",
+      "label": "缺 matplotlib",
+      "blocks": [
+        "matplotlib"
+      ],
+      "kind": "dependency",
+      "exit_code": 0,
+      "soffice_on_path": false,
+      "result_written": true,
+      "artifacts_left": [
+        "academic_deck.pptx",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ],
+      "artifact_count": 11,
+      "chart_files_on_disk": 0,
+      "preview_files_on_disk": 7,
+      "failing_import": null,
+      "stdout_tail": [
+        "evidence_map : evidence_mapping.md (entries=6, gaps=0)",
+        "spec_lint    : OK",
+        "sources      : 1  uncertainty: 2  changes: 2",
+        "self_check   : OK",
+        "artifacts    : <PROBE_DIR>\\scenarios\\S3-no-matplotlib\\out",
+        "================================================================"
+      ],
+      "status": "completed",
+      "deck_file": "academic_deck.pptx",
+      "deck_present_on_disk": true,
+      "previews": 7,
+      "chart_records": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed",
+        "reconstructed chart skipped: matplotlib missing: No module named 'matplotlib' (blocked by degrade_probe)"
+      ],
+      "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+      "self_check_ok": true,
+      "uncertainty_count": 2,
+      "verdict": "full success",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": true,
+          "detail": ""
+        },
+        "ooxml_kit": {
+          "ok": true,
+          "detail": ""
+        },
+        "preview": {
+          "ok": true,
+          "detail": ""
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": true,
+          "detail": ""
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": true,
+          "detail": ""
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 12,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S4-no-numpy",
+      "label": "缺 numpy",
+      "blocks": [
+        "numpy"
+      ],
+      "kind": "dependency",
+      "exit_code": 0,
+      "soffice_on_path": false,
+      "result_written": true,
+      "artifacts_left": [
+        "academic_deck.pptx",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ],
+      "artifact_count": 11,
+      "chart_files_on_disk": 0,
+      "preview_files_on_disk": 7,
+      "failing_import": null,
+      "stdout_tail": [
+        "evidence_map : evidence_mapping.md (entries=6, gaps=0)",
+        "spec_lint    : OK",
+        "sources      : 1  uncertainty: 2  changes: 2",
+        "self_check   : OK",
+        "artifacts    : <PROBE_DIR>\\scenarios\\S4-no-numpy\\out",
+        "================================================================"
+      ],
+      "status": "completed",
+      "deck_file": "academic_deck.pptx",
+      "deck_present_on_disk": true,
+      "previews": 7,
+      "chart_records": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed",
+        "reconstructed chart skipped: matplotlib missing: No module named 'numpy' (blocked by degrade_probe)"
+      ],
+      "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+      "self_check_ok": true,
+      "uncertainty_count": 2,
+      "verdict": "full success",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": true,
+          "detail": ""
+        },
+        "ooxml_kit": {
+          "ok": true,
+          "detail": ""
+        },
+        "preview": {
+          "ok": true,
+          "detail": ""
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": true,
+          "detail": ""
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": true,
+          "detail": ""
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 12,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S5-no-yaml",
+      "label": "缺 PyYAML",
+      "blocks": [
+        "yaml"
+      ],
+      "kind": "dependency",
+      "exit_code": 0,
+      "soffice_on_path": false,
+      "result_written": true,
+      "artifacts_left": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ],
+      "artifact_count": 13,
+      "chart_files_on_disk": 2,
+      "preview_files_on_disk": 7,
+      "failing_import": null,
+      "stdout_tail": [
+        "evidence_map : evidence_mapping.md (entries=6, gaps=0)",
+        "spec_lint    : OK",
+        "sources      : 1  uncertainty: 1  changes: 2",
+        "self_check   : OK",
+        "artifacts    : <PROBE_DIR>\\scenarios\\S5-no-yaml\\out",
+        "================================================================"
+      ],
+      "status": "completed",
+      "deck_file": "academic_deck.pptx",
+      "deck_present_on_disk": true,
+      "previews": 7,
+      "chart_records": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+      "self_check_ok": true,
+      "uncertainty_count": 1,
+      "verdict": "full success",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": true,
+          "detail": ""
+        },
+        "ooxml_kit": {
+          "ok": true,
+          "detail": ""
+        },
+        "preview": {
+          "ok": true,
+          "detail": ""
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": true,
+          "detail": ""
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": true,
+          "detail": ""
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 12,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S6-no-pptx-no-PIL",
+      "label": "同时缺 python-pptx 与 Pillow",
+      "blocks": [
+        "pptx",
+        "PIL"
+      ],
+      "kind": "dependency",
+      "exit_code": 1,
+      "soffice_on_path": false,
+      "result_written": false,
+      "artifacts_left": [],
+      "artifact_count": 0,
+      "chart_files_on_disk": 0,
+      "preview_files_on_disk": 0,
+      "failing_import": "ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)",
+      "stdout_tail": [
+        "    from pptx import Presentation",
+        "  File \"<string>\", line 9, in find_spec",
+        "    raise ModuleNotFoundError(",
+        "        \"No module named '%s' (blocked by degrade_probe)\" % fullname,",
+        "        name=fullname)",
+        "ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+      ],
+      "status": null,
+      "deck_file": null,
+      "deck_present_on_disk": false,
+      "previews": 0,
+      "chart_records": 0,
+      "uncertainty": [],
+      "rendered_with": null,
+      "self_check_ok": null,
+      "uncertainty_count": 0,
+      "verdict": "crash (no result.json)",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "ooxml_kit": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "preview": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": false,
+          "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'pptx' (blocked by degrade_probe)"
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 7,
+      "modules_total": 12
+    },
+    {
+      "scenario": "S7-no-soffice",
+      "label": "PATH 里没有 LibreOffice(soffice)",
+      "blocks": [],
+      "kind": "environment",
+      "exit_code": 0,
+      "soffice_on_path": false,
+      "result_written": true,
+      "artifacts_left": [
+        "academic_deck.pptx",
+        "chart-Fig_1.png",
+        "chart-Fig_1.svg",
+        "evidence_map.json",
+        "evidence_mapping.md",
+        "preview-approx-001.png",
+        "preview-approx-002.png",
+        "preview-approx-003.png",
+        "preview-approx-004.png",
+        "preview-approx-005.png",
+        "preview-approx-006.png",
+        "preview-approx-cover.png",
+        "result.json"
+      ],
+      "artifact_count": 13,
+      "chart_files_on_disk": 2,
+      "preview_files_on_disk": 7,
+      "failing_import": null,
+      "stdout_tail": [
+        "evidence_map : evidence_mapping.md (entries=6, gaps=0)",
+        "spec_lint    : OK",
+        "sources      : 1  uncertainty: 1  changes: 2",
+        "self_check   : OK",
+        "artifacts    : <PROBE_DIR>\\scenarios\\S7-no-soffice\\out",
+        "================================================================"
+      ],
+      "status": "completed",
+      "deck_file": "academic_deck.pptx",
+      "deck_present_on_disk": true,
+      "previews": 7,
+      "chart_records": 1,
+      "uncertainty": [
+        "declared template 'template-example.pptx' was not usable — built-in 16:9 academic layout used instead (deck.template.kind=builtin); run make_template.py if a real .pptx template is needed"
+      ],
+      "rendered_with": "pil-approximation (no PowerPoint/LibreOffice attached)",
+      "self_check_ok": true,
+      "uncertainty_count": 1,
+      "verdict": "full success",
+      "silent_degrade": false,
+      "module_imports": {
+        "cli_io": {
+          "ok": true,
+          "detail": ""
+        },
+        "assetkit": {
+          "ok": true,
+          "detail": ""
+        },
+        "deckgen": {
+          "ok": true,
+          "detail": ""
+        },
+        "ooxml_kit": {
+          "ok": true,
+          "detail": ""
+        },
+        "preview": {
+          "ok": true,
+          "detail": ""
+        },
+        "spec_lint": {
+          "ok": true,
+          "detail": ""
+        },
+        "export_check": {
+          "ok": true,
+          "detail": ""
+        },
+        "check_contract": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_template": {
+          "ok": true,
+          "detail": ""
+        },
+        "make_synthetic_inputs": {
+          "ok": true,
+          "detail": ""
+        },
+        "main": {
+          "ok": true,
+          "detail": ""
+        },
+        "degrade_probe": {
+          "ok": true,
+          "detail": ""
+        }
+      },
+      "modules_importable": 12,
+      "modules_total": 12
+    }
+  ],
+  "summary": {
+    "scenarios": 8,
+    "result_written": 5,
+    "full_success": 5,
+    "honest_partial": 0,
+    "crash": 3,
+    "silent_degrade": 0
+  },
+  "modules": [
+    "cli_io",
+    "assetkit",
+    "deckgen",
+    "ooxml_kit",
+    "preview",
+    "spec_lint",
+    "export_check",
+    "check_contract",
+    "make_template",
+    "make_synthetic_inputs",
+    "main",
+    "degrade_probe"
+  ],
+  "dependency_probes": [
+    {
+      "module": "pptx",
+      "blocked": [],
+      "ok": true,
+      "why": "基线：python-pptx 可导入",
+      "detail": ""
+    },
+    {
+      "module": "PIL",
+      "blocked": [],
+      "ok": true,
+      "why": "基线：Pillow 可导入",
+      "detail": ""
+    },
+    {
+      "module": "matplotlib",
+      "blocked": [],
+      "ok": true,
+      "why": "基线：matplotlib 可导入",
+      "detail": ""
+    },
+    {
+      "module": "numpy",
+      "blocked": [],
+      "ok": true,
+      "why": "基线：numpy 可导入",
+      "detail": ""
+    },
+    {
+      "module": "yaml",
+      "blocked": [],
+      "ok": true,
+      "why": "基线：PyYAML 可导入",
+      "detail": ""
+    },
+    {
+      "module": "pptx",
+      "blocked": [
+        "PIL"
+      ],
+      "ok": false,
+      "why": "python-pptx 是否依赖 Pillow",
+      "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+    },
+    {
+      "module": "matplotlib",
+      "blocked": [
+        "numpy"
+      ],
+      "ok": false,
+      "why": "matplotlib 是否依赖 numpy",
+      "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'numpy' (blocked by degrade_probe)"
+    },
+    {
+      "module": "matplotlib",
+      "blocked": [
+        "PIL"
+      ],
+      "ok": false,
+      "why": "matplotlib 是否依赖 Pillow",
+      "detail": "IMPORT_FAIL ModuleNotFoundError: No module named 'PIL' (blocked by degrade_probe)"
+    },
+    {
+      "module": "PIL",
+      "blocked": [
+        "pptx"
+      ],
+      "ok": true,
+      "why": "Pillow 是否反向依赖 python-pptx",
+      "detail": ""
+    }
+  ],
+  "soffice_scan": {
+    "files_scanned": 11,
+    "hits": [
+      {
+        "file": "main.py",
+        "line": 314,
+        "text": "rendered_with = \"pil-approximation (no PowerPoint/LibreOffice attached)\""
+      },
+      {
+        "file": "preview.py",
+        "line": 6,
+        "text": "Why honest: without PowerPoint or LibreOffice we cannot run the real rendering"
+      },
+      {
+        "file": "preview.py",
+        "line": 11,
+        "text": "\"pil-approximation (no PowerPoint/LibreOffice)\". They are NOT screenshots of the"
+      }
+    ],
+    "hit_count": 3,
+    "invocation_hits": [],
+    "invocation_count": 0,
+    "invokes_soffice": false
+  },
+  "minimal_env": [
+    "**硬依赖（实测：缺则主流程连 `result.json` 都写不出）**：`python-pptx`（S1 导入期失败）与其 **Pillow 依赖**（S2 导入期失败；实测 `import pptx` 在屏蔽 PIL 时同样失败）。两者不是\"可选回退\"，而是 `scripts/deckgen.py` / `scripts/ooxml_kit.py` / `scripts/preview.py` 的模块级导入链。",
+    "**软依赖（实测：缺则可降级，产物形态变化）**：`matplotlib`（S3：重建图跳过，其余产物照常）、`numpy`（S4：只影响 matplotlib 自身）。",
+    "**未被主流程使用（实测：屏蔽后与基线一致）**：`PyYAML`（S5，代码里没有任何 `yaml` 导入）——它属于平台环境清单里的资源，不是本 Skill 的依赖。",
+    "**外部引擎**：LibreOffice 未实现调用，缺失无影响；模板与预览是运行期自生成的文本→二进制流程。",
+    "**最低可用组合（把上面的实测拼起来）**：Python ≥3.8 + `python-pptx` + `Pillow`；要 PDF 素材再加 `PyMuPDF`/`pypdf`/`pdfplumber` 任一；要重建图再加 `matplotlib`。只缺 `matplotlib` 时仍产出完整 `result.json`：`charts` 记录仍在但带 `reason`、重建图文件不落盘（实测 S3/S4 的 `uncertainty` 从 1 条升到 2 条，第 2 条即 `reconstructed chart skipped: …`）。",
+    "**排障顺序建议**：先看 `result.json` 是否存在 → 不存在就先解决 `python-pptx`/`Pillow`；存在但 `status=partial` → 读 `uncertainty`（它逐条写了哪一步降级）；再跑 `export_check.py` / `check_contract.py` 确认契约面。"
+  ],
+  "uncovered": [
+    "**PDF 解析库未纳入**：`PyMuPDF`/`pypdf`/`pdfplumber` 的缺失降级没有实测，因为自带示例案例的材料是纯文本（`.txt`），PDF 分支不会被走到；要覆盖它需要一份 PDF 素材并屏蔽三个库。",
+    "**未测组合爆炸**：只测了单缺 5 个库 + 一个双缺组合；三缺以上的组合未测。",
+    "**未测操作系统级缺失**：例如系统字体目录为空、只读输出目录、磁盘满；这些属于环境故障，不是依赖缺失。",
+    "**未测 LibreOffice 真实存在时的行为**：本机没有 LibreOffice，因此只能测“不存在”这一侧（见 §4 的静态扫描结论）。",
+    "**未测子进程被中断**（Ctrl-C/超时）时的产物一致性。",
+    "**`--demo` 分支与材料不可读分支未与屏蔽矩阵交叉**（它们由 `failure-modes.md` 的状态一致性条目覆盖）。"
+  ],
+  "_redaction": {
+    "applied": true,
+    "replaced": [
+      "<PROBE_DIR>",
+      "<SKILL_DIR>",
+      "<CASE_DIR>",
+      "<PYTHON>",
+      "<ABS> (remaining drive-letter path)"
+    ],
+    "note": "only path strings; verdicts and counts are measured"
+  }
+}
